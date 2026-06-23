@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="学习文档" />
+  <title>Git 与 C++ 学习文档 | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', m: '\\mathrm{m}', pa: '\\partial', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}' } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>模板</summary><nav>
+<a class="" href="../templates/report-template.html">课程报告模板</a>
+<a class="" href="../templates/beamer-template.html">Beamer 演示模板</a>
+</nav></details>
+<details open><summary>代码实验</summary><nav>
+<a class="" href="../code/numerical-code.html">数值方法与 C++/Python</a>
+</nav></details>
+<details open><summary>学习文档</summary><nav>
+<a class="active" href="../docs/code-notes.html">Git 与 C++ 学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>Git 与 C++ 学习文档</h1><p class="doc-subtitle">把 code学习文档 中的学习笔记整理成教程页。</p><div class="doc-chips"><span>Git</span><span>VS Code</span><span>C++</span></div><p class="source-path">来源：code学习文档/计算机学习文档.md</p></header>
+<section class="doc-section"><h2>Git 与 VS Code 工作流</h2><p>文档记录了从配置身份、初始化仓库、连接远程仓库，到在 VS Code 源代码管理面板中暂存、提交和推送的流程。</p><pre><code>git config --global user.email "邮箱"
+git config --global user.name "名字"
+git init
+git remote add origin "你的github仓库地址"
+git pull origin main --allow-unrelated-histories</code></pre><h2>C++ 三目运算符</h2><p><code>?:</code> 可以作为简单 <code>if-else</code> 的表达式写法。</p><pre><code>expression1 ? expression2 : expression3
+int c = a > b ? a : b;</code></pre><h2>this 指针与 static</h2><p><code>this</code> 指向具体对象；静态函数属于类本身，不依赖某个实例。</p><pre><code>void accelerate() { this->speed += 10; }
+static bool isAdultRule(int check_age) { return check_age >= 18; }</code></pre></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

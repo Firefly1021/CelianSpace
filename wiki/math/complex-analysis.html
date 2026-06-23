@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="复数、全纯函数、积分表示与级数展开。" />
+  <title>复变函数 | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', m: '\\mathrm{m}', pa: '\\partial', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}' } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="active" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>模板</summary><nav>
+<a class="" href="../templates/report-template.html">课程报告模板</a>
+<a class="" href="../templates/beamer-template.html">Beamer 演示模板</a>
+</nav></details>
+<details open><summary>代码实验</summary><nav>
+<a class="" href="../code/numerical-code.html">数值方法与 C++/Python</a>
+</nav></details>
+<details open><summary>学习文档</summary><nav>
+<a class="" href="../docs/code-notes.html">Git 与 C++ 学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>复变函数</h1><p class="doc-subtitle">复数、全纯函数、积分表示与级数展开。</p><div class="doc-chips"><span>分析基础</span><span>数学基础</span></div><p class="source-path">来源：数学基础/Section/Complex_Analysis.tex</p></header><section class="doc-section"><h3>复数</h3>
+<p>复数$z=a+\mathrm{i}b$也可以表示成</p>
+<div class="math-display">\[z=r(\cos\theta+\mathrm{i}\sin\theta)=re^{\mathrm{i}\theta}\]</div>
+<p>其中$r=|z|$,$\theta$称为$z$的辐角,记为$\theta=\operatorname{Arg}z$.容易看出如果$\theta$是$z$的辐角,那么$\theta+2k\pi$也是$z$的辐角,因此$z$的辐角有无穷多个(这也说明$\operatorname{Arg}z$并不是一个数,而是一个集合,关于它的等式都是集合意义上的相等).但在$\operatorname{Arg}z$中,只有一个满足$-\pi&lt;\theta\leqslant \pi$,称这个$\theta$为$z$的辐角主值,记为$\arg z$.因此</p>
+<div class="math-display">\[\operatorname{Arg}z=\arg z+2k\pi,k\in \mathbb{Z}\]</div>
+<p>注意到辐角函数$\operatorname{Arg}z$是多值函数,如果我们将复平面$\mathbb{C}$沿负实轴割开,辐角主值就是相应的单值解析分支. 设$z_1,z_2$为两个复数,那么有</p>
+<div class="math-display">\[\begin{aligned}
+\operatorname{Arg}(z_1z_2)&amp;=\operatorname{Arg}z_1+\operatorname{Arg}z_2\\
+\operatorname{Arg}\left(\frac{z_1}{z_2}\right)&amp;=\operatorname{Arg}z_1-\operatorname{Arg}z_2
+\end{aligned}\]</div>
+<p>由第二个等式,说明向量$z_1,z_2$之间的夹角可以用$\operatorname{Arg}\left(\frac{z_1}{z_2}\right)$表示.如果$z_1$与$z_2$垂直,那么应当有$\arg\left(\frac{z_1}{z_2}\right)=\pm\frac{\pi}{2}$,这说明$\frac{z_1}{z_2}$是一个纯虚数,因而$z_1\overline{z_2}=\frac{z_1}{z_2}|z_2|^2$是一个纯虚数,即$\operatorname{Re} (z_1\overline{z_2})=0$,这也是$z_1$与$z_2$垂直的充要条件.同理可知$z_1$与$z_2$平行的充要条件是$\operatorname{Im} (z_1\overline{z_2})=0$.</p>
+<p>一般来讲,$\arg (z-z_0)=\theta_0$表示从$z_0$出发,与正实轴夹角为$\theta_0$的一条射线. 如果给定了复数$z=x+\mathrm{i}y$,可以用下面的方式求其辐角主值:</p>
+<div class="math-display">\[\arg z=
+\begin{cases}
+\arctan\frac{y}{x}&amp;,z\text{在第I,IV象限};\\
+\arctan\frac{y}{x}\pm \pi&amp;,z\text{在第II(+),III(-)象限}.
+\end{cases}\]</div>
+<p><strong>定义</strong>$^\clubsuit $:设$f(z)=u(x,y)+\mathrm{i}v(x,y)$是定义在域$D$上的函数,$z_0=x_0+\mathrm{i}y_0\in D$.我们说$f$在$z_0$处实可微,是指$u$和$v$作为$x,y$的二元函数在$(x_0,y_0)$处可微. 引入算子</p>
+<div class="math-display">\[\begin{aligned}
+\frac{\partial}{\partial z}&amp;=\frac{1}{2}\left(\frac{\partial}{\partial x}-\mathrm{i}\frac{\partial}{\partial y}\right),\\
+\frac{\partial}{\partial \overline{z}}&amp;=\frac{1}{2}\left(\frac{\partial}{\partial x}+\mathrm{i}\frac{\partial}{\partial y}\right).
+\end{aligned}\]</div>
+<p>因此有</p>
+<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=\frac{\partial}{\partial z}(z_0)\Delta z+\frac{\partial}{\partial \overline{z}}(z_0)\overline{\Delta z}+o(|\Delta z|)\]</div>
+<p>则可以得到下面的定理. <strong>定理</strong>$^\clubsuit $:设$f:D\to \mathbb{C}$是定义在域$D$上的函数,$z_0\in D$,那么$f$在$z_0$处实可微的充分必要条件是</p>
+<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=\frac{\partial}{\partial z}(z_0)\Delta z+\frac{\partial}{\partial \overline{z}}(z_0)\overline{\Delta z}+o(|\Delta z|)\]</div>
+<p>成立. 注意一点,我们目前说的都是$f$在$z_0$处实可微,并不是$f$在$z_0$处可微.对于$f$在$z_0$处可微有下面的定理 设$f$是定义在域$D$上的函数,$z_0\in D$,那么$f$在$z_0$处可微的充分必要条件是$f$在$z_0$处实可微且$\frac{\partial f}{\partial \overline{z}}(z_0)=0$.在可微的情况下,$f&#x27;(z_0)=\frac{\partial f}{\partial z}(z_0)$. <strong>注</strong>:$\frac{\partial f}{\partial \overline{z}}(z_0)=0$称为Cauchy-Riemann方程.从这个方程就可以得到$f$的实部和虚部应满足的条件.</p>
+<p><strong>Proof</strong>:如果$f$在$z_0$处可微,则</p>
+<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=f&#x27;(z_0)\Delta z+o(|\Delta z|)\]</div>
+<p>则由上一个定理知$f$在$z_0$处是实可微,且$\frac{\partial f}{\partial \overline{z}}(z_0)=0$,$f&#x27;(z_0)=\frac{\partial f}{\partial z}(z_0)$. 反之,若$f$在$z_0$处是实可微,且$\frac{\partial f}{\partial \overline{z}}(z_0)=0$,再由上一个定理知</p>
+<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=f&#x27;(z_0)\Delta z+o(|\Delta z|)\]</div>
+<p>由此知$f$在$z_0$处可微,而且$f&#x27;(z_0)=\frac{\partial f}{\partial z}(z_0)$. 我们可以得到下面的函数类包含关系</p>
+<div class="math-display">\[H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)\]</div>
+<p>我们已经知道,如果$f$是域$D$上的全纯函数,那么$f$在$D$上有任意阶导数.若记$f=u+\mathrm{i}v\in H(D)$,则$u,v\in C^{\infty}(D)$,不仅如此,我们还可以得到$u$和$v$都是调和函数. 由</p>
+<div class="math-display">\[\frac{\partial u}{\partial \overline{z}}=\frac{1}{2}\left(\frac{\partial u}{\partial x}+\mathrm{i}\frac{\partial u}{\partial y}\right).\]</div>
+<p>所以</p>
+<div class="math-display">\[\begin{aligned}
+\frac{\partial^2 u}{\partial z\partial \overline{z}}&amp;= \frac{\partial }{\partial z}\left(\frac{\partial u}{\partial \overline{z}}\right)\\
+&amp;= \frac{1}{4}\left[\frac{\partial}{\partial x}\left(\frac{\partial}{\partial x}-\mathrm{i}\frac{\partial}{\partial y}\right)+\mathrm{i}\frac{\partial}{\partial y}\left(\frac{\partial}{\partial x}-\mathrm{i}\frac{\partial}{\partial y}\right).\right]\\
+&amp;= \frac{1}{4}\left(\frac{\partial ^2u}{\partial x^2}+\frac{\partial ^2u}{\partial y^2}\right)=\frac{1}{4}\Delta u
+\end{aligned}\]</div>
+<p>即$\Delta u=4\frac{\partial^2 u}{\partial z\partial \overline{z}}$.由$f\in H(D)$,从而</p>
+<div class="math-display">\[\frac{\partial f}{\partial \overline{z}}=0,\frac{\partial\overline{f}}{\partial z}=0\]</div>
+<p>所以</p>
+<div class="math-display">\[\frac{\partial^2 f}{\partial z\partial \overline{z}}=\frac{\partial^2 \overline{f}}{\partial z\partial \overline{z}}=0\]</div>
+<p>由$u=\frac{1}{2}(f+\overline{f})$即得</p>
+<div class="math-display">\[\Delta u=4\frac{\partial^2 u}{\partial z\partial \overline{z}}=0\]</div>
+<p>同理知$\Delta v=0$. <strong>分式线性变换</strong>$^\clubsuit $:我们称函数</p>
+<div class="math-display">\[w=f(z)=\frac{az+b}{cz+d},(ad-bc\neq 0)\]</div></section></article><nav class="prev-next"><a href="classical-calculus.html">上一页：经典微积分</a><a href="finite-element.html">下一页：有限元方法初步</a></nav></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="群、环、数论结构与代数对象。" />
+  <title>代数与数论 | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', m: '\\mathrm{m}', pa: '\\partial', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}' } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="active" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>模板</summary><nav>
+<a class="" href="../templates/report-template.html">课程报告模板</a>
+<a class="" href="../templates/beamer-template.html">Beamer 演示模板</a>
+</nav></details>
+<details open><summary>代码实验</summary><nav>
+<a class="" href="../code/numerical-code.html">数值方法与 C++/Python</a>
+</nav></details>
+<details open><summary>学习文档</summary><nav>
+<a class="" href="../docs/code-notes.html">Git 与 C++ 学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>代数与数论</h1><p class="doc-subtitle">群、环、数论结构与代数对象。</p><div class="doc-chips"><span>代数与几何</span><span>数学基础</span></div><p class="source-path">来源：数学基础/Section/Algebra_NumberTheory.tex</p></header><section class="doc-section"><h3>群</h3>
+<p>一个很简单的例子是:整数集$\mathbb{Z}$关于整数的加法构成群,我们称之为整数加群. 设$m$为大于1的整数,考虑$\mathbb{Z}_m=\{\overline{0},\overline{1},\overline{2},\cdots,\overline{m-1}\}$.在其上定义加法和乘法:对$\overline{a},\overline{b}\in\mathbb{Z}_m$</p>
+<div class="math-display">\[\overline{a}+\overline{b}=\overline{a+b},  \overline{a}\cdot\overline{b}=\overline{ab}\]</div>
+<p>则$(\mathbb{Z}_m,+)$构成群,称之为$\mathbb{Z}$的模$m$剩余类群.值得注意的是$\mathbb{Z}_m$关于它的乘法不构成群.但是$\mathbb{Z}_m$的部分元素关于剩余类的乘法是可以构成群的. 设$m$为大于1的整数,定义集合</p>
+<div class="math-display">\[U(m)=\{\overline{a}\in\mathbb{Z}_m:(a,m)=1\}\]</div>
+<p>关于剩余类的乘法构成群.不仅如此,这还是一个交换群.当$m=p$是素数的时候,我们常记$U(p)=\mathbb{Z}_{p}^{*}$. 由数论的知识可以知道,$U(m)$的阶为$\varphi (m)$,这里$\varphi (m)$是欧拉函数,表示所有不大于$m$且和$m$互素的正整数的个数.利用算术基本定理:</p>
+<div class="math-display">\[m=p_{1}^{r_1}p_{2}^{r_2}\cdots p_{s}^{r_s}\]</div>
+<p>其中$p_1,p_2,\cdots,p_s$为$m$的不同素因子,那么</p>
+<div class="math-display">\[\varphi (m)=m\prod_{i=1}^{s}\left(1-\frac{1}{p_i}\right)\]</div>
+<p>设$m$是一个整数,记</p>
+<div class="math-display">\[H=\{mz:z\in\mathbb{Z}\}\]</div>
+<p>则$H$为整数加群$\mathbb{Z}$的子群.我们常记作$m\mathbb{Z}$. 设$G$为有限群,$H$是$G$的一个子群,则</p>
+<div class="math-display">\[|G|=|H|[G:H]\]</div>
+<p><strong>Proof</strong>:我们先证明两个事实. <strong>Part1.$H$的任意两个左(右)陪集或者相等,或者不相交</strong> 设$aH,bH$是两个左陪集.假如它们有公共元素,即有$h_1,h_2\in H$使得</p>
+<div class="math-display">\[ah_1=bh_2\]</div>
+<p>于是$a=bh_2h_1^{-1}=bh_3$,由$ah=bh_3h\in bH$可知$aH\subset bH$.同理有$bH\subset aH$.这样就证明了</p>
+<div class="math-display">\[aH=bH\]</div>
+<p><strong>Part2.群$G$可以表示成若干个不相交的左(右)陪集之并</strong> 因为$a\in aH$,所以$G=\bigcup_{a\in G}aH$.把其中重复的陪集去掉,即得</p>
+<div class="math-display">\[G=\bigcup_{\alpha}a_{\alpha}H\]</div>
+<p>其中当$\alpha\neq \beta$时,有$a_{\alpha}H\neq a_{\beta}H$. 因为$G$是有限群,由上面可以知道</p>
+<div class="math-display">\[G=a_1H\cup a_2H\cup\cdots \cup a_rH\]</div>
+<p>所以$|G|=\sum_{i=1}^r|a_iH|=\sum_{i=1}^r|H|=|H|[G:H]$.</p>
+<p><strong>定义</strong>$^\clubsuit $:设$H$是群$G$的子群,如果对每个$a\in G$都有$aH=Ha$,则称$H$是群$G$的一个正规子群,记作$H\lhd G$. 设$\varphi :G\to G&#x27;$为同态映射,则</p>
+<div class="math-display">\[G/\ker \varphi\cong \operatorname{Im}\varphi\]</div>
+<p><strong>Proof</strong>:定义映射</p>
+<div class="math-display">\[\begin{aligned}
+\psi :G/\ker \varphi&amp;\to \operatorname{Im}\varphi\\
+a\ker \varphi&amp;\mapsto \varphi (a)
+\end{aligned}\]</div>
+<p>先证明这个映射是良定义的,即证明若$x_1=x_2$,则$\psi(x_1)=\psi(x_2)$(与单射反过来了)</p>
+<div class="math-display">\[\begin{aligned}
+a\ker \varphi=b\ker \varphi &amp;\Rightarrow a^{-1}b\in \ker \varphi\Rightarrow \varphi(a^{-1}b)=e&#x27;\\
+&amp;\Rightarrow \varphi(b^{-1})\varphi(a)=e&#x27;\Rightarrow \varphi(a)=\varphi(b)\\
+\end{aligned}\]</div>
+<p>这就证明了$\psi$是良定义的,并且是单射.根据$\psi$的定义可以得到它是满射. 因为</p>
+<div class="math-display">\[\begin{aligned}
+\psi[(a\ker \varphi)(b\ker \varphi)] &amp;= \psi(ab\ker \varphi)=\varphi(ab)\\
+&amp;=\varphi(a)\varphi(b)=\psi(a\ker \varphi)\psi(b\ker \varphi)
+\end{aligned}\]</div>
+<p>综上表明$\psi$是一个$G/\ker\varphi$到$\operatorname{Im}\varphi$的同构映射.从而</p>
+<div class="math-display">\[G/\ker \varphi\cong \operatorname{Im}\varphi\]</div>
+<p>设$G$是一个群,$H&lt;G,N\triangleright G$,则</p>
+<div class="math-display">\[H/(H\cap N)\cong HN/N\]</div>
+<p><strong>Proof</strong>:思路是构造一个同构映射$\varphi$使得$\operatorname{Im}\varphi=HN/N$且$\ker\varphi =H\cap N$. 首先容易得到$HN&lt;G$,又因为$N\triangleright G$,所以$N\triangleright HN$.令</p>
+<div class="math-display">\[\begin{aligned}
+\varphi:H &amp;\to HN/N\\
+h &amp;\mapsto hN
+\end{aligned}\]</div></section></article><nav class="prev-next"><span></span><a href="classical-calculus.html">下一页：经典微积分</a></nav></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="古典 PDE、广义函数、Sobolev 空间与椭圆方程。" />
+  <title>偏微分方程与傅里叶分析 | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', m: '\\mathrm{m}', pa: '\\partial', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}' } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="active" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>模板</summary><nav>
+<a class="" href="../templates/report-template.html">课程报告模板</a>
+<a class="" href="../templates/beamer-template.html">Beamer 演示模板</a>
+</nav></details>
+<details open><summary>代码实验</summary><nav>
+<a class="" href="../code/numerical-code.html">数值方法与 C++/Python</a>
+</nav></details>
+<details open><summary>学习文档</summary><nav>
+<a class="" href="../docs/code-notes.html">Git 与 C++ 学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>偏微分方程与傅里叶分析</h1><p class="doc-subtitle">古典 PDE、广义函数、Sobolev 空间与椭圆方程。</p><div class="doc-chips"><span>PDE 与分析</span><span>数学基础</span></div><p class="source-path">来源：数学基础/Section/Foutier_Analysis.tex</p></header><section class="doc-section"><h2>偏微分方程</h2>
+<h3>三大古典偏微分方程</h3>
+<h4>位势方程</h4>
+<p>考虑下面的Dirichlet边界条件的定解问题</p>
+<div class="math-display">\[\Delta u=f(x),  &amp;x\in \Omega,\\
+u=\varphi(x),  &amp;x\in \pa\Omega,\]</div>
+<p>其中$\Omega\subset\R ^n$为有界区域,$f(x)$和$\varphi(x)$是$\Omega$和$\pa \Omega$上的已知函数. 若$u\in C^2(\Omega)\cap C(\overline{\Omega})$且在$\Omega$中满足$\Delta u\geqslant 0$,则$u$在$\overline{\Omega}$上的最大值在$\pa\Omega$上达到,即</p>
+<div class="math-display">\[\max_{\overline{\Omega}}u=\max_{\pa\Omega}u.\]</div>
+<p><strong>Proof</strong>:由于$\pa\Omega\subset\overline{\Omega}$,显然有$\max_{\overline{\Omega}}u\geqslant\max_{\pa\Omega}u$.下面证明$\max_{\overline{\Omega}}u\geqslant\max_{\pa\Omega}u$.下面证明$\max_{\overline{\Omega}}u\geqslant\max_{\pa\Omega}u$.下面证明$\max_{\overline{\Omega}}u\leqslant\max_{\pa\Omega}u$.</p>
+<p>若$u$在$x_0\in\Omega$处达到最大值(因为在内部,所以也是极大值),因此</p>
+<div class="math-display">\[Du(x_0)=0,  \operatorname{Hessi}u(x_0)\text{负定}\]</div>
+<p>因此$u_{x_ix_i}(x_0)&lt;0(i=1,\cdots,n)$,所以$\Delta u(x_0)&lt;0$. 如果在$\Omega$中$\Delta u&gt;0$,那么由上面讨论,$u$在$\overline{\Omega}$上的最大值不可能在$\Omega$的内部取得,从而只能在边界取得. 如果在$\Omega$中$\Delta u\geqslant 0$,对任意$\varepsilon&gt;0$,构造函数</p>
+<div class="math-display">\[u_{\varepsilon}(x)=u(x)+\varepsilon|x|^2\]</div>
+<p>容易得到在$\Omega$中</p>
+<div class="math-display">\[\Delta u_{\varepsilon}=\Delta u +2n\varepsilon\geqslant 2n\varepsilon&gt;0\]</div>
+<p>因此$\max_{\overline{\Omega}}u_{\varepsilon}=\max_{\pa\Omega}u_{\varepsilon}$.注意到</p>
+<div class="math-display">\[\begin{aligned}
+\max_{\overline{\Omega}}u &amp;\leqslant \max_{\overline{\Omega}}(u+\varepsilon|x|^2)=\max_{\overline{\Omega}}u_{\varepsilon}=\max_{\pa\Omega}u_{\varepsilon}\\
+&amp;=\max_{\pa\Omega}(u+\varepsilon|x|^2)\leqslant \max_{\pa\Omega}u+\varepsilon\max_{\pa\Omega}|x|^2
+\end{aligned}\]</div>
+<p>令$\varepsilon\to 0^+$,即得$\max_{\overline{\Omega}}u\leqslant\max_{\pa\Omega}u$. 相对应的,也有弱极小值原理,条件要改成$\Delta u\leqslant 0$.弱极大值原理和弱极小值原理统称为弱极值原理,这两个定理表明:如果$u\in C^2(\Omega)\cap C(\overline{\Omega})$且在$\Omega$中满足$\Delta u=0$,则</p>
+<div class="math-display">\[\min_{\pa\Omega}u\leqslant u(x)\leqslant \max_{\pa\Omega}u,  x\in\Omega\]</div>
+<p>设$f\in C(\overline{\Omega}),\varphi\in C(\pa\Omega)$,若$u\in C^2(\Omega)\cap C(\overline{\Omega})$是问题相关方程的解,则</p>
+<div class="math-display">\[\max_{\overline{\Omega}}|u|\leqslant\max_{\pa\Omega}|\varphi|+\frac{d^2}{2n}\max_{\overline{\Omega}}|f|\]</div>
+<p>其中$d=\operatorname{diam}\Omega$ <strong>Proof</strong>:记$\Phi=\max_{\pa\Omega}|\varphi|,M=\max_{\overline{\Omega}}|f|$.取$x_0\in\Omega$,构造辅助函数</p>
+<div class="math-display">\[w(x)=\Phi+\frac{M}{2n}(d^2-|x-x_0|^2)-u(x)\]</div>
+<p>直接计算,有</p>
+<div class="math-display">\[\begin{cases}
+\Delta w=-M-f\leqslant 0,&amp;x\in\Omega\\
+w=\Phi+\frac{M}{2n}(d^2-|x-x_0|^2)-\varphi\geqslant 0,&amp;x\in\pa\Omega
+\end{cases}\]</div>
+<p>由弱极小值原理得到$\min_{\overline{\Omega}}w=\min_{\pa\Omega}w\geqslant 0$.于是在$\overline{\Omega}$上$w\geqslant 0$,即</p>
+<div class="math-display">\[u\leqslant \Phi+\frac{M}{2n}(d^2-|x-x_0|^2)\leqslant\Phi+\frac{d^2}{2n}M\]</div>
+<p>在上述论述中以$-u$代替$u$就可以得到</p>
+<div class="math-display">\[-u\leqslant\Phi+\frac{d^2}{2n}M\]</div>
+<p>这就证明了结论. <strong>例</strong>$^\spadesuit$:设$\Omega$是$\R^n$中的有界区域,$\varphi\in C(\pa\Omega),u\in C^3(\Omega)\cap C(\overline{\Omega})$是问题</p>
+<div class="math-display">\[\begin{cases}
+\Delta u(x)=u^3(x)-u(x),&amp;x\in\Omega\\
+u(x)=\varphi(x),&amp;x\in\pa\Omega
+\end{cases}\]</div>
+<p>的解.证明:若$\max_{\pa\Omega}|\varphi|\leqslant 1$,则$\max_{\overline{\Omega}}|u|\leqslant 1$. <strong>Proof</strong>:如果$u$在边界上取到最大值,那么根据$\max_{\pa\Omega}|\varphi|\leqslant 1$,得到$\max_{\overline{\Omega}}u\leqslant 1$. 如果$u$在$\Omega$内部$x_0\in\Omega$取到最大值,那么有$\Delta u(x_0)\leqslant 0$.所以我们得到</p>
+<div class="math-display">\[\Delta u(x_0)=u^3(x_0)-u(x_0)=u(x_0)(u(x_0)-1)(u(x_0)+1)\leqslant 0\]</div>
+<p>因此一定有$u(x_0)\leqslant 1$.这就是$\max_{\overline{\Omega}}u\leqslant 1$. 如果$u$在边界上取到最小值,那么根据$\max_{\pa\Omega}|\varphi|\leqslant 1$,得到$\min_{\overline{\Omega}}u\geqslant -1$. 如果$u$在$\Omega$内部$y_0\in\Omega$取到最小值,那么有$\Delta u(x_0)\geqslant 0$.所以我们得到</p>
+<div class="math-display">\[\Delta u(y_0)=u^3(y_0)-u(y_0)=u(y_0)(u(y_0)-1)(u(y_0)+1)\geqslant 0\]</div>
+<p>因此一定有$u(y_0)\geqslant -1$.这就是$\min_{\overline{\Omega}}u\geqslant -1$. 综上我们证明了$\max_{\overline{\Omega}}|u|\leqslant 1$. <strong>基本解</strong>$^\clubsuit $:定义在$x\in\mathbb{R}^n\setminus \{0\}$的函数</p>
+<div class="math-display">\[\Phi (x)=
+\begin{cases}
+-\frac{1}{2\pi}\ln |x|,&amp;(n=2)\\[3pt]
+\frac{1}{n(n-2)\alpha(n)}\frac{1}{|x|^{n-2}}, &amp;(n\geqslant 3)
+\end{cases}\]</div></section></article><nav class="prev-next"><a href="finite-element.html">上一页：有限元方法初步</a><a href="functional-analysis.html">下一页：泛函分析</a></nav></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

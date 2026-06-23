@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="变分问题、有限元空间、混合有限元与计算流程。" />
+  <title>有限元方法初步 | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', m: '\\mathrm{m}', pa: '\\partial', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}' } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="active" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>模板</summary><nav>
+<a class="" href="../templates/report-template.html">课程报告模板</a>
+<a class="" href="../templates/beamer-template.html">Beamer 演示模板</a>
+</nav></details>
+<details open><summary>代码实验</summary><nav>
+<a class="" href="../code/numerical-code.html">数值方法与 C++/Python</a>
+</nav></details>
+<details open><summary>学习文档</summary><nav>
+<a class="" href="../docs/code-notes.html">Git 与 C++ 学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>有限元方法初步</h1><p class="doc-subtitle">变分问题、有限元空间、混合有限元与计算流程。</p><div class="doc-chips"><span>数值计算与有限元</span><span>数学基础</span></div><p class="source-path">来源：数学基础/Section/Finite_Element.tex</p></header><section class="doc-section"><h3>变分问题</h3>
+<p>设$a(\cdot,\cdot)$是赋范线性空间$H$上的双线性形式.若存在常数$C&gt;0$使得</p>
+<div class="math-display">\[|a(v,w)|\leqslant C\|v\|_H\|w\|_H,  \forall v,w\in H\]</div>
+<p>我们称$a(\cdot,\cdot)$是有界的(连续的).若存在常数$\alpha &gt;0$使得</p>
+<div class="math-display">\[a(v,v)\geqslant \alpha \|v\|^2_H,  \forall v\in V\subset H\]</div>
+<p>我们称$a(\cdot,\cdot)$在$V\subset H$上强制. 变分问题:设$H$为Hilbert空间,$V\subset H$为闭子空间,$a(\cdot,\cdot)$为$H$上的有界且在$V$上强制的双线性形式,那么非对称变分问题是指给定$F\in V&#x27;$,找到$u\in V$使得</p>
+<div class="math-display">\[a(u,v)=\langle F,v\rangle,  \forall v\in V\]</div>
+<p>事实上,这个问题解的存在与唯一性可以通过下面的Lax-Milgram定理来保证. 设$H$为Hilbert空间,$a(\cdot,\cdot)$为$H$上的有界且在$V$上强制的双线性形式,$F\in H&#x27;$,那么存在唯一的$u\in H$使得</p>
+<div class="math-display">\[a(u,v)=\langle F,v\rangle,  \forall v\in H\]</div>
+<p><strong>Proof</strong>:证明暂留. 从理论的角度来讲,问题已经解决的差不多了,但是从实际计算的角度来讲,无论是人工还是计算机,都无法处理无限维空间中的问题.因此一个自然的想法是,能否退而求其次,在一个有限维子空间中寻找近似解. Galerkin逼近问题:给定一个有限维子空间$V_h\subset V$与$F\in V&#x27;$.寻找$u_h\in V_h$满足</p>
+<div class="math-display">\[a(u_h,v)=\langle F,v\rangle,  \forall v\in V_h\]</div>
+<p>由此引出几个问题: 1.解$u_h$是否存在且唯一? 这个很好解决,只需要注意到有限维子空间是完备的. 2.如何估计误差$u-u_h$? 这个误差是在$V$中范数下的误差,随后将会给出Céa引理来估计误差. 3.如何构造有限维子空间$V_h$? 这在实际计算中是关键的一步,幸运的是,目前已经有很多成熟的方法来构造这个有限维子空间,其中最常用的就是有限元方法,随后我们会介绍有限元空间的构造. 4.当我们真的构造出了有限维子空间$V_h$,如何求解Galerkin逼近问题?</p>
+<p>既然是有限维空间,我们设$\operatorname{dim}V_h=n$,同时设$\{\phi_1,\cdots,\phi_n\}$为其一组基.既然我们要寻找$u_h\in V_h$,那么我们可以先将$u_h$表示为</p>
+<div class="math-display">\[u_h=\sum_{j=1}^nU_j\phi_j\]</div>
+<p>注意到逼近问题中$v\in V_h$是任意的,于是不妨直接取$v=\phi_i,i=1,\cdots,n$.于是我们将得到下面的方程组</p>
+<div class="math-display">\[\begin{cases}
+U_1a(\phi_1,\phi_1)+U_2a(\phi_2,\phi_1)+\cdots+U_na(\phi_n,\phi_1)=\langle F,\phi_1\rangle\\
+U_1a(\phi_1,\phi_2)+U_2a(\phi_2,\phi_2)+\cdots+U_na(\phi_n,\phi_2)=\langle F,\phi_2\rangle\\
+\cdots\cdots\cdots\cdots\cdots\cdots\\
+U_1a(\phi_1,\phi_n)+U_2a(\phi_2,\phi_n)+\cdots+U_na(\phi_n,\phi_n)=\langle F,\phi_n\rangle
+\end{cases}\]</div>
+<p>记$K_{ij}=a(\phi_j,\phi_i),F_i=\langle F,\phi_i\rangle,i,j=1,2\cdots,n$,并且令$U=[U_j],K=[K_{ij}],F=[F_i]$,那么Galerkin逼近问题就等价于下面的方程组</p>
+<div class="math-display">\[KU=F\]</div>
+<p>这个方程组是有解的,且解是唯一的. 现在我们设$u$是变分问题相关方程的解,$u_h$是Galerkin逼近问题相关方程的解,我们现在想估计误差$\|u-u_h\|_V$. 设$H$为Hilbert空间,$V\subset H$为闭子空间,$a(\cdot,\cdot)$为$H$上的有界且在$V$上强制的双线性形式,$F\in V&#x27;$.设$u\in V$是变分问题相关方程的解,$u_h\in V_h\subset V$是Galerkin逼近问题相关方程的解,则有</p>
+<div class="math-display">\[\|u-u_h\|_V\leqslant \frac{C}{\alpha}\inf_{v\in V_h}\|u-v\|_V\]</div>
+<p>其中$C$是$a(\cdot,\cdot)$的有界常数,$\alpha$是$a(\cdot,\cdot)$在$V$上强制的常数. <strong>Proof</strong>:因为$a(u,v)=\langle F,v\rangle,\forall v\in V$且$a(u_h,v)=\langle F,v\rangle,  \forall v\in V_h$,因此</p>
+<div class="math-display">\[a(u-u_h,v)=0,  \forall v\in V_h\]</div>
+<p>则对任意$v\in V_h$,有</p>
+<div class="math-display">\[\begin{aligned}
+\alpha \|u-u_h\|^2_V &amp;\leqslant a(u-u_h,u-u_h)\\
+&amp;=a(u-u_h,u-v)+a(u-u_h,v-u_h)\\
+&amp;= a(u-u_h,u-v)\\
+&amp;\leqslant C\|u-u_h\|_V\|u-v\|_V
+\end{aligned}\]</div>
+<p>因此$\|u-u_h\|_V\leqslant \frac{C}{\alpha}\|u-v\|_V,\forall v\in V_h$.两边取下确界可以得到</p>
+<div class="math-display">\[\|u-u_h\|_V\leqslant \frac{C}{\alpha}\inf_{v\in V_h}\|u-v\|_V\]</div>
+<p>如果注意到$V_h$还是闭的,那么可以得到$\|u-u_h\|_V\leqslant \frac{C}{\alpha}\min_{v\in V_h}\|u-v\|_V$. 这个引理右边是$u$在$V_h$中的最佳近似误差,因此这个引理说明Galerkin逼近解$u_h$的误差不会比$u$在$V_h$中的最佳近似误差大多少倍.这就把误差估计问题转化为了如何构造有限维子空间$V_h$以及如何估计最佳近似误差的问题.</p>
+<h3>有限元空间的构造</h3>
+<p>如果直接在整个区域$\Omega$上构造一个有限维空间,例如</p>
+<div class="math-display">\[V_h=\{p\in \mathcal{P}_k(\Omega)\}\]</div>
+<p>这样的话,如果区域边界特别复杂,或者真解$u$在某些地方变化的特别剧烈,这时必须要用高次多项式才能逼近,这就会导致Runge现象.此外,局部误差无法单独控制,并且还不能处理非光滑或分段连续的真解.于是从数值计算与数学角度,更好的做法是将区域分成若干个子区域. 据此,引出下面的三个问题: 1.空间$V_h$由哪些函数组成; 2.如何在各个子区域上定义这些函数; 3.如何在相邻区域之间保证适当的连续性. <strong>定义</strong>$^\clubsuit $:设 (1.)(<strong>单元区域</strong>):$K\subset\mathbb{R}^n$是一个有界闭集,其内部非空且边界分段光滑;</p>
+<p>(2.)(<strong>形函数</strong>):$\mathcal{P}$是$K$上的有限维函数空间; (3.)(<strong>节点变量集</strong>):$\mathcal{N}=\{N_1,N_2,\cdots,N_k\}$是$\mathcal{P}&#x27;$($\mathcal{P}$的对偶空间)的一组基. 那么,我们称$(K,\mathcal{P},\mathcal{N})$为一个有限元. <strong>定义</strong>$^\clubsuit $:设$(K,\mathcal{P},\mathcal{N})$是一个有限元.$\mathcal{P}$中与$\mathcal{N}$对偶的基$\{\phi_1,\phi_2,\cdots,\phi_k\}$称为$\mathcal{P}$的节点基.</p>
+<p>根据线性代数的知识就能知道节点基函数与节点变量之间的应当有下面的关系</p>
+<div class="math-display">\[N_i(\phi_j)=\delta_{ij}=
+\begin{cases}
+1,&amp; i=j\\
+0,&amp;i\neq j
+\end{cases}\]</div></section></article><nav class="prev-next"><a href="complex-analysis.html">上一页：复变函数</a><a href="pde-fourier-analysis.html">下一页：偏微分方程与傅里叶分析</a></nav></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

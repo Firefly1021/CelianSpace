@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Lebesgue 测度、抽象测度和积分。" />
+  <title>实分析 | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', m: '\\mathrm{m}', pa: '\\partial', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}' } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="active" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>模板</summary><nav>
+<a class="" href="../templates/report-template.html">课程报告模板</a>
+<a class="" href="../templates/beamer-template.html">Beamer 演示模板</a>
+</nav></details>
+<details open><summary>代码实验</summary><nav>
+<a class="" href="../code/numerical-code.html">数值方法与 C++/Python</a>
+</nav></details>
+<details open><summary>学习文档</summary><nav>
+<a class="" href="../docs/code-notes.html">Git 与 C++ 学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>实分析</h1><p class="doc-subtitle">Lebesgue 测度、抽象测度和积分。</p><div class="doc-chips"><span>分析基础</span><span>数学基础</span></div><p class="source-path">来源：数学基础/Section/Real_Analysis.tex</p></header><section class="doc-section"><h2>实分析与泛函分析</h2>
+<h3>Lebesgue测度</h3>
+<p>定义所谓的$n$维区间$Q=\{x=(x_1,\cdots,x_n):a_k\leqslant x_k\leqslant b_k,1\leqslant k\leqslant n\}$.它的体积自然可以定义为</p>
+<div class="math-display">\[|Q|=\prod^n_{k=1}(b_k-a_k)\]</div>
+<p>当然了,如果$b_k-a_k$都相等的话,此时$Q$就是一个方体.由此我们可以定义Lebesgue外测度. <strong>Lebesgue外测度</strong>$^\clubsuit $:$E\subset \R ^n$的Lebesgue外测度定义为</p>
+<div class="math-display">\[m^*(E)=\inf\{\sum^{\infty}_{k=1}|Q_k|:\bigcup^{\infty}_{k=1}Q_k\supset E,Q_k\text{为$n$维区间}\}\]</div>
+<p>注意到,这个外测度的定义是通过取下确界定义的,自然我们可以用下确界的性质得到下面的小结论: 对任意给定的$\varepsilon &gt;0$,存在覆盖$E\subset \bigcup_{k=1}^{\infty}Q_k$满足</p>
+<div class="math-display">\[\sum^{\infty}_{k=1}|Q_k|&lt;m^*(E)+\varepsilon\]</div>
+<p>从定义我们立即得到外测度一定是非负的,并且$m^*(\emptyset)=0$.此外还具有下面的性质:\\ 1.单调性:$E_1\subset E_2\Rightarrow m^*(E_1)\leqslant m^*(E_2)$. 设$E_{1}\subset E_{2}$,若$E_2\subset\bigcup_{k=1}^{\infty}Q_{k}$,则$E_{1}\subset\bigcup_{k=1}^{\infty}Q_{k}$ ,由外测度定义,$\m(E_{1})\leqslant\sum_{k=1}^{\infty}|Q_{k}|$,从而</p>
+<div class="math-display">\[\m(E_{1})\leqslant\m(E_{2})\]</div>
+<p>2.次可数可加性:$\m\left(\bigcup_{k=1}^{\infty}E_{k}\right)\leqslant\sum_{k=1}^{\infty}\m\left(E_{k}\right).$ 不妨设$\sum_{k=1}^{\infty}\m\left(E_{k}\right)&lt;\infty$.对每个$E_k,\forall\varepsilon&gt;0$,由外测度定义,$\exists\{Q_{k,j}\}$,使得$E_{k}\subset\bigcup_{j=1}^{\infty}Q_{k,j}$,且$\sum_{j=1}^{\infty}|Q_{k,j}|&lt;\m(E_{k})+\frac{\varepsilon}{2^k}$,从而$\bigcup_{k=1}^{\infty}E_{k}\subset\bigcup_{k=1}^{\infty}\bigcup_{j=1}^{\infty}Q_{k,j}$,且</p>
+<div class="math-display">\[\m(\bigcup_{k=1}^{\infty}E_{k})\leqslant\sum_{k=1}^{\infty}\sum_{j=1}^{\infty}|Q_{k,j}|&lt;\sum_{k=1}^{\infty}\m(E_{k})+\varepsilon\]</div>
+<p>由$\varepsilon&gt;0$的任意性,即证. 现在回到我们的初衷,测度是度量集合大小的一个工具,我们当然希望它满足我们的直观,例如区间的测度就是其长度,也就是有下面的例子: <strong>例</strong>$^\spadesuit$ :设$Q$是$\R ^n$中闭区间,则</p>
+<div class="math-display">\[\m (Q)=|Q|\]</div>
+<p><strong>Proof</strong>:因为$Q\supset Q$,由外测度定义,$\m(Q)\leqslant|Q|&lt;\infty$.为证反向不等式,从$\m (Q)&lt;\infty, \forall\varepsilon&gt;0$,存在闭区间列$\{Q_{k}\}$,使得$Q\subset\bigcup_{k=1}^{\infty}Q_{k}$,且$\sum_{k=1}^{\infty}|Q_{k}|\leqslant\m(Q)+\varepsilon$.对$\forall\eta $,存在开区间$Q_{k}^{*}\supset Q_{k}$,使得</p>
+<div class="math-display">\[|Q_{k}^*|\leqslant (1+\eta)|Q_{k}|,\forall k.\]</div>
+<p>因为 $Q\subset\bigcup_{k=1}^{\infty}Q_{k}\subset\bigcup_{k=1}^{\infty}Q_{k}^{*}$,由有限覆盖定理,$Q$的开覆盖$\{Q_{k}^*\}_{k}^{\infty}$中包含有限子覆盖,不妨记为 $\{Q_{k}^*\}_{k=1}^{m}$,即 $Q\subset\bigcup_{k=1}^{m}Q_{k}^{*}$,所以,</p>
+<div class="math-display">\[|Q|\leqslant\sum_{k=1}^{m}\left(1+\eta\right)|Q_{k}|&lt;\left(1+\eta\right)\left(\m\left(Q\right)+\varepsilon\right).\]</div>
+<p>由$\varepsilon,\eta&gt;0$的任意性,得到$|Q|\leqslant\m(Q)$. <strong>例</strong>$^\spadesuit$:设$E\subset\R ^n$,则对于$\forall\varepsilon &gt;0$,存在开集$G\supset E$,使得</p>
+<div class="math-display">\[\m (E)\leqslant\m (G)&lt;\m (E)+\varepsilon\]</div>
+<p>从而$\m (E)=\inf\{\m (G):G\supset E,G\text{为开集}\}$. <strong>Proof</strong>:不妨设$\m(E)&lt;\infty$,由外测度定义,对$\forall\varepsilon &gt;0$,存在闭区间列$\{Q_{k}\}$,使得</p>
+<div class="math-display">\[E\subset\bigcup_{k=1}^{\infty}Q_{k}\text{且}
+\sum_{k=1}^{\infty}|Q_{k}|&lt;\m(E)+\frac{\varepsilon}{2}.\]</div>
+<p>对每个$Q_{k}$,存在开区间$Q_{k}^{*}$,使得</p>
+<div class="math-display">\[Q_{k}\subset Q_{k}^{*}\text{且}|Q_{k}^{*}|\leqslant|Q_{k}|+\frac{\varepsilon}{2^{k+1}}.\]</div>
+<p>令$G=\bigcup_{k=1}^{\infty}Q_{k}^{*}$,则$G$为开集且$G{\supset}E$,故</p>
+<div class="math-display">\[\begin{aligned}
+\m(E)\leqslant\m(G)\leqslant\sum_{k=1}^{\infty}\m(Q_{k}^{*}) &amp;=\sum_{k=1}^{\infty}|Q_{k}^{*}|\\
+&amp;\leqslant\sum_{k=1}^{\infty}\left(|Q_{k}|+\frac{\varepsilon}{2^{k+1}}\right)\\
+&amp;=\sum_{k=1}^{\infty}|Q_{k}|+\frac{\varepsilon}{2}&lt;\m(E)+\varepsilon.
+\end{aligned}\]</div>
+<p><strong>例</strong>$^\spadesuit$:设$x_0\in\R ^n$,令$E+\{x_0\}=\{x+x_0:x\in E\}$.则</p>
+<div class="math-display">\[\m(E+\{x_{0}\})=\m(E).\]</div>
+<p><strong>Proof</strong>:因为$n$维区间的体积有平移不变性,所以,对于 $\bigcup_{k=1}^{\infty}Q_{k}{\supset}E$,有</p>
+<div class="math-display">\[\bigcup_{k=1}^{\infty}(Q_{k}+\{x_{0}\})\supset(E+\{x_{0}\}).\]</div>
+<p>于是</p>
+<div class="math-display">\[\m(E+\{x_{0}\})\leqslant\sum_{k=1}^{\infty}|Q_{k}|+\{x_{0}\}=\sum_{k=1}^{\infty}|Q_{k}|\]</div>
+<p>从而$\m(E+\{x_{0}\})\leqslant\m(E)$.反之,对$E+\{x_{0}\}$ 作向量-$x_{0}$平移.得到$E$,于是又有</p>
+<div class="math-display">\[\m(E)\leqslant\m(E+\{x_{0}\}).\]</div>
+<p><strong>例</strong>$^\spadesuit$:设$E_{1},E_{2}$为$\R ^n$中两个集合,若 $E_1$与$E_2$之间的距离$d(E_{1},E_{2})=d&gt;0$,则</p>
+<div class="math-display">\[\m(E_1\cup E_2)=\m(E_1)+\m(E_2).\]</div></section></article><nav class="prev-next"><a href="numerical-analysis.html">上一页：数值分析</a><a href="set-axiomatics.html">下一页：集合与公理化</a></nav></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

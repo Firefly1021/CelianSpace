@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Banach 空间、线性算子、对偶空间与复习选题。" />
+  <title>泛函分析 | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', m: '\\mathrm{m}', pa: '\\partial', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}' } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="active" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>模板</summary><nav>
+<a class="" href="../templates/report-template.html">课程报告模板</a>
+<a class="" href="../templates/beamer-template.html">Beamer 演示模板</a>
+</nav></details>
+<details open><summary>代码实验</summary><nav>
+<a class="" href="../code/numerical-code.html">数值方法与 C++/Python</a>
+</nav></details>
+<details open><summary>学习文档</summary><nav>
+<a class="" href="../docs/code-notes.html">Git 与 C++ 学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>泛函分析</h1><p class="doc-subtitle">Banach 空间、线性算子、对偶空间与复习选题。</p><div class="doc-chips"><span>分析基础</span><span>数学基础</span></div><p class="source-path">来源：数学基础/Section/Function_Analysis.tex</p></header><section class="doc-section"><h3>Banach空间</h3>
+<h4>赋范线性空间</h4>
+<p>设$X$是数域$\mathbb{K}(\R,\mathbb{C})$上的向量空间,$Z$为$X$的子空间.定义关系</p>
+<div class="math-display">\[x\sim y  \text{当且仅当}  (x-y)\in Z\]</div>
+<p>则$\sim$是$X$上的一个等价关系,记所有与$x$等价的元素为$\overline{x}$:</p>
+<div class="math-display">\[\begin{aligned}
+\overline{x} &amp;= \{y\in X:(x-y)\in Z\}\\
+&amp;= \{(x-z)\in X:z\in Z\}
+\end{aligned}\]</div>
+<p>在商集$X/Z$上定义加法和数乘如下:对任意的$x,y\in X$和$\alpha\in\mathbb{K}$</p>
+<div class="math-display">\[\overline{x}+\overline{y}=\overline{x+y},  \alpha\overline{x}=\overline{\alpha x}\]</div>
+<p>则$X/Z$也成为了数域$\mathbb{K}$上的一个线性空间. <strong>商范数</strong>$^\clubsuit $:设$(X,\|\cdot\|_{X})$是赋范线性空间,$Z$是$X$的闭子空间,定义映射$\|\cdot\|:X/Z\to\R$为</p>
+<div class="math-display">\[\|\overline{x}\|=\inf_{y\in\overline{x}}\|y\|_{X}=\inf_{z\in Z}\|x-z\|_{X}\]</div>
+<p>则$\|\cdot\|$是商空间$X/Z$上的范数,称为商范数. <strong>Proof</strong>:只需要按照范数的定义验证即可: <strong>Part1.非负性与正定性</strong>.</p>
+<p><strong>压缩映射</strong>$^\clubsuit $:设$(X,d)$为一距离空间.对映射$f:X\to X$,如果存在常数$k$,使得$0&lt;k&lt;1$,且对任何$x,y\in X$均有</p>
+<div class="math-display">\[d(f(x),f(y))\leqslant kd(x,y)\]</div>
+<p>则称$f$为压缩映射. 设$(X,d)$为完备的度量空间,则任何压缩映射$f:X\to X$有且仅有一个不动点$x\in X$.\\ 此外,任意给定点$x_0\in X$,由</p>
+<div class="math-display">\[x_{n+1}=f(x_n),n\geqslant 0\]</div>
+<p>定义的序列$(x_n)^{\infty}_{n=0}$当$n\to \infty$时,收敛于$x$,且成立以下估计</p>
+<div class="math-display">\[d(x_n,x)\leqslant \frac{d(f(x_0),x_0)}{1-k}k^n\]</div>
+<p><strong>Proof</strong>:   我们考虑赋范线性空间中级数的收敛性质.先看下面的例子. <strong>例</strong>$^\spadesuit$ :设$X=\{x=(\xi_1,\xi_2,\cdots,\xi_n,\cdots):n\text{为任意正整数}\}$.范数$\|x\|=\sup_{k}|\xi_k|$.取</p>
+<div class="math-display">\[x_k=(0,\cdots,0,\frac{1}{k^2},0,\cdots)\in X\]</div>
+<p>则$\|x_k\|=\frac{1}{k^2}$,因此$\sum_{k=1}^{\infty}\|x_k\|=\frac{\pi^2}{6}$,即$\sum_{k=1}^{\infty}x_k$绝对收敛.但$\sum_{k=1}^{\infty}x_k$在$X$中不收敛,这是因为</p>
+<div class="math-display">\[\sum_{k=1}^{\infty}x_k=\left(1,\frac{1}{2^2},\cdots,\frac{1}{k^2},\cdots\right)\notin X\]</div>
+<p>这个例子说明,对于一般的赋范线性空间,级数的绝对收敛并不能推出级数本身收敛.幸运的是,我们有下面的定理: <strong>定理</strong>$^\clubsuit $:设$X$为Banach空间,则从$\sum_{k=1}^{\infty}\|x_k\|$收敛可以推出$\sum_{k=1}^{\infty}x_k$收敛,且满足</p>
+<div class="math-display">\[\left\|\sum_{k=1}^{\infty}x_k\right\|\leqslant \sum_{k=1}^{\infty}\|x_k\|\]</div>
+<p>反之,在$(X,\|\cdot\|)$中,若任意级数$\sum_{k=1}^{\infty}x_k$绝对收敛总能推出该级数本身收敛,那么$X$是Banach空间. <strong>Proof</strong>:设$\sum_{k=1}^{\infty}\|x_k\|$收敛,则对任意$\varepsilon&gt;0$,存在$N&gt;0,\forall n&gt;N$,对任何正整数$p$有</p>
+<div class="math-display">\[\sum_{k=n+1}^{n+p}\|x_k\|&lt;\varepsilon\]</div>
+<p>记$S_n=\sum_{k=1}^n x_k$,于是</p>
+<div class="math-display">\[\|S_{n+p}-S_n\|=\left\|\sum_{k=n+1}^{n+p}x_k\right\|\leqslant \sum_{k=n+1}^{n+p}\|x_k\|&lt;\varepsilon\]</div>
+<p>这说明$\{S_n\}$是$X$中的Cauchy列,因此在$X$中收敛,即$\sum_{k=1}^{\infty}x_k$收敛.此外,由三角不等式</p>
+<div class="math-display">\[\left\|\sum_{k=1}^{n}x_k\right\|\leqslant \sum_{k=1}^{n}\|x_k\|\]</div>
+<p>令$n\to\infty$得到$\left\|\sum_{k=1}^{\infty}x_k\right\|\leqslant \sum_{k=1}^{\infty}\|x_k\|$. 反之,设$\{S_n\}$是$X$中任意Cauchy列,则对任意$k\in\mathbb{N}$,都存在$n_k&gt;0$,对于$\forall m&gt;n&gt;n_k$有$\|S_m-S_n\|&lt;2^{-k}$.$\forall k\in\mathbb{N}$,都可以选取$n_{k+1}&gt;n_k$.记$x_1=S_{n_1},x_k=S_{n_k}-S_{n_{k-1}}$,于是$\{S_{n_k}\}$是$\sum_{k=1}^{\infty}x_k$的部分和序列.所以</p>
+<div class="math-display">\[\sum_{k=1}^{\infty}\|x_k\|\leqslant \|x_1\|+\sum_{k=2}^{\infty}2^{-k}=\|x_1\|+1\]</div>
+<p>从而$\sum_{k=1}^{\infty}\|x_k\|$收敛,于是$\sum_{k=1}^{\infty}x_k$收敛,即$\{S_{n_k}\}$收敛,又$\{S_n\}$是$X$中的Cauchy列.所以$\{S_n\}$收敛,于是$X$完备. 这个定理的结果给了我们一个证明赋范线性空间完备的方法;这个定理的证明也展示了一个证明空间完备的方法:对于Cauchy列的收敛性不好证明时,我们可以证明其有个子列是收敛的.这个在证明Contor交集定理的逆定理时可以用到. <strong>Riesz引理</strong>$^\clubsuit $:设$A$赋范线性空间$(X,\|\cdot\|)$的真闭子空间,则对任意$\varepsilon\in (0,1)$,必存在$x_0\in X$且$\|x_0\|=1$使得</p>
+<div class="math-display">\[d(x_0,A)&gt;\varepsilon\]</div>
+<p><strong>Proof</strong>:由于$A$是$X$的真闭子空间,故存在$x_1\in X\setminus A$,有</p>
+<div class="math-display">\[d_1=d(x_1,A)=\inf\{\|x_1-x\|:x\in A\}&gt;0\]</div></section></article><nav class="prev-next"><a href="pde-fourier-analysis.html">上一页：偏微分方程与傅里叶分析</a><a href="machine-learning.html">下一页：机器学习基础</a></nav></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

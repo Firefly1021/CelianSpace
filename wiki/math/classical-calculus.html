@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="微分、积分与经典分析结果。" />
+  <title>经典微积分 | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', m: '\\mathrm{m}', pa: '\\partial', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}' } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="active" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>模板</summary><nav>
+<a class="" href="../templates/report-template.html">课程报告模板</a>
+<a class="" href="../templates/beamer-template.html">Beamer 演示模板</a>
+</nav></details>
+<details open><summary>代码实验</summary><nav>
+<a class="" href="../code/numerical-code.html">数值方法与 C++/Python</a>
+</nav></details>
+<details open><summary>学习文档</summary><nav>
+<a class="" href="../docs/code-notes.html">Git 与 C++ 学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>经典微积分</h1><p class="doc-subtitle">微分、积分与经典分析结果。</p><div class="doc-chips"><span>分析基础</span><span>数学基础</span></div><p class="source-path">来源：数学基础/Section/Classical_Calculus.tex</p></header><section class="doc-section"><h2>微积分中的一些结果</h2>
+<h3>微分</h3>
+<p><strong>定义</strong>$^\clubsuit $:令$A\subset\mathbb{R}^n$为开集,$f:A\to \mathbb{R}^m$,设$A$包含$a$的一个邻域.如果有线性映射$L:\mathbb{R}^n\to \mathbb{R}^m$使得</p>
+<div class="math-display">\[\lim\limits_{h\to 0}\frac{|f(a+h)-f(a)-L(h)|}{|h|}=0\]</div>
+<p>则称$f$在$a$处可微,并且称$L$为$f$在$a$处的微分,记为$Df(a)$.如果记$f=(f_1,\cdots,f_m)$,那么$Df(a)$是一个$m\times n$矩阵,即</p>
+<div class="math-display">\[Df(a)=
+\begin{pmatrix}
+\frac{\partial f_1}{\partial x_1}(a) &amp; \cdots &amp; \frac{\partial f_1}{\partial x_n}(a)\\
+\vdots &amp; \ddots &amp; \vdots\\
+\frac{\partial f_m}{\partial x_1}(a) &amp; \cdots &amp; \frac{\partial f_m}{\partial x_n}(a)\\
+\end{pmatrix}\]</div>
+<p>设 $D\subset\mathbb{R}^{n}$ 为凸域，函数 $f:D\rightarrow\mathbb{R}$在$D$中处处可微,则任给 $x,y\in D$,存在$\theta\in(0,1)$,使得</p>
+<div class="math-display">\[f(x)-f(y)=\nabla f(\xi)\cdot(x-y), \xi=\theta x+(1-\theta)y.\]</div>
+<p><strong>Proof</strong>:令$\sigma(t)=t x+(1-t)y$ .由$D$为凸域可知当 $t\in[0,1]$ 时 $\sigma(t)\in D$.对一元函数$\varphi(t)=f(\sigma(t))$用微分中值定理可知,存在 $\theta\in(0,1)$ ,使得 $\varphi(1)-\varphi(0)=\varphi^{\prime}(\theta)$.由复合函数求导可得</p>
+<div class="math-display">\[\varphi(1)-\varphi(0)=\nabla f(\xi)\cdot\sigma^{\prime}(\theta)=\nabla f(\xi)\cdot(x-y),\]</div>
+<p>其中$\xi=\sigma(\theta)=\theta x+(1-\theta)y.$由$f(x)=\varphi(1)$,$f(y)=\varphi(0)$ 可知欲证结论成立. 设 $D\subset\mathbb{R}^{n}$为凸域,$f:D\rightarrow\mathbb{R}^{m}$ 在 $D$ 中处处可微,则任给 $x,y\in D$ ,存在 $\xi\in D$ ,使得</p>
+<div class="math-display">\[\|f(x)-f(y)\|\leqslant\|Df(\xi)\|\cdot\|x-y\|.\]</div>
+<p><strong>Proof</strong>:基本的想法是对 $f$ 的分量的线性组合应用微分中值定理,为此,不妨设 $f\left(x\right)\neq f\left(y\right)$ 任意取定 $\mathbb{R}^{m}$ 中的单位向量 $u=(u_{1},u_{2},\cdots,u_{m})$ ,记</p>
+<div class="math-display">\[g=u\cdot f=\sum_{i=1}^{m}u_{i}f_{i},\]</div>
+<p>则 $g$为$D$中可微函数.根据微分中值定理,存在 $\xi\in D$ ,使得</p>
+<div class="math-display">\[g(x)-g(y)=\nabla g(\xi)\cdot(x-y).\]</div>
+<p>注意到 $\nabla g(\xi)=\sum_{i=1}^{m}u_{i}\nabla f_{i}(\xi)$ ,利用Cauchy-Schwarz不等式可得</p>
+<div class="math-display">\[\|\nabla g(\xi)\|\leqslant\sum_{i=1}^{m}|u_{i}|\cdot\|\nabla f_{i}(\xi)\|\leqslant\|u\|\cdot\Big(\sum_{i=1}^{m}\|\nabla f_{i}(\xi)\|^{2}\Big)^{\frac{1}{2}}=\|Df(\xi)\|.\]</div>
+<p>由 $g(x)-g(y)=u\cdot\left[f(x)-f(y)\right]$ 可得</p>
+<div class="math-display">\[\left|u\cdot[f(x)-f(y)]\right|\leqslant\|\nabla g(\xi)\|\cdot\|x-y\|\leqslant\|Df(\xi)\|\cdot\|x-y\|.\]</div>
+<p>在上式中取 $u={\frac{f(x)-f(y)}{\|f(x)-f(y)\|}}$ 就完成了定理的证明. 设 $D\subset\mathbb{R}^{n}$ 为开集, $f:D\to\mathbb{R}^{n}$ 为 $C^{k}(k\geqslant1)$ 映射,$x^{0}\in D$ 如果 $\operatorname*{det}J f(x^{0})\neq0$ ,则存在 $x^{0}$ 的开邻域 $U\subset D$ 以及 $y^{0}=f(x^{0})$ 的开邻域 $V\subset\mathbb{R}^{n}$ 使得 $f|_{U}:U\to V$ 是可逆映射,且其逆仍为 $C^{k}$ 映射.</p>
+<p><strong>Proof</strong>:不失一般性,可设 $x^{0}=0$ $y^{0}=0$ 以 $L$ 记 $f$ 在 $x^{0}=0$ 处的微分,则 $L$ 可逆,且 $L^{-1}\circ f$ 在 $x^{0}$ 处的微分为恒同映射.如果欲证结论对 $L^{-1}\circ f$ 成立,则对 $f$ 也成立.因此,不妨从一开始就假设 $D f(x^{0})=I_{n}$ 在 $x^{0}=0$ 附近, $f$ 是恒同映射的小扰动:</p>
+<div class="math-display">\[f(x)=x+g(x),D g(0)=0.\]</div>
+<p>扰动项 $g(x)=f(x)-x$ 为 $C^{k}$ 映射,因此,存在 $\delta&gt;0$ 使得</p>
+<div class="math-display">\[\|D g(x)\|\leqslant\frac{1}{2}, \forall x\in\overline{{B_{\delta}(0)}}\subset D.\]</div>
+<p>由拟微分中值定理可知</p>
+<div class="math-display">\[\|g(x_{1})-g(x_{2})\|\leqslant\frac{1}{2}\|x_{1}-x_{2}\|,\forall x_{1},x_{2}\in\overline{{B_{\delta}(0)}}.\]</div>
+<p>给定 $y\in B_{\frac{\delta}{2}}(0)$ ,我们在 $B_{\delta}(0)$ 中解方程</p>
+<div class="math-display">\[f(x)=y,\mathrm{\mathrm{ }}\mathrm{\mathrm{H }}x=y-g(x).\]</div>
+<p>记 $\varphi(x)=y-g(x)$ 当 $x\in\overline{{B_{\delta}(0)}}$ 时，</p>
+<div class="math-display">\[\|\varphi(x)\|\leqslant\|y\|+\|g(x)\|&lt;\frac{\delta}{2}+\frac{1}{2}\|x\|\leqslant\delta.\]</div>
+<p>这说明 $\varphi\big(\overline{{B_{\delta}(0)}}\big)\subset B_{\delta}(0)$ 当 $x_{1},x_{2}\in\overline{{B_{\delta}(0)}}$ 时,</p>
+<div class="math-display">\[\|\varphi(x_{1})-\varphi(x_{2})\|=\|g(x_{2})-g(x_{1})\|\leqslant{\frac{1}{2}}\|x_{1}-x_{2}\|.\]</div>
+<p>根据压缩映射原理,方程相关方程在 $\overline{{B_{\delta}(0)}}$ 中有唯一解,记为$x_{y}$:由相关方程式可知 $x_{y}\in B_{\delta}(0)$ 令</p>
+<div class="math-display">\[U=f^{-1}\Big(B_{\frac{\delta}{2}}(0)\Big)\cap B_{\delta}(0),V=B_{\frac{\delta}{2}}(0),\]</div>
+<p>则我们已经证明了 $f|_{U}:U\to V$ 是一一映射,其逆映射 $h(y)=x_{y}$ 满足</p>
+<div class="math-display">\[y-g(h(y))=h(y).\]</div></section></article><nav class="prev-next"><a href="algebra-number-theory.html">上一页：代数与数论</a><a href="complex-analysis.html">下一页：复变函数</a></nav></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

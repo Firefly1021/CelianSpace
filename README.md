@@ -20,3 +20,4 @@ https://firefly1021.github.io/CelianSpace/
 - `styles.css`：视觉系统与响应式布局
 - `script.js`：项目筛选、资料库检索、滚动进度与动态实验画布
 - `assets/hero-celianspace.png`：首页插画
+- `wiki/`：多页面文档站，包含数学基础、模板、代码实验和学习文档

@@ -1,0 +1,98 @@
+[
+  {
+    "title": "知识库首页",
+    "url": "index.html",
+    "category": "入口",
+    "text": "CelianSpace 文档站 数学基础 模板 代码 学习文档"
+  },
+  {
+    "title": "代数与数论",
+    "url": "math/algebra-number-theory.html",
+    "category": "代数与几何",
+    "text": "群、环、数论结构与代数对象。 数学基础/Section/Algebra_NumberTheory.tex"
+  },
+  {
+    "title": "经典微积分",
+    "url": "math/classical-calculus.html",
+    "category": "分析基础",
+    "text": "微分、积分与经典分析结果。 数学基础/Section/Classical_Calculus.tex"
+  },
+  {
+    "title": "复变函数",
+    "url": "math/complex-analysis.html",
+    "category": "分析基础",
+    "text": "复数、全纯函数、积分表示与级数展开。 数学基础/Section/Complex_Analysis.tex"
+  },
+  {
+    "title": "有限元方法初步",
+    "url": "math/finite-element.html",
+    "category": "数值计算与有限元",
+    "text": "变分问题、有限元空间、混合有限元与计算流程。 数学基础/Section/Finite_Element.tex"
+  },
+  {
+    "title": "偏微分方程与傅里叶分析",
+    "url": "math/pde-fourier-analysis.html",
+    "category": "PDE 与分析",
+    "text": "古典 PDE、广义函数、Sobolev 空间与椭圆方程。 数学基础/Section/Foutier_Analysis.tex"
+  },
+  {
+    "title": "泛函分析",
+    "url": "math/functional-analysis.html",
+    "category": "分析基础",
+    "text": "Banach 空间、线性算子、对偶空间与复习选题。 数学基础/Section/Function_Analysis.tex"
+  },
+  {
+    "title": "机器学习基础",
+    "url": "math/machine-learning.html",
+    "category": "数值计算与有限元",
+    "text": "线性代数、机器学习基本要素与线性模型。 数学基础/Section/Machine_Learning.tex"
+  },
+  {
+    "title": "数值分析",
+    "url": "math/numerical-analysis.html",
+    "category": "数值计算与有限元",
+    "text": "守恒律、PDE 数值解、离散极值原理与 Helmholtz 方程。 数学基础/Section/Numerical_Analysis.tex"
+  },
+  {
+    "title": "实分析",
+    "url": "math/real-analysis.html",
+    "category": "分析基础",
+    "text": "Lebesgue 测度、抽象测度和积分。 数学基础/Section/Real_Analysis.tex"
+  },
+  {
+    "title": "集合与公理化",
+    "url": "math/set-axiomatics.html",
+    "category": "基础结构",
+    "text": "公理化思想与集合论基础。 数学基础/Section/Set_Axiomatics.tex"
+  },
+  {
+    "title": "拓扑与几何",
+    "url": "math/topology-geometry.html",
+    "category": "代数与几何",
+    "text": "拓扑学基本知识和微分几何。 数学基础/Section/Topology_Geometry.tex"
+  },
+  {
+    "title": "课程报告模板",
+    "url": "templates/report-template.html",
+    "category": "模板",
+    "text": "Maxwell H(curl) Nédélec 边缘元 课程报告 LaTeX"
+  },
+  {
+    "title": "Beamer 演示模板",
+    "url": "templates/beamer-template.html",
+    "category": "模板",
+    "text": "Poisson 方程 有限元 基函数 Beamer 湘潭大学"
+  },
+  {
+    "title": "数值方法与代码实验",
+    "url": "code/numerical-code.html",
+    "category": "代码实验",
+    "text": "Beam-Warming Python C++ Nédélec Eigen 网格 边元"
+  },
+  {
+    "title": "Git 与 C++ 学习文档",
+    "url": "docs/code-notes.html",
+    "category": "学习文档",
+    "text": "Git VS Code 三目运算符 this static extern 头文件"
+  }
+]
