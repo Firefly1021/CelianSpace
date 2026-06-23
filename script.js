@@ -3,6 +3,11 @@ const filterButtons = [...document.querySelectorAll(".filter-button")];
 const projectCards = [...document.querySelectorAll(".project-card")];
 const canvas = document.querySelector("#lab-canvas");
 const pauseButton = document.querySelector("#pause-lab");
+const resourceSearch = document.querySelector("#resource-search");
+const resourceFilters = [...document.querySelectorAll(".resource-filter")];
+const resourceCards = [...document.querySelectorAll(".resource-card")];
+const resourceToggles = [...document.querySelectorAll(".resource-toggle")];
+const copyPathButtons = [...document.querySelectorAll(".copy-path")];
 
 function updateProgress() {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
@@ -19,6 +24,57 @@ filterButtons.forEach((button) => {
       const kinds = card.dataset.kind.split(" ");
       card.classList.toggle("hidden", filter !== "all" && !kinds.includes(filter));
     });
+  });
+});
+
+function updateResources() {
+  const activeFilter = document.querySelector(".resource-filter.active")?.dataset.resourceFilter || "all";
+  const query = (resourceSearch?.value || "").trim().toLowerCase();
+
+  resourceCards.forEach((card) => {
+    const kinds = card.dataset.resourceKind.split(" ");
+    const text = `${card.textContent} ${card.dataset.resourceKeywords}`.toLowerCase();
+    const matchesFilter = activeFilter === "all" || kinds.includes(activeFilter);
+    const matchesQuery = !query || text.includes(query);
+    card.classList.toggle("hidden", !matchesFilter || !matchesQuery);
+  });
+}
+
+resourceFilters.forEach((button) => {
+  button.addEventListener("click", () => {
+    resourceFilters.forEach((item) => item.classList.toggle("active", item === button));
+    updateResources();
+  });
+});
+
+resourceSearch?.addEventListener("input", updateResources);
+
+resourceToggles.forEach((button) => {
+  button.addEventListener("click", () => {
+    const card = button.closest(".resource-card");
+    const detail = card.querySelector(".resource-detail");
+    const expanded = button.getAttribute("aria-expanded") === "true";
+
+    button.setAttribute("aria-expanded", String(!expanded));
+    button.textContent = expanded ? "展开" : "收起";
+    detail.hidden = expanded;
+  });
+});
+
+copyPathButtons.forEach((button) => {
+  button.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(button.dataset.path);
+      button.textContent = "已复制";
+      window.setTimeout(() => {
+        button.textContent = "复制路径";
+      }, 1400);
+    } catch (error) {
+      button.textContent = "复制失败";
+      window.setTimeout(() => {
+        button.textContent = "复制路径";
+      }, 1400);
+    }
   });
 });
 

@@ -22,6 +22,7 @@
       <nav class="site-nav" aria-label="主导航">
         <a href="#home">首页</a>
         <a href="#projects">项目</a>
+        <a href="#resources">资料库</a>
         <a href="#notes">笔记</a>
         <a href="#lab">实验室</a>
         <a href="#contact">联系</a>
@@ -57,10 +58,10 @@
 
       <section class="archive-band" aria-label="CelianSpace 关注方向">
         <div class="band-line"></div>
-        <p>证明草稿</p>
-        <p>算法日记</p>
-        <p>可视化系统</p>
-        <p>小工具</p>
+        <p>模板库</p>
+        <p>数学基础</p>
+        <p>代码练习</p>
+        <p>学习文档</p>
       </section>
 
       <section class="section-shell projects" id="projects" aria-labelledby="projects-title">
@@ -112,9 +113,178 @@
         </div>
       </section>
 
+      <section class="section-shell resources" id="resources" aria-labelledby="resources-title">
+        <div class="section-heading">
+          <p class="section-index">02 / 资料库</p>
+          <h2 id="resources-title">把本地知识库整理成可浏览的地图。</h2>
+        </div>
+
+        <div class="resource-toolbar">
+          <label class="resource-search">
+            <span>检索</span>
+            <input id="resource-search" type="search" placeholder="数学、LaTeX、C++、Python..." />
+          </label>
+          <div class="resource-filters" aria-label="资料分类">
+            <button class="resource-filter active" type="button" data-resource-filter="all">全部</button>
+            <button class="resource-filter" type="button" data-resource-filter="template">模板</button>
+            <button class="resource-filter" type="button" data-resource-filter="math">数学</button>
+            <button class="resource-filter" type="button" data-resource-filter="code">代码</button>
+            <button class="resource-filter" type="button" data-resource-filter="note">文档</button>
+          </div>
+        </div>
+
+        <div class="resource-summary" aria-label="资料统计">
+          <article>
+            <strong>36</strong>
+            <span>模板文件</span>
+          </article>
+          <article>
+            <strong>11</strong>
+            <span>数学专题</span>
+          </article>
+          <article>
+            <strong>4291</strong>
+            <span>代码相关文件</span>
+          </article>
+          <article>
+            <strong>14</strong>
+            <span>学习文档文件</span>
+          </article>
+        </div>
+
+        <div class="resource-grid">
+          <article
+            class="resource-card"
+            data-resource-kind="template"
+            data-resource-keywords="模板 latex beamer 课程报告 湘潭大学 xtu tex pdf sty bib"
+          >
+            <div class="resource-card-head">
+              <span>各种模板</span>
+              <button class="resource-toggle" type="button" aria-expanded="false">展开</button>
+            </div>
+            <h3>LaTeX 与课程报告模板</h3>
+            <p>包含 XTU Beamer 模板、湘潭大学课程报告模板，以及配套的 `.tex`、`.sty`、`.bib`、PDF 与图片资源。</p>
+            <div class="resource-tags">
+              <span>LaTeX</span>
+              <span>Beamer</span>
+              <span>课程报告</span>
+            </div>
+            <div class="resource-detail" hidden>
+              <dl>
+                <div><dt>文件规模</dt><dd>36 个文件，主要格式为 `.png`、`.pdf`、`.tex`、`.sty`、`.bib`。</dd></div>
+                <div><dt>代表内容</dt><dd>XTUBeamer模板、湘潭大学课程报告模板、XTUReport.sty、NJUPT.sty。</dd></div>
+                <div><dt>本地路径</dt><dd>D:\CelianFile\CelianFile\各种模板</dd></div>
+              </dl>
+              <button class="copy-path" type="button" data-path="D:\CelianFile\CelianFile\各种模板">复制路径</button>
+            </div>
+          </article>
+
+          <article
+            class="resource-card"
+            data-resource-kind="math"
+            data-resource-keywords="数学基础 代数 数论 微积分 复变函数 有限元 傅里叶 泛函分析 机器学习 数值分析 实分析 集合 拓扑 几何"
+          >
+            <div class="resource-card-head">
+              <span>数学基础</span>
+              <button class="resource-toggle" type="button" aria-expanded="false">展开</button>
+            </div>
+            <h3>从分析到有限元的数学笔记</h3>
+            <p>以 LaTeX 项目组织，Section 目录覆盖代数、分析、复变、拓扑、数值分析、有限元与机器学习基础。</p>
+            <div class="resource-tags">
+              <span>11 个专题</span>
+              <span>LaTeX</span>
+              <span>数学笔记</span>
+            </div>
+            <div class="resource-detail" hidden>
+              <dl>
+                <div><dt>专题</dt><dd>代数与数论、微积分、复变函数、有限元方法、偏微分方程、泛函分析、机器学习、数值分析、实分析、集合公理化、拓扑与几何。</dd></div>
+                <div><dt>结构</dt><dd>main.tex、Mystyle.sty、ref.bib、Figure、Section、build。</dd></div>
+                <div><dt>本地路径</dt><dd>D:\CelianFile\CelianFile\数学基础</dd></div>
+              </dl>
+              <button class="copy-path" type="button" data-path="D:\CelianFile\CelianFile\数学基础">复制路径</button>
+            </div>
+          </article>
+
+          <article
+            class="resource-card"
+            data-resource-kind="code"
+            data-resource-keywords="LearningCode cpp c++ python data deep learning eigen mnist 数值方法 beam warming nedelec"
+          >
+            <div class="resource-card-head">
+              <span>LearningCode</span>
+              <button class="resource-toggle" type="button" aria-expanded="false">展开</button>
+            </div>
+            <h3>C++、Python 与数值实验代码</h3>
+            <p>包含 C++ 学习项目、深度学习实验、Python 数值脚本、MNIST 数据与若干可视化结果，是主要代码练习区。</p>
+            <div class="resource-tags">
+              <span>C++</span>
+              <span>Python</span>
+              <span>MNIST</span>
+            </div>
+            <div class="resource-detail" hidden>
+              <dl>
+                <div><dt>文件规模</dt><dd>4291 个文件，其中 `.cpp` 约 1660 个、`.h` 约 1189 个，另有 CMake、Python、CSV 与数据文件。</dd></div>
+                <div><dt>代表内容</dt><dd>AddressBookManagementSystem、DeepLearning、LearningCPP、MathCPP、beam_warming_solver.py、nedelec2d_solution.csv。</dd></div>
+                <div><dt>本地路径</dt><dd>D:\CelianFile\CelianFile\LearningCode</dd></div>
+              </dl>
+              <button class="copy-path" type="button" data-path="D:\CelianFile\CelianFile\LearningCode">复制路径</button>
+            </div>
+          </article>
+
+          <article
+            class="resource-card"
+            data-resource-kind="note code"
+            data-resource-keywords="code学习文档 计算机学习文档 github 数据结构 c++ 函数指针 this static extern 头文件 cpp 学习笔记"
+          >
+            <div class="resource-card-head">
+              <span>code学习文档</span>
+              <button class="resource-toggle" type="button" aria-expanded="false">展开</button>
+            </div>
+            <h3>计算机学习文档与 C++ 笔记</h3>
+            <p>整理 GitHub 使用、基本数据结构、C++ 杂项语法、函数指针、this 指针、static、extern 与头文件写法。</p>
+            <div class="resource-tags">
+              <span>Markdown</span>
+              <span>C++</span>
+              <span>学习笔记</span>
+            </div>
+            <div class="resource-detail" hidden>
+              <dl>
+                <div><dt>文件规模</dt><dd>14 个文件，包含 Markdown、LaTeX、PDF、代码示例与 minted 输出。</dd></div>
+                <div><dt>代表内容</dt><dd>计算机学习文档.md、CPP学习笔记.tex、CPP学习笔记.pdf、codeexamples/main.cpp。</dd></div>
+                <div><dt>本地路径</dt><dd>D:\CelianFile\CelianFile\code学习文档</dd></div>
+              </dl>
+              <button class="copy-path" type="button" data-path="D:\CelianFile\CelianFile\code学习文档">复制路径</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="learning-path" aria-label="学习路径">
+          <article>
+            <span>1</span>
+            <h3>从模板开始</h3>
+            <p>先用课程报告或 Beamer 模板固定写作格式。</p>
+          </article>
+          <article>
+            <span>2</span>
+            <h3>补数学底座</h3>
+            <p>按专题整理分析、代数、数值方法与有限元。</p>
+          </article>
+          <article>
+            <span>3</span>
+            <h3>写成代码</h3>
+            <p>把 C++、Python 与数值实验沉淀到 LearningCode。</p>
+          </article>
+          <article>
+            <span>4</span>
+            <h3>回写文档</h3>
+            <p>把工具用法、语法碎片和数据结构整理成文档。</p>
+          </article>
+        </div>
+      </section>
+
       <section class="section-shell notes-grid" id="notes" aria-labelledby="notes-title">
         <div class="section-heading">
-          <p class="section-index">02 / 笔记</p>
+          <p class="section-index">03 / 笔记</p>
           <h2 id="notes-title">让证明贴近程序的笔记。</h2>
         </div>
 
@@ -142,7 +312,7 @@
 
       <section class="section-shell lab" id="lab" aria-labelledby="lab-title">
         <div class="section-heading">
-          <p class="section-index">03 / 实验室</p>
+          <p class="section-index">04 / 实验室</p>
           <h2 id="lab-title">让公式运动起来的一小块场地。</h2>
         </div>
 
@@ -161,7 +331,7 @@
 
     <footer class="footer" id="contact">
       <div>
-        <p class="section-index">04 / 联系</p>
+        <p class="section-index">05 / 联系</p>
         <h2>在证明变成仓库的地方找到我。</h2>
       </div>
       <div class="footer-links">

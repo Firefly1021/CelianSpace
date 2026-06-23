@@ -18,5 +18,5 @@ https://firefly1021.github.io/CelianSpace/
 
 - `index.html`：页面结构与中文内容
 - `styles.css`：视觉系统与响应式布局
-- `script.js`：项目筛选、滚动进度与动态实验画布
+- `script.js`：项目筛选、资料库检索、滚动进度与动态实验画布
 - `assets/hero-celianspace.png`：首页插画
