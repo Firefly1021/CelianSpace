@@ -258,6 +258,177 @@
           </article>
         </div>
 
+        <div class="content-library" aria-labelledby="content-library-title">
+          <div class="content-library-head">
+            <div>
+              <p class="section-index">资料正文</p>
+              <h3 id="content-library-title">从文件中抽取出来的有效内容。</h3>
+            </div>
+            <div class="content-tabs" role="tablist" aria-label="资料正文分类">
+              <button class="content-tab active" type="button" role="tab" aria-selected="true" data-content-tab="templates">模板</button>
+              <button class="content-tab" type="button" role="tab" aria-selected="false" data-content-tab="math">数学</button>
+              <button class="content-tab" type="button" role="tab" aria-selected="false" data-content-tab="code">代码</button>
+              <button class="content-tab" type="button" role="tab" aria-selected="false" data-content-tab="docs">文档</button>
+            </div>
+          </div>
+
+          <div class="content-panel active" data-content-panel="templates">
+            <article class="content-card wide">
+              <span>湘潭大学课程报告模板 / main.tex</span>
+              <h4>二维频域 Maxwell 方程报告骨架</h4>
+              <p>
+                模板中已经包含一篇完整课程报告的结构：封面、中文摘要、英文摘要、目录、正文页眉样式，以及围绕
+                <strong>H(curl) 空间</strong>、<strong>Nédélec 边缘元</strong> 和稀疏矩阵实现展开的正文。
+              </p>
+              <blockquote>
+                本文以二维频域 Maxwell 方程为研究对象，围绕 H(curl) 空间、弱形式推导、Nédélec 边缘元离散以及稀疏矩阵实现展开讨论。
+              </blockquote>
+              <pre><code>\documentclass[12pt,hyperref,a4paper,UTF8,twoside]{ctexart}
+\usepackage{XTUReport}
+\newcommand{\curl}{\operatorname{curl}}
+\newcommand{\E}{\bm{E}}
+\cover
+\begin{abstractcn}
+二维频域 Maxwell 方程、H(curl) 空间、Nédélec 边缘元。
+\end{abstractcn}</code></pre>
+            </article>
+
+            <article class="content-card">
+              <span>XTUBeamer模板 / XTUBeamer模板.tex</span>
+              <h4>一维 Poisson 方程演示页</h4>
+              <p>Beamer 模板不是空壳，里面已经写入有限元入门例子：Dirichlet 边值问题、分片线性基函数和刚度矩阵组装。</p>
+              <pre><code>\begin{cases}
+-u''(x) = f(x), & x \in (0,1), \\
+u(0) = u(1) = 0.
+\end{cases}</code></pre>
+            </article>
+
+            <article class="content-card">
+              <span>CPP学习笔记.tex</span>
+              <h4>macOS 风格代码块模板</h4>
+              <p>这个 LaTeX 文件封装了带行号、One Dark 配色和窗口按钮装饰的代码展示环境，可以直接引用外部 C++ 文件。</p>
+              <pre><code>\newtcbinputlisting{\includeclist}[2]{
+  macosstyle={#2},
+  listing file={#1},
+  listing only
+}</code></pre>
+            </article>
+          </div>
+
+          <div class="content-panel" data-content-panel="math">
+            <article class="content-card wide">
+              <span>数学基础 / Real_Analysis.tex</span>
+              <h4>Lebesgue 外测度</h4>
+              <p>实分析笔记从 n 维区间体积出发，用可数区间覆盖定义 Lebesgue 外测度，并强调下确界在近似覆盖中的作用。</p>
+              <pre><code>|Q| = \prod_{k=1}^{n}(b_k-a_k)
+
+m^*(E)=\inf\left\{
+  \sum_{k=1}^{\infty}|Q_k|:
+  \bigcup_{k=1}^{\infty}Q_k \supset E
+\right\}</code></pre>
+            </article>
+
+            <article class="content-card">
+              <span>数学基础 / Finite_Element.tex</span>
+              <h4>变分问题的有界性与强制性</h4>
+              <p>有限元笔记先建立双线性形式的连续性和强制性，再进入 Hilbert 空间上的变分问题。</p>
+              <pre><code>|a(v,w)| \le C ||v||_H ||w||_H
+
+a(v,v) \ge \alpha ||v||_H^2</code></pre>
+            </article>
+
+            <article class="content-card">
+              <span>数学基础 / Complex_Analysis.tex</span>
+              <h4>复数的极坐标表示</h4>
+              <p>复变函数笔记从辐角多值性出发，解释主值分支与割线的必要性。</p>
+              <pre><code>z = a + ib
+  = r(\cos\theta + i\sin\theta)
+  = re^{i\theta}</code></pre>
+            </article>
+
+            <article class="content-card">
+              <span>数学基础 / Foutier_Analysis.tex</span>
+              <h4>偏微分方程中的极值思想</h4>
+              <p>PDE 笔记记录了 Dirichlet 边值问题、调和函数极值原理、广义函数、Sobolev 空间和二阶椭圆方程等主题。</p>
+              <pre><code>若 u 在 Ω 中满足 Δu ≥ 0，
+则 u 在闭区域上的最大值
+会在边界 ∂Ω 上达到。</code></pre>
+            </article>
+          </div>
+
+          <div class="content-panel" data-content-panel="code">
+            <article class="content-card wide">
+              <span>LearningCode / Python / beam_warming_solver.py</span>
+              <h4>Beam-Warming 格式求解线性对流方程</h4>
+              <p>Python 代码实现了一个一维线性对流方程的数值实验：阶跃初值、CFL 控制、Beam-Warming 更新和精确解对比图。</p>
+              <pre><code>u_new = u - 0.5 * cfl * (3*u - 4*u_jm1 + u_jm2) \
+          + 0.5 * cfl**2 * (u - 2*u_jm1 + u_jm2)
+
+plt.plot(x, u, 'b-', label='Numerical')
+plt.plot(x, u_exact, 'r--', label='Exact Solution')</code></pre>
+            </article>
+
+            <article class="content-card">
+              <span>LearningCode / CPP / LearningCPP / main.cpp</span>
+              <h4>Nédélec 边缘元网格结构</h4>
+              <p>C++ 主程序使用 Eigen 构造二维三角网格、边自由度和局部矩阵，为 Maxwell 型问题做有限元装配。</p>
+              <pre><code>struct Edge {
+    int a, b;
+    int count = 0;
+    int dof = -1;
+};
+
+Mesh make_unit_square_mesh(int n);</code></pre>
+            </article>
+
+            <article class="content-card">
+              <span>LearningCode / CPP / LearningCPP / main.cpp</span>
+              <h4>Nédélec 基函数与旋度</h4>
+              <p>代码中显式写出了最低阶边元基函数与旋度，和数学报告中的 H(curl) 结构相互对应。</p>
+              <pre><code>N_ab = lambda_a grad(lambda_b)
+     - lambda_b grad(lambda_a)
+
+curl N_ab = 2 * (grad lambda_a x grad lambda_b)</code></pre>
+            </article>
+          </div>
+
+          <div class="content-panel" data-content-panel="docs">
+            <article class="content-card wide">
+              <span>code学习文档 / 计算机学习文档.md</span>
+              <h4>Git 与 VS Code 工作流</h4>
+              <p>文档记录了从配置身份、初始化仓库、连接远程仓库、合并云端文件，到在 VS Code 里暂存、提交和推送的完整流程。</p>
+              <pre><code>git config --global user.email "邮箱"
+git config --global user.name "名字"
+
+git init
+git remote add origin "你的github仓库地址"
+git pull origin main --allow-unrelated-histories</code></pre>
+            </article>
+
+            <article class="content-card">
+              <span>code学习文档 / 计算机学习文档.md</span>
+              <h4>C++ 三目运算符</h4>
+              <p>笔记把 `?:` 解释成 `if-else` 的表达式写法，并给出取较大值的等价展开。</p>
+              <pre><code>expression1 ? expression2 : expression3
+
+int c = a > b ? a : b;</code></pre>
+            </article>
+
+            <article class="content-card">
+              <span>code学习文档 / 计算机学习文档.md</span>
+              <h4>this 指针与 static</h4>
+              <p>文档用“图纸”和“具体汽车”的比喻解释类与对象：`this` 指向当前对象，而 `static` 函数属于类本身。</p>
+              <pre><code>void accelerate() {
+    this->speed += 10;
+}
+
+static bool isAdultRule(int check_age) {
+    return check_age >= 18;
+}</code></pre>
+            </article>
+          </div>
+        </div>
+
         <div class="learning-path" aria-label="学习路径">
           <article>
             <span>1</span>

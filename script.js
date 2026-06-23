@@ -8,6 +8,8 @@ const resourceFilters = [...document.querySelectorAll(".resource-filter")];
 const resourceCards = [...document.querySelectorAll(".resource-card")];
 const resourceToggles = [...document.querySelectorAll(".resource-toggle")];
 const copyPathButtons = [...document.querySelectorAll(".copy-path")];
+const contentTabs = [...document.querySelectorAll(".content-tab")];
+const contentPanels = [...document.querySelectorAll(".content-panel")];
 
 function updateProgress() {
   const scrollable = document.documentElement.scrollHeight - window.innerHeight;
@@ -75,6 +77,22 @@ copyPathButtons.forEach((button) => {
         button.textContent = "复制路径";
       }, 1400);
     }
+  });
+});
+
+contentTabs.forEach((button) => {
+  button.addEventListener("click", () => {
+    const target = button.dataset.contentTab;
+
+    contentTabs.forEach((tab) => {
+      const active = tab === button;
+      tab.classList.toggle("active", active);
+      tab.setAttribute("aria-selected", String(active));
+    });
+
+    contentPanels.forEach((panel) => {
+      panel.classList.toggle("active", panel.dataset.contentPanel === target);
+    });
   });
 });
 
