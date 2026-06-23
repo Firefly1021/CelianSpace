@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="CelianSpace is a personal lab for mathematics, algorithms, visual notebooks, and small pieces of software."
+    />
+    <meta name="theme-color" content="#071014" />
+    <title>CelianSpace | Mathematics, Code, and Quiet Experiments</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="progress" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="CelianSpace home">
+        <span class="brand-mark">C</span>
+        <span>CelianSpace</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#home">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#notes">Notes</a>
+        <a href="#lab">Lab</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="header-link" href="https://github.com/Firefly1021" rel="noreferrer">GitHub</a>
+    </header>
+
+    <main id="home">
+      <section class="hero section-shell" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="terminal-line" aria-label="terminal path">~/CelianSpace</p>
+          <h1 id="hero-title">Mathematics, Code, and Quiet Experiments</h1>
+          <p class="hero-lede">
+            A personal lab for proofs, algorithms, visual notebooks, and small pieces of
+            software.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">Explore Projects</a>
+            <a class="button secondary" href="#notes">Read Notes</a>
+          </div>
+          <div class="formula-strip" aria-label="Selected formulas">
+            <span>f(n) = O(n log n)</span>
+            <span>e^(i*pi) + 1 = 0</span>
+            <span>A * v = lambda * v</span>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Anime inspired mathematical coding study room">
+          <img src="assets/hero-celianspace.png" alt="" />
+          <div class="hero-orbit one" aria-hidden="true"></div>
+          <div class="hero-orbit two" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <section class="archive-band" aria-label="CelianSpace focus">
+        <div class="band-line"></div>
+        <p>Proof sketches</p>
+        <p>Algorithm diaries</p>
+        <p>Visual systems</p>
+        <p>Small tools</p>
+      </section>
+
+      <section class="section-shell projects" id="projects" aria-labelledby="projects-title">
+        <div class="section-heading">
+          <p class="section-index">01 / Projects</p>
+          <h2 id="projects-title">Research files for code that wants a reason.</h2>
+        </div>
+
+        <div class="project-controls" aria-label="Project filters">
+          <button class="filter-button active" type="button" data-filter="all">All</button>
+          <button class="filter-button" type="button" data-filter="math">Math</button>
+          <button class="filter-button" type="button" data-filter="code">Code</button>
+          <button class="filter-button" type="button" data-filter="visual">Visual</button>
+        </div>
+
+        <div class="project-list">
+          <article class="project-card" data-kind="math visual">
+            <div>
+              <span class="project-kind">Math / Visual</span>
+              <h3>Fractal Notebook</h3>
+            </div>
+            <p>
+              Complex-plane experiments for Mandelbrot sets, orbit traps, and color maps.
+            </p>
+            <a href="https://github.com/Firefly1021" rel="noreferrer">Repository</a>
+          </article>
+
+          <article class="project-card" data-kind="code math">
+            <div>
+              <span class="project-kind">Code / Math</span>
+              <h3>Algorithm Atlas</h3>
+            </div>
+            <p>
+              A map of graph, dynamic programming, and search patterns with proofs beside code.
+            </p>
+            <a href="https://github.com/Firefly1021" rel="noreferrer">Repository</a>
+          </article>
+
+          <article class="project-card" data-kind="visual code">
+            <div>
+              <span class="project-kind">Visual / Code</span>
+              <h3>Discrete Motion Lab</h3>
+            </div>
+            <p>
+              Tiny simulations for cellular automata, particles, and emergent grid behavior.
+            </p>
+            <a href="https://github.com/Firefly1021" rel="noreferrer">Repository</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-shell notes-grid" id="notes" aria-labelledby="notes-title">
+        <div class="section-heading">
+          <p class="section-index">02 / Notes</p>
+          <h2 id="notes-title">Notes that keep the proof close to the program.</h2>
+        </div>
+
+        <div class="note-panel selected">
+          <span>Linear Algebra</span>
+          <h3>Eigenvectors as stable directions</h3>
+          <p>When a transformation keeps a line in place, computation becomes geometry.</p>
+          <code>A v = lambda v</code>
+        </div>
+
+        <div class="note-panel">
+          <span>Algorithms</span>
+          <h3>Why divide and conquer feels inevitable</h3>
+          <p>Subproblems, merge cost, and the quiet shape of recurrence trees.</p>
+          <code>T(n) = 2T(n/2) + n</code>
+        </div>
+
+        <div class="note-panel">
+          <span>Analysis</span>
+          <h3>Limits as a debugging tool</h3>
+          <p>Asymptotic thinking turns vague growth into something testable.</p>
+          <code>lim n->inf a_n</code>
+        </div>
+      </section>
+
+      <section class="section-shell lab" id="lab" aria-labelledby="lab-title">
+        <div class="section-heading">
+          <p class="section-index">03 / Lab</p>
+          <h2 id="lab-title">A small field for moving formulas.</h2>
+        </div>
+
+        <div class="lab-stage">
+          <canvas id="lab-canvas" width="920" height="460" aria-label="Animated mathematical field"></canvas>
+          <div class="lab-copy">
+            <h3>Parametric field</h3>
+            <p>
+              A living sketch of waves, particles, and graph-like paths. It is deliberately
+              small: enough to make the page breathe, not enough to distract from the work.
+            </p>
+            <button class="button secondary" id="pause-lab" type="button">Pause Motion</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer" id="contact">
+      <div>
+        <p class="section-index">04 / Contact</p>
+        <h2>Find me where proofs become repositories.</h2>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/Firefly1021" rel="noreferrer">GitHub</a>
+        <a href="mailto:hello@example.com">Email</a>
+        <a href="#home">Back to top</a>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
