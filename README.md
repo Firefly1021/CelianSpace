@@ -1,22 +1,22 @@
 # CelianSpace
 
-A static GitHub Pages personal website for mathematics, algorithms, code notes, and visual experiments.
+一个用于展示数学、算法、代码笔记与可视化实验的 GitHub Pages 静态个人网站。
 
-## Publish on GitHub Pages
+## 发布到 GitHub Pages
 
-1. Open the repository settings on GitHub.
-2. Go to **Pages**.
-3. Set the source to **Deploy from a branch**.
-4. Choose the `main` branch and the root folder.
-5. The site will be available at:
+1. 打开 GitHub 仓库设置。
+2. 进入 **Pages**。
+3. Source 选择 **Deploy from a branch**。
+4. Branch 选择 `main`，文件夹选择根目录。
+5. 网站地址是：
 
 ```text
 https://firefly1021.github.io/CelianSpace/
 ```
 
-## Files
+## 文件说明
 
-- `index.html`: page structure and content
-- `styles.css`: visual system and responsive layout
-- `script.js`: project filters, scroll progress, and the animated lab canvas
-- `assets/hero-celianspace.png`: generated hero illustration
+- `index.html`：页面结构与中文内容
+- `styles.css`：视觉系统与响应式布局
+- `script.js`：项目筛选、滚动进度与动态实验画布
+- `assets/hero-celianspace.png`：首页插画

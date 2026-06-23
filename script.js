@@ -45,12 +45,12 @@ function drawField() {
   context.clearRect(0, 0, width, height);
 
   const gradient = context.createRadialGradient(width * 0.5, height * 0.5, 0, width * 0.5, height * 0.5, width * 0.7);
-  gradient.addColorStop(0, "rgba(118, 240, 223, 0.12)");
-  gradient.addColorStop(1, "rgba(3, 8, 11, 0.96)");
+  gradient.addColorStop(0, "rgba(78, 174, 158, 0.2)");
+  gradient.addColorStop(1, "rgba(236, 244, 238, 0.98)");
   context.fillStyle = gradient;
   context.fillRect(0, 0, width, height);
 
-  context.strokeStyle = "rgba(174, 230, 221, 0.09)";
+  context.strokeStyle = "rgba(42, 104, 96, 0.12)";
   context.lineWidth = 1;
   for (let x = 0; x < width; x += 42) {
     context.beginPath();
@@ -76,7 +76,7 @@ function drawField() {
     points.push({ x, y });
   }
 
-  context.strokeStyle = "rgba(118, 240, 223, 0.62)";
+  context.strokeStyle = "rgba(22, 126, 118, 0.68)";
   context.lineWidth = 1.4;
   context.beginPath();
   points.forEach((point, index) => {
@@ -87,13 +87,13 @@ function drawField() {
 
   points.forEach((point, index) => {
     const glow = index % 9 === 0;
-    context.fillStyle = glow ? "rgba(226, 139, 196, 0.9)" : "rgba(215, 202, 169, 0.76)";
+    context.fillStyle = glow ? "rgba(173, 79, 134, 0.9)" : "rgba(140, 109, 46, 0.78)";
     context.beginPath();
     context.arc(point.x, point.y, glow ? 2.7 : 1.8, 0, Math.PI * 2);
     context.fill();
   });
 
-  context.fillStyle = "rgba(240, 247, 244, 0.72)";
+  context.fillStyle = "rgba(23, 39, 36, 0.72)";
   context.font = "12px Cascadia Code, Consolas, monospace";
   context.fillText("x(t) = cos(7t + phi) * r", 24, 34);
   context.fillText("y(t) = sin(0.82t) * r", 24, 56);
@@ -103,7 +103,7 @@ function drawField() {
 
 pauseButton.addEventListener("click", () => {
   paused = !paused;
-  pauseButton.textContent = paused ? "Resume Motion" : "Pause Motion";
+  pauseButton.textContent = paused ? "继续动画" : "暂停动画";
 });
 
 window.addEventListener("resize", resizeCanvas);

@@ -1,30 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="CelianSpace is a personal lab for mathematics, algorithms, visual notebooks, and small pieces of software."
+      content="CelianSpace 是一个关于数学、算法、代码笔记与可视化实验的个人空间。"
     />
-    <meta name="theme-color" content="#071014" />
-    <title>CelianSpace | Mathematics, Code, and Quiet Experiments</title>
+    <meta name="theme-color" content="#f3f7f1" />
+    <title>CelianSpace | 数学、代码与安静实验</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <div class="progress" aria-hidden="true"></div>
 
     <header class="site-header">
-      <a class="brand" href="#home" aria-label="CelianSpace home">
+      <a class="brand" href="#home" aria-label="CelianSpace 首页">
         <span class="brand-mark">C</span>
         <span>CelianSpace</span>
       </a>
-      <nav class="site-nav" aria-label="Primary navigation">
-        <a href="#home">Home</a>
-        <a href="#projects">Projects</a>
-        <a href="#notes">Notes</a>
-        <a href="#lab">Lab</a>
-        <a href="#contact">Contact</a>
+      <nav class="site-nav" aria-label="主导航">
+        <a href="#home">首页</a>
+        <a href="#projects">项目</a>
+        <a href="#notes">笔记</a>
+        <a href="#lab">实验室</a>
+        <a href="#contact">联系</a>
       </nav>
       <a class="header-link" href="https://github.com/Firefly1021" rel="noreferrer">GitHub</a>
     </header>
@@ -33,129 +33,127 @@
       <section class="hero section-shell" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="terminal-line" aria-label="terminal path">~/CelianSpace</p>
-          <h1 id="hero-title">Mathematics, Code, and Quiet Experiments</h1>
+          <h1 id="hero-title">数学、代码与安静实验</h1>
           <p class="hero-lede">
-            A personal lab for proofs, algorithms, visual notebooks, and small pieces of
-            software.
+            一个存放证明、算法、可视化笔记与小型软件作品的个人研究室。
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#projects">Explore Projects</a>
-            <a class="button secondary" href="#notes">Read Notes</a>
+            <a class="button primary" href="#projects">浏览项目</a>
+            <a class="button secondary" href="#notes">阅读笔记</a>
           </div>
-          <div class="formula-strip" aria-label="Selected formulas">
+          <div class="formula-strip" aria-label="精选公式">
             <span>f(n) = O(n log n)</span>
             <span>e^(i*pi) + 1 = 0</span>
             <span>A * v = lambda * v</span>
           </div>
         </div>
 
-        <div class="hero-visual" aria-label="Anime inspired mathematical coding study room">
+        <div class="hero-visual" aria-label="二次元风格的数学与代码研究室">
           <img src="assets/hero-celianspace.png" alt="" />
           <div class="hero-orbit one" aria-hidden="true"></div>
           <div class="hero-orbit two" aria-hidden="true"></div>
         </div>
       </section>
 
-      <section class="archive-band" aria-label="CelianSpace focus">
+      <section class="archive-band" aria-label="CelianSpace 关注方向">
         <div class="band-line"></div>
-        <p>Proof sketches</p>
-        <p>Algorithm diaries</p>
-        <p>Visual systems</p>
-        <p>Small tools</p>
+        <p>证明草稿</p>
+        <p>算法日记</p>
+        <p>可视化系统</p>
+        <p>小工具</p>
       </section>
 
       <section class="section-shell projects" id="projects" aria-labelledby="projects-title">
         <div class="section-heading">
-          <p class="section-index">01 / Projects</p>
-          <h2 id="projects-title">Research files for code that wants a reason.</h2>
+          <p class="section-index">01 / 项目</p>
+          <h2 id="projects-title">让代码拥有理由的研究档案。</h2>
         </div>
 
-        <div class="project-controls" aria-label="Project filters">
-          <button class="filter-button active" type="button" data-filter="all">All</button>
-          <button class="filter-button" type="button" data-filter="math">Math</button>
-          <button class="filter-button" type="button" data-filter="code">Code</button>
-          <button class="filter-button" type="button" data-filter="visual">Visual</button>
+        <div class="project-controls" aria-label="项目筛选">
+          <button class="filter-button active" type="button" data-filter="all">全部</button>
+          <button class="filter-button" type="button" data-filter="math">数学</button>
+          <button class="filter-button" type="button" data-filter="code">代码</button>
+          <button class="filter-button" type="button" data-filter="visual">可视化</button>
         </div>
 
         <div class="project-list">
           <article class="project-card" data-kind="math visual">
             <div>
-              <span class="project-kind">Math / Visual</span>
-              <h3>Fractal Notebook</h3>
+              <span class="project-kind">数学 / 可视化</span>
+              <h3>分形笔记本</h3>
             </div>
             <p>
-              Complex-plane experiments for Mandelbrot sets, orbit traps, and color maps.
+              围绕 Mandelbrot 集、轨道陷阱与色彩图谱展开的复平面实验。
             </p>
-            <a href="https://github.com/Firefly1021" rel="noreferrer">Repository</a>
+            <a href="https://github.com/Firefly1021" rel="noreferrer">仓库</a>
           </article>
 
           <article class="project-card" data-kind="code math">
             <div>
-              <span class="project-kind">Code / Math</span>
-              <h3>Algorithm Atlas</h3>
+              <span class="project-kind">代码 / 数学</span>
+              <h3>算法图谱</h3>
             </div>
             <p>
-              A map of graph, dynamic programming, and search patterns with proofs beside code.
+              把图论、动态规划与搜索模式放在同一张地图里，代码旁边保留证明。
             </p>
-            <a href="https://github.com/Firefly1021" rel="noreferrer">Repository</a>
+            <a href="https://github.com/Firefly1021" rel="noreferrer">仓库</a>
           </article>
 
           <article class="project-card" data-kind="visual code">
             <div>
-              <span class="project-kind">Visual / Code</span>
-              <h3>Discrete Motion Lab</h3>
+              <span class="project-kind">可视化 / 代码</span>
+              <h3>离散运动实验室</h3>
             </div>
             <p>
-              Tiny simulations for cellular automata, particles, and emergent grid behavior.
+              用小型模拟观察元胞自动机、粒子运动与网格中的涌现行为。
             </p>
-            <a href="https://github.com/Firefly1021" rel="noreferrer">Repository</a>
+            <a href="https://github.com/Firefly1021" rel="noreferrer">仓库</a>
           </article>
         </div>
       </section>
 
       <section class="section-shell notes-grid" id="notes" aria-labelledby="notes-title">
         <div class="section-heading">
-          <p class="section-index">02 / Notes</p>
-          <h2 id="notes-title">Notes that keep the proof close to the program.</h2>
+          <p class="section-index">02 / 笔记</p>
+          <h2 id="notes-title">让证明贴近程序的笔记。</h2>
         </div>
 
         <div class="note-panel selected">
-          <span>Linear Algebra</span>
-          <h3>Eigenvectors as stable directions</h3>
-          <p>When a transformation keeps a line in place, computation becomes geometry.</p>
+          <span>线性代数</span>
+          <h3>特征向量：稳定的方向</h3>
+          <p>当一个变换保留某条直线，计算就变成了几何。</p>
           <code>A v = lambda v</code>
         </div>
 
         <div class="note-panel">
-          <span>Algorithms</span>
-          <h3>Why divide and conquer feels inevitable</h3>
-          <p>Subproblems, merge cost, and the quiet shape of recurrence trees.</p>
+          <span>算法</span>
+          <h3>为什么分治像是必然</h3>
+          <p>子问题、合并代价，以及递归树里安静展开的结构。</p>
           <code>T(n) = 2T(n/2) + n</code>
         </div>
 
         <div class="note-panel">
-          <span>Analysis</span>
-          <h3>Limits as a debugging tool</h3>
-          <p>Asymptotic thinking turns vague growth into something testable.</p>
+          <span>分析</span>
+          <h3>把极限当作调试工具</h3>
+          <p>渐近思维能把模糊的增长，变成可检查的对象。</p>
           <code>lim n->inf a_n</code>
         </div>
       </section>
 
       <section class="section-shell lab" id="lab" aria-labelledby="lab-title">
         <div class="section-heading">
-          <p class="section-index">03 / Lab</p>
-          <h2 id="lab-title">A small field for moving formulas.</h2>
+          <p class="section-index">03 / 实验室</p>
+          <h2 id="lab-title">让公式运动起来的一小块场地。</h2>
         </div>
 
         <div class="lab-stage">
-          <canvas id="lab-canvas" width="920" height="460" aria-label="Animated mathematical field"></canvas>
+          <canvas id="lab-canvas" width="920" height="460" aria-label="动态数学场"></canvas>
           <div class="lab-copy">
-            <h3>Parametric field</h3>
+            <h3>参数曲线场</h3>
             <p>
-              A living sketch of waves, particles, and graph-like paths. It is deliberately
-              small: enough to make the page breathe, not enough to distract from the work.
+              一张关于波、粒子和图状路径的动态草图。它刻意保持克制：让页面有呼吸感，但不抢走作品本身的注意力。
             </p>
-            <button class="button secondary" id="pause-lab" type="button">Pause Motion</button>
+            <button class="button secondary" id="pause-lab" type="button">暂停动画</button>
           </div>
         </div>
       </section>
@@ -163,13 +161,13 @@
 
     <footer class="footer" id="contact">
       <div>
-        <p class="section-index">04 / Contact</p>
-        <h2>Find me where proofs become repositories.</h2>
+        <p class="section-index">04 / 联系</p>
+        <h2>在证明变成仓库的地方找到我。</h2>
       </div>
       <div class="footer-links">
         <a href="https://github.com/Firefly1021" rel="noreferrer">GitHub</a>
         <a href="mailto:hello@example.com">Email</a>
-        <a href="#home">Back to top</a>
+        <a href="#home">返回顶部</a>
       </div>
     </footer>
 
