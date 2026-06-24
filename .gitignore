@@ -20,3 +20,8 @@ materials/**/*.dll
 materials/**/*.exp
 materials/**/*.idb
 materials/**/*.ipch
+materials/**/*.aux
+materials/**/*.listing
+materials/**/*.synctex.gz
+materials/**/_minted/
+materials/**/compile_commands.json
