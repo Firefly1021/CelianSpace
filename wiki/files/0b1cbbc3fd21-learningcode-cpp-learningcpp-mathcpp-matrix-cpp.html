@@ -1,0 +1,1194 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="LearningCode/CPP/LearningCPP/MathCPP/MATRIX.CPP" />
+  <title>MATRIX.CPP | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>MATRIX.CPP</h1><p class="doc-subtitle">LearningCode / code / 28.6 KB</p><div class="doc-chips"><span>LearningCode</span><span>code</span></div><p class="source-path">来源：LearningCode/CPP/LearningCPP/MathCPP/MATRIX.CPP · <a href="../../materials/LearningCode/CPP/LearningCPP/MathCPP/MATRIX.CPP">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/LearningCode/CPP/LearningCPP/MathCPP/MATRIX.CPP">打开原始文件</a><a class="button-link" href="../materials/learning-code-source.html">返回分类</a></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+#include &lt;string.h&gt;
+#include &lt;fstream&gt;
+// 本程序实现matrix类
+// 对matrix类的定义
+#include &quot;matrix.h&quot;
+
+matrix::matrix(buffer * b): // 缺省构造函数，产生0行0列空矩阵
+	rownum(0),colnum(0),istrans(0),isneg(0),issym(0)
+{
+		if(b){ // 如用户给出b，则使用b作为数据缓存
+			buf=b;
+			buf-&gt;alloc(0);
+			}
+		else // 否则，产生一个新的缓存，类别是当前缺省的缓存类
+			buf = getnewbuffer(0);
+}
+
+matrix::matrix(size_t n, buffer * b): // 产生n阶单位方阵
+		rownum(n),colnum(1),istrans(0),isneg(0),issym(0)
+{
+		if(b){ // 如用户给出b，则使用b作为数据缓存
+			buf=b;
+			buf-&gt;alloc(n);
+			}
+		else // 否则，产生一个新的缓存，类别是当前缺省的缓存类
+			buf = getnewbuffer(n);
+}
+
+matrix unit(size_t n)	// 产生n阶单位矩阵
+{
+	if(n==0) throw TMESSAGE(&quot;n must larger than 0\n&quot;);
+	matrix m(n,n);
+	for(size_t i=0; i&lt;n; i++)
+	for(size_t j=0; j&lt;n; j++)
+		if(i==j) m.set(i,j,1.0);
+		else m.set(i,j,0.0);
+	m.issym = 1;
+	return m;
+}
+
+
+matrix::matrix(size_t r, size_t c, buffer * b):
+		rownum(r),colnum(c),istrans(0),isneg(0),issym(0)
+{
+		if(b){ // 如用户给出b，则使用b作为数据缓存
+			buf=b;
+			buf-&gt;alloc(r*c);
+			}
+		else // 否则，产生一个新的缓存，类别是当前缺省的缓存类
+			buf = getnewbuffer(r*c);
+}
+
+matrix::matrix(const matrix&amp; m) // 拷贝构造函数
+{
+	rownum = m.rownum;	// 拷贝行数与列数
+	colnum = m.colnum;
+	istrans = m.istrans;	// 拷贝转置标记
+	isneg = m.isneg;		// 拷贝负值标记
+	issym = m.issym;		// 拷贝对称标记
+	buf = m.buf;		// 设置指向相同缓存的指针
+	buf-&gt;refnum++;	// 缓存的引用数增1
+}
+
+matrix::matrix(const char * filename, buffer * b): // 从数据文件构造矩阵
+	istrans(0), isneg(0), issym(0)
+{
+	char label[10];
+	std::ifstream in(filename); // 打开文件流
+	in &gt;&gt; label; // 文件开始必须有matrix关键词
+	if(strcmp(label, &quot;matrix&quot;)!=0) throw TMESSAGE(&quot;format error!&quot;);
+	in &gt;&gt; rownum &gt;&gt; colnum; // 读取行数和列数
+	if(!in.good()) throw TMESSAGE(&quot;read file error!&quot;);
+	// 申请或产生缓存
+	if(b) { buf=b;
+		buf-&gt;alloc(rownum*colnum);
+	}
+	else buf = getnewbuffer(rownum*colnum);
+	size_t line;
+	for(size_t i=0; i&lt;rownum; i++) { // 依次按行读取
+		in &gt;&gt; line; // 读行号
+		if(line != i+1) throw TMESSAGE(&quot;format error!&quot;);
+		in.width(sizeof(label));
+		in &gt;&gt; label; // 行号后跟冒号
+		if(label[0] != &#x27;:&#x27;) throw TMESSAGE(&quot;format error!&quot;);
+		DOUBLE a;
+		for(size_t j=0; j&lt;colnum; j++) { // 读取一行数据
+			in &gt;&gt; a;
+			set(i,j,a);
+		}
+		if(!in.good()) throw TMESSAGE(&quot;read file error!&quot;);
+	}
+	checksym(); // 检查是否为对称阵
+}
+
+matrix::matrix(void * data, size_t r, size_t c, buffer * b):
+		rownum(r),colnum(c),istrans(0),isneg(0),issym(0) // 数据构造函数
+{
+	if(b){
+		buf=b;
+		buf-&gt;alloc(r*c);
+		}
+	else
+		buf = getnewbuffer(r*c);
+	DOUBLE * d = (DOUBLE *)data;
+	for(size_t i=0; i&lt;r*c; i++)  // 这里进行数据拷贝，因此原数据的内存是可以释放的
+		buf-&gt;set(i,d[i]);
+	checksym();	// 检查是否为对称阵
+}
+
+DOUBLE matrix::operator()(size_t r, size_t c) const
+{
+	if(r&gt;= rownum || c&gt;= colnum)
+		throw TMESSAGE(&quot;Out range!&quot;);
+	return value(r,c);
+}
+
+matrix&amp; matrix::operator=(const matrix&amp; m)  // 赋值重载
+{
+	rownum = m.rownum; //  行数和列数的拷贝
+	colnum = m.colnum;
+	istrans = m.istrans; // 转置标志的拷贝
+	isneg = m.isneg;	// 取负标志的拷贝
+	issym = m.issym;	// 对称标志的拷贝
+	if(buf == m.buf)  // 如果原缓存与m的缓存一样，则返回
+		return (*this);
+	buf-&gt;refnum--; // 原缓存不同，则原缓存的引用数减1
+	if(!buf-&gt;refnum)delete buf; // 减1后的原缓存如果引用数为0，则删除原缓存
+	buf = m.buf; // 将原缓存指针指向m的缓存
+	buf-&gt;refnum++; // 新缓存的引用数增1
+	checksym();	// 检查是否为对称阵
+	return (*this); // 返回自己的引用
+}
+
+matrix&amp; matrix::operator=(DOUBLE a) // 通过赋值运算符将矩阵所有元素设为a
+{
+	if(rownum == 0 || colnum == 0) return (*this);
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		set(i,j,a);
+	if(rownum == colnum)issym = 1;
+	return (*this);
+}
+
+matrix matrix::operator-() const // 矩阵求负，产生负矩阵
+{
+	matrix mm(*this);
+	mm.neg();
+	return mm;
+}
+
+ostream&amp; operator&lt;&lt;(ostream&amp; o, const matrix&amp; m) // 流输出运算符
+{
+	// 先输出关键字matrix,然后是行号，制表符，列号，换行
+	o &lt;&lt; &quot;matrix &quot; &lt;&lt; m.rownum &lt;&lt; &#x27;\t&#x27; &lt;&lt; m.colnum &lt;&lt; std::endl;
+	for(size_t i=0; i&lt;m.rownum; i++) { // 依次输出各行
+		o&lt;&lt; (i+1) &lt;&lt;&#x27;:&#x27;; // 行号后跟冒号。注意输出的行号是从1开始
+				// 是内部编程的行号加1
+		size_t k=8; // 后面输入一行的内容，每次一行数字超过八个时
+			// 就换一行
+		for(size_t j=0; j&lt;m.colnum; j++) {
+			o&lt;&lt;&#x27;\t&#x27;&lt;&lt;m.value(i,j);
+			if(--k==0) {
+				k=8;
+				o&lt;&lt;std::endl;
+			}
+		}
+		o&lt;&lt;std::endl; // 每行结束时也换行
+	}
+	return o;
+}
+
+istream&amp; operator&gt;&gt;(istream&amp; in, matrix&amp; m) // 流输入运算符
+{
+	char label[10];
+	in.width(sizeof(label));
+	in &gt;&gt; label; // 输入matrix关键字
+	if(strcmp(label, &quot;matrix&quot;)!=0)
+		throw TMESSAGE(&quot;format error!\n&quot;);
+	in &gt;&gt; m.rownum &gt;&gt; m.colnum; // 输入行号和列号
+	if(!in.good()) throw TMESSAGE(&quot;read file error!&quot;);
+	m.buf-&gt;refnum--; // 原缓存引用数减1
+	if(!m.buf-&gt;refnum) delete m.buf; // 如原缓存引用数为0，则删去原缓存
+	m.isneg = m.istrans = 0; // 转置和取负标志清零
+	m.buf = getnewbuffer(m.rownum*m.colnum); // 按缺省子类产生新缓存
+	size_t line; // 按矩阵行输入
+	for(size_t i=0; i&lt;m.rownum; i++) {
+		in &gt;&gt; line; // 先输入行号
+		if(line != i+1) throw TMESSAGE(&quot;format error!\n&quot;);
+		in.width(sizeof(label)); // 行号后应跟冒号
+		in &gt;&gt; label;
+		if(label[0] != &#x27;:&#x27;) throw TMESSAGE(&quot;format error!\n&quot;);
+		DOUBLE a; // 随后是本行的各个数值
+		for(size_t j=0; j&lt;m.colnum; j++) {
+			in &gt;&gt; a;
+			m.set(i,j,a);
+		}
+		if(!in.good()) throw TMESSAGE(&quot;read file error!&quot;);
+	}
+	m.checksym();	// 检查是否为对称阵
+	return in;
+}
+
+matrix&amp; matrix::operator*=(DOUBLE a) // 矩阵数乘常数a，结果放在原矩阵
+{
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		set(i,j,a*value(i,j));
+	return (*this);
+}
+
+matrix matrix::operator*(DOUBLE a)const // 矩阵数乘常数a，原矩阵内容不变，返回一新矩阵
+{
+	matrix m(rownum, colnum);
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		m.set(i,j,a*value(i,j));
+	return m;
+}
+
+matrix matrix::operator+(const matrix&amp; m)const // 矩阵相加，产生一新的矩阵并返回它
+{
+	if(rownum != m.rownum || colnum != m.colnum) // 对应行列必须相同
+		throw TMESSAGE(&quot;can not do add of matrix\n&quot;);
+	matrix mm(rownum, colnum); // 产生一同自己同形的矩阵
+	DOUBLE a;
+	for(size_t i=0; i&lt;rownum; i++) // 求和
+	for(size_t j=0; j&lt;colnum; j++)
+	{
+		a = value(i,j)+m.value(i,j);
+		mm.set(i,j,a);
+	}
+	mm.checksym();	// 检查是否为对称阵
+	return mm;
+}
+
+matrix&amp; matrix::operator+=(const matrix &amp;m) // 矩阵求和，自己内容改变为和
+{
+	DOUBLE a;
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+	{
+		a = value(i,j)+m.value(i,j);
+		set(i,j,a);
+	}
+	checksym();	// 检查是否为对称阵
+	return (*this);
+}
+
+matrix matrix::operator+(DOUBLE a)	// 矩阵加常数，指每一元素加一固定的常数，产生
+											// 新矩阵，原矩阵不变
+{
+	matrix m(rownum, colnum);
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		m.set(i,j,a+value(i,j));
+	return m;
+}
+
+matrix&amp; matrix::operator+=(DOUBLE a)	// 矩阵自身加常数，自身内容改变
+{
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		set(i,j,a+value(i,j));
+	return (*this);
+}
+
+matrix operator-(DOUBLE a, matrix&amp; m) { // 常数减矩阵，产生新的矩阵
+	return (-m)+a;
+};
+
+
+matrix matrix::operator-(const matrix&amp; m) // 矩阵相减，产生新的矩阵
+{
+	matrix mm(*this); // 产生一同自己同形的矩阵
+	mm += (-m);	// 加上相应的负矩阵
+	return mm;
+}
+
+matrix&amp; matrix::operator-=(matrix&amp; m) // 矩阵相减，结果修改原矩阵
+{
+	(*this) += (-m);
+	return (*this);
+}
+
+matrix matrix::operator*(const matrix&amp; m)const // 矩阵相乘，原矩阵内容不变，产生一新矩阵
+{
+	if(colnum != m.rownum) // 必须满足相乘条件
+		throw TMESSAGE(&quot;can not multiply!&quot;);
+	matrix mm(rownum,m.colnum); // 计算并产生一合要求的矩阵放乘积
+	DOUBLE a;
+	for(size_t i=0; i&lt;rownum; i++) // 计算乘积
+	for(size_t j=0; j&lt;m.colnum; j++){
+		a = 0.0;
+		for(size_t k=0; k&lt;colnum; k++)
+			a += value(i,k)*m.value(k,j);
+		mm.set(i,j,a);
+	}
+	mm.checksym();	// 检查是否为对称阵
+	return mm; // 返回乘积
+}
+
+matrix&amp; matrix::operator*=(const matrix&amp; m) // 矩阵相乘，自己修改成积矩阵
+{
+	matrix mm;
+	mm = (*this) * m;
+	(*this) = (*this)*m;
+	return (*this);
+}
+
+matrix matrix::t()  // 矩阵转置，产生新的矩阵
+{
+	matrix mm(*this);
+	mm.trans();
+	return mm;
+}
+
+int matrix::isnear(const matrix&amp; m, double e)const // 检查二矩阵是否近似相等
+{
+	if(rownum != m.rownum || colnum != m.colnum) return 0;
+	for(size_t i=0; i&lt; rownum; i++)
+	for(size_t j=0; j&lt; colnum; j++)
+		if(fabs(value(i,j)-m.value(i,j)) &gt; e) return 0;
+	return 1;
+}
+
+int matrix::isnearunit(double e) const // 检查矩阵是否近似为单位矩阵
+{
+	if(rownum != colnum) return 0;
+	return isnear(unit(rownum), e);
+}
+
+matrix matrix::row(size_t r) // 提取第r行行向量
+{
+	matrix mm(1, colnum);
+	for(size_t i=0; i&lt; colnum; i++)
+		mm.set(0, i, value(r,i));
+	return mm;
+}
+
+matrix matrix::col(size_t c) // 提取第c列列向量
+{
+	matrix mm(rownum, 1);
+	for(size_t i=0; i&lt; rownum; i++)
+		mm.set(i, value(i, c));
+	return mm;
+}
+
+void matrix::swapr(size_t r1, size_t r2, size_t k) // 交换矩阵r1和r2两行
+{
+	DOUBLE a;
+	for(size_t i=k; i&lt;colnum; i++) {
+		a = value(r1, i);
+		set(r1, i, value(r2, i));
+		set(r2, i, a);
+	}
+}
+
+void matrix::swapc(size_t c1, size_t c2, size_t k) // 交换c1和c2两列
+{
+	DOUBLE a;
+	for(size_t i=k; i&lt;colnum; i++) {
+		a = value(i, c1);
+		set(i, c1, value(i, c2));
+		set(i, c2, a);
+	}
+}
+
+DOUBLE matrix::maxabs(size_t &amp;r, size_t &amp;c, size_t k) // 求第k行和第k列后的主元及位置
+{
+	DOUBLE a=0.0;
+	for(size_t i=k;i&lt;rownum;i++)
+	for(size_t j=k;j&lt;colnum;j++)
+		if(a &lt; fabs(value(i,j))) {
+			r=i;c=j;a=fabs(value(i,j));
+		}
+	return a;
+}
+
+size_t matrix::zgsxy(matrix &amp; m, int fn) // 进行主高斯消元运算，fn为参数，缺省为0
+ /* 本矩阵其实是常数阵，而矩阵m必须是方阵
+	运算过程其实是对本矩阵和m同时作行初等变换，
+	运算结果m的对角线相乘将是行列式，而本矩阵则变换成
+	自己的原矩阵被m的逆阵左乘，m的秩被返回，如果秩等于阶数
+	则本矩阵中的内容已经是唯一解
+ */
+{
+	if(rownum != m.rownum || m.rownum != m.colnum) // 本矩阵行数必须与m相等
+						// 且m必须是方阵
+		throw TMESSAGE(&quot;can not divide!&quot;);
+	lbuffer * bb = getnewlbuffer(rownum); // 产生一维数为行数的长整数缓存区
+	lbuffer &amp; b = (*bb); // 用引用的办法使下面的程序容易懂
+	size_t is;
+	DOUBLE a;
+	size_t i,j,k,rank=0;
+	for(k=0; k&lt;rownum; k++) { // 从第0行到第k行进行主高斯消元
+		if(m.maxabs(is, i, k)==0) // 求m中第k级主元，主元所在的行，列存在is,i中
+			break; // 如果主元为零，则m不可逆，运算失败
+		rank = k+1; // rank存放当前的阶数
+		b.retrieve(k) = (long)i;  // 将长整数缓存区的第k个值设为i
+		if(i != k)
+			m.swapc(k, i); // 交换m中i,k两列
+		if(is != k) {
+			m.swapr(k, is, k); // 交换m中i,k两行,从k列以后交换
+			swapr(k, is); // 交换本矩阵中i,k两行
+		}
+		a = m.value(k,k);  // 取出主元元素
+		for (j=k+1;j&lt;rownum;j++) // 本意是将m的第k行除以主元
+				// 但只需把第k行的第k+1列以上除以主元即可
+				// 这样还保留了主元作行列式运算用
+			m.set(k,j,m.value(k,j)/a);
+		for (j=0;j&lt;colnum;j++) // 将本矩阵的第k行除以主元
+			set(k,j,value(k,j)/a);
+		// 上面两步相当于将m和本矩阵构成的增广矩阵第k行除以主元
+		// 下面对增广矩阵作行基本初等变换使第k行的其余列均为零
+		// 但0值无必要计算，因此从第k+1列开始计算
+		for(j=k+1;j&lt;rownum;j++) // j代表列，本矩阵的行数就是m的列数
+		for(i=0;i&lt;rownum;i++) //i代表行，依次对各行计算，k行除外
+			if(i!=k)
+				m.set(i,j,m.value(i,j)-m.value(i,k)*m.value(k,j));
+		// 对本矩阵亦作同样的计算
+		for(j=0;j&lt;colnum;j++)
+		for(i=0;i&lt;rownum;i++)
+			if(i!=k)
+				set(i,j,value(i,j)-m.value(i,k)*value(k,j));
+	} // 主高斯消元循环k结束
+	if(fn == 1) {
+		for(j=0; j&lt;rank; j++)
+		for(i=0; i&lt;rownum; i++)
+			if(i==j) m.set(i,i,1.0);
+			else
+				m.set(i,j,0.0);
+		for(k = rank; k&gt;0; k--)
+			m.swapc(k-1,(size_t)b[k-1]);
+	}
+	for(k = rank; k&gt;0; k--) // 将本矩阵中的各行按b中内容进行调节
+		if((size_t)b[k-1] != k-1)
+			swapr(k-1,(size_t)b[k-1]); // 行交换
+	delete bb; // 释放长整数缓存
+	return rank; // 返回mm的秩
+}
+
+matrix&amp; matrix::operator/=(matrix m) // 利用重载的除法符号/=来解方程
+	// 本矩阵设为d,则方程为mx=d,考虑解写成x=d/m的形式，
+	// 而方程的解也存放在d中，则实际编程时写d/=m
+{
+	if(zgsxy(m)!=rownum) // 如秩不等于m的阶数，则方程无解
+		throw TMESSAGE(&quot;can not divide!&quot;);
+	return *this;
+}
+
+matrix matrix::operator/(matrix m) // 左乘m的逆矩阵产生新矩阵
+{
+	m.inv();	// m的逆矩阵
+	return (*this)*m;
+}
+
+matrix&amp; matrix::inv()		// 用全选主元高斯-约当法求逆矩阵
+{
+	if(rownum != colnum || rownum == 0)
+		throw TMESSAGE(&quot;Can not calculate inverse&quot;);
+	size_t i,j,k;
+	 DOUBLE d,p;
+	lbuffer * isp = getnewlbuffer(rownum); // 产生一维数为行数的长整数缓存区
+	lbuffer * jsp = getnewlbuffer(rownum); // 产生一维数为行数的长整数缓存区
+	lbuffer&amp; is = *isp;	// 使用引用使程序看起来方便
+	lbuffer&amp; js = *jsp;
+	for(k=0; k&lt;rownum; k++)
+		{
+			d = maxabs(i, j, k); // 全主元的位置和值
+			is[k] = (long)i;
+			js[k] = (long)j;
+			if(d==0.0) {
+				delete isp;
+				delete jsp;
+				throw TMESSAGE(&quot;can not inverse&quot;);
+			}
+		  if ((size_t)is[k] != k) swapr(k,(size_t)is[k]);
+		  if ((size_t)js[k] != k) swapc(k,(size_t)js[k]);
+			p = 1.0/value(k,k);
+			set(k,k,p);
+		  for (j=0; j&lt;rownum; j++)
+			 if (j!=k) set(k,j,value(k,j)*p);
+		  for (i=0; i&lt;rownum; i++)
+			 if (i!=k)
+				for (j=0; j&lt;rownum; j++)
+				  if (j!=k) set(i,j,value(i,j)-value(i,k)*value(k,j));
+		  for (i=0; i&lt;rownum; i++)
+			 if (i!=k) set(i,k,-value(i,k)*p);
+		} // end for k
+	 for (k=rownum; k&gt;0; k--)
+		{ if ((size_t)js[k-1]!=k-1) swapr((size_t)js[k-1], k-1);
+		  if ((size_t)is[k-1]!=k-1) swapc((size_t)is[k-1], k-1);
+		}
+  delete isp;
+  delete jsp;
+	checksym();	// 检查是否为对称阵
+  return (*this);
+}
+
+matrix matrix::operator~()	// 求逆矩阵，但产生新矩阵
+{
+	matrix m(*this);
+	m.inv();
+	return m;
+}
+
+matrix operator/(DOUBLE a, matrix&amp; m) // 求逆矩阵再乘常数
+{
+	matrix mm(m);
+	mm.inv();
+	if(a != 1.0) mm*=a;
+	return mm;
+}
+
+matrix&amp; matrix::operator/=(DOUBLE a) // 所有元素乘a的倒数，自身改变
+{
+	return operator*=(1/a);
+}
+
+matrix matrix::operator/(DOUBLE a) // 所有元素乘a的倒数，产生新的矩阵
+{
+	matrix m(*this);
+	m/=a;
+	return m;
+}
+
+DOUBLE matrix::det(DOUBLE err)		// 求行列式的值
+{
+	if(rownum != colnum || rownum == 0)
+		throw TMESSAGE(&quot;Can not calculate det&quot;);
+	matrix m(*this);
+	size_t rank;
+	return m.detandrank(rank, err);
+}
+
+size_t matrix::rank(DOUBLE err)	// 求矩阵的秩
+{
+	if(rownum==0 || colnum==0)return 0;
+	size_t k;
+	k = rownum &gt; colnum ? colnum : rownum;
+	matrix m(k,k);		// 产生k阶方阵
+	for(size_t i=0; i&lt;k; i++)
+	for(size_t j=0; j&lt;k; j++)
+		m.set(i,j,value(i,j));
+	size_t r;
+	m.detandrank(r, err);
+	return r;
+}
+
+DOUBLE matrix::detandrank(size_t &amp; rank, DOUBLE err)	// 求方阵的行列式和秩
+{
+	if(rownum != colnum || rownum == 0)
+		throw TMESSAGE(&quot;calculate det and rank error!&quot;);
+	size_t i,j,k,is,js;
+	double f,detv,q,d;
+	f=1.0; detv=1.0;
+	rank = 0;
+	 for (k=0; k&lt;rownum-1; k++)
+		{
+			q = maxabs(is, js, k);
+			if(q&lt;err) return 0.0;	// 如主元太小，则行列式的值被认为是0
+			rank++; // 秩增1
+			if(is!=k) { f=-f; swapr(k,is,k); }
+			if(js!=k) { f=-f; swapc(k,js,k); }
+			q = value(k,k);
+			detv *= q;
+		  for (i=k+1; i&lt;rownum; i++)
+			 {
+				d=value(i,k)/q;
+				for (j=k+1; j&lt;rownum; j++)
+					set(i,j,value(i,j)-d*value(k,j));
+			 }
+		} // end loop k
+	 q = value(rownum-1,rownum-1);
+	 if(q != 0.0 ) rank++;
+	return f*detv*q;
+}
+
+void matrix::checksym()	// 检查和尝试调整矩阵到对称矩阵
+{
+	issym = 0;	// 先假设矩阵非对称
+	if(rownum != colnum) return;	// 行列不等当然不是对称矩阵
+	DOUBLE a,b;
+	for(size_t i=1; i&lt;rownum; i++) // 从第二行开始检查
+	for(size_t j=0; j&lt;i; j++) // 从第一列到第i-1列
+	{
+		a = value(i,j);
+		b = value(j,i);
+		if( fabs(a-b) &gt;= defaulterr ) return; // 发现不对称，返回
+		if(a!=b)set(i,j,b); // 差别很小就进行微调
+	}
+	issym = 1;	// 符合对称阵标准
+}
+
+void matrix::house(buffer &amp; b, buffer &amp; c)// 用豪斯荷尔德变换将对称阵变为对称三对
+											// 角阵，b返回主对角线元素，c返回次对角线元素
+{
+	if(!issym) throw TMESSAGE(&quot;not symatry&quot;);
+	size_t i,j,k;
+	DOUBLE h,f,g,h2,a;
+	 for (i=rownum-1; i&gt;0; i--)
+		{ h=0.0;
+		  if (i&gt;1)
+			 for (k=0; k&lt;i; k++)
+				{ a = value(i,k); h += a*a;}
+		  if (h == 0.0)
+			 { c[i] = 0.0;
+				if (i==1) c[i] = value(i,i-1);
+				b[i] = 0.0;
+			 }
+		  else
+			 { c[i] = sqrt(h);
+				a = value(i,i-1);
+				if (a &gt; 0.0) c[i] = -c[i];
+				h -= a*c[i];
+				set(i,i-1,a-c[i]);
+				f=0.0;
+				for (j=0; j&lt;i; j++)
+				  { set(j,i,value(i,j)/h);
+					 g=0.0;
+					 for (k=0; k&lt;=j; k++)
+						g += value(j,k)*value(i,k);
+					 if(j&lt;=i-2)
+						for (k=j+1; k&lt;i; k++)
+							g += value(k,j)*value(i,k);
+					 c[j] = g/h;
+					 f += g*value(j,i);
+				  }
+				h2=f/(2*h);
+				for (j=0; j&lt;i; j++)
+				  { f=value(i,j);
+					 g=c[j] - h2*f;
+					 c[j] = g;
+					 for (k=0; k&lt;=j; k++)
+						set(j,k, value(j,k)-f*c[k]-g*value(i,k) );
+				  }
+				b[i] = h;
+			 }
+		}
+	 for (i=0; i&lt;=rownum-2; i++) c[i] = c[i+1];
+	 c[rownum-1] = 0.0;
+	 b[0] = 0.0;
+	 for (i=0; i&lt;rownum; i++)
+		{ if ((b[i]!=0.0)&amp;&amp;(i&gt;=1))
+			 for (j=0; j&lt;i; j++)
+				{ g=0.0;
+				  for (k=0; k&lt;i; k++)
+					 g=g+value(i,k)*value(k,j);
+				  for (k=0; k&lt;i; k++)
+					 set(k,j,value(k,j)-g*value(k,i));
+				}
+		  b[i] = value(i,i);
+		  set(i,i,1.0);
+		  if (i&gt;=1)
+			 for (j=0; j&lt;=i-1; j++)
+				{ set(i,j,0.0);
+				  set(j,i,0.0); }
+		}
+	 return;
+}
+
+void matrix::trieigen(buffer&amp; b, buffer&amp; c, size_t l, DOUBLE eps)
+						// 计算三对角阵的全部特征值与特征向量
+{	size_t i,j,k,m,it;
+	double d,f,h,g,p,r,e,s;
+	c[rownum-1]=0.0; d=0.0; f=0.0;
+	for (j=0; j&lt;rownum; j++)
+		{ it=0;
+		  h=eps*(fabs(b[j])+fabs(c[j]));
+		  if (h&gt;d) d=h;
+		  m=j;
+		  while ((m&lt;rownum)&amp;&amp;(fabs(c[m])&gt;d)) m+=1;
+		  if (m!=j)
+			 { do
+				  { if (it==l) throw TMESSAGE(&quot;fial to calculate eigen value&quot;);
+					 it += 1;
+					 g=b[j];
+					 p=(b[j+1]-g)/(2.0*c[j]);
+					 r=sqrt(p*p+1.0);
+					 if (p&gt;=0.0) b[j]=c[j]/(p+r);
+					 else b[j]=c[j]/(p-r);
+					 h=g-b[j];
+					 for (i=j+1; i&lt;rownum; i++)
+						b[i]-=h;
+					 f=f+h; p=b[m]; e=1.0; s=0.0;
+					 for (i=m-1; i&gt;=j; i--)
+						{ g=e*c[i]; h=e*p;
+						  if (fabs(p)&gt;=fabs(c[i]))
+							 { e=c[i]/p; r=sqrt(e*e+1.0);
+								c[i+1]=s*p*r; s=e/r; e=1.0/r;
+							 }
+						  else
+				{ e=p/c[i]; r=sqrt(e*e+1.0);
+								c[i+1]=s*c[i]*r;
+								s=1.0/r; e=e/r;
+							 }
+						  p=e*b[i]-s*g;
+						  b[i+1]=h+s*(e*g+s*b[i]);
+						  for (k=0; k&lt;rownum; k++)
+							 {
+								h=value(k,i+1);
+								set(k,i+1, s*value(k,i)+e*h);;
+								set(k,i,e*value(k,i)-s*h);
+							 }
+						  if(i==0) break;
+						}
+					 c[j]=s*p; b[j]=e*p;
+				  }
+				while (fabs(c[j])&gt;d);
+			 }
+		  b[j]+=f;
+		}
+	 for (i=0; i&lt;=rownum; i++)
+		{ k=i; p=b[i];
+		  if (i+1&lt;rownum)
+			 { j=i+1;
+				while ((j&lt;rownum)&amp;&amp;(b[j]&lt;=p))
+				  { k=j; p=b[j]; j++;}
+			 }
+		  if (k!=i)
+			 { b[k]=b[i]; b[i]=p;
+				for (j=0; j&lt;rownum; j++)
+				  { p=value(j,i);
+					 set(j,i,value(j,k));
+					 set(j,k,p);
+				  }
+			 }
+		}
+}
+
+matrix matrix::eigen(matrix &amp; eigenvalue, DOUBLE eps, size_t l)
+	 // 计算对称阵的全部特征向量和特征值
+		// 返回按列排放的特征向量，而eigenvalue将返回一维矩阵，为所有特征值
+		// 组成的列向量
+{
+	if(!issym) throw TMESSAGE(&quot;it is not symetic matrix&quot;);
+	eigenvalue = matrix(rownum); // 产生n行1列向量准备放置特征值
+	matrix m(*this); // 复制自己产生一新矩阵
+	if(rownum == 1) {	// 如果只有1X1矩阵，则特征向量为1，特征值为value(0,0)
+		m.set(0,0,1.0);
+		eigenvalue.set(0,value(0,0));
+		return m;
+	}
+	buffer * b, *c;
+	b = getnewbuffer(rownum);
+	c = getnewbuffer(rownum);
+	m.house(*b,*c);	// 转换成三对角阵
+	m.trieigen(*b,*c,l,eps); // 算出特征向量和特征值
+	for(size_t i=0; i&lt;rownum; i++) // 复制b的内容到eigenvalue中
+		eigenvalue.set(i,(*b)[i]);
+	return m;
+}
+
+void matrix::hessenberg()	// 将一般实矩阵约化为赫申伯格矩阵
+{
+	 size_t i,j,k;
+	 double d,t;
+	 i = 0;
+	 for (k=1; k&lt;rownum-1; k++)
+		{ d=0.0;
+		  for (j=k; j&lt;rownum; j++)
+			 { t=value(j,k-1);
+				if (fabs(t)&gt;fabs(d))
+				  { d=t; i=j;}
+			 }
+		  if (fabs(d)!=0.0)
+			 { if (i!=k)
+				  { for (j=k-1; j&lt;rownum; j++)
+						{
+						  t = value(i,j);
+						  set(i,j,value(k,j));
+						  set(k,j,t);
+						}
+					 for (j=0; j&lt;rownum; j++)
+						{
+						  t = value(j,i);
+						  set(j,i,value(j,k));
+						  set(j,k,t);
+						}
+				  }
+				for (i=k+1; i&lt;rownum; i++)
+				  {
+					 t = value(i,k-1)/d;
+					 set(i,k-1,0.0);
+					 for (j=k; j&lt;rownum; j++)
+						  set(i,j,value(i,j)-t*value(k,j));
+					 for (j=0; j&lt;rownum; j++)
+						  set(j,k,value(j,k)+t*value(j,i));
+				  }
+			 }
+		}
+}
+
+void matrix::qreigen(matrix &amp; u1, matrix &amp; v1, size_t jt, DOUBLE eps)
+ // 求一般实矩阵的所有特征根
+// a和b均返回rownum行一列的列向量矩阵，返回所有特征根的实部和虚部
+{
+	matrix a(*this);
+	a.hessenberg();	// 先算出赫申伯格矩阵
+	u1 = matrix(rownum);
+	v1 = matrix(rownum);
+	buffer * uu = getnewbuffer(rownum);
+	buffer * vv = getnewbuffer(rownum);
+	buffer &amp;u = *uu;
+	buffer &amp;v = *vv;
+	 size_t m,it,i,j,k,l;
+	 size_t iir,iic,jjr,jjc,kkr,kkc,llr,llc;
+	 DOUBLE b,c,w,g,xy,p,q,r,x,s,e,f,z,y;
+	 it=0; m=rownum;
+	 while (m!=0)
+		{ l=m-1;
+		  while ( l&gt;0 &amp;&amp; (fabs(a.value(l,l-1))&gt;eps*
+			(fabs(a.value(l-1,l-1))+fabs(a.value(l,l))))) l--;
+		  iir = m-1; iic = m-1;
+		  jjr = m-1; jjc = m-2;
+		  kkr = m-2; kkc = m-1;
+		  llr = m-2; llc = m-2;
+		  if (l==m-1)
+			 { u[m-1]=a.value(m-1,m-1); v[m-1]=0.0;
+				m--; it=0;
+			 }
+		  else if (l==m-2)
+			 { b=-(a.value(iir,iic)+a.value(llr,llc));
+				c=a.value(iir,iic)*a.value(llr,llc)-
+					a.value(jjr,jjc)*a.value(kkr,kkc);
+				w=b*b-4.0*c;
+				y=sqrt(fabs(w));
+				if (w&gt;0.0)
+				  { xy=1.0;
+					 if (b&lt;0.0) xy=-1.0;
+					 u[m-1]=(-b-xy*y)/2.0;
+					 u[m-2]=c/u[m-1];
+					 v[m-1]=0.0; v[m-2]=0.0;
+				  }
+				else
+				  { u[m-1]=-b/2.0; u[m-2]=u[m-1];
+					 v[m-1]=y/2.0; v[m-2]=-v[m-1];
+				  }
+				m=m-2; it=0;
+			 }
+		  else
+			 {
+			 if (it&gt;=jt) {
+				delete uu;
+				delete vv;
+				throw TMESSAGE(&quot;fail to calculate eigenvalue&quot;);
+			 }
+				it++;
+				for (j=l+2; j&lt;m; j++)
+					a.set(j,j-2,0.0);
+				for (j=l+3; j&lt;m; j++)
+					a.set(j,j-3,0.0);
+				for (k=l; k+1&lt;m; k++)
+				  { if (k!=l)
+						{ p=a.value(k,k-1); q=a.value(k+1,k-1);
+						  r=0.0;
+						  if (k!=m-2) r=a.value(k+2,k-1);
+						}
+					 else
+						{
+						  x=a.value(iir,iic)+a.value(llr,llc);
+						  y=a.value(llr,llc)*a.value(iir,iic)-
+								a.value(kkr,kkc)*a.value(jjr,jjc);
+						  iir = l; iic = l;
+						  jjr = l; jjc = l+1;
+						  kkr = l+1; kkc = l;
+						  llr = l+1; llc = l+1;
+						  p=a.value(iir,iic)*(a.value(iir,iic)-x)
+								+a.value(jjr,jjc)*a.value(kkr,kkc)+y;
+						  q=a.value(kkr,kkc)*(a.value(iir,iic)+a.value(llr,llc)-x);
+						  r=a.value(kkr,kkc)*a.value(l+2,l+1);
+						}
+					 if ((fabs(p)+fabs(q)+fabs(r))!=0.0)
+						{ xy=1.0;
+						  if (p&lt;0.0) xy=-1.0;
+						  s=xy*sqrt(p*p+q*q+r*r);
+						  if (k!=l) a.set(k,k-1,-s);
+						  e=-q/s; f=-r/s; x=-p/s;
+						  y=-x-f*r/(p+s);
+						  g=e*r/(p+s);
+						  z=-x-e*q/(p+s);
+						  for (j=k; j&lt;m; j++)
+							 {
+								iir = k; iic = j;
+								jjr = k+1; jjc = j;
+								p=x*a.value(iir,iic)+e*a.value(jjr,jjc);
+								q=e*a.value(iir,iic)+y*a.value(jjr,jjc);
+								r=f*a.value(iir,iic)+g*a.value(jjr,jjc);
+								if (k!=m-2)
+								  { kkr = k+2; kkc = j;
+									 p=p+f*a.value(kkr,kkc);
+									 q=q+g*a.value(kkr,kkc);
+									 r=r+z*a.value(kkr,kkc);
+									 a.set(kkr,kkc,r);
+								  }
+								a.set(jjr,jjc,q);
+								a.set(iir,iic,p);
+							 }
+						  j=k+3;
+						  if (j&gt;=m-1) j=m-1;
+						  for (i=l; i&lt;=j; i++)
+							 { iir = i; iic = k;
+								jjr = i; jjc = k+1;
+								p=x*a.value(iir,iic)+e*a.value(jjr,jjc);
+								q=e*a.value(iir,iic)+y*a.value(jjr,jjc);
+								r=f*a.value(iir,iic)+g*a.value(jjr,jjc);
+								if (k!=m-2)
+								  { kkr = i; kkc = k+2;
+									 p=p+f*a.value(kkr,kkc);
+									 q=q+g*a.value(kkr,kkc);
+									 r=r+z*a.value(kkr,kkc);
+									 a.set(kkr,kkc,r);
+								  }
+								a.set(jjr,jjc,q);
+								a.set(iir,iic,p);
+							 }
+						}
+				  }
+			 }
+		}
+	for(i=0;i&lt;rownum;i++) {
+		u1.set(i,u[i]);
+		v1.set(i,v[i]);
+	}
+	delete uu;
+	delete vv;
+}
+
+DOUBLE gassrand(int rr)	// 返回一零均值单位方差的正态分布随机数
+{
+	static DOUBLE r=3.0;	// 种子
+	if(rr) r = rr;
+	int i,m;
+	DOUBLE s,w,v,t;
+	s=65536.0; w=2053.0; v=13849.0;
+	t=0.0;
+	for (i=1; i&lt;=12; i++)
+		{ r=r*w+v; m=(int)(r/s);
+		  r-=m*s; t+=r/s;
+		}
+	t-=6.0;
+	return(t);
+}
+
+gassvector::gassvector(matrix &amp; r):	//r必须是正定对称阵，为正态随机向量的协方差
+	a(r)
+{
+	if(r.rownum != r.colnum) throw TMESSAGE(&quot;must be a sqare matrix&quot;);
+	if(!r.issym) throw TMESSAGE(&quot;must be a symetic matrix&quot;);
+	matrix evalue;
+	a = a.eigen(evalue);
+	for(size_t i=0; i&lt;a.colnum; i++) {
+		DOUBLE e = sqrt(evalue(i));
+		for(size_t j=0; j&lt;a.rownum; j++)
+			a.set(j,i,a.value(j,i)*e);
+	}
+}
+
+matrix gassvector::operator()(matrix &amp; r) // 返回给定协方差矩阵的正态随机向量
+{
+	a = r;
+	matrix evalue;
+	a = a.eigen(evalue);
+	size_t i;
+	for(i=0; i&lt;a.colnum; i++) {
+		DOUBLE e = sqrt(evalue(i));
+		for(size_t j=0; j&lt;a.rownum; j++)
+			a.set(j,i,a.value(j,i)*e);
+	}
+	matrix rr(a.rownum);	// 产生列向量
+	for(i=0; i&lt;a.rownum; i++)
+		rr.set(i,gassrand());
+	return a*rr;
+}
+
+matrix gassvector::operator()()	// 返回已设定的协方差矩阵的正态随机向量
+{
+	matrix rr(a.rownum);
+	for(size_t i=0; i&lt;a.rownum; i++)
+		rr.set(i,gassrand());
+	return a*rr;
+}
+
+void gassvector::setdata(matrix &amp; r) // 根据协方差矩阵设置增益矩阵
+{
+	if(!r.issym) throw TMESSAGE(&quot;r must be symetic!&quot;);
+	a = r;
+	matrix evalue;
+	a = a.eigen(evalue);
+	for(size_t i=0; i&lt;a.colnum; i++) {
+   	if(evalue(i)&lt;0.0) throw TMESSAGE(&quot;var matrix not positive!&quot;);
+		DOUBLE e = sqrt(evalue(i));
+		for(size_t j=0; j&lt;a.rownum; j++)
+			a.set(j,i,a.value(j,i)*e);
+	}
+}
+
+int matrix::ispositive()		// 判定矩阵是否对称非负定阵，如是返回1，否则返回0
+{
+	if(!issym) return 0;
+	matrix ev;
+	eigen(ev);
+	for(size_t i=0; i&lt;rownum; i++)
+		if(ev(i)&lt;0) return 0;
+	return 1;
+}
+
+matrix matrix::cholesky(matrix&amp; dd)	// 用乔里斯基分解法求对称正定阵的线性
+		// 方程组ax=d返回方程组的解，本身为a，改变为分解阵u,d不变
+{
+	if(!issym) throw TMESSAGE(&quot;not symetic!&quot;);
+	if(dd.rownum != colnum) throw TMESSAGE(&quot;dd&#x27;s rownum not right!&quot;);
+	matrix md(dd);
+	size_t i,j,k,u,v;
+	if(value(0,0)&lt;=0.0) throw TMESSAGE(&quot;not positive&quot;);
+	set(0,0,sqrt(value(0,0))); //	 a[0]=sqrt(a[0]);
+	buffer&amp; a = (*buf);
+	buffer&amp; d = (*(md.buf));
+	size_t n = rownum;
+	size_t m = dd.colnum;
+	for (j=1; j&lt;n; j++) a[j]=a[j]/a[0];
+	for (i=1; i&lt;n; i++)
+		{ u=i*n+i;
+		  for (j=1; j&lt;=i; j++)
+			 { v=(j-1)*n+i;
+				a[u]=a[u]-a[v]*a[v];
+			 }
+		  if (a[u]&lt;=0.0) throw TMESSAGE(&quot;not positive&quot;);
+		  a[u]=sqrt(a[u]);
+		  if (i!=(n-1))
+			 { for (j=i+1; j&lt;n; j++)
+				  { v=i*n+j;
+					 for (k=1; k&lt;=i; k++)
+						a[v]=a[v]-a[(k-1)*n+i]*a[(k-1)*n+j];
+					 a[v]=a[v]/a[u];
+				  }
+			 }
+		}
+	for (j=0; j&lt;m; j++)
+		{ d[j]=d[j]/a[0];
+		  for (i=1; i&lt;=n-1; i++)
+			 { u=i*n+i; v=i*m+j;
+				for (k=1; k&lt;=i; k++)
+				  d[v]=d[v]-a[(k-1)*n+i]*d[(k-1)*m+j];
+				d[v]=d[v]/a[u];
+			 }
+		}
+	for (j=0; j&lt;=m-1; j++)
+		{ u=(n-1)*m+j;
+		  d[u]=d[u]/a[n*n-1];
+		  for (k=n-1; k&gt;=1; k--)
+			 { u=(k-1)*m+j;
+				for (i=k; i&lt;=n-1; i++)
+				  { v=(k-1)*n+i;
+					 d[u]=d[u]-a[v]*d[i*m+j];
+				  }
+				v=(k-1)*n+k-1;
+				d[u]=d[u]/a[v];
+			 }
+		}
+	if(n&gt;1)
+	for(j=1; j&lt;n; j++)
+	for(i=0; i&lt;j; i++)
+		a[i+j*n]=0.0;
+	return md;
+}
+
+DOUBLE lineopt(matrix&amp; aa,matrix&amp; bb, matrix&amp; cc, matrix &amp; xx)
+ // 线性规划最优点寻找程序，aa为mXn不等式约束条件左端系数矩阵，bb为不等式约束
+ // 条件的右端项，为m维向量，cc为目标函数系数，n维向量，xx返回极小点，为n维向量
+{
+	if(aa.rownum != bb.rownum || aa.colnum != cc.rownum ||
+		aa.colnum != xx.rownum) throw TMESSAGE(&quot;dimenstion not right!&quot;);
+	size_t n=aa.colnum, m=aa.rownum;
+	size_t i,mn,k,j;
+	matrix a(m,n+m);
+	for(i=0;i&lt;m;i++) {
+		for(j=0;j&lt;n;j++)
+			a.set(i,j,aa(i,j));
+		for(j=n;j&lt;n+m;j++)
+			if(j-n == i) a.set(i,j,1.0);
+			else a.set(i,j,0.0);
+	}
+	matrix c(m+n);
+	c = 0.0;
+	for(i=0;i&lt;m;i++)
+		c.set(i,cc(i));
+	lbuffer* jjs = getnewlbuffer(m);
+	lbuffer&amp; js = (*jjs);
+	DOUBLE s,z,dd,y; //,*p,*d;
+
+	for (i=0; i&lt;m; i++) js[i]=(long)(n+i);
+	matrix p(m,m);
+	matrix d;
+	mn=m+n; s=0.0;
+	matrix x(mn);
+	while (1)
+		{ for (i=0; i&lt;m; i++)
+			 for (j=0; j&lt;m; j++)
+				p.set(i,j,a(i,(size_t)js[j]));
+		  p.inv();
+			d = p*a;
+			x = 0.0;
+		  for (i=0; i&lt;m; i++)
+			 { s=0.0;
+				for (j=0; j&lt;=m-1; j++)
+					s+=p(i,j)*bb(j);
+				x.set((size_t)js[i],s);
+			 }
+		  k=mn; dd=1.0e-35;
+		  for (j=0; j&lt;mn; j++)
+			 { z=0.0;
+				for (i=0; i&lt;m; i++)
+					z+=c((size_t)js[i])*d(i,j);
+				z-=c(j);
+				if (z&gt;dd) { dd=z; k=j;}
+			 }
+		  if (k==mn)
+			 { s=0.0;
+				for (j=0; j&lt;n; j++) {
+					xx.set(j,x(j));
+					s+=c(j)*x(j);
+				}
+				delete jjs;
+				return s;
+			 }
+		  j=m;
+		  dd=1.0e+20;
+		  for (i=0; i&lt;=m-1; i++)
+			 if (d(i,k)&gt;=1.0e-20)   // [i*mn+k]&gt;=1.0e-20)
+				{ y=x(size_t(js[i]))/d(i,k);
+				  if (y&lt;dd) { dd=y; j=i;}
+				}
+		  if (j==m) { delete jjs;
+							throw TMESSAGE(&quot;lineopt failed!&quot;);
+						}
+		  js[j]=(long)k;
+		}
+}
+</code></pre></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

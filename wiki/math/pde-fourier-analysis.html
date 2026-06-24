@@ -8,14 +8,14 @@
   <link rel="stylesheet" href="../assets/wiki.css" />
   <script defer src="../assets/search-index.js"></script>
   <script defer src="../assets/wiki.js"></script>
-  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', m: '\\mathrm{m}', pa: '\\partial', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}' } }, svg: { fontCache: 'global' } };</script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 <body data-depth="1">
   <header class="wiki-topbar">
     <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
     <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
-    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板..." autocomplete="off" /></label>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
     <a class="top-link" href="../../index.html">个人主页</a>
   </header>
   <div class="search-results" id="search-results" hidden></div>
@@ -34,66 +34,461 @@
 <a class="" href="../math/set-axiomatics.html">集合与公理化</a>
 <a class="" href="../math/topology-geometry.html">拓扑与几何</a>
 </nav></details>
-<details open><summary>模板</summary><nav>
-<a class="" href="../templates/report-template.html">课程报告模板</a>
-<a class="" href="../templates/beamer-template.html">Beamer 演示模板</a>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
 </nav></details>
-<details open><summary>代码实验</summary><nav>
-<a class="" href="../code/numerical-code.html">数值方法与 C++/Python</a>
-</nav></details>
-<details open><summary>学习文档</summary><nav>
-<a class="" href="../docs/code-notes.html">Git 与 C++ 学习文档</a>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>偏微分方程与傅里叶分析</h1><p class="doc-subtitle">古典 PDE、广义函数、Sobolev 空间与椭圆方程。</p><div class="doc-chips"><span>PDE 与分析</span><span>数学基础</span></div><p class="source-path">来源：数学基础/Section/Foutier_Analysis.tex</p></header><section class="doc-section"><h2>偏微分方程</h2>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>偏微分方程与傅里叶分析</h1><p class="doc-subtitle">古典 PDE、广义函数、Sobolev 空间与椭圆方程。</p><div class="doc-chips"><span>PDE 与分析</span><span>完整正文</span></div><p class="source-path">来源：数学基础/Section/Foutier_Analysis.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Foutier_Analysis.tex">原始文件</a></p></header><section class="doc-section"><h2>偏微分方程</h2>
 <h3>三大古典偏微分方程</h3>
 <h4>位势方程</h4>
 <p>考虑下面的Dirichlet边界条件的定解问题</p>
-<div class="math-display">\[\Delta u=f(x),  &amp;x\in \Omega,\\
-u=\varphi(x),  &amp;x\in \pa\Omega,\]</div>
-<p>其中$\Omega\subset\R ^n$为有界区域,$f(x)$和$\varphi(x)$是$\Omega$和$\pa \Omega$上的已知函数. 若$u\in C^2(\Omega)\cap C(\overline{\Omega})$且在$\Omega$中满足$\Delta u\geqslant 0$,则$u$在$\overline{\Omega}$上的最大值在$\pa\Omega$上达到,即</p>
 <div class="math-display">\[\max_{\overline{\Omega}}u=\max_{\pa\Omega}u.\]</div>
-<p><strong>Proof</strong>:由于$\pa\Omega\subset\overline{\Omega}$,显然有$\max_{\overline{\Omega}}u\geqslant\max_{\pa\Omega}u$.下面证明$\max_{\overline{\Omega}}u\geqslant\max_{\pa\Omega}u$.下面证明$\max_{\overline{\Omega}}u\geqslant\max_{\pa\Omega}u$.下面证明$\max_{\overline{\Omega}}u\leqslant\max_{\pa\Omega}u$.</p>
-<p>若$u$在$x_0\in\Omega$处达到最大值(因为在内部,所以也是极大值),因此</p>
 <div class="math-display">\[Du(x_0)=0,  \operatorname{Hessi}u(x_0)\text{负定}\]</div>
-<p>因此$u_{x_ix_i}(x_0)&lt;0(i=1,\cdots,n)$,所以$\Delta u(x_0)&lt;0$. 如果在$\Omega$中$\Delta u&gt;0$,那么由上面讨论,$u$在$\overline{\Omega}$上的最大值不可能在$\Omega$的内部取得,从而只能在边界取得. 如果在$\Omega$中$\Delta u\geqslant 0$,对任意$\varepsilon&gt;0$,构造函数</p>
 <div class="math-display">\[u_{\varepsilon}(x)=u(x)+\varepsilon|x|^2\]</div>
-<p>容易得到在$\Omega$中</p>
 <div class="math-display">\[\Delta u_{\varepsilon}=\Delta u +2n\varepsilon\geqslant 2n\varepsilon&gt;0\]</div>
-<p>因此$\max_{\overline{\Omega}}u_{\varepsilon}=\max_{\pa\Omega}u_{\varepsilon}$.注意到</p>
 <div class="math-display">\[\begin{aligned}
 \max_{\overline{\Omega}}u &amp;\leqslant \max_{\overline{\Omega}}(u+\varepsilon|x|^2)=\max_{\overline{\Omega}}u_{\varepsilon}=\max_{\pa\Omega}u_{\varepsilon}\\
 &amp;=\max_{\pa\Omega}(u+\varepsilon|x|^2)\leqslant \max_{\pa\Omega}u+\varepsilon\max_{\pa\Omega}|x|^2
 \end{aligned}\]</div>
-<p>令$\varepsilon\to 0^+$,即得$\max_{\overline{\Omega}}u\leqslant\max_{\pa\Omega}u$. 相对应的,也有弱极小值原理,条件要改成$\Delta u\leqslant 0$.弱极大值原理和弱极小值原理统称为弱极值原理,这两个定理表明:如果$u\in C^2(\Omega)\cap C(\overline{\Omega})$且在$\Omega$中满足$\Delta u=0$,则</p>
 <div class="math-display">\[\min_{\pa\Omega}u\leqslant u(x)\leqslant \max_{\pa\Omega}u,  x\in\Omega\]</div>
-<p>设$f\in C(\overline{\Omega}),\varphi\in C(\pa\Omega)$,若$u\in C^2(\Omega)\cap C(\overline{\Omega})$是问题相关方程的解,则</p>
 <div class="math-display">\[\max_{\overline{\Omega}}|u|\leqslant\max_{\pa\Omega}|\varphi|+\frac{d^2}{2n}\max_{\overline{\Omega}}|f|\]</div>
-<p>其中$d=\operatorname{diam}\Omega$ <strong>Proof</strong>:记$\Phi=\max_{\pa\Omega}|\varphi|,M=\max_{\overline{\Omega}}|f|$.取$x_0\in\Omega$,构造辅助函数</p>
 <div class="math-display">\[w(x)=\Phi+\frac{M}{2n}(d^2-|x-x_0|^2)-u(x)\]</div>
-<p>直接计算,有</p>
 <div class="math-display">\[\begin{cases}
 \Delta w=-M-f\leqslant 0,&amp;x\in\Omega\\
 w=\Phi+\frac{M}{2n}(d^2-|x-x_0|^2)-\varphi\geqslant 0,&amp;x\in\pa\Omega
 \end{cases}\]</div>
-<p>由弱极小值原理得到$\min_{\overline{\Omega}}w=\min_{\pa\Omega}w\geqslant 0$.于是在$\overline{\Omega}$上$w\geqslant 0$,即</p>
 <div class="math-display">\[u\leqslant \Phi+\frac{M}{2n}(d^2-|x-x_0|^2)\leqslant\Phi+\frac{d^2}{2n}M\]</div>
-<p>在上述论述中以$-u$代替$u$就可以得到</p>
 <div class="math-display">\[-u\leqslant\Phi+\frac{d^2}{2n}M\]</div>
-<p>这就证明了结论. <strong>例</strong>$^\spadesuit$:设$\Omega$是$\R^n$中的有界区域,$\varphi\in C(\pa\Omega),u\in C^3(\Omega)\cap C(\overline{\Omega})$是问题</p>
 <div class="math-display">\[\begin{cases}
 \Delta u(x)=u^3(x)-u(x),&amp;x\in\Omega\\
 u(x)=\varphi(x),&amp;x\in\pa\Omega
 \end{cases}\]</div>
-<p>的解.证明:若$\max_{\pa\Omega}|\varphi|\leqslant 1$,则$\max_{\overline{\Omega}}|u|\leqslant 1$. <strong>Proof</strong>:如果$u$在边界上取到最大值,那么根据$\max_{\pa\Omega}|\varphi|\leqslant 1$,得到$\max_{\overline{\Omega}}u\leqslant 1$. 如果$u$在$\Omega$内部$x_0\in\Omega$取到最大值,那么有$\Delta u(x_0)\leqslant 0$.所以我们得到</p>
 <div class="math-display">\[\Delta u(x_0)=u^3(x_0)-u(x_0)=u(x_0)(u(x_0)-1)(u(x_0)+1)\leqslant 0\]</div>
-<p>因此一定有$u(x_0)\leqslant 1$.这就是$\max_{\overline{\Omega}}u\leqslant 1$. 如果$u$在边界上取到最小值,那么根据$\max_{\pa\Omega}|\varphi|\leqslant 1$,得到$\min_{\overline{\Omega}}u\geqslant -1$. 如果$u$在$\Omega$内部$y_0\in\Omega$取到最小值,那么有$\Delta u(x_0)\geqslant 0$.所以我们得到</p>
 <div class="math-display">\[\Delta u(y_0)=u^3(y_0)-u(y_0)=u(y_0)(u(y_0)-1)(u(y_0)+1)\geqslant 0\]</div>
-<p>因此一定有$u(y_0)\geqslant -1$.这就是$\min_{\overline{\Omega}}u\geqslant -1$. 综上我们证明了$\max_{\overline{\Omega}}|u|\leqslant 1$. <strong>基本解</strong>$^\clubsuit $:定义在$x\in\mathbb{R}^n\setminus \{0\}$的函数</p>
 <div class="math-display">\[\Phi (x)=
 \begin{cases}
 -\frac{1}{2\pi}\ln |x|,&amp;(n=2)\\[3pt]
 \frac{1}{n(n-2)\alpha(n)}\frac{1}{|x|^{n-2}}, &amp;(n\geqslant 3)
-\end{cases}\]</div></section></article><nav class="prev-next"><a href="finite-element.html">上一页：有限元方法初步</a><a href="functional-analysis.html">下一页：泛函分析</a></nav></main>
+\end{cases}\]</div>
+<div class="math-display">\[|D\Phi(x)|\leqslant \frac{C}{|x|^{n-1}},|D^2\Phi(x)|\leqslant \frac{C}{|x|^n}  (x\neq 0)\]</div>
+<div class="math-display">\[\begin{cases}
+\frac{\pa \Phi}{\pa x_i} &amp;= -\frac{1}{n\alpha(n)}\frac{x_i}{|x|^n}\\[6pt]
+\frac{\pa^2 \Phi}{\pa x_i^2} &amp;= \frac{1}{\alpha(n)}\frac{x_i^2}{|x|^{n+1}}-\frac{1}{n\alpha(n)}\frac{1}{|x|^n}
+\end{cases}
+  (i=1,2,\cdots,n)\]</div>
+<div class="math-display">\[\frac{u(x+he_i)-u(x)}{h}=\int_{\mathbb{R}^n}\Phi(y)\frac{f(x+he_i-y)-f(x-y)}{h}\mathrm{d}y\]</div>
+<div class="math-display">\[u_{x_i}=\int_{\mathbb{R}^n}\Phi(y)f_{x_i}(x-y)\mathrm{d}y\]</div>
+<div class="math-display">\[\begin{aligned}
+\Delta u &amp;= \int_{\mathbb{R}^n}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y\\
+&amp;= \int_{B(0,\varepsilon)}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y+\int_{\mathbb{R}^n\setminus B(0,\varepsilon)}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y
+\end{aligned}\]</div>
+<div class="math-display">\[\left|\int_{B(0,\varepsilon)}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y\right|\leqslant \|D^2f\|_{L^{\infty}(\mathbb{R}^n)}\int_{B(0,\varepsilon)}|\Phi(y)|\mathrm{d}y\lesssim
+\begin{cases}
+\frac{1}{2(n-2)} \|D^2f\|_{L^{\infty}(\mathbb{R}^n)}\varepsilon^2,&amp;n\geqslant 3\\[8pt]
+\frac{\|D^2f\|_{L^{\infty}(\mathbb{R}^n)}}{2}\varepsilon^2(|\ln \varepsilon|+\frac{1}{2}),&amp; n=2
+\end{cases}\]</div>
+<div class="math-display">\[\int_{\mathbb{R}^n\setminus B(0,\varepsilon)}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y=\int_{\pa B(0,\varepsilon)}\Phi(y)\frac{\pa f}{\pa \nu_{x}}(x-y)-f(x-y)\frac{\pa\Phi}{\pa\nu_{x}}(y)\mathrm{d}S_y\]</div>
+<div class="math-display">\[\left|\int_{B(0,\varepsilon)}\Phi(y)\frac{\pa f}{\pa \nu_{x}}(x-y)\mathrm{d}S_y\right|\leqslant \alpha(n)|\Phi(\varepsilon)|\|Df\|_{L^{\infty}(\mathbb{R}^n)}\varepsilon^{n-1}\to 0\]</div>
+<div class="math-display">\[\begin{aligned}
+-\int_{\pa B(0,\varepsilon)}f(x-y)\frac{\pa\Phi}{\pa\nu_{x}}(y)\mathrm{d}S_y &amp;= -\int_{\pa B(0,\varepsilon)}f(x-y)\nabla \Phi(y)\cdot \nu_{x}\mathrm{d}S_y\\
+&amp;= -\frac{1}{n\alpha(n)}\int_{\pa B(0,\varepsilon)}f(x-y)\frac{y}{|y|^n}\cdot\frac{y}{|y|}\mathrm{d}S_y\\
+&amp;= -\frac{1}{n\alpha(n)}\int_{\pa B(0,1)}f(x-\varepsilon z)\mathrm{d}S_z
+\end{aligned}\]</div>
+<div class="math-display">\[-\int_{\pa B(0,\varepsilon)}f(x-y)\frac{\pa\Phi}{\pa\nu_{x}}(y)\mathrm{d}S_y\to -f(x)\]</div>
+<div class="math-display">\[u(x)=\fint_{B(x,r)}u(y)\mathrm{d}y=\fint_{\pa B(x,r)}u(y)\mathrm{d}S\]</div>
+<h4>热传导方程</h4>
+<h4>波动方程</h4>
+<h3>PDE中的其他概念</h3>
+<div class="math-display">\[[u]_{\lambda,\Omega}:=\sup\limits_{x,y\in\Omega\\x\neq y }\frac{|u(x)-u(y)|}{|x-y|^{\lambda}}&lt;+\infty\]</div>
+<div class="math-display">\[\|u\|_{C^{k,\lambda}}:=\sum_{|\alpha|\leqslant k}\|D^{\alpha}u\|_{C(\overline{\Omega})}+\sum_{|\alpha|=k}[D^{\alpha}u]_{C^{0,\lambda}(\overline{\Omega})}\]</div>
+<div class="math-display">\[[u]_{\mu,\Omega}\leqslant [u]_{\lambda,\Omega}^{1-\theta}[u]_{\gamma,\Omega}^\theta\]</div>
+<div class="math-display">\[[u]_{\mu,\Omega}:=\sup\limits_{x,y\in\Omega\\x\neq y }\left\{\frac{|u(x)-u(y)|}{|x-y|^{\lambda}}\right\}^{1-\theta}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}^{\theta}\leqslant [u]_{\lambda,\Omega}^{1-\theta}[u]_{\gamma,\Omega}^\theta\]</div>
+<h3>广义函数</h3>
+<h4>基本函数空间</h4>
+<div class="math-display">\[\operatorname{supp}f=\overline{\{x\in \Omega;f(x)\neq 0\}}\]</div>
+<div class="math-display">\[C_{c}(\Omega)=\{\text{在}\Omega\text{中具有紧支集的连续函数全体}\}\]</div>
+<div class="math-display">\[u=(\operatorname{Re}u)^{+}-(\operatorname{Re}u)^{-}+\mathrm {i}((\operatorname{Im}u)^{+}-(\operatorname{Im}u)^{-}):=u_{1}-u_{2}+\mathrm{i}(u_{3}-u_{4})\]</div>
+<div class="math-display">\[m(\{ x \in \Omega:s_{k_{0}}(x)\neq\phi(x)\})&lt; \left(\frac{\varepsilon}{4\|s_{k_{0}}\|_{L^{\infty}(\Omega)}}\right)^{p}\]</div>
+<div class="math-display">\[\begin{aligned}
+\|\phi-s_{k_0}\|_{\Lp} &amp;\leqslant\|\phi-s_{k_0}\|_{L^{\infty}(\Omega)}m(\{ x \in \Omega:s_{k_{0}}(x)\neq\phi(x)\})^{\frac{1}{p}}\\
+&amp;\leqslant\frac{2\|s_{k_0}\|_{L^{\infty}(\Omega)}\varepsilon}{4\|s_{k_0}\|_{L^{\infty}(\Omega)}}=\frac{ \varepsilon}{2}
+\end{aligned}\]</div>
+<div class="math-display">\[\|\phi-u\|_{\Lp}\leqslant\|\phi-s_{k_{0}}\|_{\Lp}+\|s_{k_{0}}-u\|_{\Lp}&lt;\varepsilon.\]</div>
+<div class="math-display">\[\eta_{\varepsilon}(x)=\frac{1}{\varepsilon^n}\eta\left(\frac{x}{\varepsilon}\right),x\in\R ^n\]</div>
+<div class="math-display">\[\begin{aligned}
+\eta &amp;\in C^{\infty}(\R ^n),\text{对于所有的}x\in\R ^n,\eta (x)\geqslant 0\\
+\operatorname{supp} &amp;\subset \overline{B(0,1)},\;\int_{\R ^n}\eta (x)\mathrm{d}x=1
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+\eta_{\varepsilon} &amp;\in C^{\infty}(\R ^n),\text{对于所有的}x\in\R ^n,\eta_{\varepsilon}\geqslant 0\\
+\operatorname{supp} &amp;\subset \overline{B(0,\varepsilon)},\;\int_{\R ^n}\eta_{\varepsilon}\mathrm{d}x=1
+\end{aligned}\]</div>
+<div class="math-display">\[\eta (x)=
+\begin{cases}
+C\exp\left(\frac{1}{|x|^2-1}\right),&amp; |x|&lt;1\\
+0,&amp; |x|\geqslant 1
+\end{cases}\]</div>
+<div class="math-display">\[u_{\varepsilon}(x)=\int_{\R ^n}u(x-y)\eta_{\varepsilon}(y)\mathrm{d}y=\int_{\R ^n}u(y)\eta_{\varepsilon}(x-y)\mathrm{d}y\]</div>
+<div class="math-display">\[\lim_{\varepsilon\to 0}\|u_{\varepsilon}-u\|_{L^p(\R ^n)}=0\]</div>
+<div class="math-display">\[\lim_{\varepsilon\to 0}\|u_{\varepsilon}-u\|_{L^p(\R ^n)}=0\]</div>
+<div class="math-display">\[\|u-v\|_{L^p(\R ^n)}\leqslant \delta\]</div>
+<div class="math-display">\[\begin{aligned}
+\|f_\varepsilon\|_{L^p(\mathbb{R}^n)}^p
+&amp;= \int_{\mathbb{R}^n} |f_\varepsilon(x)|^p   \dd x \\
+&amp;= \int_{\mathbb{R}^n} \left| \int_{\mathbb{R}^n} f(x - y) \eta_\varepsilon(y)   \dd y \right|^p \dd x \\
+&amp;= \int_{\mathbb{R}^n} \left| \int_{\mathbb{R}^n} f(x - y) \eta_\varepsilon^{\frac{1}{p}}(y) \eta_\varepsilon^{1 - \frac{1}{p}}(y)   \dd y \right|^p \dd x \\
+&amp;\leqslant \int_{\mathbb{R}^n} \int_{\mathbb{R}^n} |f(x - y)|^p \eta_\varepsilon(y)   \dd y   \dd x
+\left( \int_{\mathbb{R}^n} \eta_\varepsilon(y)   \dd y \right)^{p - 1} \\
+&amp;= \int_{\mathbb{R}^n} \int_{\mathbb{R}^n} |f(x - y)|^p \eta_\varepsilon(y)   \dd y   \dd x \\
+&amp;= \int_{\mathbb{R}^n} \left( \int_{\mathbb{R}^n} |f(x - y)|^p   \dd x \right) \eta_\varepsilon(y)   \dd y \\
+&amp;= \|f\|_{L^p(\mathbb{R}^n)}^p \int_{\mathbb{R}^n} \eta_\varepsilon(y)   \dd y \\
+&amp;= \|f\|_{L^p(\mathbb{R}^n)}^p.
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+\max_{x\in\R^n}|v_{\varepsilon}(x)-v(x)| &amp;\leqslant \max_{x\in K_1}|v_{\varepsilon}(x)-v(x)|+\max_{x\notin K_1}|v_{\varepsilon}(x)-v(x)|\\
+&amp;\leqslant \max_{x\in K_1}\int_{|y|\leqslant \varepsilon}|v(x-y)-v(x)|\eta _{\varepsilon}(y)\dd y\\
+&amp;  +\max_{x\notin K_1}\left(|v(x)|+\int_{|y|\leqslant \varepsilon}|v(x-y)|\eta _{\varepsilon}(y)\dd y\right)\\
+&amp;\leqslant s\int_{|y|\leqslant}\eta_{\varepsilon}(y)\dd y+\max_{x\notin K_1}\left(s+s\int_{|y|\leqslant \varepsilon}\eta _{\varepsilon}(y)\dd y\right)\leqslant 3s
+\end{aligned}\]</div>
+<div class="math-display">\[\|v_{\varepsilon}-v\|_{L^p(\R ^n)}=\|v_{\varepsilon}-v\|_{L^p(K_2)}\leqslant \max_{x\in K_2}|v_{\varepsilon}(x)-v(x)|\cdot m(K_2)^{1/p}\to 0\]</div>
+<div class="math-display">\[\begin{aligned}
+\|u_{\varepsilon}-u\|_{L^p(\R^n)} &amp;\leqslant \|u_{\varepsilon}-v_{\varepsilon}\|_{L^p(\R^n)}+\|v_{\varepsilon}-v\|_{L^p(\R^n)}+\|v-u\|_{L^p(\R^n)}\\
+&amp;\leqslant 2 \|v-u\|_{L^p(\R^n)}+\|v_{\varepsilon}-v\|_{L^p(\R^n)}\leqslant 3\delta
+\end{aligned}\]</div>
+<div class="math-display">\[\mathbf{1}_{R}(x)=
+\begin{cases}
+1&amp;,|x|\leqslant R\\
+0&amp;,|x|&gt;R
+\end{cases}\]</div>
+<div class="math-display">\[\beta_{R}(x)=\int_{\R^n}\mathbf{1}_{R}(x-y)\eta (y)\dd y=\int_{\R^n}\mathbf{1}_{R}(y)\eta (x-y)\dd y\]</div>
+<div class="math-display">\[\supp \beta_{R}\subset\{x\in\R^n:|x|\leqslant R+1\}\]</div>
+<div class="math-display">\[|y|\geqslant |x|-|x-y|&gt;R+1-1=R \Rightarrow |y|&gt;1\]</div>
+<div class="math-display">\[\beta_{R}(x)=\int_{\R^n}\mathbf{1}_{R}(y)\eta (x-y)\dd y=0\]</div>
+<div class="math-display">\[\supp \beta_{R}\subset\{x\in\R^n:|x|\leqslant R+1\}\]</div>
+<div class="math-display">\[|y|\leqslant |x-y|+|x|\leqslant R-1+1=R\]</div>
+<div class="math-display">\[\beta_{R}(x)=\int_{\R^n}\mathbf{1}_{R}(y)\eta (x-y)\dd y=\int_{\R^n}\eta (x-y)\dd y=1\]</div>
+<div class="math-display">\[\sup_{x\in\R ^n}|x^{\alpha}\pa^{\beta}\varphi (x)|\to 0\]</div>
+<div class="math-display">\[\begin{aligned}
+x^{\alpha}\pa^{\beta}\varphi (x) &amp;=\frac{1}{|x|^2}\sum_{j=1}^{n}x^2_jx^{\alpha}\pa^{\beta}\varphi (x)\\
+&amp;=\frac{1}{|x|^2}\sum_{j=1}^{n}x_1^{\alpha_1}x_2^{\alpha_2}\cdots x_{j-1}^{\alpha_{j-1}}x^{2+\alpha_j}_j x_{j+1}^{\alpha_{j+1}}\cdots x^{\alpha_n}_n\pa^{\beta}\varphi (x)\\
+\end{aligned}\]</div>
+<div class="math-display">\[\lim_{|x|\to \infty}|x^{\alpha}\pa^{\beta}\varphi (x)|=0\]</div>
+<div class="math-display">\[\begin{aligned}
+|x|^{2k} &amp;= (x_1^2+x_2^2+\cdots+x_n^2)^k\\
+&amp;\leqslant n^{k-1}(x_1^{2k}+x_2^{2k}+\cdots+x_n^{2k})\\
+&amp;= n^{k-1}(x^{p_{1k}}+x^{p_{2k}}+\cdots+x^{p_{nk}})
+\end{aligned}\]</div>
+<div class="math-display">\[\sup_{x\in\R^n}|x^{\alpha}\pa^{\beta}\varphi (x)|\leqslant C\]</div>
+<div class="math-display">\[\begin{aligned}
+&amp;\sup_{x\in\R^n}|(1+|x|^2)^k\pa^{\beta}\varphi (x)|\\
+&amp;\leqslant 2^{k-1}\sup_{x\in\R^n}|\pa^{\beta}\varphi (x)|+ 2^{k-1}\sup_{x\in\R^n}|x|^{2k}|\pa^{\beta}\varphi (x)|\\
+&amp;\leqslant 2^{k-1}\sup_{x\in\R^n}|\pa^{\beta}\varphi (x)|+ (2n)^{k-1}\sum_{j=1}^{k}\sup_{x\in\R^n}|x^{p_{jk}}\pa^{\beta}\varphi (x)|\leqslant C
+\end{aligned}\]</div>
+<div class="math-display">\[|x^{\alpha}|=|x^{\alpha_1}_{1}x^{\alpha_2}_{2}\cdots x^{\alpha_n}_{n}|\leqslant|x|^{\alpha_1}_{1}|x|^{\alpha_2}_{2}\cdots |x|^{\alpha_n}_{n} \leqslant |x|^{\alpha_1+\cdots+\alpha_n}=|x|^{|\alpha|}\]</div>
+<div class="math-display">\[\sup_{x\in\R^n}|(1+|x|^2)^k\pa^{\beta}\varphi (x)|\leqslant C\]</div>
+<div class="math-display">\[\sup_{x\in\R^n}|x^{\alpha}\pa^{\beta}\varphi (x)|\leqslant \sup_{x\in\R^n}|x|^{|\alpha|}|\pa^{\beta}\varphi (x)|\leqslant \sup_{x\in\R^n}|(1+|x|^2)^{|\alpha|}\pa^{\beta}\varphi (x)|\leqslant C\]</div>
+<div class="math-display">\[\begin{aligned}
+(1+|x|^2)^k &amp;\leqslant (1+2|x-y|^2+2|y|^2)^k\\
+&amp;\leqslant 2^k(1+|x-y|^2+1+|y|^2)^k\\
+&amp;\leqslant 2^{2k}[(1+|x-y|^2)^k+(1+|y|^2)^k]
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+\left|(1+|x|^2)^k\paa\int_{\R^n}f(x-y)g(y)\dd y\right| &amp;\leqslant 2^{2k}\int_{\R^n}(1+|x-y|^2)^k|\paa_x f(x-y)|g(y)|\dd y\\
+&amp;+2^{2k}\int_{\R^n}(1+|y|^2)^k|\paa_x f(x-y)|g(y)|\dd y\\
+&amp;\leqslant C\int_{\R^n}|g(y)|\dd y+C\int_{\R^n}|\paa_x f(x-y)|\dd y\\
+&amp;\leqslant C\int_{\R^n}(1+|y|^2)^{-n}[(1+|y|^2)^n|g(y)|+(1+|y|^2)^n|\paa f(y)|]\dd y\\
+&amp;\leqslant C_1\int_{\R^n}(1+|y|^2)^{-n}\dd y\leqslant C_2
+\end{aligned}\]</div>
+<div class="math-display">\[C^{\infty}_c(\R^n)\subset \sch\subset C^{\infty}(\R ^n)\]</div>
+<h4>广义函数</h4>
+<div class="math-display">\[\mathcal{E}&#x27;(\mathbb{R}^n)\subset \mathcal{S}&#x27;(\mathbb{R}^n)\subset\mathcal{D}&#x27;(\mathbb{R}^n)\]</div>
+<h3>Sobolev空间</h3>
+<div class="math-display">\[\int_{\Omega}u\pa ^{\alpha}\varphi\dd x=(-1)^{|\alpha|}\int_{\Omega}v\varphi\dd x\]</div>
+<div class="math-display">\[W^{k,p}(\Omega)=\{u\in L^{p}(\Omega):\pa^{\alpha}u\in L^{p}(\Omega),0\leqslant |\alpha|\leqslant k\}\]</div>
+<div class="math-display">\[H^k(\Omega)=W^{k,2}(\Omega)\; (k=0,1,2,\cdots)\]</div>
+<div class="math-display">\[(u,v)_{H^k(\Omega)}=\sum_{|\alpha|\leqslant k}\int_{\Omega}\pa ^{\alpha}u(x)\pa ^{\alpha}v(x)\dd x,\forall u,v\in H^k(\Omega)\]</div>
+<div class="math-display">\[\|u\|_{W^{k,p}(\Omega)}=:
+\begin{cases}
+\left(\sum_{|\alpha|\leqslant k}\|\pa^{\alpha}u\|_{\Lp}^p\right)^{\frac{1}{p}},&amp; 1\leqslant p&lt;\infty\\
+\max_{|\alpha|\leqslant k}\|\pa^{\alpha}u(x)\|_{L^\infty(\Omega)},&amp; p=\infty
+\end{cases}\]</div>
+<div class="math-display">\[W^{k,p}(\Omega)=\{u\in W^{k}(\Omega):\pa^{\alpha}u\in L^{p}(\Omega),|\alpha|\leqslant k\}\]</div>
+<div class="math-display">\[\|u\|_{W^{k,p}(\Omega)}=\sum_{|\alpha|\leqslant k}\|\pa ^{\alpha}u\|_{L^{p}(\Omega)}\]</div>
+<div class="math-display">\[\begin{aligned}
+\|u+v\|_{W^{k,p}(\Omega)} &amp;= \left(\sum_{|\alpha|\leqslant k}\|\paa u+\paa v\|_{L^{p}(\Omega)}^P\right)^{1/p}\\
+&amp;\leqslant \left(\sum_{|\alpha|\leqslant k}(\|\paa u\|_{L^{p}(\Omega)}+\|\paa v\|_{L^{p}(\Omega)})^p\right)^{1/p}\\
+&amp;\leqslant \left(\sum_{|\alpha|\leqslant k}\|\paa u\|_{L^{p}(\Omega)}^p\right)^{1/p}+\left(\sum_{|\alpha|\leqslant k}\|\paa V\|_{L^{p}(\Omega)}^p\right)^{1/p}\\
+&amp;= \|u\|_{W^{k,p}(\Omega)}+\|v\|_{W^{k,p}(\Omega)}
+\end{aligned}\]</div>
+<div class="math-display">\[u\in\sbev,\paa u=u_{\alpha}\]</div>
+<div class="math-display">\[\int_{\Omega}u\paa \varphi\dd x=\lim_{m\to\infty}\int_{\Omega}u_m\paa \varphi\dd x=\lim_{m\to\infty}(-1)^{|\alpha|}\int_{\Omega}\paa u_m\varphi\dd x=(-1)^{|\alpha|}\int_{\Omega}\paa u_{\alpha}\varphi\dd x\]</div>
+<h4>逼近定理</h4>
+<div class="math-display">\[u_{\varepsilon}=\eta_{\varepsilon}\ast u,\text{在$\Omega_{\varepsilon}$中}\]</div>
+<div class="math-display">\[\paa u_{\varepsilon}=\eta_{\varepsilon}\ast \paa u\]</div>
+<div class="math-display">\[\begin{aligned}
+\paa u_{\varepsilon} &amp;= \paa_x\int_{\Omega}\eta_{\varepsilon}(x-y)u(y)\dd y=\int_{\Omega}u(y)\paa_x\eta_{\varepsilon}(x-y)\dd y\\
+&amp;= (-1)^{|\alpha|}\int_{\Omega}u(y)\paa_y\eta_{\varepsilon}(x-y)\dd y
+\end{aligned}\]</div>
+<div class="math-display">\[\int_{\Omega}u(y)\paa_y\eta_{\varepsilon}(x-y)\dd y=(-1)^{|\alpha|}\int_{\Omega}\eta_{\varepsilon}(x-y)\paa u(y)\dd y\]</div>
+<div class="math-display">\[\paa u_{\varepsilon}=(-1)^{|\alpha|+|\alpha|}\int_{\Omega}\eta_{\varepsilon}(x-y)\paa u(y)\dd y=[\eta_{\varepsilon}\ast \paa u](x)\]</div>
+<div class="math-display">\[\|u_{\varepsilon}-u\|_{W^{k,p}(V)}=\sum_{|\alpha|\leqslant k}\|\paa u_{\varepsilon}- \paa u\|_{L^p(V)}\to 0\]</div>
+<div class="math-display">\[C^{\infty}(\Omega)\cap\sbev\text{在}\sbev\text{中稠密}\]</div>
+<div class="math-display">\[u_m\to u\]</div>
+<div class="math-display">\[\Omega_{i}=\left\{x\in \Omega:\operatorname{dist}(x,\pa \Omega)&gt;\frac{1}{i}\right\},  i\geqslant 1\]</div>
+<div class="math-display">\[\Omega_1\subset\subset \Omega_2\subset\subset\cdots\subset\subset \Omega_N\subset\subset\cdots\subset\subset\Omega\]</div>
+<div class="math-display">\[\begin{cases}
+\varphi_i(x)\in C^{\infty}_{c}(V_i),&amp; 0\leqslant \varphi_i(x)\leqslant 1\\
+\sum^{\infty}_{i=0}\varphi_i(x)=1,&amp;\forall x\in \Omega
+\end{cases}\]</div>
+<div class="math-display">\[\begin{cases}
+\|u_i-\varphi_iu\|_{\sbev}\leqslant\frac{\delta}{2^{i+1}} &amp;,i\geqslant 0\\
+\supp(u_i)\subset W_i&amp;,i\geqslant 1
+\end{cases}\]</div>
+<div class="math-display">\[\begin{aligned}
+\|v-u\|_{W^{k,p}(V)} &amp;=\|\sum^{\infty}_{i=0}u_i-\sum^{\infty}_{i=0}\varphi_iu\|_{W^{k,p}(V)}\\
+&amp;\leqslant \sum^{\infty}_{i=0}\|u_i-\varphi_iu\|_{W^{k,p}(V)}\\
+&amp;\leqslant \sum^{\infty}_{i=0}\|u_i-\varphi_iu\|_{W^{k,p}(\Omega)}\\
+&amp;\leqslant \sum^{\infty}_{i=0}\frac{\delta}{2^{i+1}}=\delta
+\end{aligned}\]</div>
+<div class="math-display">\[\Omega\cap B(x_0,r)=\{x\in B(x_0,r):x_n&gt;\gamma (x_1,\cdots,x_{n-1})\}\]</div>
+<div class="math-display">\[\pa\Omega\cap B(x_0,r)=\{x\in B(x_0,r):x_n=\gamma (x_1,\cdots,x_{n-1})\}\]</div>
+<div class="math-display">\[\begin{cases}
+y_i=x_i,&amp;(i=1,\cdots,n-1)\\
+y_n=x_n-\gamma(x_1,\cdots,x_{n-1})
+\end{cases}\]</div>
+<div class="math-display">\[\mathbf{\varPhi}(x&#x27;,x_n)=(x&#x27;,x_n-\gamma(x&#x27;))=(y&#x27;,y_n)\]</div>
+<div class="math-display">\[u_m\to u\]</div>
+<div class="math-display">\[\Omega\cap B(x_0,r)=\{x\in B(x_0,r):x_n&gt;\gamma (x_1,\cdots,x_{n-1})\}\]</div>
+<div class="math-display">\[\supp (\eta_{\varepsilon}\ast u)\subset \supp u+\overline{B(0,\varepsilon)}\]</div>
+<div class="math-display">\[x_{\varepsilon}=x+\lambda\varepsilon e_n\]</div>
+<div class="math-display">\[v_{\varepsilon}=\eta_{\varepsilon}\ast u_{\varepsilon}=\int_{\R^n}u_{\varepsilon}(x-y)\eta_{\varepsilon}\mathrm{d}y\]</div>
+<div class="math-display">\[x-y+\lambda\varepsilon e_n=x_{\varepsilon}-y\in\Omega\cap B(x_0,r)\]</div>
+<div class="math-display">\[\|x_{\varepsilon}-y-x_{\varepsilon}\|=\|-y\|\leqslant\varepsilon\]</div>
+<div class="math-display">\[\|\paa v_{\varepsilon}-\paa u\|_{L^{p}(V)}\leqslant \|\paa v_{\varepsilon}-\paa u_{\varepsilon}\|_{L^{p}(V)}+\|\paa u_{\varepsilon}-\paa u\|_{L^{p}(V)}\]</div>
+<div class="math-display">\[\|v_i-u\|_{\Wkp[V_i]{k}{p}}\leqslant\delta\]</div>
+<div class="math-display">\[\|v_0-u\|_{\Wkp[V_0]{k}{p}}\leqslant\delta\]</div>
+<div class="math-display">\[\begin{aligned}
+\|\paa v-\paa u\|_{L^{p}(\Omega)} &amp;\leqslant \sum_{i=0}^{N}\|\paa (\varphi_iv_i)-\paa (\varphi_i u)\|_{L^{p}(V_i)}\\
+&amp;\leqslant C\sum_{i=0}^{N}\|v_i-u\|_{\Wkp[V_i]{k}{p}}\leqslant C(N+1)\delta
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+&amp;    \|\paa (\varphi_iv_i)-\paa (\varphi_i u)\|_{L^{p}(V_i)} =\|\paa[\varphi_i(v_i-u)]\|_{L^{p}(V_i)}\\
+&amp;= \left\|\sum_{\beta\leqslant\alpha}\binom{\alpha}{\beta}\pa^{\beta}\varphi_i\cdot\pa^{\alpha-\beta}(v_i-u) \right\|_{L^{p}(V_i)}\\
+&amp;\leqslant \sum_{\beta\leqslant\alpha}\binom{\alpha}{\beta}\|\pa^{\beta}\varphi_i\cdot\pa^{\alpha-\beta}(v_i-u)\|_{L^{p}(V_i)},  \text{记}M_{\beta,i}=\sup_{x\in V_i}|\pa^{\beta}\varphi_i(x)|\\
+&amp;\leqslant \sum_{\beta\leqslant\alpha}\binom{\alpha}{\beta}M_{\beta,i}\cdot\|\pa^{\alpha-\beta}(v_i-u)\|_{L^{p}(V_i)},  \text{再记}M_{\beta}=\max_{0\leqslant i\leqslant N}\sup_{x\in V_i}|\pa^{\beta}\varphi_i(x)|&lt;+\infty\\
+&amp;\leqslant \sum_{\beta\leqslant\alpha}\binom{\alpha}{\beta}M_{\beta}\cdot\|\pa^{\alpha-\beta}(v_i-u)\|_{L^{p}(V_i)},  \text{组合数是有限的,记}C_0=\max_{\beta\leqslant\alpha,|\alpha|\leqslant k}\binom{\alpha}{\beta}M_{\beta}\\
+&amp;\leqslant C_0\sum_{\beta\leqslant\alpha}\|\pa^{\alpha-\beta}(v_i-u)\|_{L^{p}(V_i)},  \text{记}\gamma=\alpha-\beta,\text{求和指标就变成了}|\gamma|\leqslant k\\
+&amp;\leqslant C_0\sum_{|\gamma|\leqslant k}\|\pa^{\gamma}(v_i-u)\|_{L^{p}(V_i)},  \text{由范数的等价性,参考最开始范数的两种形式,}\\
+&amp;\leqslant C\|v_i-u\|_{\Wkp[V_i]{k}{p}}
+\end{aligned}\]</div>
+<div class="math-display">\[\sum_{i=0}^{N}\|\paa (\varphi_iv_i)-\paa (\varphi_i u)\|_{L^{p}(V_i)}\leqslant C\sum_{i=0}^{N}\|v_i-u\|_{\Wkp[V_i]{k}{p}}\leqslant C(N+1)\delta\]</div>
+<h4>延拓与迹定理</h4>
+<div class="math-display">\[f(x)=1,x\in[-1,1]\]</div>
+<div class="math-display">\[\mathbf{E}:\Wkp[\Omega]{1}{p}\to \Wkp[\R ^n]{1}{p}\]</div>
+<div class="math-display">\[\|\mathbf{E}u\|_{\Wkp[\R ^n]{1}{p}}\leqslant C\|u\|_{\Wkp[\Omega]{1}{p}}\]</div>
+<div class="math-display">\[\begin{cases}
+B^+&amp;=B^0\cap \{x_n\geqslant 0\}\subset \overline{\Omega}\\
+B^-&amp;=B^0\cap \{x_n\leqslant 0\}\subset \R^n-\overline{\Omega}
+\end{cases}\]</div>
+<div class="math-display">\[\overline{u}(x)=
+\begin{cases}
+u(x&#x27;,x_n),&amp;x\in B^+\\
+u(x&#x27;,-x_n),&amp;x\in B^-
+\end{cases}\]</div>
+<div class="math-display">\[\frac{\pa}{\pa x_n}\overline{u}(x&#x27;,x_n)=\frac{\pa}{\pa x_n}u(x&#x27;,-x_n)=-\frac{\pa u}{\pa x_n}(x&#x27;,-x_n)\]</div>
+<div class="math-display">\[\overline{u}(x)=
+\begin{cases}
+u(x&#x27;,x_n),&amp;x\in B^+\\
+\lambda_1u(x&#x27;,-x_n)+\lambda_2u(x&#x27;,-\frac{x_n}{2}),&amp;x\in B^-
+\end{cases}\]</div>
+<div class="math-display">\[\lambda_1+\lambda_2=1\]</div>
+<div class="math-display">\[\frac{\pa}{\pa x_n}\overline{u}(x)=-\lambda_1\frac{\pa}{\pa x_n}u(x&#x27;,-x_n)-\frac{\lambda_2}{2}\frac{\pa}{\pa x_n}u(x&#x27;,-\frac{x_n}{2})\]</div>
+<div class="math-display">\[-\lambda_1-\frac{\lambda_2}{2}=1\]</div>
+<div class="math-display">\[\overline{u}(x)=
+\begin{cases}
+u(x&#x27;,x_n),&amp;x\in B^+\\
+-3u(x&#x27;,-x_n)+4u(x&#x27;,-\frac{x_n}{2}),&amp;x\in B^-
+\end{cases}\]</div>
+<div class="math-display">\[\|\overline{u}\|_{W^{1,p}(B^0)}\leqslant C\|u\|_{W^{1,p}(B^+)}\]</div>
+<div class="math-display">\[\begin{aligned}
+\|\overline{u}\|_{W^{1,p}(B^0)}^p &amp;= \int_{B^0}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x\\
+&amp;= \int_{B^+}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x+\int_{B^-}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x\\
+&amp;= \int_{B^+}|u|^p+|\nabla u|^p\mathrm{d}x+\int_{B^-}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+|\overline{u}|^p=|-3u(x&#x27;,-x_n)+4u(x&#x27;,-\frac{x_n}{2})|^p &amp;\leqslant 2^{1-p}\left(3^p|u(x&#x27;,-x_n)|^p+4^p|u(x&#x27;,-\frac{x_n}{2})|^p\right)\\
+&amp;\lesssim \left(|u(x&#x27;,-x_n)|^p+|u(x&#x27;,-\frac{x_n}{2})|^p\right)
+\end{aligned}\]</div>
+<div class="math-display">\[\nabla \overline{u}=
+\begin{cases}
+-3\frac{\pa}{\pa x_i}u(x&#x27;,-x_n)+4\frac{\pa}{\pa x_i}u(x&#x27;,-\frac{x_n}{2}),&amp;i&lt;n\\
+3\frac{\pa}{\pa x_i}u(x&#x27;,-x_n)-2\frac{\pa}{\pa x_i}u(x&#x27;,-\frac{x_n}{2}),&amp;i=n
+\end{cases}\]</div>
+<div class="math-display">\[\begin{aligned}
+|\nabla\overline{u}|^2 &amp;= \sum^n_{i=1}\left(\frac{\pa}{\pa x_i}\overline{u}\right)^2 \\
+&amp;= \sum^{n-1}_{i=1}\left(-3\frac{\pa}{\pa x_i}u(x&#x27;,-x_n)+4\frac{\pa}{\pa x_i}u(x&#x27;,-\frac{x_n}{2})\right)^2+\left(3\frac{\pa}{\pa x_n}u(x&#x27;,-x_n)-2\frac{\pa}{\pa x_n}u(x&#x27;,-\frac{x_n}{2})\right)^2\\
+&amp; \leqslant\sum^{n-1}_{i=1}\left[18\left(\frac{\pa}{\pa x_i}u(x&#x27;,-x_n)\right)^2+32\left(\frac{\pa}{\pa x_i}u(x&#x27;,-\frac{x_n}{2})\right)^2\right]\\
+&amp;+18\left(\frac{\pa}{\pa x_n}u(x&#x27;,-x_n)\right)^2+8\left(\frac{\pa}{\pa x_n}u(x&#x27;,-\frac{x_n}{2})\right)^2\\
+&amp; \lesssim \left(|\nabla u(x&#x27;,-x_n)|^2+|\nabla u(x&#x27;,-\frac{x_n}{2})|^2\right)
+\end{aligned}\]</div>
+<div class="math-display">\[|\nabla\overline{u}|^p\lesssim \left(|\nabla u(x&#x27;,-x_n)|^p+|\nabla u(x&#x27;,-\frac{x_n}{2})|^p\right)\]</div>
+<div class="math-display">\[\int_{B^-}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x\lesssim \int_{B^-}|u(x&#x27;,-x_n)|^p+|\nabla u(x&#x27;,-x_n)|^p+|u(x&#x27;,-\frac{x_n}{2})|^p+|\nabla u(x&#x27;,-\frac{x_n}{2})|^p\mathrm{d}x\]</div>
+<div class="math-display">\[y&#x27;=x&#x27;,y_n=-x_n\]</div>
+<div class="math-display">\[\begin{aligned}
+\int_{B^-}|u(x&#x27;,-x_n)|^p+|\nabla u(x&#x27;,-x_n)|^p\mathrm{d}x &amp;=\int_{x_n&lt;0}|u(x&#x27;,-x_n)|^p+|\nabla u(x&#x27;,-x_n)|^p\mathrm{d}x\\
+&amp;=\int_{y_n&gt;0}|u(y&#x27;,y_n)|^p+|\nabla u(y&#x27;,y_n)|^p\mathrm{d}y\\
+&amp;=\int_{B^+}|u(x&#x27;,x_n)|^p+|\nabla u(x&#x27;,x_n)|^p\mathrm{d}x
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+\int_{B^-}|u(x&#x27;,-\frac{x_n}{2})|^p+|\nabla u(x&#x27;,-\frac{x_n}{2})|^p\mathrm{d}x &amp;=2\int_{z_n&gt;0}|u(z&#x27;,z_n)|^p+|\nabla u(z&#x27;,z_n)|^p\mathrm{d}z\\
+&amp;=\int_{B^+}|u(x&#x27;,x_n)|^p+|\nabla u(x&#x27;,x_n)|^p\mathrm{d}x
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+\|\overline{u}\|_{W^{1,p}(B^0)}^p &amp;= \int_{B^+}|u|^p+|\nabla u|^p\mathrm{d}x+\int_{B^-}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x\\
+&amp; \lesssim \int_{B^+}|u|^p+|\nabla u|^p\mathrm{d}x+2\int_{B^+}|u(x&#x27;,x_n)|^p+|\nabla u(x&#x27;,x_n)|^p\mathrm{d}x\\
+&amp; \lesssim \int_{B^+}|u|^p+|\nabla u|^p\mathrm{d}x=\|u\|_{W^{1,p}(B^+)}
+\end{aligned}\]</div>
+<div class="math-display">\[y=\boldsymbol{\Phi}(x),u&#x27;(y)=u(\boldsymbol{\Psi}(y))\]</div>
+<div class="math-display">\[\|\overline{u&#x27;}\|_{W^{1,p}(B^0_y)}\leqslant C\|u&#x27;\|_{W^{1,p}(B^+_y)}\]</div>
+<div class="math-display">\[\|\overline{u}\|_{W^{1,p}(W)}\leqslant C\|u\|_{W^{1,p}(\boldsymbol{\Psi}(B^+_y))}\leqslant C\|u\|_{W^{1,p}(\Omega)}\]</div>
+<div class="math-display">\[\|\overline{u}\|_{W^{1,p}(\R ^n)}\leqslant \sum^N_{i=0}\|\zeta_i\overline{u}_i\|_{W^{1,p}(\R ^n)}\]</div>
+<div class="math-display">\[\begin{aligned}
+|\nabla (\zeta_i\overline{u}_i)|^p &amp;\leqslant \left(|\zeta_i||\nabla \overline{u}_i|+|\overline{u}_i||\nabla \zeta_i|\right)^p\\
+&amp;\leqslant 2^{p-1}\left(|\zeta_i|^p|\nabla \overline{u}_i|^p+|\overline{u}_i|^p|\nabla \zeta_i|^p\right)
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+\|\zeta_i\overline{u}_i\|^p_{W^{1,p}(\R ^n)} &amp;= \int_{W_i}\|\zeta_i\overline{u}_i\|^p+|\nabla (\zeta_i\overline{u}_i)|^p\mathrm{d}x\\
+&amp;\leqslant  \int_{W_i}|\zeta_i|^p|\overline{u}_i|^p+2^{p-1}\left(|\zeta_i|^p|\nabla \overline{u}_i|^p+|\overline{u}_i|^p|\nabla \zeta_i|^p\right)\mathrm{d}x\\
+&amp;= \int_{W_i}(|\zeta_i|^p+2^{p-1}|\nabla \zeta_i|^p)|\overline{u}_i|^p+2^{p-1}|\zeta_i|^p|\nabla \overline{u}_i|^p\mathrm{d}x\\
+&amp;\lesssim \int_{W_i}|\overline{u}_i|^p+|\nabla \overline{u}_i|^p\mathrm{d}x,  \text{不要忘了$\zeta_i$是紧支集的}\\
+&amp;= \|\overline{u}_i\|^p_{W^{1,p}(W_i)}
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+\|\overline{u}\|_{W^{1,p}(\R ^n)} \leqslant \sum^N_{i=0}\|\zeta_i\overline{u}_i\|_{W^{1,p}(\R ^n)}&amp;\lesssim \sum^N_{i=0}\|\overline{u}_i\|^p_{W^{1,p}(W_i)}\\
+&amp;\lesssim \sum^N_{i=0}\|u\|^p_{W^{1,p}(\Omega)}\lesssim \|u\|^p_{W^{1,p}(\Omega)}
+\end{aligned}\]</div>
+<div class="math-display">\[\|\mathbf{E}u_m-\mathbf{E}u_n\|_{W^{1,p}(\R ^n)}\leqslant C\|u_m-u_n\|_{W^{1,p}(\Omega)}\]</div>
+<div class="math-display">\[\mathbf{T}:W^{1,p}(\Omega)\to L^p(\pa\Omega)\]</div>
+<div class="math-display">\[\|\mathbf{T}u\|_{L^p(\pa\Omega)}\leqslant C\|u\|_{W^{1,p}(\Omega)}\]</div>
+<div class="math-display">\[\int_{\Gamma}|u|^p\mathrm{d}x&#x27;\lesssim \int_{B^+}(|u|^p+|\nabla u|^p)\mathrm{d}x\]</div>
+<div class="math-display">\[\int_{\Gamma}|u|^p\mathrm{d}x&#x27;\leqslant \int_{x_n=0}\zeta |u|^p\mathrm{d}x&#x27;\]</div>
+<div class="math-display">\[\begin{aligned}
+\int_{x_n=0}\zeta |u|^p\mathrm{d}x&#x27; &amp;= -\int_{B^+}\frac{\pa}{\pa x_n}(\zeta |u|^p)\mathrm{d}x,\text{不要忘了}|u|=\sqrt{u^2}\\
+&amp;= -\int_{B^+}\left[\zeta_{x_n}|u|^p+p\zeta |u|^{p-1}\operatorname{sgn}(u)u_{x_n}\right]\mathrm{d}x
+\end{aligned}\]</div>
+<div class="math-display">\[\left|\int_{B^+}\zeta_{x_n}|u|^p\mathrm{d}x\right|\leqslant \int_{B^+}|\zeta_{x_n}|u|^p\mathrm{d}x|\lesssim \int_{B^+}|u|^p\mathrm{d}x\]</div>
+<div class="math-display">\[\begin{aligned}
+p\left|\int_{B^+}\zeta |u|^{p-1}u_{x_n}\mathrm{d}x\right| &amp;\leqslant p\left(\int_{B^+}|u|^{(p-1)q}\zeta^q\mathrm{d}x\right)^{1/q}\left(\int_{B^+}|u_{x_n}|^p\mathrm{d}x\right)^{1/p}\\
+&amp;\leqslant p\left(\frac{1}{p}\int_{B^+}|u_{x_n}|^p\mathrm{d}x+\frac{1}{q}\int_{B^+}|u|^{(p-1)q}\zeta^q\mathrm{d}x\right)\\
+&amp;\lesssim \left(\int_{B^+}|u|^p\mathrm{d}x+\int_{B^+}|\nabla u|^p\mathrm{d}x\right)
+\end{aligned}\]</div>
+<div class="math-display">\[\int_{\Gamma}|u|^p\mathrm{d}x&#x27;\leqslant C\int_{B^+}(|u|^p+|\nabla u|^p)\mathrm{d}x\]</div>
+<div class="math-display">\[\int_{\Gamma}|u|^p\mathrm{d}S\leqslant C\int_{\Omega}(|u|^p+|\nabla u|^p)\mathrm{d}x\]</div>
+<div class="math-display">\[\|u\|_{L^p(\Gamma_i)}\leqslant C\|u\|_{W^{1,p}(\Omega)},  (i=1,\cdots,N)\]</div>
+<div class="math-display">\[\|\mathbf{T}u\|_{L^p(\pa\Omega)}\leqslant C\|u\|_{W^{1,p}(\Omega)}\]</div>
+<div class="math-display">\[\|\mathbf{T}u_m-\mathbf{T}u_n\|_{L^p(\pa\Omega)}\leqslant C\|u_m-u_n\|_{W^{1,p}(\Omega)}\]</div>
+<div class="math-display">\[\mathbf{T}u_m=u_m|_{\pa\Omega}\]</div>
+<div class="math-display">\[\|u_m|_{\pa\Omega}-u|_{\pa\Omega}\|_{L^p(\pa\Omega)}\to 0\]</div>
+<h4>Sobolev不等式</h4>
+<div class="math-display">\[\|x\|_Y\leqslant C\|x\|_X,  \forall x\in X\]</div>
+<div class="math-display">\[\|u\|_Y\leqslant \eta\|u\|_{X}+C_{\eta}\|u\|_Z,  \forall u\in X\]</div>
+<div class="math-display">\[\|u_k\|_Y&gt;\eta_0+k\|u_k\|_Z\]</div>
+<div class="math-display">\[\|u_k\|_Z&lt;\frac{C}{k}\to 0,  k\to\infty\]</div>
+<div class="math-display">\[\|u_{n_k}\|_Y&gt;\eta_0+k\|u_{n_k}\|_Z\]</div>
+<div class="math-display">\[\|u_m-u_n\|_Y\leqslant \eta+C_{\eta}\|u_m-u_n\|_Z\]</div>
+<div class="math-display">\[p^*:=\frac{np}{n-p}\]</div>
+<div class="math-display">\[\|u\|_{L^{p^*}(\R^n)}\leqslant C\|\nabla u\|_{L^p(\R^n)}\]</div>
+<div class="math-display">\[u(x)=\int_{-\infty}^{x_i}u_{x_i}(x_1,\cdots,x_{i-1},y_i,x_{i+1},\cdots,x_n)\mathrm{d}y_i\]</div>
+<div class="math-display">\[|u(x)|\leqslant\int_{-\infty}^{\infty}|\nabla u(x_1,\cdots,x_{i-1},y_i,x_{i+1},\cdots,x_n)|\mathrm{d}y_i,i=1,\cdots,n\]</div>
+<div class="math-display">\[|u(x)|^{\frac{n}{n-1}}\leqslant \prod _{i=1}^n\left(\int_{-\infty}^{\infty}|\nabla u(x_1,\cdots,x_{i-1},y_i,x_{i+1},\cdots,x_n)|\mathrm{d}y_i\right)^{\frac{1}{n-1}}\]</div>
+<div class="math-display">\[\begin{aligned}
+\int_{-\infty}^{\infty}|u(x)|^{\frac{n}{n-1}}\mathrm{d}x_1 &amp;\leqslant \int_{-\infty}^{\infty}\prod _{i=1}^n\left(\int_{-\infty}^{\infty}|\nabla u|\mathrm{d}y_i\right)^{\frac{1}{n-1}}\mathrm{d}x_1\\
+&amp;= \left(\int_{-\infty}^{\infty}|\nabla u|\mathrm{d}y_1\right)^{\frac{1}{n-1}}\int_{-\infty}^{\infty}\prod _{i=2}^n\left(\int_{-\infty}^{\infty}|\nabla u|\mathrm{d}y_i\right)^{\frac{1}{n-1}}\mathrm{d}x_1\\
+&amp;\leqslant\left(\int_{-\infty}^{\infty}|\nabla u|\mathrm{d}y_1\right)^{\frac{1}{n-1}}\left(\prod _{i=2}^n\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}|\nabla u|\mathrm{d}x_1\mathrm{d}y_i\right)^{\frac{1}{n-1}}
+\end{aligned}\]</div>
+<div class="math-display">\[\int_{\R^n}|u|^{\frac{n}{n-1}}\mathrm{d}x\leqslant\left(\int_{\R^n}|\nabla u|\mathrm{d}x\right)^{\frac{n}{n-1}}\]</div>
+<div class="math-display">\[\begin{aligned}
+\left(\int_{\R^n}|u|^{\frac{\gamma n}{n-1}}\mathrm{d}x\right)^{\frac{n-1}{n}} &amp;\leqslant \int_{\R^n}|\nabla |u|^\gamma|\mathrm{d}x=\gamma\int_{\R^n}|u|^{\gamma-1}|\nabla u|\mathrm{d}x\\
+&amp;\leqslant \gamma \left(\int_{\R^n}|u|^{(\gamma-1)\frac{p}{p-1}}\mathrm{d}x\right)^{\frac{p-1}{p}}\left(\int_{\R^n}|\nabla u|^p\mathrm{d}x\right)^{\frac{1}{p}}
+\end{aligned}\]</div>
+<div class="math-display">\[\gamma:=\frac{p(n-1)}{n-p}&gt;1\]</div>
+<div class="math-display">\[\left(\int_{\R^n}|u|^{p^*}\mathrm{d}x\right)^{\frac{1}{p^*}}\leqslant \gamma \left(\int_{\R^n}|\nabla u|^p\mathrm{d}x\right)^{\frac{1}{p}}\]</div>
+<div class="math-display">\[\|u\|_{C^{0,\gamma}(\mathbb{R}^n)}\leqslant C\|u\|_{W^{1,p}(\mathbb{R}^n)}\]</div>
+<div class="math-display">\[\sup_{x\in\mathbb{R}^n}|u(x)|+\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}\leqslant C\left(\|u\|^p_{L^p(\mathbb{R}^n)}+\|Du\|^p_{L^p(\mathbb{R}^n)}\right)^{1/p}\]</div>
+<div class="math-display">\[\sup_{x\in\mathbb{R}^n}|u(x)|+\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}\leqslant C\left(\|u\|_{L^p(\mathbb{R}^n)}+\|Du\|_{L^p(\mathbb{R}^n)}\right)\]</div>
+<div class="math-display">\[\|u\|_{W^{k,p}(\Omega)}=\sum_{|\alpha|\leqslant k}\|\pa ^{\alpha}u\|_{L^{p}(\Omega)}\]</div>
+<div class="math-display">\[\sup_{x\in\mathbb{R}^n}|u(x)|\text{和}\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}\]</div>
+<div class="math-display">\[\fint_{B(x,r)}|u(y)-u(x)|\mathrm{d}y\lesssim\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y\]</div>
+<div class="math-display">\[\begin{aligned}
+|u(x+sw)-u(x)| &amp;=\left|\int_0^s\frac{\mathrm{d}}{\mathrm{d}t}u(x+tw)\mathrm{d}t\right|\\
+&amp;=\left|\int_0^s Du(x+tw)\cdot w\mathrm{d}t\right|\\
+&amp;\leqslant \int_0^s|Du(x+tw)|\mathrm{d}t
+\end{aligned}\]</div>
+<div class="math-display">\[\int_{\partial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w\leqslant \int_0^s\int_{\partial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t\]</div>
+<div class="math-display">\[\begin{aligned}
+\int_0^s\int_{\partial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t &amp;= \int_0^s\int_{\partial B(x,t)}\frac{Du(y)}{t^{n-1}}\mathrm{d}S_y\mathrm{d}t \\
+&amp;= \int_{B(x,s)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y \\
+&amp;\leqslant \int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y
+\end{aligned}\]</div>
+<div class="math-display">\[\int_{\partial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w=\frac{1}{s^{n-1}}\int_{\partial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\]</div>
+<div class="math-display">\[\int_{\partial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\leqslant s^{n-1}\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y\]</div>
+<div class="math-display">\[\fint_{B(x,r)}|u(y)-u(x)|\mathrm{d}y\leqslant \frac{1}{n\alpha(n)}\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y\]</div>
+<div class="math-display">\[\begin{aligned}
+|u(x)| &amp;\leqslant \fint_{B(x,1)}|u(y)-u(x)|\mathrm{d}y+\fint_{B(x,1)}|u(y)|\mathrm{d}y\\
+&amp;\lesssim \int_{B(x,1)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y+\left(\int_{B(x,1)}|u(y)|^p\mathrm{d}y\right)^{1/p}\\
+&amp;\leqslant \left(\int_{B(x,1)}|Du(y)|^p\mathrm{d}y\right)^{1/p}\left(\int_{B(x,1)}\frac{1}{|y-x|^{q(n-1)}}\mathrm{d}y\right)^{1/q}+\|u\|_{L^p(\mathbb{R}^n)}\\
+&amp;\lesssim \|Du\|_{L^p(\mathbb{R}^n)}+\|u\|_{L^p(\mathbb{R}^n)}
+\end{aligned}\]</div>
+<div class="math-display">\[\|u\|_{C^{0,\gamma}(\mathbb{R}^n)}\lesssim r^{-n/p}\|u\|_{L^p(\mathbb{R}^n)}+\|Du\|_{L^p(\mathbb{R}^n)}\]</div>
+<div class="math-display">\[|u(x)-u(y)|\leqslant \fint_{W}|u(x)-u(z)|\mathrm{d}z+\fint_{W}|u(y)-u(z)|\mathrm{d}z\]</div>
+<div class="math-display">\[\begin{aligned}
+\fint_{W}|u(x)-u(z)|\mathrm{d}z &amp;\lesssim \fint_{B(x,r)}|u(x)-u(z)|\mathrm{d}z\\
+&amp;\lesssim \int_{B(x,r)}\frac{|Du(z)|}{|z-x|^{n-1}}\mathrm{d}z\\
+&amp;\leqslant \left(\int_{B(x,r)}|Du(z)|^p\mathrm{d}z\right)^{1/p}\left(\int_{B(x,r)}\frac{1}{|z-x|^{q(n-1)}}\mathrm{d}z\right)^{1/q}\\
+&amp;\lesssim r^{1-\frac{n}{p}}\|Du\|_{L^p(\mathbb{R}^n)}
+\end{aligned}\]</div>
+<div class="math-display">\[\fint_{W}|u(x)-u(z)|\mathrm{d}z\lesssim r^{1-\frac{n}{p}}\|Du\|_{L^p(\mathbb{R}^n)}\]</div>
+<div class="math-display">\[\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}\lesssim \|Du\|_{L^p(\mathbb{R}^n)}\]</div>
+<div class="math-display">\[\begin{aligned}
+\|u\|_{C^{0,\gamma}(\mathbb{R}^n)}&amp;=\sup_{x\in\mathbb{R}^n}|u(x)|+\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}
+&amp;\lesssim \|Du\|_{L^p(\mathbb{R}^n)}+\|u\|_{L^p(\mathbb{R}^n)}=\|u\|_{W^{1,p}(\mathbb{R}^n)}
+\end{aligned}\]</div>
+<h4>$H^1_0(\Omega)$的对偶空间$H^{-1}(\Omega)$</h4>
+<div class="math-display">\[\langle f,v\rangle=(f,v)_{L^2(\Omega)}=\int_\Omega fv\mathrm{d}x,  v\in H^1_0(\Omega)\]</div>
+<div class="math-display">\[\langle f,v\rangle=\int_\Omega\left(f_0v+\sum^{n}_{i=1}f_iv_{x_i}\right)\mathrm{d}x,  \forall v\in H^1_0(\Omega)\]</div>
+<div class="math-display">\[\|f\|_{H^{-1}(\Omega)}=\inf\left\{\left(\int_\Omega \sum^{n}_{i=1}|f_i|^2\mathrm{d}x\right)^{1/2}\right\}\]</div>
+<div class="math-display">\[\langle f,v\rangle=(f,v)_{L^2(\Omega)}=\int_\Omega fv\mathrm{d}x,  v\in H^1_0(\Omega)\]</div>
+<div class="math-display">\[\begin{aligned}
+\|f\|_{H^{-1}(\Omega)} &amp;= \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\left|\langle f,v\rangle\right|}{\|v\|_{H^1_0(\Omega)}}\\
+&amp;= \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\left|\int_\Omega\left(f_0v+\sum^{n}_{i=1}f_iv_{x_i}\right)\mathrm{d}x\right|}{\|v\|_{H^1_0(\Omega)}}\\
+&amp;\leqslant \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\|f_0\|_{L^2(\Omega)}\|v\|_{L^2(\Omega)}+\sum_{i=1}^n\|f_i\|_{L^2(\Omega)}\|\paa_iv\|_{L^2(\Omega)}}{\|v\|_{H^1_0(\Omega)}}\\
+&amp;\leqslant \sum_{i=0}^n\|f_i\|_{L^2(\Omega)}
+\end{aligned}\]</div>
+<div class="math-display">\[\langle f,v\rangle=(u,v)_{H^1_0(\Omega)},\forall  v\in H^1_0(\Omega)\]</div>
+<div class="math-display">\[\langle f,v\rangle=\int_{\Omega}\left(uv+\sum_{i=1}^n\pa_{i}u\pa_i v\right)\mathrm{d}x,\forall  v\in H^1_0(\Omega)\]</div>
+<div class="math-display">\[\|f\|_{H^{-1}(\Omega)}=\|u\|_{H^1_0(\Omega)}=\left(\int_{\Omega}\left(|u|^2+\sum_{i=1}^n|\pa_i u|^2\right)\mathrm{d}x\right)^{1/2}=\left(\int_{\Omega}\sum_{i=0}^n|f_i|^2\mathrm{d}x\right)^{1/2}\]</div>
+<div class="math-display">\[\langle f,v\rangle=\int_\Omega\left(f_0v+\sum^{n}_{i=1}f_iv_{x_i}\right)\mathrm{d}x,  \forall v\in H^1_0(\Omega)\]</div>
+<div class="math-display">\[\begin{aligned}
+|\|f\|_{H^{-1}(\Omega)}| &amp;\leqslant \int_\Omega\left(|g_0||v|+\sum^{n}_{i=1}|g_i||v_{x_i}|\right)\mathrm{d}x\\
+&amp;\leqslant \left(\int_{\Omega}\sum_{i=1}^n|g_i|^2\mathrm{d}x\right)^{1/2}\|v\|_{H^1_0(\Omega)}
+\end{aligned}\]</div>
+<div class="math-display">\[\|f\|_{H^{-1}(\Omega)}=\|u\|_{H^1_0(\Omega)}=\left(\int_{\Omega}\left(|u|^2+\sum_{i=1}^n|\pa_i u|^2\right)\mathrm{d}x\right)^{1/2}=\left(\int_{\Omega}\sum_{i=0}^n|f_i|^2\mathrm{d}x\right)^{1/2}\]</div>
+<div class="math-display">\[\int_{\Omega}fv\mathrm{d}x=(f,v)_{L^2(\Omega)}=f(v)=\langle f,v\rangle\]</div>
+<div class="math-display">\[\begin{aligned}
+\|f\|_{H^{-1}(\Omega)} &amp;= \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\left|\langle f,v\rangle\right|}{\|v\|_{H^1_0(\Omega)}}\\
+&amp;= \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\left|(f,v)_{L^2(\Omega)}\right|}{\|v\|_{H^1_0(\Omega)}}\\
+&amp;\leqslant \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\|f\|_{L^2(\Omega)}\|v\|_{L^2(\Omega)}}{\|v\|_{H^1_0(\Omega)}}\\
+&amp;\leqslant \|f\|_{L^2(\Omega)}
+\end{aligned}\]</div>
+<h3>二阶椭圆方程</h3></section><nav class="prev-next"><a href="finite-element.html">上一页：有限元方法初步</a><a href="functional-analysis.html">下一页：泛函分析</a></nav></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

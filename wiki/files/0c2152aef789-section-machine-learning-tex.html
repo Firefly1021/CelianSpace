@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="数学基础/Section/Machine_Learning.tex" />
+  <title>Machine_Learning.tex | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>Machine_Learning.tex</h1><p class="doc-subtitle">数学基础 / latex / 13.2 KB</p><div class="doc-chips"><span>数学基础</span><span>latex</span></div><p class="source-path">来源：数学基础/Section/Machine_Learning.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Machine_Learning.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Machine_Learning.tex">打开原始文件</a><a class="button-link" href="../materials/math-source.html">返回分类</a></div><p></p>
+<h2>机器学习</h2>
+<h3>线性代数</h3>
+<h3>机器学习的基本要素</h3>
+<p>机器学习是从有限的观测数据中学习出具有一般性的规律,并可以将总结出来的规律推广到未观测样本上.机器学习方法大致可以分为三个基本要素:模型,学习准则,优化算法.</p>
+<h4>模型</h4>
+<p>首先给定输入空间$\mathcal{X}$和输出空间$\mathcal{Y}$,不同的机器学习任务区别在输出空间的不同,比如二分类问题中$\mathcal{Y}=\{-1,+1\}$,K分类问题中$\mathcal{Y}=\{1,2,\cdots,K\}$以及回归问题中$\mathcal{Y}=\mathbb{R}$. 输入空间和输出空间构成了一个样本空间$\mathcal{X}\times\mathcal{Y}$,对于样本空间中的样本$(\vecb{x},y)\in \mathcal{X}\times\mathcal{Y}$,假定$\vecb{x}$和$y$之间的关系可以通过一个未知的真实映射$y=g(\vecb{x})$或者真实条件概率$\mathbb{P}_r(y|\vecb{x})$.机器学习的目标就是找到一个模型近似真实映射或者真实条件概率. 由于我们并不知道真实映射$y=g(\vecb{x})$或者真实条件概率$\mathbb{P}_r(y|\vecb{x})$的具体形式,因此我们只能在假设空间$\mathcal{F}$上观测训练集$\mathcal{D}$的效果,并从中选择一个理想的假设. 假设空间$\mathcal{F}$通常是一个参数化的函数族</p>
+<div class="math-display">\[\mathcal{F}=\{f(\vecb{x};\theta):\theta\in\mathbb{R}^{D}\}\]</div>
+<p>线性模型</p>
+<div class="math-display">\[f(\vecb{x};\theta)=\vecb{w}^T\vecb{x}+b\]</div>
+<p>其中参数$\theta$包含了权重向量$\vecb{w}$和偏置$b$. 非线性模型可以写为多个非线性基函数的线性组合</p>
+<div class="math-display">\[f(\vecb{x};\theta)=\vecb{w}^T\phi(\vecb{x})+b\]</div>
+<p>其中$\phi(\vecb{x})=[\phi_1(\vecb{x}),\phi_2(\vecb{x}),\cdots,\phi_K(\vecb{x})]^T$为$K$个非线性基函数组成的向量,参数$\theta$包含了权重向量$\vecb{w}$和偏置$b$.如果$\phi(\vecb{x})$本身是可以学习的基函数,比如</p>
+<div class="math-display">\[\phi_k(\vecb{x})=h(\vecb{w}_k^T\phi&#x27;(\vecb{x})+b_k),\forall 1\leqslant k\leqslant K\]</div>
+<p>其中$h$是非线性函数,$\phi&#x27;(\vecb{x})$为另一组基函数.此时$f(\vecb{x};\theta)$就等价于神经网络模型.</p>
+<h4>学习准则</h4>
+<p>令训练集$\mathcal{D}=\{(\vecb{x}^{(n)},y^{(n)})\}_{n=1}^N$是由$N$个独立同分布的样本组成,模型$f(\vecb{x};\theta)$的好坏可以通过期望风险$\mathcal{R}(\theta)$来衡量,如果设$(\vecb{x},y)\sim \mathbb{P}_r(\vecb{x},y)$,其定义为</p>
+<div class="math-display">\[\mathcal{R}(\theta)=\mathbb{E}\left[\mathcal{L}(y,f(\vecb{x};\theta))\right]\]</div>
+<p>其中$\mathcal{L}(y,f(\vecb{x};\theta))$为损失函数. 损失函数是一个非负实值函数,用来量化模型预测和真实标签之间的差异.最直观的损失函数是模型在训练集上的错误率,即0-1损失函数</p>
+<div class="math-display">\[\begin{aligned}
+\mathcal{L}(y,f(\vecb{x};\theta)) &amp;=
+\begin{cases}
+0\; &amp; y=f(\vecb{x};\theta)\\
+1\; &amp; y\neq f(\vecb{x};\theta)
+\end{cases}\\
+&amp;=\mathbf{1}(y\neq f(\vecb{x};\theta))
+\end{aligned}\]</div>
+<p>显而易见,0-1损失函数的数学性质不大好,因此经常用连续可微的损失函数代替. 平方损失函数经常用在预测标签$y$为实值的问题中,但一般不适用于分类问题.其定义为</p>
+<div class="math-display">\[\mathcal{L}(y,f(\vecb{x};\theta))= \frac{1}{2}\left(y-f(\vecb{x};\theta)\right)^2\]</div>
+<p>一般用于分类问题的是交叉熵损失函数.假设样本的标签$y=\{1,\cdots,K\}$为离散的类别,模型$f(\vecb{x};\theta)\in [0,1]^K$的输出为类别标签的条件概率,即</p>
+<div class="math-display">\[\mathbb{P}(y=k|\vecb{x};\theta)=f_k(\vecb{x};\theta)\]</div>
+<p>很容易看出来$f_k(\vecb{x};\theta)\in [0,1],\sum_{k=1}^K f_k(\vecb{x};\theta)=1$. 我们可以用一个向量来表示样本标签,比如</p>
+<div class="math-display">\[y=k\Leftrightarrow \vecb{y}=[\underbrace{0,\cdots,0}_{k-1}, 1,0,\cdots,0]^T\]</div>
+<p>标签向量$\vecb{y}$可以看作样本标签的真实条件概率$\mathbb{P}_r(\vecb{y}|\vecb{x})$,第$k$个分量$y_k$是类别为$k$的真实条件概率,换句话说,假设样本的类别为$k$,那么它属于第$k$类的概率为1,属于其他类的概率为0. 现在我们并不知道样本标签的真实条件概率分布$\vecb{y}$,而模型预测的是$f(\vecb{x};\theta)$,那么两个分布的交叉熵定义为</p>
+<div class="math-display">\[\mathcal{L}(y,f(\vecb{x};\theta))=-\vecb{y}^T\log f(\vecb{x};\theta)=-\sum_{k=1}^K y_k\log f_k(\vecb{x};\theta)\]</div>
+<p>交叉熵直观理解是真实情况与自己理解之间的差距,猜的越准,交叉熵就越小.而熵是某种信息的固有属性,对于给定的训练集,训练标签的熵是已经确定的. 对于二分类问题,假设$y$的取值为$\{+1,-1\},f(\vecb{x};\theta)\in\mathbb{R}$.Hinge损失函数定义为</p>
+<div class="math-display">\[\mathcal{L}(y,f(\vecb{x};\theta))=\max\{0,1-yf(\vecb{x};\theta)\}\]</div>
+<p>现在回到期望风险上.由于我们并不知道真实的分布以及映射关系,那么无法计算期望风险.给定一个训练集$\mathcal{D}=\{(\vecb{x}^{(n)},y^{(n)})\}_{n=1}^N$,我们可以计算的是经验风险</p>
+<div class="math-display">\[\mathcal{R}^{emp}_{\mathcal{D}}(\theta)=\frac{1}{N}\sum_{n=1}^N\mathcal{L}(y^{(n)},f(\vecb{x}^{(n)};\theta))\]</div>
+<p>因此从直觉上来看,一个可行的学习准则是找到一组参数$\theta^*$使得经验风险最小,即</p>
+<div class="math-display">\[\theta^*=\arg\min_{\theta}\mathcal{R}^{emp}_{\mathcal{D}}(\theta)\]</div>
+<p>这就是经验风险最小化准则.值得提醒的是这里的$\arg\min$是argument of minimum. 根据Kolmogorov强大数定律,独立同分布的随机变量序列满足强大数定律,也就是说当训练集的大小趋于无穷时,经验风险就趋近于期望风险.但我们无法获得无限的训练样本,并且训练样本也未必很好的反应全部数据的真实情况,经验风险最小化原则很容易导致模型在训练集上的效果很好,但预测未知数据的效果差,这就是过拟合.</p>
+<h4>优化算法</h4>
+<div class="math-display">\[\begin{aligned}
+\theta_{t+1} &amp; = \theta_t-\alpha\nabla_{\theta}\mathcal{R}^{emp}_{\mathcal{D}}(\theta_t)\\
+&amp; = \theta_t-\frac{\alpha}{N}\sum_{n=1}^N\nabla_{\theta}\mathcal{L}(y^{(n)},f(\vecb{x}^{(n)};\theta))
+\end{aligned}\]</div>
+<div class="math-display">\[\theta_{t+1}\leftarrow \theta_t-\frac{\alpha}{K}\sum_{(\vecb{x},y)\in\mathcal{S}_t}\nabla_{\theta}\mathcal{L}(y^{(n)},f(\vecb{x}^{(n)};\theta))\]</div>
+<h4>PAC学习理论</h4>
+<div class="math-display">\[\mathcal{G}_{\mathcal{D}}(f)=\mathcal{R}(f)-\mathcal{R}^{emp}_{\mathcal{D}}(f)\]</div>
+<div class="math-display">\[\lim\limits_{|\mathcal{D}|\rightarrow\infty}\mathcal{G}_{\mathcal{D}}(f)=0\]</div>
+<div class="math-display">\[\mathbb{P}\left([\mathcal{R}(f)-\mathcal{R}^{emp}_{\mathcal{D}}(f)\leqslant\varepsilon]\right)\geqslant 1-\delta\]</div>
+<h3>线性模型</h3>
+<div class="math-display">\[f(\vecb{x};\vecb{w})=w_1x_1+w_2x_2+\cdots+w_Dx_D+b=\vecb{w}^T\vecb{x}+b\]</div>
+<div class="math-display">\[y=g(f(\vecb{x};\vecb{w}))\]</div>
+<div class="math-display">\[\begin{aligned}
+g(f(\vecb{x};\vecb{w})) &amp;= \sgn (f(\vecb{x};\vecb{w}))\\
+&amp;=
+\begin{cases}
++1,&amp; \text{若}\; f(\vecb{x};\vecb{w})&gt;0\\
+-1,&amp; \text{若}\; f(\vecb{x};\vecb{w})&lt;0
+\end{cases}
+\end{aligned}\]</div>
+<div class="math-display">\[f_i(\vecb{x};\vecb{w}_i)=\vecb{w}^T_i\vecb{x}+b_i\]</div>
+<div class="math-display">\[y=\arg\max_{i\in \{1,\cdots,C\}}f_i(\vecb{x};\vecb{w}_i)\]</div>
+<h4>Logistic回归</h4>
+<div class="math-display">\[\mathbb{P}(y=1|\vecb{x})=g(f(\vecb{x};\vecb{w}))\]</div>
+<div class="math-display">\[\text{Logistic}(x)=\frac{L}{1+\exp\{-K(x-x_0)\}}\]</div>
+<div class="math-display">\[\sigma &#x27;(x)=\sigma (x)(1-\sigma (x))\]</div></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

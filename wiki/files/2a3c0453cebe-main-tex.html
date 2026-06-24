@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="数学基础/main.tex" />
+  <title>main.tex | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>main.tex</h1><p class="doc-subtitle">数学基础 / latex / 10.5 KB</p><div class="doc-chips"><span>数学基础</span><span>latex</span></div><p class="source-path">来源：数学基础/main.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/main.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/main.tex">打开原始文件</a><a class="button-link" href="../materials/math-source.html">返回分类</a></div><p>数学基础 C\&#x27;elian Sun   </p>
+<p class="source-path">\input{Section/Set_Axiomatics.tex}</p>
+<p class="source-path">\input{Section/Classical_Calculus.tex}</p>
+<p class="source-path">\input{Section/Complex_Analysis.tex}</p>
+<p class="source-path">\input{Section/Real_Analysis.tex}</p>
+<p class="source-path">\input{Section/Function_Analysis.tex}</p>
+<p class="source-path">\input{Section/Foutier_Analysis.tex}</p>
+<p class="source-path">\input{Section/Topology_Geometry.tex}</p>
+<p class="source-path">\input{Section/Algebra_NumberTheory.tex}</p>
+<p class="source-path">\input{Section/Finite_Element.tex}</p>
+<p class="source-path">\input{Section/Machine_Learning.tex}</p>
+<p class="source-path">\input{Section/Numerical_Analysis.tex}</p>
+<p>\thispagestyle{empty} \tableofcontents  \color{ZhengWen}</p>
+<p></p>
+<h2>两个求和公式及应用</h2>
+<h3>Euler-Maclaurin求和公式</h3>
+<p>级数的一个重要问题在于如何判断其收敛性,这一问题本质上就是分析级数的渐近性质,也就是怎么增长或衰减的.这在数论中(尤其是解析数论里)十分重要.下面给出一般的Euler-Maclaurin求和公式,它是级数收敛性判断的一个重要工具.</p>
+<div class="math-display">\[\sum_{n=a}^{b}f(n)=\int_{a}^{b}f(x)dx+\frac{f(a)+f(b)}{2}+\sum_{k=1}^{\lfloor m/2\rfloor }\frac{B_{2k}}{(2k)!}(f^{(2k-1)}(b)-f^{(2k-1)}(a))+R_m\]</div>
+<div class="math-display">\[B_0(x)=1,   B_n&#x27;(x)=nB_{n-1}(x),   \int_0^1 B_n(x) dx=0\]</div>
+<div class="math-display">\[\begin{aligned}
+B_0(x) &amp;= 1 \\
+B_1(x) &amp;= x - \frac{1}{2} \\
+B_2(x) &amp;= x^2 - x + \frac{1}{6} \\
+B_3(x) &amp;= x^3 - \frac{3}{2}x^2 + \frac{1}{2}x \\
+B_4(x) &amp;= x^4 - 2x^3 + x^2 - \frac{1}{30} \\
+\end{aligned}\]</div>
+<div class="math-display">\[B_0=1,   B_1=-\frac{1}{2},   B_2=\frac{1}{6},   B_3=0,   B_4=-\frac{1}{30},   B_5=0,   B_6=\frac{1}{42},   \cdots\]</div>
+<div class="math-display">\[\sum_{n=a}^{b}f(n)=\int_{a}^{b}f(x)dx+\frac{f(a)+f(b)}{2}+\int_{a}^{b}(x-\lfloor x \rfloor-\frac{1}{2})f&#x27;(x)dx\]</div>
+<div class="math-display">\[\begin{aligned}
+\int_{a}^{b}(x-\lfloor x \rfloor-\frac{1}{2})f&#x27;(x)dx &amp;= \sum_{k=a}^{b-1}\int_{k}^{k+1}(x-\lfloor x \rfloor-\frac{1}{2})f&#x27;(x)dx \\
+&amp;= \sum_{k=a}^{b-1}\int_{0}^{1}(x-\frac{1}{2})f&#x27;(k+x)dx \\
+&amp;= \sum_{k=a}^{b-1}\left[\frac{f(k)+f(k+1)}{2}-\int_{k}^{k+1}f(x)dx\right] \\
+&amp;= \sum_{k=a}^{b}f(k)-\int_{a}^{b}f(x)dx-\frac{f(a)+f(b)}{2}
+\end{aligned}\]</div>
+<div class="math-display">\[\sum_{n=1}^{N}\frac{1}{n} = \ln N+\frac{1}{2}+\frac{1}{2N}-\int_{1}^{N}\frac{x-\lfloor x \rfloor-1/2}{x^2}dx\]</div>
+<div class="math-display">\[\sum_{n=1}^{N}\frac{\ln n}{n^2+1} = \int_{1}^{N}\frac{\ln x}{x^2+1}dx+\frac{\ln N}{2(N^2+1)}+\int_{1}^{N}(x-\lfloor x \rfloor-\frac{1}{2})\left(\frac{1+x^2(1-2\ln x)}{x(x^2+1)^2}\right)dx\]</div>
+<div class="math-display">\[\int_{1}^{\infty}\frac{\ln x}{x^2+1}dx,  \int_{1}^{\infty}(x-\lfloor x \rfloor-\frac{1}{2})\left(\frac{1+x^2(1-2\ln x)}{x(x^2+1)^2}\right)dx\]</div>
+<div class="math-display">\[\begin{aligned}
+\ln N! = \sum_{n=1}^{N}\ln n &amp;= \int_{1}^{N}\ln x dx + \frac{\ln N}{2} + \int_{1}^{N}(x-\lfloor x \rfloor-\frac{1}{2})\frac{1}{x}dx\\
+&amp;= N\ln N - N + 1 + \frac{\ln N}{2} + \int_{1}^{N}(x-\lfloor x \rfloor-\frac{1}{2})\frac{1}{x}dx
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+\int_{1}^{N}(x-\lfloor x \rfloor-\frac{1}{2})\frac{1}{x}dx &amp;= \frac{1}{2}\int_1^N \frac{1}{x}\mathrm{d}B_2(x-\lfloor x \rfloor) \\
+&amp;= \frac{1}{2}\left\{\left[\frac{B_2(x-\lfloor x \rfloor)}{x}\right]_{1}^{N}-\int_1^N B_2(x-\lfloor x \rfloor)\mathrm{d}\left(\frac{1}{x}\right)\right\} \\
+\end{aligned}\]</div>
+<div class="math-display">\[\ln N!= N\ln N - N + \frac{\ln N}{2} +\left(1-\frac{1}{12}\right)+\frac{1}{12N} + \frac{1}{2}\int_1^N B_2(x-\lfloor x \rfloor)\frac{1}{x^2}dx\]</div>
+<div class="math-display">\[\int_1^N B_2(x-\lfloor x \rfloor)\frac{1}{x^2}dx=\int_1^\infty B_2(x-\lfloor x \rfloor)\frac{1}{x^2}dx - \int_N^\infty B_2(x-\lfloor x \rfloor)\frac{1}{x^2}dx\]</div>
+<div class="math-display">\[\left|\int_N^\infty B_2(x-\lfloor x \rfloor)\frac{1}{x^2}dx\right| \leqslant \frac{1}{6} \int_N^\infty \frac{1}{x^2}dx = \frac{1}{6N}\]</div>
+<div class="math-display">\[\ln N! = N\ln N - N + \frac{\ln N}{2} + C + O\left(\frac{1}{N}\right)\]</div>
+<h3>Abel求和公式</h3>
+<div class="math-display">\[\sum_{1\leqslant n\leqslant x}a_nf(n) = A(x)f(x) - \int_1^x A(t)f&#x27;(t)dt\]</div>
+<div class="math-display">\[\begin{aligned}
+\sum_{1\leqslant n\leqslant x}a_nf(n) &amp;= \sum_{1\leqslant n\leqslant k}a_nf(n)\\
+&amp;= A(k)f(k)-\sum_{1\leqslant n\leqslant k-1}A(n)(f(n+1)-f(n)) \\
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+\sum_{1\leqslant n\leqslant k-1}A(n)(f(n+1)-f(n)) &amp;= \sum_{1\leqslant n\leqslant k-1}A(n)\int_n^{n+1}f&#x27;(t)dt \\
+&amp;= \sum_{1\leqslant n\leqslant k-1}\int_n^{n+1}A(t)f&#x27;(t)dt\\
+&amp;= \int_1^k A(t)f&#x27;(t)dt=\int_1^x A(t)f&#x27;(t)dt-\int_k^x A(t)f&#x27;(t)dt
+\end{aligned}\]</div>
+<div class="math-display">\[\int_k^x A(t)f&#x27;(t)dt= A(k)\int_k^x f&#x27;(t)dt=A(x)f(x)-A(k)f(k)\]</div>
+<div class="math-display">\[\sum_{1\leqslant n\leqslant x}a_nf(n) = A(x)f(x) - \int_1^x A(t)f&#x27;(t)dt\]</div>
+<div class="math-display">\[a_n=\mathbf{1}_p(n)=
+\begin{cases}
+1, &amp; \text{如果 $n$ 是素数} \\
+0, &amp; \text{其他}
+\end{cases}\]</div>
+<div class="math-display">\[\sum_{p\leqslant x}\frac{1}{p} = \frac{\pi(x)}{x} + \int_2^x \frac{\pi(t)}{t^2}dt\]</div>
+<div class="math-display">\[\frac{\pi(x)}{x}= \frac{1}{\ln x} + \frac{E(x)}{x}= \frac{1}{\ln x} + O\left(\frac{1}{\ln^2 x}\right)\]</div>
+<div class="math-display">\[\int_2^x \frac{\pi(t)}{t^2}dt= \int_2^x \frac{1}{t\ln t}dt + \int_2^x \frac{E(t)}{t^2}dt=\ln\ln x-\ln\ln 2 + \int_2^x \frac{E(t)}{t^2}dt\]</div>
+<div class="math-display">\[\int_2^{\infty}\left|\frac{E(t)}{t^2}\right|dt \leqslant C\int_2^{\infty} \frac{1}{t\ln^2 t}dt=\frac{C}{\ln 2}\]</div>
+<div class="math-display">\[\left|\int_x^{\infty}\frac{E(t)}{t^2}dt\right|\leqslant C\int_x^{\infty} \frac{1}{t\ln^2 t}dt = \frac{C}{\ln x}\]</div>
+<div class="math-display">\[\begin{aligned}
+\sum_{p\leqslant x}\frac{1}{p} &amp;= \frac{\pi(x)}{x} + \int_2^x \frac{\pi(t)}{t^2}dt\\
+&amp;= \frac{1}{\ln x} + O\left(\frac{1}{\ln^2 x}\right) + \ln\ln x-\ln\ln 2 + C_1 + O\left(\frac{1}{\ln x}\right) \\
+\end{aligned}\]</div>
+<div class="math-display">\[\sum_{p\leqslant x}\frac{1}{p} = \ln\ln x + M + O\left(\frac{1}{\ln x}\right)\]</div></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

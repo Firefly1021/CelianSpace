@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="LearningCode/CPP/LearningCPP/MathCPP/Buffer.cpp" />
+  <title>Buffer.cpp | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>Buffer.cpp</h1><p class="doc-subtitle">LearningCode / code / 8.1 KB</p><div class="doc-chips"><span>LearningCode</span><span>code</span></div><p class="source-path">来源：LearningCode/CPP/LearningCPP/MathCPP/Buffer.cpp · <a href="../../materials/LearningCode/CPP/LearningCPP/MathCPP/Buffer.cpp">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/LearningCode/CPP/LearningCPP/MathCPP/Buffer.cpp">打开原始文件</a><a class="button-link" href="../materials/learning-code-source.html">返回分类</a></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;fstream&gt;
+
+// 功能：实现buffer.h中的各个缓冲类的函数
+
+#include &quot;buffer.h&quot;
+#include &quot;cbuffer.h&quot;
+
+DOUBLE defaulterr = 1e-8; 	// 缺省的误差调整值
+int doadjust = 1;		// 决定数据是否根据误差值自动向整数靠扰，
+							// 其实是向小数点后三位靠扰
+
+/* 下面的六个指针分别初始化指向产生六个缓冲区长度为空的六个
+	缓冲区，其中两个实数缓冲区，两个长整数缓冲区，两个复数缓冲区
+  其中实数，长整数和复数这三种数据类型的每一种都有磁盘和内存两种
+  缓冲区。如果数据较小时可以存放在内存中，而数据量很大时则存放在
+  临时文件构成的磁盘缓冲区中。这六个空缓冲区并不真正用来存放数据，
+  而是用来产生出新的与自己一样的缓冲区，因为它们都是抽象类buffer的
+  子类，所以都将被settomemory函数或者settodisk函数赋给三个buffer类的
+  指针，使得getnewbuffer,getnewcbuffer和getnewlbuffer三个函数能够从这些
+  缓冲区中用抽象类函数产生同样类型的缓冲区。
+  总的想法是，在以后编写的计算各种矩阵或者行列式，或者其它的大量
+  数据的运算时，只要调用一次settomemroy或者settodisk函数，那么用户
+  不必改写一行代码，就可以照算不误，而存储媒体已经改变。
+*/
+static membuffer *memorybuffer = new membuffer; // 实数内存缓冲区指针
+static diskbuffer *diskfilebuffer = new diskbuffer; // 实数磁盘缓冲区指针
+static lmembuffer *memorylbuffer = new lmembuffer; // 长整数内存缓冲区指针
+static ldiskbuffer *diskfilelbuffer = new ldiskbuffer; // 长整数磁盘缓冲区指针
+static memcbuffer *memorycbuffer = new memcbuffer; // 复数内存缓冲区指针
+static diskcbuffer *diskfilecbuffer = new diskcbuffer; // 复数磁盘缓冲区指针
+
+
+/* 以下三个缺省缓冲区指针为全局变量，用户可以定义自己的缓冲区
+	类，并在产生静态实例变量后将其指针赋予它们 */
+
+buffer *defbuffer = memorybuffer; // 缺省实数缓冲区指针
+lbuffer *deflbuffer = memorylbuffer; // 缺省长整数缓冲区指针
+cbuffer *defcbuffer = memorycbuffer; // 缺省复数缓冲区指针
+
+
+/* 产生一个新的容量为n个实数的实数缓冲区，返回此缓冲区指针，
+	缓冲区的类型与defbuffer指向的变量的子类类型相同 */
+buffer * getnewbuffer(size_t n){
+	return defbuffer-&gt;newbuf(n);
+}
+
+/* 产生一个新的容量为n个长整数的长整数缓冲区，返回此缓冲区指针，
+	缓冲区的类型与deflbuffer指向的变量的子类类型相同 */
+lbuffer * getnewlbuffer(size_t n){
+	return deflbuffer-&gt;newbuf(n);
+}
+
+/* 产生一个新的容量为n个复数的复数缓冲区，返回此缓冲区指针，
+	缓冲区的类型与defcbuffer指向的变量的子类类型相同 */
+cbuffer * getnewcbuffer(size_t n){
+	return defcbuffer-&gt;newbuf(n);
+}
+
+// 将各实数，长整数和复数的缺省的缓冲区指针指向相应的磁盘缓冲区指针
+void settodisk()
+{
+	defbuffer = diskfilebuffer;
+	deflbuffer = diskfilelbuffer;
+	defcbuffer = diskfilecbuffer;
+}
+
+// 将各实数，长整数和复数的缺省的缓冲区指针指向相应的内存缓冲区指针
+void settomemory()
+{
+	defbuffer = memorybuffer;
+	deflbuffer = memorylbuffer;
+	defcbuffer = memorycbuffer;
+}
+
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; o, buffer&amp; b)
+{
+	size_t maxitem = 5;
+	for(size_t i=0; i&lt;b.len(); i++) {
+		o &lt;&lt; b[i] &lt;&lt; &#x27;\t&#x27;;
+		if(((i+1) % maxitem)==0)
+			o &lt;&lt; std::endl;
+	}
+	o &lt;&lt; std::endl;
+	return o;
+}
+
+
+// 将实数缓冲区的第n个实数的值设为d，并返回一个实数缓冲区的
+// 指针，此指针一般就是指向自己，而在一个缓冲区的引用数多于一个时
+// 此函数将先克隆出一个新的缓冲区，此新的缓冲区的引用数为1，并对此
+// 新的缓冲区的第n个实数的值设为d，然后返加新缓冲区的指针
+buffer* buffer::set(size_t n, DOUBLE d)
+{
+	// 如调整标志设置，则调整
+	if(doadjust) adjust(d);
+	if(refnum == 1) {	// 如果引用数为1，则将第n个实数的值设为d，并返回自己
+			// 的指针
+		retrieve(n) = d;
+		return this;
+	}
+	refnum --;	// 引用数大于1，因此将本缓冲区的引用数减1
+	buffer * b;
+	b = clone();	// 克隆一个内容同自己一样的新缓冲区
+	(b-&gt;retrieve(n)) = d; // 将新缓冲区的第n个实数的值设为d
+	return b;	// 返回新缓冲区的指针
+}
+
+buffer* membuffer::clone() // 克隆一个内容和自己一样的实数内存缓冲区，并返回其指针
+{
+	buffer* b;
+	b = new membuffer(length);	// 建立一个新的实数内存缓冲区，尺寸和自己的一样
+	if(length &gt; 0)	// 如果自己有内容，将全部拷贝到新产生的缓冲区中
+		for(size_t i=0; i&lt;length; i++)
+			(b-&gt;retrieve(i)) = (*this)[i];
+	return b;
+}
+
+// 实数磁盘缓冲区构造函数
+diskbuffer::diskbuffer(size_t lth):buffer(),length(lth),n(0),buf(0.0)
+{
+//	tempfp = tmpfile();	// 打开一新的临时文件，指针赋给tempfp
+	tmpfile_s(&amp;tempfp);
+}
+
+// 实数磁盘缓冲区的析构函数
+diskbuffer::~diskbuffer()
+{
+	fclose(tempfp);	// 关闭临时文件
+}
+
+void diskbuffer::alloc(size_t num) // 将磁盘缓冲区重新定为尺寸为num
+{
+	length = num;
+	if(!tempfp)	 // 如果临时文件尚未打开，则打开临时文件
+//		tempfp = tmpfile();
+	tmpfile_s(&amp;tempfp);
+	n = 0;	// 当前缓冲区指针设在开始，就是0处
+}
+
+void diskbuffer::release() // 释放磁盘缓冲区
+{
+	fclose(tempfp);	// 关闭临时文件
+	buf = 0.0;
+	length = 0;
+}
+
+DOUBLE&amp; diskbuffer::retrieve(size_t i) // 返回实数磁盘缓冲区的第i个实数
+{
+	long off;
+	off = (long)n*sizeof(DOUBLE); // 计算出当前指针n对应的文件的偏移量
+	fseek(tempfp, off, SEEK_SET); // 移动文件指针到给定的偏移量处
+	fwrite(&amp;buf, sizeof(DOUBLE), 1, tempfp); // 将当前的buf中值写到文件中
+	off = (long)i*sizeof(DOUBLE); // 计算第i个实数在文件的什么位置
+	fseek(tempfp, off, SEEK_SET); // 移动文件指针到给定的偏移量处
+	fread(&amp;buf, sizeof(DOUBLE), 1, tempfp); // 读回所需的实数值到buf中
+	n = i;	// 并将n改为i
+	return buf; // 返回读出的实数的引用
+}
+
+buffer* diskbuffer::clone() // 克隆一个新的内容与自己一样的实数磁盘缓冲区
+{
+	buffer* b;
+	b = new diskbuffer(length); // 定位产生一个与自己长度一样的新缓冲区
+	if(length &gt; 0)	// 如果长度大于0，则自己的内容拷贝到新缓冲区
+		for(size_t i=0; i&lt;length; i++)
+			(b-&gt;retrieve(i)) = (*this)[i];
+	return b; // 返回新缓冲区的指针
+}
+
+
+// 将第n个长整数的值设为v，如果缓冲区的引用数大于1，
+// 则会先克隆出新的缓冲区，然后再进行操作，并返回新缓冲区的指针
+lbuffer* lbuffer::set(size_t n, long v)
+{
+	if(refnum == 1) { //  引用数为1
+		retrieve(n) = v; // 将第n个长整数的值设为v
+		return this;	// 返回自己
+	}
+	refnum --;		// 引用数大于1，引用数减1
+	lbuffer * b;
+	b = clone();	// 克隆出新的内容一样的长整数缓冲区
+	(b-&gt;retrieve(n)) = v; // 将新缓冲区的第n个长整数值设为v
+	return b;	// 返回新缓冲区的指针
+}
+
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; o, lbuffer&amp; b)
+{
+	size_t maxitem = 5;
+	for(size_t i=0; i&lt;b.len(); i++) {
+		o &lt;&lt; b[i] &lt;&lt; &#x27;\t&#x27;;
+		if(((i+1) % maxitem)==0)
+			o &lt;&lt; std::endl;
+	}
+	o &lt;&lt; std::endl;
+	return o;
+}
+
+lbuffer* lmembuffer::clone() // 克隆一个内容一新的长整数内存缓存区
+{
+	lbuffer* b;
+	b = new lmembuffer(length);	// 产生长度与自己一样的长整数缓存区
+	if(length &gt; 0)	// 如果长度大于0，则将自己的内容拷贝过去
+		for(size_t i=0; i&lt;length; i++)
+			(b-&gt;retrieve(i)) = (*this)[i];
+	return b;	// 返回新缓存区的指针
+}
+
+// 长整数磁盘缓存区的构造函数
+ldiskbuffer::ldiskbuffer(size_t lth):lbuffer(),length(lth),n(0),buf(0)
+{
+//	tempfp = tmpfile();	// 打开临时文件
+	tmpfile_s(&amp;tempfp);
+}
+
+// 长整数磁盘缓存区的析构函灵敏
+ldiskbuffer::~ldiskbuffer()
+{
+	fclose(tempfp);	// 关闭临时文件
+}
+
+// 将长度定改为num
+void ldiskbuffer::alloc(size_t num)
+{
+	length = num;
+	if(!tempfp) // 如临时文件尚未打开，则打开
+//		tempfp = tmpfile();
+	tmpfile_s(&amp;tempfp);
+	n = 0;
+}
+
+// 长整数磁盘缓存区释放
+void ldiskbuffer::release()
+{
+	fclose(tempfp);	// 关闭临时文件
+	buf = 0;
+	length = 0;
+}
+
+// 检索第i个值的引用
+long&amp; ldiskbuffer::retrieve(size_t i)
+{
+	long off;
+	off = (long)n*sizeof(long); // 先将当前的内容保存
+	fseek(tempfp, off, SEEK_SET);
+	fwrite(&amp;buf, sizeof(long), 1, tempfp);
+	off = (long)i*sizeof(long);	// 再取出第i个长整数到buf中
+	fseek(tempfp, off, SEEK_SET);
+	fread(&amp;buf, sizeof(long), 1, tempfp);
+	n = i;
+	return buf;
+}
+
+// 克隆一个和内容和自己一样的长整数磁盘缓存区
+lbuffer* ldiskbuffer::clone()
+{
+	lbuffer* b;
+	b = new ldiskbuffer(length); // 产生长度和自己一样的缓存区
+	if(length &gt; 0)	// 如果自己内容不为空，拷贝内容到新的缓存区
+		for(size_t i=0; i&lt;length; i++)
+			(b-&gt;retrieve(i)) = (*this)[i];
+	return b;
+}
+
+DOUBLE adjust(DOUBLE &amp; a) // 将实数调整为最靠近小数点后二位的实数
+// 准则：如果一个实数距某个二位小数小于十的负八次幂，则调整为这个小数
+// 否则不变
+{
+	DOUBLE b = floor(a*100.0+0.5)/100.0; // b是四舍五入到小数点后二位
+	if(fabs(b-a)&lt;defaulterr) // 如果舍入误差极小，则抛弃
+		a = b;
+	return a;
+}
+
+char * throwmessage(int l,const char * f, const char * c)
+{
+	static char a[100];
+//	sprintf(a,&quot;file:%s,line:%d\nmessage:%s\n&quot;,f,l,c);
+	sprintf_s(a,100,&quot;file:%s,line:%d\nmessage:%s\n&quot;,f,l,c);
+	return a;
+}
+
+</code></pre></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

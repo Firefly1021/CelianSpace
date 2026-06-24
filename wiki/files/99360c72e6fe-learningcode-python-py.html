@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="LearningCode/Python/测试文件.py" />
+  <title>测试文件.py | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>测试文件.py</h1><p class="doc-subtitle">LearningCode / code / 4.9 KB</p><div class="doc-chips"><span>LearningCode</span><span>code</span></div><p class="source-path">来源：LearningCode/Python/测试文件.py · <a href="../../materials/LearningCode/Python/%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6.py">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/LearningCode/Python/%E6%B5%8B%E8%AF%95%E6%96%87%E4%BB%B6.py">打开原始文件</a><a class="button-link" href="../materials/learning-code-source.html">返回分类</a></div><pre><code>import torch
+import torch.nn as nn
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 设置随机种子以保证数值实验的可复现性
+torch.manual_seed(42)
+
+# ==========================================
+# 步骤 2: 构建神经网络替代模型 (Surrogate Model)
+# ==========================================
+class PINN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        # 核心注意：在 PINN 中求解二阶 PDE，绝对不能使用 ReLU！
+        # ReLU 的二阶导数恒为 0，会导致物理残差在 AutoDiff 时直接消失。
+        # 必须使用具备无限阶平滑导数的激活函数，如 Tanh, Sigmoid 或 GELU。
+        self.net = nn.Sequential(
+            nn.Linear(1, 32), nn.Tanh(),
+            nn.Linear(32, 32), nn.Tanh(),
+            nn.Linear(32, 32), nn.Tanh(),
+            nn.Linear(32, 1)
+        )
+
+    def forward(self, x):
+        return self.net(x)
+
+model = PINN()
+
+# ==========================================
+# 步骤 3: 数据采样与配点生成 (Collocation Points)
+# ==========================================
+N_f = 100 # 域内配点数量
+
+# 1. 域内配点 x_f (必须设置 requires_grad=True，这是 AutoDiff 的前提)
+x_f = torch.linspace(-1, 1, N_f).view(-1, 1)
+x_f.requires_grad_(True) 
+
+# 2. 边界配点 x_bc 与对应的边界值 u_bc
+x_bc = torch.tensor([[-1.0], [1.0]])
+u_bc = torch.tensor([[0.0], [0.0]])
+
+# ==========================================
+# 步骤 4 &amp; 5: AutoDiff 残差计算与损失函数优化
+# ==========================================
+# 针对这种一维平滑函数逼近，二阶优化器 L-BFGS 通常比 Adam 表现出更高的收敛精度
+optimizer = torch.optim.LBFGS(
+    model.parameters(),
+    lr=1.0,
+    max_iter=1000,
+    tolerance_grad=1e-7,
+    tolerance_change=1e-9,
+    history_size=50
+)
+
+def closure():
+    optimizer.zero_grad()
+
+    # --- 1. 计算边界损失 (Data/BC Loss) ---
+    u_bc_pred = model(x_bc)
+    loss_bc = nn.functional.mse_loss(u_bc_pred, u_bc)
+
+    # --- 2. 计算物理残差损失 (PDE Loss) ---
+    u_f = model(x_f)
+    
+    # [AutoDiff 核心] 计算一阶导数 du/dx
+    # create_graph=True 允许我们对导数再次求导
+    du_dx = torch.autograd.grad(
+        outputs=u_f, 
+        inputs=x_f,
+        grad_outputs=torch.ones_like(u_f),
+        create_graph=True,
+        retain_graph=True
+    )[0]
+
+    # [AutoDiff 核心] 计算二阶导数 d^2u/dx^2
+    d2u_dx2 = torch.autograd.grad(
+        outputs=du_dx, 
+        inputs=x_f,
+        grad_outputs=torch.ones_like(du_dx),
+        create_graph=True,
+        retain_graph=True
+    )[0]
+
+    # 组装 PDE 残差: r(x) = d^2u/dx^2 + pi^2 * sin(pi * x)
+    # 当网络完美逼近解析解时，residual 应当处处为 0
+    residual = d2u_dx2 + (torch.pi ** 2) * torch.sin(torch.pi * x_f)
+    loss_f = nn.functional.mse_loss(residual, torch.zeros_like(residual))
+
+    # --- 3. 构造总损失 ---
+    loss = loss_bc + loss_f
+    loss.backward()
+    return loss
+
+print(&quot;开始 L-BFGS 闭包优化...&quot;)
+optimizer.step(closure)
+print(&quot;优化完成。&quot;)
+
+# ==========================================
+# 步骤 6: 模型评估与推断 (Evaluation)
+# ==========================================
+# 生成密集测试网格以评估全局误差
+x_test = torch.linspace(-1, 1, 500).view(-1, 1)
+
+with torch.no_grad(): # 推理阶段不再需要计算图
+    u_pred = model(x_test)
+    u_exact = torch.sin(torch.pi * x_test)
+    
+    # 严格计算相对 L2 误差向量范数
+    error_l2 = torch.norm(u_pred - u_exact, p=2) / torch.norm(u_exact, p=2)
+    print(f&quot;Relative L2 Error: {error_l2.item():.4e}&quot;)
+
+# 切换到测试模式
+model.eval()
+with torch.no_grad():
+    x_plot = torch.linspace(-1, 1, 200).view(-1, 1)
+    u_pred_plot = model(x_plot).numpy()
+    u_exact_plot = torch.sin(torch.pi * x_plot).numpy()
+    x_plot_nodes = x_plot.numpy()
+
+# 创建画布
+fig, ax = plt.subplots(1, 2, figsize=(12, 5))
+
+# 图 1: 预测解 vs 解析解
+ax[0].plot(x_plot_nodes, u_exact_plot, &#x27;r-&#x27;, linewidth=2, label=&#x27;Exact Solution&#x27;, alpha=0.6)
+ax[0].plot(x_plot_nodes, u_pred_plot, &#x27;b--&#x27;, linewidth=2, label=&#x27;PINN Prediction&#x27;)
+ax[0].scatter(x_bc.detach().numpy(), u_bc.detach().numpy(), color=&#x27;black&#x27;, marker=&#x27;x&#x27;, s=100, label=&#x27;Boundary Points&#x27;, zorder=5)
+ax[0].set_title(&#x27;Solution Comparison: $u(x)$&#x27;)
+ax[0].set_xlabel(&#x27;$x$&#x27;)
+ax[0].set_ylabel(&#x27;$u$&#x27;)
+ax[0].legend()
+ax[0].grid(True, linestyle=&#x27;--&#x27;, alpha=0.7)
+
+# 图 2: 绝对误差分布
+error = np.abs(u_pred_plot - u_exact_plot)
+ax[1].fill_between(x_plot_nodes.flatten(), error.flatten(), color=&#x27;teal&#x27;, alpha=0.3)
+ax[1].plot(x_plot_nodes, error, color=&#x27;teal&#x27;, label=&#x27;Absolute Error&#x27;)
+ax[1].set_title(&#x27;Absolute Error: $|u_{pred} - u_{exact}|$&#x27;)
+ax[1].set_xlabel(&#x27;$x$&#x27;)
+ax[1].set_yscale(&#x27;log&#x27;) # 误差通常很小，对数坐标更清晰
+ax[1].legend()
+ax[1].grid(True, linestyle=&#x27;--&#x27;, alpha=0.7)
+
+plt.tight_layout()
+plt.show()</code></pre></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

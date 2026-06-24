@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="各种模板/湘潭大学课程报告模板/main.tex" />
+  <title>main.tex | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>main.tex</h1><p class="doc-subtitle">各种模板 / latex / 30.8 KB</p><div class="doc-chips"><span>各种模板</span><span>latex</span></div><p class="source-path">来源：各种模板/湘潭大学课程报告模板/main.tex · <a href="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/main.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/main.tex">打开原始文件</a><a class="button-link" href="../materials/templates-source.html">返回分类</a></div><p>\usetikzlibrary{arrows.meta,calc}</p>
+<p>\cover</p>
+<p>\pagestyle{abstractcnstyle} \pagenumbering{Roman}</p>
+<p>本文以二维频域 Maxwell 方程为研究对象,围绕 $H(\text{curl})$ 空间、弱形式推导、Nédélec 边缘元离散以及稀疏矩阵实现展开讨论.通过将完整三维电磁问题简化为二维有界区域上的双旋方程,本文保留了 Maxwell 方程的核心旋度结构,同时降低了函数空间与有限元构造的复杂度.文中首先建立带理想电导体边界条件的二维强形式模型,随后在 $H_0(\text{curl};\Omega)$ 空间中推导相应弱形式,并说明 Nédélec 边缘元相较于传统节点元在保持切向连续性和避免伪模态方面的优势.最后,结合三角剖分、边自由度、稀疏矩阵组装、数值实验和先验误差分析,给出二维计算电磁问题的一套较完整的理论与实现框架.数值结果表明,最低阶 Nédélec 边缘元在光滑制造解算例中呈现接近一阶的收敛行为.</p>
+<p>\keywordscn{二维 Maxwell 方程；$H(\text{curl})$ 空间；Nédélec 边缘元；有限元方法；稀疏矩阵}</p>
+<p>\pagestyle{abstractenstyle}</p>
+<p>This report studies a two-dimensional frequency-domain Maxwell problem and its finite element discretization in the $H(\text{curl})$ framework. By reducing the full three-dimensional electromagnetic model to a two-dimensional double-curl equation, the essential curl structure is preserved while the mathematical and computational complexity is reduced. The strong form with perfect electric conductor boundary conditions is first introduced, followed by the weak formulation in $H_0(\text{curl};\Omega)$. The lowest-order Nédélec edge element on triangular meshes is then used to construct a conforming discretization. Sparse matrix assembly, numerical convergence tests, linear solver choices, and a priori error estimates are also discussed. The resulting framework provides a clear entry point for understanding edge-element methods in computational electromagnetics.</p>
+<p>\keywordsen{two-dimensional Maxwell equations; $H(\text{curl})$ space; Nédélec edge element; finite element method; sparse matrix}</p>
+<p>\pagestyle{contentstyle} \tableofcontents</p>
+<p>\pagestyle{articlestyle}</p>
+<h2>引言</h2>
+<p>在计算电磁学中,高频谐振腔、波导结构以及散射问题中的电磁场分布通常由频域 Maxwell 方程描述.与低频静态问题不同,高频问题中电场与磁场相互耦合,波动效应、边界反射以及介质界面处的传播特性都会显著影响数值解的精度.因此,如何构造既符合电磁场物理规律,又具有良好数值稳定性的离散格式,是有限元方法应用于 Maxwell 方程时的核心问题之一.</p>
+<p>完整的 Maxwell 方程本质上是三维向量场问题,其函数空间、边界迹和有限元构造都较为复杂.为了降低分析和实现难度,同时保留问题中最重要的旋度结构,本文选取二维频域 Maxwell 模型作为研究对象.设计算区域为有界 Lipschitz 区域</p>
+<div class="math-display">\[\Omega\subset\R^2,\]</div>
+<p>电场写成平面向量场</p>
+<div class="math-display">\[\E=(E_1,E_2)^T.\]</div>
+<p>二维模型虽然是对三维电磁问题的简化,但仍然包含 $H(\text{curl})$ 空间、切向连续性、理想电导体边界条件以及 Nédélec 边缘元等关键内容,因此非常适合作为学习 Maxwell 有限元离散的基础模型.</p>
+<p>在电磁问题中,电场在介质界面上的连续性与标量椭圆方程有本质区别.特别地,电场的切向分量需要满足适当的连续条件,而法向分量在介质参数不连续时可以发生跳跃.这意味着电场并不天然属于传统的 $[H^1(\Omega)]^2$ 协调空间.若强行采用节点有限元来逼近电场,就会人为施加过强的连续性要求,从而破坏真实电磁场的界面性质,并可能在本征值问题中产生非物理伪模态.</p>
+<p>因此,Maxwell 方程的自然函数空间不是 $H^1$ 空间,而是与旋度算子相适应的 $H(\text{curl};\Omega)$ 空间.该空间只要求向量场本身及其旋度平方可积,不要求所有一阶偏导数都平方可积,因而更符合电磁场的物理正则性.相应地,有限元离散也应采用 $H(\text{curl})$ 协调的 Nédélec 边缘元.与节点元以节点函数值作为自由度不同,Nédélec 元以边上的切向积分作为自由度,能够自然保持跨单元边界的切向连续性,同时允许法向分量不连续.</p>
+<p>本文围绕二维频域 Maxwell 方程展开.首先,建立带理想电导体(PEC)边界条件的二维强形式模型；其次,在 $H_0(\text{curl};\Omega)$ 空间中推导弱形式；然后,采用三角剖分上的最低阶第一类 Nédélec 边缘元进行离散；最后,从稀疏矩阵组装、线性系统求解和先验误差分析等角度讨论其数值实现与理论性质.通过该二维模型,可以较清晰地理解 Nédélec 边缘元在计算电磁学中的数学基础和工程实现方法.</p>
+<h2>强形式与数学模型</h2>
+<p>考虑一个由理想导体包裹的二维有界 Lipschitz 区域</p>
+<div class="math-display">\[\Omega\subset\R^2,
+ 
+\Gamma=\partial\Omega.\]</div>
+<p>该区域可以看作二维截面上的谐振腔或波导简化模型.假设场量具有时谐因子 $e^{j\omega t}$,其中 $\omega$ 为角频率,$j=\sqrt{-1}$.在频域下,时间微分可转化为乘以 $j\omega$,从而得到仅依赖空间变量的复值方程.</p>
+<p>在二维情形中,平面向量场的旋度定义为标量:</p>
+<div class="math-display">\[\curl \E
+=
+\frac{\partial E_2}{\partial x}
+-
+\frac{\partial E_1}{\partial y}.\]</div>
+<p>另一方面,对于标量函数 $\phi$,定义其旋度为二维向量:</p>
+<div class="math-display">\[\curl \phi
+=
+\begin{pmatrix}
+\dfrac{\partial \phi}{\partial y}\\[4pt]
+-\dfrac{\partial \phi}{\partial x}
+\end{pmatrix}.\]</div>
+<p>因此,$\curl\E$ 是标量,而 $\curl(\mu_r^{-1}\curl\E)$ 又是二维向量.这种记号使二维双旋方程仍可写成与三维形式相近的表达.</p>
+<p>令</p>
+<div class="math-display">\[k_0=\omega\sqrt{\mu_0\varepsilon_0},
+ 
+Z_0=\sqrt{\frac{\mu_0}{\varepsilon_0}},\]</div>
+<p>其中 $k_0$ 为真空波数,$Z_0$ 为真空波阻抗.设 $\mu_r$ 和 $\varepsilon_r$ 分别为相对磁导率和相对介电常数.为简化讨论,本文主要考虑各向同性介质,即 $\mu_r,\varepsilon_r$ 为标量函数,并假设</p>
+<div class="math-display">\[\mu_r,\varepsilon_r\in L^\infty(\Omega),
+ 
+\mu_r(\bm{x})\ge \alpha_\mu&gt;0, 
+\varepsilon_r(\bm{x})\ge \alpha_\varepsilon&gt;0\]</div>
+<p>几乎处处成立.该条件保证材料参数有界且不退化.</p>
+<p>二维频域 Maxwell 双旋方程的强形式写为</p>
+<div class="math-display">\[\tvec\cdot\E=0\]</div>
+<div class="math-display">\[\curl(\mu_r^{-1}\curl \E)\]</div>
+<div class="math-display">\[k_0^2\varepsilon_r\E\]</div>
+<div class="math-display">\[-jk_0Z_0\J\]</div>
+<h2>弱形式与空间分析</h2>
+<div class="math-display">\[H(\text{curl};\Omega)
+=
+\left\{
+\bm{v}\in [L^2(\Omega)]^2
+\mid
+\curl\bm{v}\in L^2(\Omega)
+\right\}.\]</div>
+<div class="math-display">\[\|\bm{v}\|_{H(\text{curl};\Omega)}
+=
+\left(
+\|\bm{v}\|_{[L^2(\Omega)]^2}^2
++
+\|\curl\bm{v}\|_{L^2(\Omega)}^2
+\right)^{1/2},\]</div>
+<div class="math-display">\[(\bm{u},\bm{v})_{H(\text{curl})}
+=
+\int_\Omega
+\bm{u}\cdot\overline{\bm{v}} d\Omega
++
+\int_\Omega
+(\curl\bm{u}) \overline{\curl\bm{v}} d\Omega.\]</div>
+<div class="math-display">\[H_0(\text{curl};\Omega)
+=
+\left\{
+\bm{v}\in H(\text{curl};\Omega)
+\mid
+\tvec\cdot\bm{v}=0 \text{ on } \Gamma
+\right\}.\]</div>
+<div class="math-display">\[V=H_0(\text{curl};\Omega).\]</div>
+<div class="math-display">\[\int_\Omega
+\curl(\mu_r^{-1}\curl\E)\cdot\overline{\bm{v}} d\Omega
+-
+k_0^2
+\int_\Omega
+\varepsilon_r\E\cdot\overline{\bm{v}} d\Omega
+=
+\int_\Omega
+-jk_0Z_0\J\cdot\overline{\bm{v}} d\Omega.\]</div>
+<div class="math-display">\[\int_\Omega
+\curl\phi\cdot\overline{\bm{v}} d\Omega
+=
+\int_\Omega
+\phi \overline{\curl\bm{v}} d\Omega
++
+\int_\Gamma
+\phi \overline{\bm{v}\cdot\tvec} dS.\]</div>
+<div class="math-display">\[a(\E,\bm{v})
+=
+\int_\Omega
+\mu_r^{-1}
+(\curl\E) \overline{\curl\bm{v}} d\Omega
+-
+k_0^2
+\int_\Omega
+\varepsilon_r
+\E\cdot\overline{\bm{v}} d\Omega,\]</div>
+<div class="math-display">\[f(\bm{v})
+=
+\int_\Omega
+-jk_0Z_0
+\J\cdot\overline{\bm{v}} d\Omega.\]</div>
+<div class="math-display">\[|a(\bm{u},\bm{v})|
+\le
+C_\mu
+\|\curl\bm{u}\|_{L^2(\Omega)}
+\|\curl\bm{v}\|_{L^2(\Omega)}
++
+k_0^2C_\varepsilon
+\|\bm{u}\|_{[L^2(\Omega)]^2}
+\|\bm{v}\|_{[L^2(\Omega)]^2}.\]</div>
+<div class="math-display">\[|a(\bm{u},\bm{v})|
+\le
+C
+\|\bm{u}\|_{H(\text{curl};\Omega)}
+\|\bm{v}\|_{H(\text{curl};\Omega)}.\]</div>
+<div class="math-display">\[|f(\bm{v})|
+\le
+k_0Z_0
+\|\J\|_{[L^2(\Omega)]^2}
+\|\bm{v}\|_{[L^2(\Omega)]^2}
+\le
+C
+\|\bm{v}\|_{H(\text{curl};\Omega)}.\]</div>
+<div class="math-display">\[-k_0^2\int_\Omega\varepsilon_r|\E|^2 d\Omega,\]</div>
+<h2>有限元离散化:Nédélec 边缘元</h2>
+<div class="math-display">\[\mathcal{T}_h=\{K\}\]</div>
+<p class="caption">二维三角剖分及 Nédélec 边缘元自由度示意图</p>
+<div class="math-display">\[\ell_e(\bm{v})
+=
+\int_e \bm{v}\cdot\tvec_e ds,\]</div>
+<div class="math-display">\[\mathcal{N}_0(K)
+=
+\left\{
+\bm{v}_h(x,y)
+=
+\begin{pmatrix}
+a\\ b
+\end{pmatrix}
++
+c
+\begin{pmatrix}
+y\\ -x
+\end{pmatrix}
+\ \middle|\
+a,b,c\in\R
+\right\}.\]</div>
+<div class="math-display">\[\bm{N}_{ij}
+=
+\lambda_i\nabla\lambda_j
+-
+\lambda_j\nabla\lambda_i,
+  1\le i&lt;j\le 3.\]</div>
+<div class="math-display">\[\int_{e_{kl}}
+\bm{N}_{ij}\cdot\tvec_{kl} ds
+=
+\delta_{(ij),(kl)}.\]</div>
+<div class="math-display">\[V_h=
+\left\{
+\bm{v}_h\in H_0(\text{curl};\Omega)
+\ \middle|\
+\bm{v}_h|_K\in\mathcal{N}_0(K),
+ 
+\forall K\in\mathcal{T}_h
+\right\}.\]</div>
+<div class="math-display">\[\{\bm{N}_1,\bm{N}_2,\ldots,\bm{N}_N\},\]</div>
+<div class="math-display">\[\E_h=\sum_{j=1}^{N}x_j\bm{N}_j.\]</div>
+<div class="math-display">\[\sum_{j=1}^{N}x_j a(\bm{N}_j,\bm{N}_i)=f(\bm{N}_i),
+  i=1,2,\ldots,N.\]</div>
+<div class="math-display">\[\bm{A}\bm{x}=\bm{b},\]</div>
+<div class="math-display">\[A_{ij}=a(\bm{N}_j,\bm{N}_i),
+ 
+b_i=f(\bm{N}_i).\]</div>
+<div class="math-display">\[A_{ij}
+=
+\int_\Omega
+\mu_r^{-1}
+(\curl\bm{N}_j) \overline{\curl\bm{N}_i} d\Omega
+-
+k_0^2
+\int_\Omega
+\varepsilon_r
+\bm{N}_j\cdot\overline{\bm{N}_i} d\Omega,\]</div>
+<div class="math-display">\[b_i
+=
+\int_\Omega
+-jk_0Z_0
+\J\cdot\overline{\bm{N}_i} d\Omega.\]</div>
+<div class="math-display">\[\bm{A}=\bm{K}-k_0^2\bm{M},\]</div>
+<div class="math-display">\[K_{ij}
+=
+\int_\Omega
+\mu_r^{-1}
+(\curl\bm{N}_j) \overline{\curl\bm{N}_i} d\Omega,
+ 
+M_{ij}
+=
+\int_\Omega
+\varepsilon_r
+\bm{N}_j\cdot\overline{\bm{N}_i} d\Omega.\]</div>
+<h2>数值计算与高性能实现</h2>
+<div class="math-display">\[\bm{A}\bm{x}=\bm{b}.\]</div>
+<pre><code>#include &lt;Eigen/Sparse&gt;
+#include &lt;Eigen/Dense&gt;
+#include &lt;complex&gt;
+#include &lt;vector&gt;
+using Complex = std::complex&lt;double&gt;;
+using SparseMatrixC = Eigen::SparseMatrix&lt;Complex&gt;;
+using TripletC = Eigen::Triplet&lt;Complex&gt;;
+using Matrix3c = Eigen::Matrix&lt;Complex, 3, 3&gt;;
+// N 为全局边自由度总数
+int N = mesh.get_num_edges();
+std::vector&lt;TripletC&gt; tripletList;
+// 每个三角形单元有 3 条边,局部矩阵大小为 3 x 3
+tripletList.reserve(N * 10);
+for (const auto&amp; element : mesh.elements) {
+    Matrix3c local_matrix =
+        compute_local_matrix_2d(element, mu, epsilon, k0);
+    for (int i = 0; i &lt; 3; ++i) {
+        int global_i = element.global_edge_id(i);
+        for (int j = 0; j &lt; 3; ++j) {
+            int global_j = element.global_edge_id(j);
+            tripletList.emplace_back(
+                global_i,
+                global_j,
+                local_matrix(i, j)
+            );
+        }
+    }
+}
+SparseMatrixC A(N, N);
+// Eigen 会自动把相同位置的三元组贡献累加
+A.setFromTriplets(tripletList.begin(), tripletList.end());
+A.makeCompressed();</code></pre>
+<div class="math-display">\[A_{ij}^{(K)}
+=
+\int_K
+\mu_r^{-1}
+(\curl\bm{N}_j) \overline{\curl\bm{N}_i} dK
+-
+k_0^2
+\int_K
+\varepsilon_r
+\bm{N}_j\cdot\overline{\bm{N}_i} dK,
+  i,j=1,2,3.\]</div>
+<div class="math-display">\[A_{ij}^{(K)}
+=
+\mu_r^{-1}
+(\curl\bm{N}_j)\overline{(\curl\bm{N}_i)}
+|K|
+-
+k_0^2\varepsilon_r
+\int_K
+\bm{N}_j\cdot\overline{\bm{N}_i} dK.\]</div>
+<pre><code>#include &lt;Eigen/SparseLU&gt;
+Eigen::Matrix&lt;Complex, Eigen::Dynamic, 1&gt; b(N);
+Eigen::Matrix&lt;Complex, Eigen::Dynamic, 1&gt; x(N);
+Eigen::SparseLU&lt;SparseMatrixC&gt; solver;
+solver.analyzePattern(A);
+solver.factorize(A);
+if (solver.info() != Eigen::Success) {
+    std::cerr &lt;&lt; &quot;Matrix factorization failed.&quot; &lt;&lt; std::endl;
+}
+x = solver.solve(b);
+if (solver.info() != Eigen::Success) {
+    std::cerr &lt;&lt; &quot;Linear solve failed.&quot; &lt;&lt; std::endl;
+}</code></pre>
+<pre><code>#include &lt;Eigen/IterativeLinearSolvers&gt;
+Eigen::BiCGSTAB&lt;SparseMatrixC, Eigen::IncompleteLUT&lt;Complex&gt;&gt; solver;
+solver.setTolerance(1e-10);
+solver.setMaxIterations(1000);
+solver.compute(A);
+if (solver.info() != Eigen::Success) {
+    std::cerr &lt;&lt; &quot;Preconditioner construction failed.&quot; &lt;&lt; std::endl;
+}
+x = solver.solve(b);
+std::cout &lt;&lt; &quot;Iterations: &quot; &lt;&lt; solver.iterations() &lt;&lt; std::endl;
+std::cout &lt;&lt; &quot;Estimated error: &quot; &lt;&lt; solver.error() &lt;&lt; std::endl;</code></pre>
+<h2>数值实验与结果分析</h2>
+<div class="math-display">\[\Omega=(0,1)^2\]</div>
+<div class="math-display">\[\E(x,y)
+=
+\begin{pmatrix}
+\sin(\pi x)\sin(\pi y)\\
+\sin(\pi x)\sin(\pi y)
+\end{pmatrix}.\]</div>
+<div class="math-display">\[\tvec\cdot\E=0,
+  \text{on } \partial\Omega.\]</div>
+<div class="math-display">\[\curl\curl\E-k_0^2\E=\bm{f}\]</div>
+<div class="math-display">\[\|\E-\E_h\|_{L^2(\Omega)},
+ 
+\|\curl(\E-\E_h)\|_{L^2(\Omega)},
+ 
+\|\E-\E_h\|_{H(\curl;\Omega)}.\]</div>
+<div class="math-display">\[\|\E-\E_h\|_{H(\curl;\Omega)}
+=
+\left(
+\|\E-\E_h\|_{L^2(\Omega)}^2
++
+\|\curl(\E-\E_h)\|_{L^2(\Omega)}^2
+\right)^{1/2}.\]</div>
+<div class="math-display">\[\text{rate}
+=
+\frac{\log(e_h/e_{h/2})}{\log 2},\]</div>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/figures/convergence.png" alt="convergence.png" loading="lazy" /><figcaption>各种模板/湘潭大学课程报告模板/figures/convergence.png</figcaption></figure>
+<p class="caption">最低阶 Nédélec 边缘元的误差收敛曲线</p>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/figures/rates.png" alt="rates.png" loading="lazy" /><figcaption>各种模板/湘潭大学课程报告模板/figures/rates.png</figcaption></figure>
+<p class="caption">不同网格尺寸下的观测收敛阶</p>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/figures/solution_Ex.png" alt="solution_Ex.png" loading="lazy" /><figcaption>各种模板/湘潭大学课程报告模板/figures/solution_Ex.png</figcaption></figure>
+<p class="caption">单元重心处计算得到的电场 $E_x$ 分量</p>
+<div class="math-display">\[E_x=\sin(\pi x)\sin(\pi y),\]</div>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/figures/solution_quiver.png" alt="solution_quiver.png" loading="lazy" /><figcaption>各种模板/湘潭大学课程报告模板/figures/solution_quiver.png</figcaption></figure>
+<p class="caption">计算得到的二维电场矢量分布</p>
+<h2>先验误差分析</h2>
+<div class="math-display">\[\E\in V=H_0(\text{curl};\Omega),\]</div>
+<div class="math-display">\[\E_h\in V_h\subset V.\]</div>
+<div class="math-display">\[\int_e
+(\Pi_h\E)\cdot\tvec_e ds
+=
+\int_e
+\E\cdot\tvec_e ds,
+ 
+\forall e\in\mathcal{E}_h,\]</div>
+<div class="math-display">\[\|\E-\Pi_h\E\|_{[L^2(\Omega)]^2}
++
+h\|\curl(\E-\Pi_h\E)\|_{L^2(\Omega)}
+\le
+C h^r
+\left(
+\|\E\|_{[H^r(\Omega)]^2}
++
+\|\curl\E\|_{H^r(\Omega)}
+\right),\]</div>
+<div class="math-display">\[a(\E-\E_h,\bm{v}_h)=0,
+ 
+\forall \bm{v}_h\in V_h.\]</div>
+<div class="math-display">\[\|\E-\E_h\|_{H(\text{curl};\Omega)}
+\le
+C
+\inf_{\bm{v}_h\in V_h}
+\|\E-\bm{v}_h\|_{H(\text{curl};\Omega)}.\]</div>
+<div class="math-display">\[\|\E-\E_h\|_{H(\text{curl};\Omega)}
+\le
+C h^r
+\left(
+\|\E\|_{[H^r(\Omega)]^2}
++
+\|\curl\E\|_{H^r(\Omega)}
+\right).\]</div>
+<div class="math-display">\[\text{求解}
+\longrightarrow
+\text{误差估计}
+\longrightarrow
+\text{标记单元}
+\longrightarrow
+\text{局部加密}
+\longrightarrow
+\text{重新求解}.\]</div>
+<h2>结论</h2></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

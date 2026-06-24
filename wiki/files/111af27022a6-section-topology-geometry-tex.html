@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="数学基础/Section/Topology_Geometry.tex" />
+  <title>Topology_Geometry.tex | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>Topology_Geometry.tex</h1><p class="doc-subtitle">数学基础 / latex / 13.1 KB</p><div class="doc-chips"><span>数学基础</span><span>latex</span></div><p class="source-path">来源：数学基础/Section/Topology_Geometry.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Topology_Geometry.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Topology_Geometry.tex">打开原始文件</a><a class="button-link" href="../materials/math-source.html">返回分类</a></div><p></p>
+<h2>拓扑与几何</h2>
+<h3>拓扑学基本知识</h3>
+<p>设$X$是一个集合,$\mathcal{T} \subset \mathcal{P} (X)$,如果$\ttt$满足下面三条性质:<br> 1. $\emptyset \in \mathcal{T},X\in \mathcal{T}$;<br> 2. $\forall A_i \in \mathcal{T} (i\in I)$,则$\bigcup_{i\in I}A_i \in \mathcal{T}$;<br> 3. $\forall A_i \in \mathcal{T} (i=1,2)$,则$A_1\cap A_2 \in \mathcal{T}$.</p>
+<p>就称$\ttt$为$X$上的一个拓扑,又称$\ttt$中的元素为$X$上的开集.当$X$装备了拓扑结构$\ttt$之后,称$(X,\ttt)$为拓扑空间. <strong>定义</strong>$^\clubsuit $:设$(X,\ttt)$为一拓扑空间,$E\subset X$是闭集当且仅当$X-E$是开集;事实上,闭集还可以定义为满足$E=E&#x27;$的$E$为闭集. 设$(X,\ttt)$为一拓扑空间,$S$是$X$的一个子集,可以在$S$上定义一个与$\ttt$相容的拓扑</p>
+<div class="math-display">\[\ttt _{S}=\{O\cap S;O\in\ttt\}\]</div>
+<p>称$\ttt _{S}$是$\ttt$在$S$上的诱导拓扑,$(S,\ttt _{S})$是$(X,\ttt)$的拓扑子空间.</p>
+<h3>微分几何</h3>
+<h4>拓扑基本知识</h4>
+<div class="math-display">\[\mathcal{T}=\left\{U=\bigcup_{B\in \mathcal{U}}B:\mathcal{U}\subset\mathcal{B}\right\}\]</div>
+<h4>微分流形</h4>
+<div class="math-display">\[\varphi_{\beta}\circ \varphi_{\alpha}^{-1}:\varphi_{\alpha}(U_{\alpha}\cap U_{\beta})\to \varphi_{\beta}(U_{\alpha}\cap U_{\beta})\]</div>
+<div class="math-display">\[\psi\circ f\circ \varphi^{-1}:\varphi(U)\to \psi(V)\]</div>
+<div class="math-display">\[\varphi_{\beta}\circ\varphi^{-1}_{\alpha}(x)=(y^1,y^2,\cdots,y^n)\]</div>
+<div class="math-display">\[J(\varphi_{\beta}\circ\varphi^{-1}_{\alpha})=\left(\frac{\partial y^i}{\partial x^j}\right)_{n\times n}\]</div>
+<div class="math-display">\[\det J(\varphi_{\beta}\circ\varphi^{-1}_{\alpha})(p)=\frac{\partial (y^1,y^2,\cdots,y^n)}{\partial (x^1,x^2,\cdots,x^n)}(\varphi_{\alpha}(p)),  p\in U_{\alpha}\cap U_{\beta}\]</div>
+<div class="math-display">\[S^1=\{(x,y)\in\mathbb{R}^2:x^2+y^2=1\}=\{\mathrm{e}^{\mathrm{i}\theta}:\theta\in[0,2\pi]\}\]</div>
+<div class="math-display">\[U_1=\{\mathrm{e}^{\mathrm{i}\theta}:\theta\in(0,2\pi)\},  U_2=\{\mathrm{e}^{\mathrm{i}\theta}:\theta\in(\pi,3\pi)\}\]</div>
+<div class="math-display">\[\begin{aligned}
+\varphi_1:U_1&amp;\to (0,2\pi)\subset \mathbb{R}^1\\
+\mathrm{e}^{\mathrm{i}\theta}&amp;\mapsto \theta
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+\varphi_2:U_2&amp;\to (\pi,3\pi)\subset \mathbb{R}^1\\
+\mathrm{e}^{\mathrm{i}\eta}&amp;\mapsto \eta
+\end{aligned}\]</div>
+<div class="math-display">\[\varphi_2\circ \varphi_1^{-1}:\varphi_1(U_1\cap U_2)=(0,\pi)\cup(\pi,2\pi)\to \varphi_2(U_1\cap U_2)=(\pi,2\pi)\cup (2\pi,3\pi),\]</div>
+<div class="math-display">\[\varphi_2\circ \varphi_1^{-1}=
+\begin{cases}
+\theta+2\pi, &amp; \theta\in(0,\pi)\\[3pt]
+\theta, &amp; \theta\in(\pi,2\pi)
+\end{cases}\]</div></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

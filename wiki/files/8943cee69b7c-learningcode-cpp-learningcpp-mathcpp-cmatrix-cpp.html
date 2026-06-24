@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="LearningCode/CPP/LearningCPP/MathCPP/CMATRIX.CPP" />
+  <title>CMATRIX.CPP | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>CMATRIX.CPP</h1><p class="doc-subtitle">LearningCode / code / 17.6 KB</p><div class="doc-chips"><span>LearningCode</span><span>code</span></div><p class="source-path">来源：LearningCode/CPP/LearningCPP/MathCPP/CMATRIX.CPP · <a href="../../materials/LearningCode/CPP/LearningCPP/MathCPP/CMATRIX.CPP">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/LearningCode/CPP/LearningCPP/MathCPP/CMATRIX.CPP">打开原始文件</a><a class="button-link" href="../materials/learning-code-source.html">返回分类</a></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;fstream&gt;
+#include &quot;cmatrix.h&quot;
+
+// 缺省的构造函数，产生0行0列空复矩阵
+cmatrix::cmatrix(cbuffer * b): rownum(0),colnum(0),
+	isneg(0),istrans(0),isconj(0)
+{
+		if(b){
+			buf=b;
+			buf-&gt;alloc(0);
+			}
+		else
+			buf = getnewcbuffer(0); // 如果缺省的b没有给出，则产生一
+				// 长度为行乘列个复数和缓存
+}
+// 构造一r行c列的复矩阵，可选的复缓存指向b
+cmatrix::cmatrix(size_t r, size_t c, cbuffer * b):
+		rownum(r),colnum(c),istrans(0),isneg(0),isconj(0)
+{
+		if(b){
+			buf=b;
+			buf-&gt;alloc(r*c);
+			}
+		else
+			buf = getnewcbuffer(r*c); // 如果缺省的b没有给出，则产生一
+				// 长度为行乘列个复数和缓存
+}
+
+cmatrix::cmatrix(size_t n, cbuffer * b):
+		rownum(n),colnum(1),istrans(0),isneg(0),isconj(0)
+{
+		if(b){
+			buf=b;
+			buf-&gt;alloc(n);
+			}
+		else
+			buf = getnewcbuffer(n); // 如果缺省的b没有给出，则产生一
+				// 长度为行乘列个复数和缓存
+}
+
+cmatrix cunit(size_t n) // 产生n阶单位矩阵
+{
+	cmatrix m(n,n);
+	for(size_t i=0; i&lt;n; i++)
+	for(size_t j=0; j&lt;n; j++)
+			if(i==j) m.set(i,i,1.0);
+			else m.set(i,j,0.0);
+	return m;
+}
+
+// 拷贝构造函数
+cmatrix::cmatrix(const cmatrix&amp; m)
+{
+	rownum = m.rownum; // 复制行数和列数
+	colnum = m.colnum;
+	istrans = m.istrans; // 复制标志
+	isneg = m.isneg;
+	isconj = m.isconj;
+	buf = m.buf; // 指向相同的缓存
+	buf-&gt;refnum++;	// 缓存的引用数增1
+}
+
+// 用数据文件构造复矩阵
+cmatrix::cmatrix(const char * filename, cbuffer * b) :
+	istrans(0),isneg(0),isconj(0)
+{
+	char label[10];
+	std::ifstream in(filename); // 打开文件输入
+	in &gt;&gt; label; // 文件以cmatrix关键词打头
+	if(strcmp(label, &quot;cmatrix&quot;)!=0) throw TMESSAGE(&quot;format error!&quot;);
+	in &gt;&gt; rownum &gt;&gt; colnum; // 接着是行数和列数
+	if(!in.good()) throw TMESSAGE(&quot;read file error!&quot;);
+	if(b) { buf=b;	// 产生所需长度的缓存
+		buf-&gt;alloc(rownum*colnum);
+	}
+	else buf = getnewcbuffer(rownum*colnum);
+	size_t line;
+	for(size_t i=0; i&lt;rownum; i++) { // 按行循环输入
+		in &gt;&gt; line;	// 每行以行号开始
+		if(line != i+1) throw TMESSAGE(&quot;format error!&quot;);
+		in.width(sizeof(label));
+		in &gt;&gt; label; // 紧接着是冒号
+		if(label[0] != &#x27;:&#x27;) throw TMESSAGE(&quot;format error!&quot;);
+		COMPLEX a;
+		for(size_t j=0; j&lt;colnum; j++) { // 随后是一行的内容
+			in &gt;&gt; a;
+			set(i,j,a);
+		}
+		if(!in.good()) throw TMESSAGE(&quot;read file error!&quot;);
+	}
+}
+
+// 从内存数据块构造复矩阵。data指向内存数据块，构造完毕后data指向的内存可以释放
+cmatrix::cmatrix(void * data, size_t r, size_t c, cbuffer * b):
+		rownum(r),colnum(c),istrans(0),isneg(0),isconj(0)
+{
+	if(b){
+		buf=b;
+		buf-&gt;alloc(r*c);
+		}
+	else
+		buf = getnewcbuffer(r*c);
+	COMPLEX * d = (COMPLEX *)data;
+	for(size_t i=0; i&lt;r*c; i++)
+		buf-&gt;set(i,d[i]);
+}
+
+cmatrix::cmatrix(matrix&amp; m, cbuffer* b) : // 由实矩阵产生一个内容相同的复矩阵
+	istrans(0),isneg(0),isconj(0)
+{
+	rownum = m.rownum;
+	colnum = m.colnum;
+	if(b) { buf=b;	// 产生所需长度的缓存
+		buf-&gt;alloc(rownum*colnum);
+	}
+	else buf = getnewcbuffer(rownum*colnum);
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		set(i,j,m.value(i,j));
+}
+
+cmatrix::cmatrix(matrix&amp; mr, matrix&amp; mi, cbuffer * b): // 两个实矩阵成为实部和虚部
+	istrans(0),isneg(0),isconj(0)
+{
+	if(mr.rownum != mi.rownum || mr.colnum != mi.colnum)
+		throw TMESSAGE(&quot;dimension not same!&quot;);
+	rownum = mi.rownum;
+	colnum = mr.colnum;
+	if(b) { buf=b;	// 产生所需长度的缓存
+		buf-&gt;alloc(rownum*colnum);
+	}
+	else buf = getnewcbuffer(rownum*colnum);
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		set(i,j,COMPLEX(mr.value(i,j),mi.value(i,j)));
+}
+
+matrix cmatrix::real()const // 由实部生成实矩阵
+{
+	matrix m(rownum, colnum);
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++) {
+		m.set(i,j,std::real(value(i,j)));
+	}
+	return m;
+}
+
+matrix cmatrix::image()const // 由虚部生成实矩阵
+{
+	matrix m(rownum, colnum);
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		m.set(i,j,std::imag(value(i,j)));
+	return m;
+}
+
+// 矩阵赋值
+cmatrix&amp; cmatrix::operator=(const cmatrix&amp; m)
+{
+	rownum = m.rownum; // 复制行数和列数
+	colnum = m.colnum;
+	if(buf == m.buf) // 如果本来就指向相同的缓存，则返回
+		return (*this);
+	buf-&gt;refnum--;	// 否则放弃原来的缓存，先将原缓存引用数减1
+						// 如果不为0说明还有其它的矩阵引用数据
+	if(!buf-&gt;refnum)delete buf; // 否则删除缓存
+	istrans = m.istrans;	// 复制标志
+	isneg = m.isneg;
+	isconj = m.isconj;
+	buf = m.buf; // 复制缓存指针
+	buf-&gt;refnum++; // 缓存引用数增1
+	return (*this);
+}
+
+cmatrix&amp; cmatrix::operator=(matrix&amp; m)
+{
+	rownum = m.rownum; // 复制行数和列数
+	colnum = m.colnum;
+	buf-&gt;refnum--;
+	if(!buf-&gt;refnum) delete buf; // 放弃原来缓存
+	istrans = isneg = isconj = 0; // 标志清零
+	buf = getnewcbuffer(rownum*colnum); // 申请新的缓存
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		set(i,j,m.value(i,j));
+	return (*this);
+}
+
+cmatrix&amp; cmatrix::operator=(COMPLEX a) // 将矩阵所有元素设为常数a
+{
+	if(rownum == 0 || colnum==0 ) return (*this);
+	istrans = isneg = isconj = 0; // 标志清零
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		set(i,j,a);
+	return (*this);
+}
+
+COMPLEX cmatrix::operator()(size_t r, size_t c)
+ // 重载函数运算符，返回第r行c列的值
+{
+	if(r&gt;= rownum || c &gt;= colnum)
+		throw TMESSAGE(&quot;range overflow&quot;);
+	return value(r,c);
+}
+
+COMPLEX cmatrix::operator()(size_t r)
+	// 重载函数运算符，返回第r行0列的值，用于向量
+{
+	return (*this)(r,0);
+}
+
+
+// 流输出
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; o, cmatrix&amp; m)
+{	// 先输出关键词cmatrix,后跟行数和列数
+	o &lt;&lt; &quot;cmatrix &quot; &lt;&lt; m.rownum &lt;&lt; &#x27;\t&#x27; &lt;&lt; m.colnum &lt;&lt; std::endl;
+	// 每行由行号，冒号，后跟一行的复数构成
+	for(size_t i=0; i&lt;m.rownum; i++) {
+		o&lt;&lt; (i+1) &lt;&lt;&#x27;:&#x27;;
+		size_t k=8;
+		for(size_t j=0; j&lt;m.colnum; j++) {
+			o&lt;&lt;&#x27;\t&#x27;&lt;&lt;m.value(i,j);
+			if(--k==0) {
+				k=8;
+				o&lt;&lt;std::endl;
+			}
+		}
+		o&lt;&lt;std::endl;
+	}
+	return o;
+}
+
+// 流输入
+std::istream&amp; operator&gt;&gt;(std::istream&amp; in, cmatrix&amp; m)
+{
+	char label[10];
+	in.width(sizeof(label));
+	in &gt;&gt; label;
+	if(strcmp(label, &quot;cmatrix&quot;)!=0) // 以关键词cmatrix打到
+		throw TMESSAGE(&quot;format error!&quot;);
+	in &gt;&gt; m.rownum &gt;&gt; m.colnum; // 后跟行数和列数
+	if(!in.good()) throw TMESSAGE(&quot;read file error!&quot;);
+	m.buf-&gt;refnum--; // 放弃原来的缓存
+	if(!m.buf-&gt;refnum) delete m.buf;
+	m.buf = getnewcbuffer(m.rownum*m.colnum); // 申请新的缓存
+	m.istrans = m.isneg = m.isconj = 0; // 标志清零
+	size_t line;
+	for(size_t i=0; i&lt;m.rownum; i++) {
+		in &gt;&gt; line;
+		if(line != i+1) throw TMESSAGE(&quot;format error!&quot;); // 每行以行号开始
+		in.width(sizeof(label));
+		in &gt;&gt; label;
+		if(label[0] != &#x27;:&#x27;) throw TMESSAGE(&quot;format error!&quot;); // 后跟冒号
+		COMPLEX a;
+		for(size_t j=0; j&lt;m.colnum; j++) { // 然后是这一行的数据
+			in &gt;&gt; a;
+			m.set(i,j,a);
+		}
+		if(!in.good()) throw TMESSAGE(&quot;read file error!&quot;);
+	}
+	return in;
+}
+
+// 数乘矩阵，原矩阵内容改变为结果
+cmatrix&amp; cmatrix::operator*=(COMPLEX a)
+{
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		set(i,j,a*value(i,j));
+	return (*this);
+}
+
+// 数乘矩阵，原矩阵内容不变，返回结果矩阵
+cmatrix cmatrix::operator*(COMPLEX a)
+{
+	cmatrix m(rownum, colnum);
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		m.set(i,j,a*value(i,j));
+	return m;
+}
+
+cmatrix cmatrix::operator+(COMPLEX a) // 矩阵加常数，产生新矩阵
+{
+	cmatrix m(rownum, colnum);
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		m.set(i,j,a+value(i,j));
+	return m;
+
+}
+
+cmatrix&amp; cmatrix::operator+=(COMPLEX a) // 矩阵加常数，更动原矩阵
+{
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+		set(i,j,a+value(i,j));
+	return (*this);
+}
+
+// 矩阵相加
+cmatrix cmatrix::operator+(const cmatrix&amp; m)const
+{
+	if(rownum != m.rownum || colnum != m.colnum) // 行列必须对应相等
+		throw TMESSAGE(&quot;can not do add of cmatrix&quot;);
+	cmatrix mm(rownum, colnum);
+	COMPLEX a;
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+	{
+		a = value(i,j)+m.value(i,j);
+		mm.set(i,j,a);
+	}
+	return mm;
+}
+
+// 矩阵相加，不产生新的矩阵，修改原矩阵的内容
+cmatrix&amp; cmatrix::operator+=(const cmatrix &amp;m)
+{
+	COMPLEX a;
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;colnum; j++)
+	{
+		a = value(i,j)+m.value(i,j);
+		set(i,j,a);
+	}
+	return (*this);
+}
+
+cmatrix cmatrix::operator-(cmatrix&amp; a)	// 矩阵相减
+{
+	return (*this)+(-a);
+}
+
+cmatrix&amp; cmatrix::operator-=(cmatrix&amp; a) // 矩阵自身减矩阵
+{
+	(*this)+=(-a);
+	return (*this);
+}
+
+// 矩阵相乘，返回新产生的结果矩阵
+cmatrix cmatrix::operator*(cmatrix&amp; m)
+{
+	if(colnum != m.rownum) // 前矩阵的列数必须等于后矩阵的行数
+		throw TMESSAGE(&quot;can not multiply!&quot;);
+	cmatrix mm(rownum,m.colnum);
+	COMPLEX a;
+	for(size_t i=0; i&lt;rownum; i++)
+	for(size_t j=0; j&lt;m.colnum; j++){
+		a = 0.0;
+		for(size_t k=0; k&lt;colnum; k++)
+			a += value(i,k)*m.value(k,j);
+		mm.set(i,j,a);
+	}
+	return mm;
+}
+
+// 矩阵相乘，改变原矩阵的内容
+cmatrix&amp; cmatrix::operator*=(cmatrix&amp; m)
+{
+	(*this) = (*this)*m;
+	return (*this);
+}
+
+cmatrix cmatrix::operator-()const // 矩阵求负，产生新的矩阵
+{
+	cmatrix m(*this);
+	m.neg();
+	return m;
+}
+
+cmatrix&amp; cmatrix::neg() // 矩阵自身求负
+{
+	isneg = !isneg;	// 取负标志求反
+	return (*this);
+}
+
+cmatrix cmatrix::t()		// 矩阵转置，产生新的矩阵
+{
+	cmatrix m(*this);
+	m.trans();
+	return m;
+}
+
+cmatrix cmatrix::operator!()		// 矩阵共轭，产生新的矩阵
+{
+	cmatrix m(*this);
+	return m.conj();
+}
+
+cmatrix cmatrix::tc()		// 矩阵共轭转置，产生新的矩阵
+{
+	cmatrix m(*this);
+	return m.transconj();
+};
+
+cmatrix&amp; cmatrix::operator-=(COMPLEX a) // 矩阵自身减常数
+{
+	(*this) += (-a);
+	return (*this);
+}
+
+cmatrix cmatrix::operator-(COMPLEX a)	// 矩阵减常数，产生新的矩阵
+{
+	return (*this)+(-a);
+}
+
+cmatrix operator-(COMPLEX a, cmatrix m) // 常数减矩阵，产生新的矩阵
+{
+	return (-m)+a;
+}
+
+void cmatrix::swapr(size_t r1, size_t r2, size_t k) // 交换矩阵r1和r2两行
+{
+	COMPLEX a;
+	for(size_t i=k; i&lt;colnum; i++) {
+		a = value(r1, i);
+		set(r1, i, value(r2, i));
+		set(r2, i, a);
+	}
+}
+
+void cmatrix::swapc(size_t c1, size_t c2, size_t k) // 交换c1和c2两列
+{
+	COMPLEX a;
+	for(size_t i=k; i&lt;colnum; i++) {
+		a = value(i, c1);
+		set(i, c1, value(i, c2));
+		set(i, c2, a);
+	}
+}
+
+DOUBLE cmatrix::maxabs(size_t &amp;r, size_t &amp;c, size_t k)
+ // 求第k行和第k列后的主元及位置
+{
+	DOUBLE a=0.0;
+	DOUBLE br,bi;
+	for(size_t i=k;i&lt;rownum;i++)
+	for(size_t j=k;j&lt;colnum;j++) {
+		br = std::real(value(i,j));
+		bi = std::imag(value(i,j));
+		br = br*br+bi*bi;
+		if(a &lt; br) {
+			r=i;c=j;a=br;
+		}
+	}
+	return a;
+}
+
+size_t cmatrix::zgsxy(cmatrix &amp; m, int fn) // 进行主高斯消元运算，fn为参数，缺省为0
+ /* 本矩阵其实是常数阵，而矩阵m必须是方阵
+	运算过程其实是对本矩阵和m同时作行初等变换，
+	运算结果m的对角线相乘将是行列式，而本矩阵则变换成
+	自己的原矩阵被m的逆阵左乘，m的秩被返回，如果秩等于阶数
+	则本矩阵中的内容已经是唯一解
+ */
+{
+	if(rownum != m.rownum || m.rownum != m.colnum) // 本矩阵行数必须与m相等
+						// 且m必须是方阵
+		throw TMESSAGE(&quot;can not divide!&quot;);
+	lbuffer * bb = getnewlbuffer(rownum); // 产生一维数为行数的长整数缓存区
+	lbuffer &amp; b = (*bb); // 用引用的办法使下面的程序容易懂
+	size_t is;
+	COMPLEX a;
+	size_t i,j,k,rank=0;
+	for(k=0; k&lt;rownum; k++) { // 从第0行到第k行进行主高斯消元
+		if(m.maxabs(is, i, k)==0) // 求m中第k级主元，主元所在的行，列存在is,i中
+				// 返回的主元值放在a中
+			break; // 如果主元为零，则m不可逆，运算失败
+		rank = k+1; // rank存放当前的阶数
+		b.retrieve(k) = (long)i;  // 将长整数缓存区的第k个值设为i
+		if(i != k)
+			m.swapc(k, i); // 交换m中i,k两列
+		if(is != k) {
+			m.swapr(k, is, k); // 交换m中i,k两行,从k列以后交换
+			swapr(k, is); // 交换本矩阵中i,k两行
+		}
+		a = m.value(k,k); // 取出主元值
+		for (j=k+1;j&lt;rownum;j++) // 本意是将m的第k行除以主元
+				// 但只需把第k行的第k+1列以上除以主元即可
+				// 这样还保留了主元作行列式运算用
+			m.set(k,j,m.value(k,j)/a);
+		for (j=0;j&lt;colnum;j++) // 将本矩阵的第k行除以主元
+			set(k,j,value(k,j)/a);
+		// 上面两步相当于将m和本矩阵构成的增广矩阵第k行除以主元
+		// 下面对增广矩阵作行基本初等变换使第k行的其余列均为零
+		// 但0值无必要计算，因此从第k+1列开始计算
+		for(j=k+1;j&lt;rownum;j++) // j代表列，本矩阵的行数就是m的列数
+		for(i=0;i&lt;rownum;i++) //i代表行，依次对各行计算，k行除外
+			if(i!=k)
+				m.set(i,j,m.value(i,j)-m.value(i,k)*m.value(k,j));
+		// 对本矩阵亦作同样的计算
+		for(j=0;j&lt;colnum;j++)
+		for(i=0;i&lt;rownum;i++)
+			if(i!=k)
+				set(i,j,value(i,j)-m.value(i,k)*value(k,j));
+	} // 主高斯消元循环k结束
+	if(fn == 1) {
+		for(j=0; j&lt;rank; j++)
+		for(i=0; i&lt;rownum; i++)
+			if(i==j) m.set(i,i,1.0);
+			else
+				m.set(i,j,0.0);
+		for(k = rank; k&gt;0; k--)
+			m.swapc(k-1,(size_t)b[k-1]);
+	}
+	for(k = rank; k&gt;0; k--) // 将本矩阵中的各行按b中内容进行调节
+		if((size_t)b[k-1] != k-1)
+			swapr(k-1,(size_t)b[k-1]); // 行交换
+	delete bb; // 释放长整数缓存
+	return rank; // 返回mm的秩
+}
+
+cmatrix&amp; cmatrix::operator/=(cmatrix m) // 利用重载的除法符号/=来解方程
+	// 本矩阵设为d,则方程为mx=d,考虑解写成x=d/m的形式，
+	// 而方程的解也存放在d中，则实际编程时写d/=m
+{
+	if(zgsxy(m)!=rownum) // 如秩不等于m的阶数，则方程无解
+		throw TMESSAGE(&quot;can not divide!&quot;);
+	return *this;
+}
+
+cmatrix&amp; cmatrix::fft(int l)
+{
+	if(colnum != 1) throw TMESSAGE(&quot;fft need vector!&quot;);
+	size_t n,i;
+	int k;
+	n = 1;
+	for(k=0;k&lt;10000;k++) {
+		if(n&gt;=rownum) break;
+		n*=2;
+	}
+	if(rownum &lt; n) {	// 将数组扩大为2的乘幂维
+		cmatrix m(n);
+		for(i=0; i&lt;rownum; i++)
+			m.set(i,value(i,0));
+		for(i=rownum; i&lt;n; i++)
+			m.set(i,0.0);
+		(*this)=m;
+	}
+	size_t it,m,is,j,nv;
+	int l0;
+	COMPLEX q,s,v,podd;
+	DOUBLE p;
+	cmatrix f(n);
+	for (it=0; it&lt;n; it++)
+		{ m=it; is=0;
+		  for (i=0; i&lt;(size_t)k; i++)
+			 { j=m/2; is=2*is+(m-2*j); m=j;}
+		  f.set(it,value(is,0));
+		}
+	set(0,1.0);
+	cbuffer &amp; pp = *buf;
+	cbuffer &amp; ff = *(f.buf);
+	p = 2.0*M_PI/n;
+	pp[1] = COMPLEX(cos(p),-sin(p));
+	if (l!=0) pp[1] = std::conj(pp[1]);
+	for (i=2; i&lt;n; i++)
+		pp[i] = pp[1]*pp[i-1];
+	for (it=0; it&lt;n-1; it+=2)
+		{  v = ff[it];
+			ff[it] += ff[it+1];
+			ff[it+1] = v - ff[it+1];
+		}
+	m=n/2; nv=2;
+	for (l0=k-2; l0&gt;=0; l0--)
+		{ m/=2; nv*=2;
+		  for (it=0; it&lt;=(m-1)*nv; it+=nv)
+			 for (j=0; j&lt;=(nv/2)-1; j++)
+				{
+					podd = pp[m*j]*ff[it+j+nv/2];
+					ff[it+j+nv/2] = ff[it+j]-podd;
+					ff[it+j] += podd;
+				}
+		}
+	 if (l!=0)
+		for (i=0; i&lt;n; i++)
+		  ff[i]/=(long)n;
+	(*this) = f;
+	return (*this);
+}
+
+cmatrix fft(matrix&amp; m)
+{
+	cmatrix mm(m);
+	return mm.fft();
+}
+
+matrix convolute(matrix&amp;a, matrix&amp; b)	// 求矩阵a与b的离散卷积
+{
+	if(a.colnum != 1 || b.colnum != 1)throw TMESSAGE(&quot;must be a vector&quot;);
+	size_t nn = a.rownum+b.rownum;
+	size_t n;
+	int k;
+	n = 1;
+	for(k=0;k&lt;10000;k++) {
+		if(n&gt;=nn) break;
+		n*=2;
+	}
+	matrix aa(n),bb(n);
+	size_t i;
+	aa = 0.0;
+	bb = 0.0;
+	for(i=0; i&lt;a.rownum; i++)
+		aa.set(i,a(i));
+	for(i=0; i&lt;b.rownum; i++)
+		bb.set(i,b(i));
+	cmatrix aafft(fft(aa)),bbfft(fft(bb));
+	for(i=0; i&lt;n; i++)
+		aafft.set(i,aafft(i)*bbfft(i));
+	nn--;
+	matrix c(nn),d;
+	d = (aafft.fft(1)).real();
+	for(i=0;i&lt;nn;i++)
+		c.set(i,0,d(i));
+	return c;
+}
+
+cmatrix&amp; cmatrix::inv()		// 用全选主元高斯-约当法求逆矩阵
+{
+	if(rownum != colnum) throw TMESSAGE(&quot;must be a square matrix&quot;);
+	size_t n = rownum;
+	lbuffer * isp = getnewlbuffer(n);
+	lbuffer * jsp = getnewlbuffer(n);
+	lbuffer&amp; is = (*isp);
+	lbuffer&amp; js = (*jsp);
+	size_t i,j,k,u,v;
+	DOUBLE d;
+	for (k=0; k&lt;n; k++)
+		{
+			if((d=maxabs(u,v,k))== 0.0) {
+				delete isp;
+				delete jsp;
+				throw TMESSAGE(&quot;can not inverse&quot;);
+			}
+			is[k]=(long)u;
+			js[k]=(long)v;
+/*
+		 d=0.0;
+		  for (i=k; i&lt;=n-1; i++)
+		  for (j=k; j&lt;=n-1; j++)
+			 { u=i*n+j;
+				p=ar[u]*ar[u]+ai[u]*ai[u];
+				if (p&gt;d) { d=p; is[k]=i; js[k]=j;}
+			 }
+		  if (d+1.0==1.0)
+			 { free(is); free(js); printf(&quot;err**not inv\n&quot;);
+				return(0);
+			 }
+			 */
+		  if ((size_t)is[k]!=k) swapr(k,(size_t)is[k]);
+/*
+			 for (j=0; j&lt;=n-1; j++)
+				{ u=k*n+j; v=is[k]*n+j;
+				  t=ar[u]; ar[u]=ar[v]; ar[v]=t;
+				  t=ai[u]; ai[u]=ai[v]; ai[v]=t;
+				} */
+		  if ((size_t)js[k]!=k) swapc(k,(size_t)js[k]);
+/*			 for (i=0; i&lt;=n-1; i++)
+				{ u=i*n+k; v=i*n+js[k];
+				  t=ar[u]; ar[u]=ar[v]; ar[v]=t;
+				  t=ai[u]; ai[u]=ai[v]; ai[v]=t;
+				} */
+//		  l=k*n+k;
+		  set(k,k,std::conj(value(k,k))/d);
+//		  ar[l]=ar[l]/d; ai[l]=-ai[l]/d;
+		  for (j=0; j&lt;n; j++)
+			 if (j!=k)
+				set(k,j,value(k,j)*value(k,k));
+/*
+				{ u=k*n+j;
+				  p=ar[u]*ar[l]; q=ai[u]*ai[l];
+				  s=(ar[u]+ai[u])*(ar[l]+ai[l]);
+				  ar[u]=p-q; ai[u]=s-p-q;
+				} */
+		  for (i=0; i&lt;n; i++)
+			 if (i!=k)
+				{ // v=i*n+k;
+				  for (j=0; j&lt;n; j++)
+					 if (j!=k)
+						set(i,j,value(i,j)-value(k,j)*value(i,k));
+/*
+						{ u=k*n+j;  w=i*n+j;
+						  p=ar[u]*ar[v]; q=ai[u]*ai[v];
+						  s=(ar[u]+ai[u])*(ar[v]+ai[v]);
+						  t=p-q; b=s-p-q;
+						  ar[w]=ar[w]-t;
+						  ai[w]=ai[w]-b;
+						} */
+				}
+		  for (i=0; i&lt;n; i++)
+			 if (i!=k)
+				set(i,k,-value(i,k)*value(k,k));
+/*				{ u=i*n+k;
+				  p=ar[u]*ar[l]; q=ai[u]*ai[l];
+				  s=(ar[u]+ai[u])*(ar[l]+ai[l]);
+				  ar[u]=q-p; ai[u]=p+q-s;
+				} */
+		}
+	 for (k=n; k&gt;0; k--)
+		{ if ((size_t)js[k-1]!=k-1) swapr((size_t)js[k-1],k-1);
+/*			 for (j=0; j&lt;n; j++) swapr((size_t)js[k-1],k-1);
+				{ u=k*n+j; v=js[k]*n+j;
+				  t=ar[u]; ar[u]=ar[v]; ar[v]=t;
+				  t=ai[u]; ai[u]=ai[v]; ai[v]=t;
+				} */
+		  if ((size_t)is[k-1]!=k-1) swapc((size_t)is[k-1],k-1);
+/*			 for (i=0; i&lt;=n-1; i++)
+				{ u=i*n+k; v=i*n+is[k];
+				  t=ar[u]; ar[u]=ar[v]; ar[v]=t;
+				  t=ai[u]; ai[u]=ai[v]; ai[v]=t;
+				} */
+		}
+	delete isp;
+	delete jsp;
+	return (*this);
+}
+
+cmatrix cmatrix::operator~()	// 求逆矩阵，但产生新矩阵
+{
+	cmatrix m(*this);
+	m.inv();
+	return m;
+}
+
+cmatrix operator/(COMPLEX a, cmatrix m) // 求逆矩阵再乘常数
+{
+	return (~m)*a;
+}
+
+cmatrix&amp; cmatrix::operator/=(COMPLEX a) // 所有元素乘a的倒数，自身改变
+{
+	(*this)*=1.0/a;
+	return (*this);
+}
+
+cmatrix cmatrix::operator/(COMPLEX a) // 所有元素乘a的倒数，产生新的矩阵
+{
+	cmatrix m(*this);
+	m/=a;
+	return m;
+}
+
+</code></pre></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

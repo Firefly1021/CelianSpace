@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="各种模板/XTUBeamer模板/XTUBeamer模板.tex" />
+  <title>XTUBeamer模板.tex | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>XTUBeamer模板.tex</h1><p class="doc-subtitle">各种模板 / latex / 10.8 KB</p><div class="doc-chips"><span>各种模板</span><span>latex</span></div><p class="source-path">来源：各种模板/XTUBeamer模板/XTUBeamer模板.tex · <a href="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF.tex">打开原始文件</a><a class="button-link" href="../materials/templates-source.html">返回分类</a></div><p>\usefonttheme{professionalfonts}</p>
+<p>\usetikzlibrary{calc} \captionsetup{font=small}</p>
+<p>你的姓名 这是你的标题 \subtitle{副标题} \institute{湘潭大学} \today</p>
+<p>\def\cmd#1{\texttt{\color{red}\footnotesize $\backslash$#1}} \def\env#1{\texttt{\color{blue}\footnotesize #1}} \definecolor{deepblue}{rgb}{0,0,0.5} \definecolor{deepred}{rgb}{0.6,0,0} \definecolor{deepgreen}{rgb}{0,0.5,0} \definecolor{halfgray}{gray}{0.55} \definecolor{KuangNei}{RGB}{242,242,242} \definecolor{BianKuang}{RGB}{71,93,79} \lstset{ basicstyle=\ttfamily\small, keywordstyle=\bfseries\color{deepblue}, emphstyle=\ttfamily\color{deepred},</p>
+<p>\kaishu</p>
+<p>\titlepage</p>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF/pic/XTU.png" alt="XTU.png" loading="lazy" /><figcaption>各种模板/XTUBeamer模板/pic/XTU.png</figcaption></figure>
+<p>\tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]</p>
+<h2>一个简单的例子</h2>
+<p>\small 考虑一维Poisson方程的Dirichlet边值问题:</p>
+<div class="math-display">\[\varphi_0=
+\begin{cases}
+\frac{x_1-x}{h_1},&amp;x\in [x_0,x_1]\\
+0,&amp;\text{其他}
+\end{cases},
+\varphi_n=
+\begin{cases}
+0,&amp;\text{其他}\\
+\frac{x-x_{n-1}}{h_n},&amp;x\in [x_{n-1},x_n]
+\end{cases}\]</div>
+<div class="math-display">\[\varphi_i=
+\begin{cases}
+\frac{x-x_{i-1}}{h_i},&amp;x\in [x_{i-1},x_i]\\
+\frac{x_{i+1}-x}{h_{i+1}},&amp;x\in [x_i,x_{i+1}]\\
+0,&amp;\text{其他}
+\end{cases}\]</div>
+<p class="caption">刚度矩阵的组装</p>
+<div class="math-display">\[K^{(k)}=\frac{1}{h_k}
+\begin{bmatrix}
+1 &amp; -1\\
+-1&amp; 1 \\
+\end{bmatrix}\]</div>
+<div class="math-display">\[(\underbrace{1,0,\cdots,0}_{n+1}),  (\underbrace{0,\cdots,0,1}_{n+1})\]</div>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF/pic/n_4_global.png" alt="n_4_global.png" loading="lazy" /><figcaption>各种模板/XTUBeamer模板/pic/n_4_global.png</figcaption></figure>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF/pic/n_16_global.png" alt="n_16_global.png" loading="lazy" /><figcaption>各种模板/XTUBeamer模板/pic/n_16_global.png</figcaption></figure>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF/pic/n_128_global.png" alt="n_128_global.png" loading="lazy" /><figcaption>各种模板/XTUBeamer模板/pic/n_128_global.png</figcaption></figure>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF/pic/n_4.png" alt="n_4.png" loading="lazy" /><figcaption>各种模板/XTUBeamer模板/pic/n_4.png</figcaption></figure>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF/pic/n_16.png" alt="n_16.png" loading="lazy" /><figcaption>各种模板/XTUBeamer模板/pic/n_16.png</figcaption></figure>
+<figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF/pic/n_128.png" alt="n_128.png" loading="lazy" /><figcaption>各种模板/XTUBeamer模板/pic/n_128.png</figcaption></figure>
+<h2>抽象有限元</h2>
+<h3>抽象变分问题</h3>
+<div class="math-display">\[|a(v,w)|\leqslant C\|v\|_H\|w\|_H,  \forall v,w\in H\]</div>
+<div class="math-display">\[a(v,v)\geqslant \alpha \|v\|^2_H,  \forall v\in V\subset H\]</div>
+<div class="math-display">\[a(u,v)=\langle F,v\rangle,  \forall v\in H\]</div>
+<div class="math-display">\[\|u-u_h\|_V\leqslant \frac{C}{\alpha}\inf_{v\in V_h}\|u-v\|_V\]</div>
+<div class="math-display">\[\mathcal{I}_{\mathcal{T}}f|_{K_i}=\mathcal{I}_{K_i} f\]</div>
+<div class="math-display">\[\begin{aligned}
+&amp;3\text{个顶点}.\\
+&amp;3(k-1)\text{个不同的边节点};\\
+&amp;\frac{1}{2}(k-1)(k-2)\text{个单元内部节点}.
+\end{aligned}\]</div>
+<h2>stokes方程</h2></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

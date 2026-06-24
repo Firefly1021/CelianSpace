@@ -8,14 +8,14 @@
   <link rel="stylesheet" href="assets/wiki.css" />
   <script defer src="assets/search-index.js"></script>
   <script defer src="assets/wiki.js"></script>
-  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', m: '\\mathrm{m}', pa: '\\partial', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}' } }, svg: { fontCache: 'global' } };</script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 <body data-depth="0">
   <header class="wiki-topbar">
     <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
     <a class="top-brand" href="index.html">CelianSpace Wiki</a>
-    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板..." autocomplete="off" /></label>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
     <a class="top-link" href="../index.html">个人主页</a>
   </header>
   <div class="search-results" id="search-results" hidden></div>
@@ -34,26 +34,19 @@
 <a class="" href="math/set-axiomatics.html">集合与公理化</a>
 <a class="" href="math/topology-geometry.html">拓扑与几何</a>
 </nav></details>
-<details open><summary>模板</summary><nav>
-<a class="" href="templates/report-template.html">课程报告模板</a>
-<a class="" href="templates/beamer-template.html">Beamer 演示模板</a>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="materials/index.html">资料总览</a>
+<a class="" href="materials/math-source.html">数学基础源文件</a>
+<a class="" href="materials/templates-source.html">各种模板</a>
+<a class="" href="materials/learning-code-source.html">LearningCode</a>
+<a class="" href="materials/code-docs-source.html">code学习文档</a>
 </nav></details>
-<details open><summary>代码实验</summary><nav>
-<a class="" href="code/numerical-code.html">数值方法与 C++/Python</a>
-</nav></details>
-<details open><summary>学习文档</summary><nav>
-<a class="" href="docs/code-notes.html">Git 与 C++ 学习文档</a>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="templates/index.html">模板总览</a>
+<a class="" href="code/index.html">代码实验</a>
+<a class="" href="docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>CelianSpace 文档站</h1><p class="doc-subtitle">像 OI Wiki 一样浏览数学基础、模板、代码实验和学习文档。</p><div class="doc-chips"><span>多页面</span><span>左侧目录</span><span>公式渲染</span><span>搜索</span></div></header>
-<section class="doc-section">
-  <div class="wiki-hero-grid">
-    <a href="math/real-analysis.html"><strong>数学基础</strong><span>每个 Section 独立成页，按方向分类。</span></a>
-    <a href="templates/report-template.html"><strong>模板</strong><span>课程报告与 Beamer 模板的可阅读说明。</span></a>
-    <a href="code/numerical-code.html"><strong>代码实验</strong><span>Beam-Warming、Nédélec 边元与 C++/Python 代码。</span></a>
-    <a href="docs/code-notes.html"><strong>学习文档</strong><span>Git、C++ 语法、头文件和工程组织。</span></a>
-  </div>
-  <h2>数学基础分类</h2><div class="category-grid"><section class="category-card"><h2>分析基础</h2><a href="math/classical-calculus.html"><strong>经典微积分</strong><span>微分、积分与经典分析结果。</span></a><a href="math/complex-analysis.html"><strong>复变函数</strong><span>复数、全纯函数、积分表示与级数展开。</span></a><a href="math/functional-analysis.html"><strong>泛函分析</strong><span>Banach 空间、线性算子、对偶空间与复习选题。</span></a><a href="math/real-analysis.html"><strong>实分析</strong><span>Lebesgue 测度、抽象测度和积分。</span></a></section><section class="category-card"><h2>代数与几何</h2><a href="math/algebra-number-theory.html"><strong>代数与数论</strong><span>群、环、数论结构与代数对象。</span></a><a href="math/topology-geometry.html"><strong>拓扑与几何</strong><span>拓扑学基本知识和微分几何。</span></a></section><section class="category-card"><h2>PDE 与分析</h2><a href="math/pde-fourier-analysis.html"><strong>偏微分方程与傅里叶分析</strong><span>古典 PDE、广义函数、Sobolev 空间与椭圆方程。</span></a></section><section class="category-card"><h2>数值计算与有限元</h2><a href="math/finite-element.html"><strong>有限元方法初步</strong><span>变分问题、有限元空间、混合有限元与计算流程。</span></a><a href="math/machine-learning.html"><strong>机器学习基础</strong><span>线性代数、机器学习基本要素与线性模型。</span></a><a href="math/numerical-analysis.html"><strong>数值分析</strong><span>守恒律、PDE 数值解、离散极值原理与 Helmholtz 方程。</span></a></section><section class="category-card"><h2>基础结构</h2><a href="math/set-axiomatics.html"><strong>集合与公理化</strong><span>公理化思想与集合论基础。</span></a></section></div>
-</section></article></main>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>CelianSpace 文档站</h1><p class="doc-subtitle">面向数学、代码、模板和学习文档的完整资料型网页。</p><div class="doc-chips"><span>多页面</span><span>完整资料</span><span>公式渲染</span><span>搜索</span></div></header><section class="doc-section"><div class="wiki-hero-grid"><a href="materials/index.html"><strong>完整资料库</strong><span>92 个材料文件全部纳入网页。</span></a><a href="math/real-analysis.html"><strong>数学基础</strong><span>11 个 Section 按方向分类，全文渲染。</span></a><a href="templates/index.html"><strong>模板</strong><span>报告、Beamer、样式、图片和 PDF。</span></a><a href="code/index.html"><strong>代码实验</strong><span>Python、C++、数据和结果图。</span></a></div><h2>数学基础分类</h2><div class="category-grid"><section class="category-card"><h2>分析基础</h2><a href="math/classical-calculus.html"><strong>经典微积分</strong><span>微分、积分与经典分析结果。</span></a><a href="math/complex-analysis.html"><strong>复变函数</strong><span>复数、全纯函数、积分表示与级数展开。</span></a><a href="math/functional-analysis.html"><strong>泛函分析</strong><span>Banach 空间、线性算子、对偶空间与复习选题。</span></a><a href="math/real-analysis.html"><strong>实分析</strong><span>Lebesgue 测度、抽象测度和积分。</span></a></section><section class="category-card"><h2>代数与几何</h2><a href="math/algebra-number-theory.html"><strong>代数与数论</strong><span>群、环、数论结构与代数对象。</span></a><a href="math/topology-geometry.html"><strong>拓扑与几何</strong><span>拓扑学基本知识和微分几何。</span></a></section><section class="category-card"><h2>PDE 与分析</h2><a href="math/pde-fourier-analysis.html"><strong>偏微分方程与傅里叶分析</strong><span>古典 PDE、广义函数、Sobolev 空间与椭圆方程。</span></a></section><section class="category-card"><h2>数值计算与有限元</h2><a href="math/finite-element.html"><strong>有限元方法初步</strong><span>变分问题、有限元空间、混合有限元与计算流程。</span></a><a href="math/machine-learning.html"><strong>机器学习基础</strong><span>线性代数、机器学习基本要素与线性模型。</span></a></section><section class="category-card"><h2>数值分析与 PDE</h2><a href="math/numerical-analysis.html"><strong>数值分析</strong><span>守恒律、PDE 数值解、离散极值原理与 Helmholtz 方程。</span></a></section><section class="category-card"><h2>基础结构</h2><a href="math/set-axiomatics.html"><strong>集合与公理化</strong><span>公理化思想与集合论基础。</span></a></section></div></section></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

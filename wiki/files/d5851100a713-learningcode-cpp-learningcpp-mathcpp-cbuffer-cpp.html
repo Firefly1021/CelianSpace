@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="LearningCode/CPP/LearningCPP/MathCPP/CBUFFER.CPP" />
+  <title>CBUFFER.CPP | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>CBUFFER.CPP</h1><p class="doc-subtitle">LearningCode / code / 2.3 KB</p><div class="doc-chips"><span>LearningCode</span><span>code</span></div><p class="source-path">来源：LearningCode/CPP/LearningCPP/MathCPP/CBUFFER.CPP · <a href="../../materials/LearningCode/CPP/LearningCPP/MathCPP/CBUFFER.CPP">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/LearningCode/CPP/LearningCPP/MathCPP/CBUFFER.CPP">打开原始文件</a><a class="button-link" href="../materials/learning-code-source.html">返回分类</a></div><pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;fstream&gt;
+
+#include &quot;cbuffer.h&quot;
+
+std::ostream &amp;operator&lt;&lt;(std::ostream &amp; out, std::complex&lt;double&gt; &amp; z)
+{
+	out&lt;&lt;&quot;(&quot;&lt;&lt;std::real(z)&lt;&lt;&quot;,&quot;&lt;&lt;std::imag(z)&lt;&lt;&quot;)&quot;;
+	return out;
+}
+std::istream &amp;operator&gt;&gt;(std::istream &amp; in, std::complex&lt;double&gt; &amp; z)
+{
+	double x,y;
+//	in &gt;&gt; &quot;(&quot; &gt;&gt; x &gt;&gt; &quot;,&quot; &gt;&gt; y &gt;&gt; &quot;)&quot;;
+	char a;
+	in &gt;&gt; a &gt;&gt; x &gt;&gt; a &gt;&gt; y &gt;&gt; a;
+	z = std::complex&lt;double&gt;(x,y);
+	return in;
+}
+
+std::ostream&amp; operator&lt;&lt;(std::ostream&amp; o, cbuffer&amp; b)
+{
+	size_t maxitem = 5;
+	for(size_t i=0; i&lt;b.len(); i++) {
+		o &lt;&lt; b[i] &lt;&lt; &#x27;\t&#x27;;
+		if(((i+1) % maxitem)==0)
+			o &lt;&lt; std::endl;
+	}
+	o &lt;&lt; std::endl;
+	return o;
+}
+
+// 将第n个值设为d，如果引用数大于1，则克隆出一个新的
+// 复数缓存区，再作设置，返回作了设置的缓存区指针
+cbuffer* cbuffer::set(size_t n, COMPLEX d)
+{
+	DOUBLE x,y;
+	if(doadjust) {
+		x = std::real(d);
+		y = std::imag(d);
+		d = COMPLEX(adjust(x),adjust(y));
+	}
+	if(refnum == 1) {
+		retrieve(n) = d;
+		return this;
+	}
+	refnum --;
+	cbuffer * b;
+	b = clone();
+	(b-&gt;retrieve(n)) = d;
+	return b;
+}
+
+// 克隆一个完全一样的缓存区
+cbuffer* memcbuffer::clone()
+{
+	cbuffer* b;
+	b = new memcbuffer(length);
+	if(length &gt; 0)
+		for(size_t i=0; i&lt;length; i++)
+			(b-&gt;retrieve(i)) = (*this)[i];
+	return b;
+}
+
+// 磁盘缓存区构造函数，打开临时文件
+diskcbuffer::diskcbuffer(size_t lth):cbuffer(),length(lth),n(0)
+{
+//	tempfp = tmpfile();
+	tmpfile_s(&amp;tempfp);
+}
+
+
+// 析构函数，关闭临时文件
+diskcbuffer::~diskcbuffer()
+{
+	fclose(tempfp);
+}
+
+// 将缓存区尺寸改为num
+void diskcbuffer::alloc(size_t num)
+{
+	length = num;
+	if(!tempfp)
+//		tempfp = tmpfile();
+	tmpfile_s(&amp;tempfp);
+	n = 0;
+}
+
+// 释放缓存区，关闭临时文件
+void diskcbuffer::release()
+{
+	fclose(tempfp);
+	buf = 0.0;
+	length = 0;
+}
+
+// 返回第i个复数的引用，先将当前buf中的内容写入临时文件
+COMPLEX&amp; diskcbuffer::retrieve(size_t i)
+{
+	long off;
+	off = (long)n*sizeof(COMPLEX);
+	fseek(tempfp, off, SEEK_SET);
+	fwrite(&amp;buf, sizeof(COMPLEX), 1, tempfp);
+	off = (long)i*sizeof(COMPLEX);
+	fseek(tempfp, off, SEEK_SET);
+	fread(&amp;buf, sizeof(COMPLEX), 1, tempfp);
+	n = i;
+	return buf;
+}
+
+// 克隆一个内容完全相同的磁盘缓存区
+cbuffer* diskcbuffer::clone()
+{
+	cbuffer* b;
+	b = new diskcbuffer(length);
+	if(length &gt; 0)
+		for(size_t i=0; i&lt;length; i++)
+			(b-&gt;retrieve(i)) = (*this)[i];
+	return b;
+}
+</code></pre></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

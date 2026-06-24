@@ -22,3 +22,8 @@ https://firefly1021.github.io/CelianSpace/
 - `assets/hero-celianspace.png`：首页插画
 - `wiki/`：多页面文档站，包含数学基础、模板、代码实验和学习文档
 - `materials/`：迁移进仓库的原始学习资料与模板源文件
+
+
+## 资料库生成
+
+`wiki/` 现在包含 `materials/` 中全部有效文件的完整资料索引：TeX、Markdown 和代码以网页形式展示，图片与 PDF 直接预览，数据文件提供摘要和原始文件入口。

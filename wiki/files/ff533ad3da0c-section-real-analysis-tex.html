@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="数学基础/Section/Real_Analysis.tex" />
+  <title>Real_Analysis.tex | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>Real_Analysis.tex</h1><p class="doc-subtitle">数学基础 / latex / 38.7 KB</p><div class="doc-chips"><span>数学基础</span><span>latex</span></div><p class="source-path">来源：数学基础/Section/Real_Analysis.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Real_Analysis.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Real_Analysis.tex">打开原始文件</a><a class="button-link" href="../materials/math-source.html">返回分类</a></div><p></p>
+<h2>实分析与泛函分析</h2>
+<h3>Lebesgue测度</h3>
+<p>定义所谓的$n$维区间$Q=\{x=(x_1,\cdots,x_n):a_k\leqslant x_k\leqslant b_k,1\leqslant k\leqslant n\}$.它的体积自然可以定义为</p>
+<div class="math-display">\[|Q|=\prod^n_{k=1}(b_k-a_k)\]</div>
+<p>当然了,如果$b_k-a_k$都相等的话,此时$Q$就是一个方体.由此我们可以定义Lebesgue外测度. <strong>Lebesgue外测度</strong>$^\clubsuit $:$E\subset \R ^n$的Lebesgue外测度定义为</p>
+<div class="math-display">\[m^*(E)=\inf\{\sum^{\infty}_{k=1}|Q_k|:\bigcup^{\infty}_{k=1}Q_k\supset E,Q_k\text{为$n$维区间}\}\]</div>
+<p>注意到,这个外测度的定义是通过取下确界定义的,自然我们可以用下确界的性质得到下面的小结论: 对任意给定的$\varepsilon &gt;0$,存在覆盖$E\subset \bigcup_{k=1}^{\infty}Q_k$满足</p>
+<div class="math-display">\[\sum^{\infty}_{k=1}|Q_k|&lt;m^*(E)+\varepsilon\]</div>
+<p>从定义我们立即得到外测度一定是非负的,并且$m^*(\emptyset)=0$.此外还具有下面的性质:<br> 1.单调性:$E_1\subset E_2\Rightarrow m^*(E_1)\leqslant m^*(E_2)$. 设$E_{1}\subset E_{2}$,若$E_2\subset\bigcup_{k=1}^{\infty}Q_{k}$,则$E_{1}\subset\bigcup_{k=1}^{\infty}Q_{k}$ ,由外测度定义,$\m(E_{1})\leqslant\sum_{k=1}^{\infty}|Q_{k}|$,从而</p>
+<div class="math-display">\[\m(E_{1})\leqslant\m(E_{2})\]</div>
+<p>2.次可数可加性:$\m\left(\bigcup_{k=1}^{\infty}E_{k}\right)\leqslant\sum_{k=1}^{\infty}\m\left(E_{k}\right).$ 不妨设$\sum_{k=1}^{\infty}\m\left(E_{k}\right)&lt;\infty$.对每个$E_k,\forall\varepsilon&gt;0$,由外测度定义,$\exists\{Q_{k,j}\}$,使得$E_{k}\subset\bigcup_{j=1}^{\infty}Q_{k,j}$,且$\sum_{j=1}^{\infty}|Q_{k,j}|&lt;\m(E_{k})+\frac{\varepsilon}{2^k}$,从而$\bigcup_{k=1}^{\infty}E_{k}\subset\bigcup_{k=1}^{\infty}\bigcup_{j=1}^{\infty}Q_{k,j}$,且</p>
+<div class="math-display">\[\m(\bigcup_{k=1}^{\infty}E_{k})\leqslant\sum_{k=1}^{\infty}\sum_{j=1}^{\infty}|Q_{k,j}|&lt;\sum_{k=1}^{\infty}\m(E_{k})+\varepsilon\]</div>
+<p>由$\varepsilon&gt;0$的任意性,即证. 现在回到我们的初衷,测度是度量集合大小的一个工具,我们当然希望它满足我们的直观,例如区间的测度就是其长度,也就是有下面的例子: <strong>例</strong>$^\spadesuit$ :设$Q$是$\R ^n$中闭区间,则</p>
+<div class="math-display">\[\m (Q)=|Q|\]</div>
+<p><strong>Proof</strong>:因为$Q\supset Q$,由外测度定义,$\m(Q)\leqslant|Q|&lt;\infty$.为证反向不等式,从$\m (Q)&lt;\infty, \forall\varepsilon&gt;0$,存在闭区间列$\{Q_{k}\}$,使得$Q\subset\bigcup_{k=1}^{\infty}Q_{k}$,且$\sum_{k=1}^{\infty}|Q_{k}|\leqslant\m(Q)+\varepsilon$.对$\forall\eta $,存在开区间$Q_{k}^{*}\supset Q_{k}$,使得</p>
+<div class="math-display">\[|Q_{k}^*|\leqslant (1+\eta)|Q_{k}|,\forall k.\]</div>
+<p>因为 $Q\subset\bigcup_{k=1}^{\infty}Q_{k}\subset\bigcup_{k=1}^{\infty}Q_{k}^{*}$,由有限覆盖定理,$Q$的开覆盖$\{Q_{k}^*\}_{k}^{\infty}$中包含有限子覆盖,不妨记为 $\{Q_{k}^*\}_{k=1}^{m}$,即 $Q\subset\bigcup_{k=1}^{m}Q_{k}^{*}$,所以,</p>
+<div class="math-display">\[|Q|\leqslant\sum_{k=1}^{m}\left(1+\eta\right)|Q_{k}|&lt;\left(1+\eta\right)\left(\m\left(Q\right)+\varepsilon\right).\]</div>
+<p>由$\varepsilon,\eta&gt;0$的任意性,得到$|Q|\leqslant\m(Q)$. <strong>例</strong>$^\spadesuit$:设$E\subset\R ^n$,则对于$\forall\varepsilon &gt;0$,存在开集$G\supset E$,使得</p>
+<div class="math-display">\[\m (E)\leqslant\m (G)&lt;\m (E)+\varepsilon\]</div>
+<p>从而$\m (E)=\inf\{\m (G):G\supset E,G\text{为开集}\}$. <strong>Proof</strong>:不妨设$\m(E)&lt;\infty$,由外测度定义,对$\forall\varepsilon &gt;0$,存在闭区间列$\{Q_{k}\}$,使得</p>
+<div class="math-display">\[E\subset\bigcup_{k=1}^{\infty}Q_{k}\text{且}
+\sum_{k=1}^{\infty}|Q_{k}|&lt;\m(E)+\frac{\varepsilon}{2}.\]</div>
+<p>对每个$Q_{k}$,存在开区间$Q_{k}^{*}$,使得</p>
+<div class="math-display">\[Q_{k}\subset Q_{k}^{*}\text{且}|Q_{k}^{*}|\leqslant|Q_{k}|+\frac{\varepsilon}{2^{k+1}}.\]</div>
+<p>令$G=\bigcup_{k=1}^{\infty}Q_{k}^{*}$,则$G$为开集且$G{\supset}E$,故</p>
+<div class="math-display">\[\begin{aligned}
+\m(E)\leqslant\m(G)\leqslant\sum_{k=1}^{\infty}\m(Q_{k}^{*}) &amp;=\sum_{k=1}^{\infty}|Q_{k}^{*}|\\
+&amp;\leqslant\sum_{k=1}^{\infty}\left(|Q_{k}|+\frac{\varepsilon}{2^{k+1}}\right)\\
+&amp;=\sum_{k=1}^{\infty}|Q_{k}|+\frac{\varepsilon}{2}&lt;\m(E)+\varepsilon.
+\end{aligned}\]</div>
+<p><strong>例</strong>$^\spadesuit$:设$x_0\in\R ^n$,令$E+\{x_0\}=\{x+x_0:x\in E\}$.则</p>
+<div class="math-display">\[\m(E+\{x_{0}\})=\m(E).\]</div>
+<p><strong>Proof</strong>:因为$n$维区间的体积有平移不变性,所以,对于 $\bigcup_{k=1}^{\infty}Q_{k}{\supset}E$,有</p>
+<div class="math-display">\[\bigcup_{k=1}^{\infty}(Q_{k}+\{x_{0}\})\supset(E+\{x_{0}\}).\]</div>
+<p>于是</p>
+<div class="math-display">\[\m(E+\{x_{0}\})\leqslant\sum_{k=1}^{\infty}|Q_{k}|+\{x_{0}\}=\sum_{k=1}^{\infty}|Q_{k}|\]</div>
+<p>从而$\m(E+\{x_{0}\})\leqslant\m(E)$.反之,对$E+\{x_{0}\}$ 作向量-$x_{0}$平移.得到$E$,于是又有</p>
+<div class="math-display">\[\m(E)\leqslant\m(E+\{x_{0}\}).\]</div>
+<p><strong>例</strong>$^\spadesuit$:设$E_{1},E_{2}$为$\R ^n$中两个集合,若 $E_1$与$E_2$之间的距离$d(E_{1},E_{2})=d&gt;0$,则</p>
+<div class="math-display">\[\m(E_1\cup E_2)=\m(E_1)+\m(E_2).\]</div>
+<p><strong>Proof</strong>: 由外测度的次可加性,只要证反向不等式:</p>
+<div class="math-display">\[\m(E_{1}\cup E_{2})\geqslant\m(E_{1})+\m(E_{2}).\]</div>
+<p>不妨设$\m(E_{1}\cup E_{2})&lt;\infty$.由外测度的定义,对$\forall\varepsilon &gt;0$,存在区间列$\{Q_{k}\}$,使得$\bigcup^{\infty}_{k=1}Q_k\supset E_1\cup E_2$且</p>
+<div class="math-display">\[\sum_{k=1}^{\infty}|Q_{k}|&lt;\m(E_{1}\cup E_{2})+\varepsilon\]</div>
+<p>其中所有$Q_{k}$的直径$\operatorname{diam}(Q_{k})&lt;d$,则对每个$Q_{k}$,不能同时含有$E_{1},E_{2}$的点.于是可对$\bigcup_{k=1}^{\infty}Q_{k}$作分解：</p>
+<div class="math-display">\[\bigcup_{k=1}^{\infty}Q_{k}=(\bigcup_{j}Q_{k,j})\cup(\bigcup_{m}Q_{k,m}),\]</div>
+<p>式中$\bigcup_{j}Q_{k,j}\supset E_{1},\bigcup_{m}Q_{k,m}\supset E_{2}$,所以,</p>
+<div class="math-display">\[\m(E_{1}\cup E_{2})+\varepsilon&gt;\sum_{k=1}^{\infty}|Q_{k}|=\sum_{j}|Q_{k,j}|+\sum_{m}|Q_{k,m}|\geqslant\m (E_1)+\m (E_2)\]</div>
+<p>由$\varepsilon&gt;0$的任意性,即证. <strong>例</strong>$^\spadesuit$:设$E$为 $\R ^n$中可数集,则$\m(E)=0$. <strong>Proof</strong>:因为可数集$E$可写成</p>
+<div class="math-display">\[E=\{x_{1},x_{2},\cdots,x_{k},\cdots\}=\bigcup_{k=1}^{\infty}\{x_{k}\},\]</div>
+<p>所以,$0\leqslant\m(E)\leqslant\sum_{k=1}^{\infty}\m\left\{x_{k}\right\}$.于是接下来只需要说明单点集的外测度为零即可.这是显然的. 从这个例子我们可以看出:若$\m(E)&gt;0$,则$E$必为不可数集. <strong>Lebesgue可测集</strong>$^\clubsuit $:设$E\subset\R ^n$,若对$\forall\varepsilon&gt;0$,存在开集$G\supset E$,使得</p>
+<div class="math-display">\[\m(G-E)&lt;\varepsilon\]</div>
+<p>则称$E$是Lebesgue可测集,这时$\m(E)$称为$E$的Lebesgue测度.$m(E)$.即对于可测集$E,m(E)=\m(E)$. 注意到,上面定义中开集$G$与$\varepsilon$有关.它表明,若$E$是可测集,则对$\forall k$,存在 开集$G_{k}\supset E$,使得</p>
+<div class="math-display">\[\m(G_{k}-E)&lt;\frac{1}{k}.\]</div>
+<p>当我们直接取$G=E$时,可以说明$\R ^n$中任意开集都是可测集.</p>
+<p>设$\sum_{k=1}^{\infty}\m(E_{k})&lt;\infty$,求证</p>
+<div class="math-display">\[m(\varlimsup_{k\to\infty}E_{k})=0,\]</div>
+<p>从而</p>
+<div class="math-display">\[\m(\varliminf_{k\to\infty}E_{k})=0.\]</div>
+<p><strong>Proof</strong>:只需要证$m(\varlimsup_{k\to\infty}E_{k})=0$.利用上极限的定义</p>
+<div class="math-display">\[\varlimsup_{k\to\infty}E_{k}=\bigcap_{n=1}^{\infty}\bigcup_{k=n}^{\infty}E_{k}\subset\bigcup_{k=n}^{\infty}E_{k}\]</div>
+<p>根据外测度的单调性,有</p>
+<div class="math-display">\[0\leqslant \m (\varlimsup_{k\to\infty}E_{k})\leqslant \m(\bigcup_{k=n}^{\infty}E_{k})\leqslant \sum_{k=n}^{\infty}\m(E_{k})\to 0\]</div>
+<p>这就表明了$\m(\varlimsup_{k\to\infty}E_{k})=0$.自然有$m(\varlimsup_{k\to\infty}E_{k})=0$. <strong>例</strong>$^\spadesuit$:设$\{E_{k}\}$是可测集列,则$E=\bigcup_{k=1}^{\infty}E_{k}$也是可测集,且</p>
+<div class="math-display">\[\m\left(\bigcup_{k=1}^{\infty}E_{k}\right)\leqslant\sum_{k=1}^{\infty}\m(E_{k}).\]</div>
+<p><strong>Proof</strong>:对于$\forall\varepsilon&gt;0$,由$E_{k}$可测,存在开集$G_{k}\supset E_{k}$,使得$\m(G_{k}-E_{k})&lt;\frac{\varepsilon}{2^{k}}$,令$G=\bigcup_{k=1}^{\infty}G_{k}$,则$G$为开集,且$G\supset E$.再从</p>
+<div class="math-display">\[G-E\subset\bigcup_{k=1}^{\infty}(G_{k}-E_{k})\]</div>
+<p>得</p>
+<div class="math-display">\[\m(G-E)\leqslant\sum_{k=1}^{\infty}\m(G_{k}-E_{k})&lt;\varepsilon.\]</div>
+<p>于是$E$是可测集.利用外测度的次可数可加性,再注意到可测集的外测度和测度相等,就得到结论. <strong>例</strong>$^\spadesuit$:设$E$可测,则$E$的补集$E^{c}$可测. <strong>Proof</strong>:由$E$可测,对$\forall k\in\mathbb{N}$,存在开集$G_{k}\supset E$,使得$\m(G_{k}-E)&lt;\frac{1}{k}$.$G_{k}^{c}$为闭集,故可测,且$G_{k}^{c}\subset E^{c}$, 从而$H=\bigcup_{k=1}^{\infty}G_{k}^{c}$可测,且$H\subset E^{c}$.令$A=E^{c}-H$,则$A\subset E^{c}-G_{k}^{c}=G_{k}-E$.从而$\m(A)&lt;\frac{1}{k}$.于是$\m(A)=0$,所以A可测.从而$E^{c}=A\cup H$ 可测. 如果设$\{E_{k}\}$是可测集列,那么$E^{c}=\bigcup_{k=1}^{\infty}E_{k}^{c}$可测,也就有$E=\bigcap_{k=1}^{\infty}E_{k}$是可测集.再注意到$E_1-E_2=E_1\cap E_2^c$,就得到了$E_1-E_2$可测. <strong>例</strong>$^\spadesuit$:$E$可测$\Longleftrightarrow \forall\varepsilon&gt;0$,存在闭集$F{\subset}E$,使得</p>
+<div class="math-display">\[\m(E-F)&lt;\varepsilon.\]</div>
+<p><strong>Proof</strong>:$E$可测$\Leftrightarrow E^{c}$可测,则对$\forall\varepsilon&gt;0$,存在开集$G\supset E^{c}$,使得$\m(G-E^c)&lt;\varepsilon$,令$F=G^{c}$,则$F\subset E$且$\m(E-F)=\m(G-E^{c})&lt;\varepsilon$.</p>
+<p>设$\{E_{k}\}$是互不相交的可测集列,则</p>
+<div class="math-display">\[m\left(\bigcup_{k=1}^{\infty}E_{k}\right)=\sum_{k=1}^{\infty}m(E_{k}).\]</div>
+<p><strong>Proof</strong>:(1)先设所有$E_{k}$都是有界集,对$\forall\varepsilon&gt;0$,存在闭集$F_{k}\subset E_{k}$,使得$\m(E_{k}-F_{k})&lt;\frac{\varepsilon}{2^{k}}$.从而$\m(E_{k})\leqslant\m(F_{k})+\frac{\varepsilon}{2^{k}}$.因为$\{E_{k}\}$有界且互不相交,所以,$\{F_{k}\}$是互不相交的有界闭集列.对$\forall m$,有$m\left(\bigcup_{k=1}^{m}F_{k}\right)=\sum_{k=1}^{m}\mu(F_{k})$.于是,从$\bigcup_{k=1}^{m}F_{k}\subset\bigcup_{k=1}^{\infty}E_{k}$可推出</p>
+<div class="math-display">\[m\left(\bigcup_{k=1}^{\infty}E_{k}\right)\geqslant m\left(\bigcup_{k=1}^{m}F_{k}\right)=\sum_{k=1}^{m}m\left(F_{k}\right)\geqslant\sum_{k=1}^{m}m\left(E_{k}\right)-\varepsilon,\]</div>
+<p>由$\varepsilon&gt;0$的任意性,得$m\left(\bigcup_{k=1}^{\infty}E_{k}\right)\geqslant\sum_{k=1}^{m}m\left(E_{k}\right)$.令$m\to \infty$得$m\left(\bigcup_{k=1}^{\infty}E_{k}\right)\geqslant\sum_{k=1}^{\infty}m\left(E_{k}\right)$. (2)对于一般的$E_{k}$,取递增到$\R ^n$的区间列$\{Q_{k}\}$,并令$A_{1}=Q_{1},A_{k}=Q_{k}-Q_{k-1},k{\geqslant}2$,则$E_{k,j}=E_{k}\cap A_{j}$是互不相交的有界可测集列,而且$E_{k}=\bigcup_{j = 1}^{\infty}E_{k,j}$,所以</p>
+<div class="math-display">\[m\left(\bigcup_{k=1}^{\infty}E_{k}\right)=m\left(\bigcup_{k,j}E_{k,j}\right) =\sum_{k,j}m\left(E_{k,j}\right) = \sum_{k=1}^{\infty}m\left(E_{k}\right)\]</div>
+<p><strong>例</strong>$^\spadesuit$:设$E_{1},E_{2}$为可测集,$E_{1}\subset E_{2},m(E_{1})&lt;{\subset}&gt;\infty$,则</p>
+<div class="math-display">\[\mu(E_{2}-E_{1})=\mu(E_{2})-\mu(E_{1}).\]</div>
+<p>这个例子基本且重要,尤其是我们在涉及到移项的时候. <strong>Proof</strong>:$E_{2}=E_{1}\cup(E_{2}-E_{1})$,由可数可加性,$m(E_{2})=m(E_{1})+m(E_{2}-E_{1})$ .又 $m(E_{1})&lt;\infty$,于是$m(E_{2}-E_{1})=m(E_{2})-m(E_{1})$.</p>
+<p>设$\{E_{k}\}$是可测集列,$\lim_{k\to\infty}E_{k}=E$.<br> 1.<strong>下连续性</strong>:若$\{E_{k}\}$递增,则$E=\bigcup_{k=1}^{\infty}E_{k}$可测,且</p>
+<div class="math-display">\[\lim_{k\to\infty}m(E_{k})=m(\lim_{k\to\infty}E_{k})=m(E)\]</div>
+<p>2.若<strong>上连续性</strong>:若$\{E_{k}\}$递减,且存在某个$k_0$,使得$m(E_{k_0})&lt;\infty$,则$E=\bigcap_{k=1}^{\infty}E_{k}$可测,且</p>
+<div class="math-display">\[\lim_{k\to\infty}m(E_{k})=m(E)\]</div>
+<p><strong>Proof</strong>:1.若有某个$m(E_{k})=\infty$,则$m(E)=\infty$,这时自然成立.下面设所有$m(E_{k})&lt;\infty$.令$A_{1}=E_{1},A_{k}=E_{k}-E_{k-1}(k\geqslant2)$,则$\{A_{k}\}$互不相交且$E=\bigcup_{k=1}^{\infty}A_{k}$.移项得,$m(A_{k})=m(E_{k})-m(E_{k-1})$,所以,由可数可加性,有</p>
+<div class="math-display">\[m(E)=\sum_{k=1}^{\infty}m(A_{k})=\lim_{m\to\infty}\sum_{k=1}^{m}m(A_{k})=\lim_{m\to\infty}m(\bigcup_{k=1}^{m}A_{k})=\lim_{m\to\infty}m(E_{m}).\]</div>
+<p>2.不妨设$m(E_1)&lt;\infty,\{E_{k}\}$递减$\Rightarrow E_{k}^{c}=E_{1}-E_{k}$递增,而且$E^{c}=\left(\bigcap_{k=1}^{\infty}E_{k}\right)^{c}=\bigcup_{k=1}^{\infty}E_{k}^{c}$.利用下连续性,$m(E^{c})=\lim_{k\to\infty}m(E_{k}^{c})$,即</p>
+<div class="math-display">\[m(E_{1}-E)=\lim_{k\to\infty}m(E_{1}-E_{k}).\]</div>
+<p>又$m(E_1)&lt;\infty$,所以,$m(E_{1})-m(E)=m(E_{1})-\lim_{k\to\infty}m(E_{k})$,即$m(E)=\lim_{k\to\infty}m(E_{k})$. <strong>例</strong>$^\spadesuit$:开集$G$的闭包$\overline{G}$的测度$m(\overline{{G}})$是否等于$m(G)$? <strong>Proof</strong>:开集$G$的闭包$\overline{G}$的测度$m(\overline{G})$不一定等于$m(G)$.这是因为开集虽然是开区间的推广,但是两者的测度性质却发生了变化.例如$\mathbb{R}^1$中的开集可分解为互不相交的开区间的并:</p>
+<div class="math-display">\[G = \bigcup_{k=1}^{\infty} (\alpha_k, \beta_k)\]</div>
+<p>于是,</p>
+<div class="math-display">\[m(G) = \sum_{k=1}^{\infty} (\beta_k - \alpha_k)\]</div>
+<p>但是由闭包的性质,对于无穷并运算,只能得出</p>
+<div class="math-display">\[\overline{G} = \bigcup_{k=1}^{\infty} [\alpha_k, \beta_k] \supseteq \bigcup_{k=1}^{\infty} (\alpha_k, \beta_k) \Rightarrow m(\overline{G}) \geqslant \sum_{k=1}^{\infty} (\beta_k - \alpha_k) = m(G)\]</div>
+<p>我们只要构造使上述严格不等号 $m(\overline{G}) &gt; m(G)$成立的反例. 设$Q =\{r_k\}_{k=1}^{\infty}$是$[0,1]$中有理数集.令 $G_n =\left( r_n - \frac{\delta}{2^{n+1}}, r_n + \frac{\delta}{2^{n+1}} \right)$,取正数 $\delta$,使得$0 &lt; \delta &lt; 1$.再令$G = \bigcup_{n=1}^{\infty} G_n$,则$G$是开集,且</p>
+<div class="math-display">\[m(G) \leqslant \sum_{n=1}^{\infty} \frac{\delta}{2^n} = \delta &lt; 1\]</div>
+<p>另一方面,$\overline{G} \supset [0,1]$,故 $m(\overline{G}) \geqslant m([0,1]) = 1 &gt; m(G)$. <strong>例</strong>$^\spadesuit$:在$\R ^1$中构造一个只含无理点的闭集$F$,使得$m(F)&gt;0$ <strong>Proof</strong>:我们首先想到的是在$\R^1$中去掉有理数集 $Q=\{r_k\}_{k=1}^\infty$,在$\R^1 - Q$中虽然只有无理数,但它不是闭集.于是想到以每个有理点为中心作一个开区间. 这些开区间的并集就构成开集. 在 $\R^1$ 中去掉这个开集, 就得到了只含无理点的闭集. 设$\R^1$中有理数集$Q=\{r_k\}_{k=1}^\infty$.令$G_n=\left(r_n-\frac{1}{2^{n+1}}, r_n+\frac{1}{2^{n+1}}\right)$,则</p>
+<div class="math-display">\[G=\bigcup_{n=1}^\infty G_n\]</div>
+<p>是$\R^1$中的开集.</p>
+<div class="math-display">\[m(G)\leqslant\sum_{n=1}^\infty m(G_n) =\sum_{n=1}^\infty \frac{1}{2^n} = 1.\]</div>
+<p>记 $F=\R^1 - G$,则$F$是只含无理数的闭集,且 $m(F) &gt; 0$. <strong>例</strong>$^\spadesuit$:设$m(E)&lt;\infty,E_{k}(1\leqslant k\leqslant n)$是$E$的可测子集,且</p>
+<div class="math-display">\[\sum_{k=1}^{n}\mu\left(E_{k}\right)&gt;\left(n-1\right)\mu\left(E\right),\]</div>
+<p>证明:$m\left(\bigcap_{k=1}^{n}E_{k}\right)&gt;0$. <strong>Proof</strong>:将所给的条件</p>
+<div class="math-display">\[\sum_{k=1}^{\infty} m(E_k) &gt; (n-1) m(E)\]</div>
+<p>作变形:</p>
+<div class="math-display">\[m(E) &gt; n m(E) -\sum_{k=1}^{n} m(E_k) =\sum_{k=1}^{n} m(E - E_k) =\sum_{k=1}^{n} m(E_k^c).\]</div>
+<p>由于 $E -\bigcup_{k=1}^{n} E_k^c = E\cap \left( \bigcup_{k=1}^{n} E_k^c \right)^c = E \cap \left( \bigcap_{k=1}^{n} E_k \right) = \bigcap_{k=1}^{n} E_k$和$m(E) &lt; \infty$,故</p>
+<div class="math-display">\[m \left(\bigcap_{k=1}^{n} E_k \right) = m\left( E - \bigcup_{k=1}^{n} E_k^c \right) = m(E) - m \left( \bigcup_{k=1}^{n} E_k^c \right) \geqslant m(E) - \sum_{k=1}^{n} m(E_k^c) &gt; 0.\]</div>
+<p><strong>例</strong>$^\spadesuit$:设$\{A_{k}\}$或$\{B_{k}\}$为可测集列,且$A_{k}\subset E\subset B_{k},m(B_{k}-A_{k})\to 0(k\to\infty)$,证明$E$是可测集. <strong>Proof</strong>:证 (1)设$\{A_k\}$为可测集列.令$A=\bigcup_{k=1}^{\infty}A_k$,则$A$可测且$A_k\subset A\subset E\subset B_k$,从而</p>
+<div class="math-display">\[E-A\subset B_k-A_k \Rightarrow m^*(E-A)\leqslant m^*(B_k-A_k)\to 0   (k\to\infty),\]</div>
+<p>即$m^*(E-A)=0$.所以,$E-A$可测.故$E=A\cup(E-A)$可测. (2) 设$\{B_k\}$为可测集列.令$B=\bigcap_{k=1}^{\infty}B_k$,则$B$可测且$A_k\subset E\subset B\subset B_k$,从而</p>
+<div class="math-display">\[B-E\subset B_k-A_k \Rightarrow m^*(B-E)\leqslant m^*(B_k-A_k)\to 0   (k\to\infty),\]</div>
+<p>即$m^*(B-E)=0$.故$B-E$可测.故$E=B-(B-E)$可测. <strong>重要的例子</strong>$^\spadesuit$:证明:对$\R ^n$的任何子集$E$.都存在$G_{\delta}$型集$G_{\delta}\supset E$,使得</p>
+<div class="math-display">\[m(G_{\delta})=\m=(E).\]</div>
+<p><strong>Proof</strong>:$\forall k\in\mathbb{N}$,存在开集$G_k\supset E$,使得</p>
+<div class="math-display">\[m(G_k)&lt;m^*(E)+\frac{1}{k}.\]</div>
+<p>令$G_\delta=\bigcap_{k=1}^\infty G_k$,则$G_\delta$是$G_\delta$型集,且$E\subset G_\delta\subset G_k$($\forall k\in\mathbb{N}$),于是</p>
+<div class="math-display">\[m^*(E)\leqslant m(G_\delta)\leqslant m(G_k)&lt;m^*(E)+\frac{1}{k},\]</div>
+<p>令$k\to\infty$,得到$m(G_\delta)=m^*(E)$. $\R ^n$中集$E$的可测性,有多种等价的刻画.在之前的定义中是用开集$G$从$E$的外部来逼近$E$;有一个例子是用$E$的闭子集$F$从$E$的内部来逼近$E$.</p>
+<p>$E\subset\R ^n$可测的充要条件是对任一集$A$,有</p>
+<div class="math-display">\[m(G_\delta)=m(G_\delta\cap E)+m(G_\delta-E),\]</div>
+<div class="math-display">\[\m(A)\geqslant\m(A\cap E)+\m(A-E).\]</div>
+<div class="math-display">\[m(G_\delta)=\m(E)+\m(G_\delta-E),\]</div>
+<div class="math-display">\[E=\bigcup_{k=1}^{\infty}E_k\]</div>
+<div class="math-display">\[m(G_\delta^{(k)})\geqslant\m(G_\delta^{(k)}\cap E)+\m(G_\delta^{(k)}-E)\geqslant\m(E_k)+\m(G_\delta^{(k)}-E),\]</div>
+<div class="math-display">\[\m(G_\delta^{(k)}-E)\leqslant m(G_\delta^{(k)})-\m(E_k)=0,\]</div>
+<div class="math-display">\[G-E=\bigcup_{k=1}^{\infty}(G_\delta^{(k)}-E).\]</div>
+<div class="math-display">\[\m(G-E)\leqslant\sum_{k=1}^{\infty}\m(G_\delta^{(k)}-E)=0,\]</div>
+<h3>抽象测度</h3>
+<div class="math-display">\[\text{若}A_i\in\mathcal{M}(i\in I),\text{其中指标集$I$为可数集,那么}\bigcap_{i\in I}A_i\in\mathcal{M}.\]</div>
+<div class="math-display">\[\mathcal{M}:=\bigcap_{j\in J}\mathcal{M}_j\]</div>
+<div class="math-display">\[\Sigma (\mathcal{M})=\{\mathcal{A}:\mathcal{A}\supset\mathcal{M},\mathcal{A}\text{为$\sigma$代数}\}\]</div>
+<div class="math-display">\[\sigma (\mathcal{M}):=\bigcap_{\mathcal{A}\in \Sigma}\mathcal{A}\]</div>
+<div class="math-display">\[\mathcal{R}=\{A_1\times A_2:A_1\in\mathcal{M}_1,A_2\in\mathcal{M}_2\}\]</div>
+<div class="math-display">\[\tilde{\mathcal{R}}=\{A\subset X_1\times X_2:A\text{为有限个两两不交的矩形的并}\}\]</div>
+<div class="math-display">\[A=\bigcup_{i\leqslant N}(A_{i}^{(1)}\times A_{i}^{(2)})\]</div>
+<div class="math-display">\[A=\bigcup(A_i^{(1)}\times A_i^{(2)}),   B=\bigcup(B_j^{(1)}\times B_j^{(2)}),\]</div>
+<div class="math-display">\[\begin{aligned}
+A \cup B &amp;= \bigcup_{i,j} \left( \left(A_i^{(1)} \times A_i^{(2)}\right) \cup \left(B_j^{(1)} \times B_j^{(2)}\right) \right) \\
+&amp;= \bigcup_{i,j} \left[ \left(A_i^{(1)} \cap B_j^{(1)}\right) \times \left(A_i^{(2)} \cap B_j^{(2)}\right) \cup \left(A_i^{(1)} \cap B_j^{(1)}\right) \times \left(A_i^{(2)} \setminus B_j^{(2)}\right) \right. \\
+&amp;  \left. \cup \left(A_i^{(1)} \setminus B_j^{(1)}\right) \times \left(A_i^{(2)} \cap B_j^{(2)}\right) \cup \left(A_i^{(1)} \setminus B_j^{(1)}\right) \times \left(A_i^{(2)} \setminus B_j^{(2)}\right) \right]
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+A \cap B &amp;= \bigcup_{i,j} \left( \left(A_i^{(1)} \times A_i^{(2)}\right) \cap \left(B_j^{(1)} \times B_j^{(2)}\right) \right) \\
+&amp;= \bigcup_{i,j} \left( \left(A_i^{(1)} \cap B_j^{(1)}\right) \times \left(A_i^{(2)} \cap B_j^{(2)}\right) \right)
+\end{aligned}\]</div>
+<div class="math-display">\[\begin{aligned}
+A^c &amp;= \left( \bigcup_i \left(A_i^{(1)} \times A_i^{(2)}\right) \right)^c = \bigcap_i \left(A_i^{(1)} \times A_i^{(2)}\right)^c \\
+&amp;= \bigcap_i \left(\underbrace{\left(A_i^{(1)c} \times A_i^{(2)c}\right) \cup \left(A_i^{(1)c} \times A_i^{(2)}\right) \cup \left(A_i^{(1)} \times A_i^{(2)c}\right)}_{\text{在$\tR$}中}\right)
+\end{aligned}\]</div>
+<div class="math-display">\[\mu\Bigl(\bigcup_{n=1}^{\infty}E_n\Bigr)=\sum_{n=1}^{\infty}\mu(E_n)\]</div>
+<div class="math-display">\[\forall E\in\mathcal{M}_2,f^{-1}(E)\in\mathcal{M}_1.\]</div>
+<div class="math-display">\[f(x)=\sum_{i=0}^{m}\lambda _i\mathbf{1} _{A_i}(x),\]</div>
+<div class="math-display">\[f(x)=\sum_{i=0}^{m}\lambda _i\mathbf{1} _{A_i}(x),\]</div>
+<div class="math-display">\[f(x)=\sum_{i=0}^{m}\lambda _i\mathbf{1} _{A_i}(x)\]</div>
+<div class="math-display">\[0\leqslant \varphi_1(x)\leqslant \varphi_2(x)\leqslant\cdots \varphi_n(x)\leqslant \varphi_{n+1}(x)\leqslant\cdots\]</div>
+<div class="math-display">\[\forall \varepsilon&gt;0,\lim_{n\to\infty}\mu(\{x\in X:|f_n(x)-f(x)|\geqslant\varepsilon\})=0\]</div>
+<div class="math-display">\[\sup_{x\in \R^n}|g_{\varepsilon}(x)|\leqslant \sup_{x\in \R^n}|f(x)| \text{并且} m(\{x\in\R^n:f(x)\neq g_{\varepsilon}(x)\})&lt;\varepsilon\]</div>
+<h3>积分</h3>
+<div class="math-display">\[f(x)=\sum_{i=0}^{m}\lambda _i\mathbf{1} _{A_i}(x),\]</div>
+<div class="math-display">\[\int_{X}f\mathrm{d}\mu=\sum_{\lambda\in\mathbb{C}}\lambda\cdot\mu(f^{-1}(\lambda))\]</div>
+<div class="math-display">\[\int_{X}f\mathrm{d}\mu=\sum_{i=0}^{m}\lambda _i\cdot\mu(A_i)\]</div>
+<div class="math-display">\[\int_X f\mathrm{d}\mu=\sup\left\{\int_X \varphi\mathrm{d}\mu:\varphi\in\mathcal{E}(X,\mathcal{M},\mu),0\leqslant \varphi\leqslant f\right\}\]</div>
+<div class="math-display">\[\int_X f\mathrm{d}\mu=\int_X f^+\mathrm{d}\mu-\int_X f^-\mathrm{d}\mu\]</div>
+<div class="math-display">\[f^+{x}=f(x)\mathbf{1}_{x|\{f(x)\geqslant 0\}}(x),  f^-(x)=-f(x)\mathbf{1}_{x|\{f(x)\leqslant 0\}}(x)\]</div>
+<div class="math-display">\[\int_X f\mathrm{d}\mu=\int_X \operatorname{Re}(f)\mathrm{d}\mu+\mathrm{i}\int_X \operatorname{Im}(f)\mathrm{d}\mu\]</div>
+<div class="math-display">\[f_n(x)\leqslant f_{n+1}(x)\]</div>
+<div class="math-display">\[\lim_{n\to \infty}\int_X f_n\mathrm{d}\mu=\int_X f\mathrm{d}\mu\]</div>
+<div class="math-display">\[\lim_{n\to \infty}\int_X f_n\mathrm{d}\mu\leqslant \int_X f\mathrm{d}\mu\]</div>
+<div class="math-display">\[\lim_{n\to \infty}\int_X f_n\mathrm{d}\mu\geqslant \int_X f\mathrm{d}\mu\]</div>
+<div class="math-display">\[E_n=\{x\in X:f_n(x)\geqslant \alpha\varphi(x)\},  n\geqslant 1\]</div>
+<div class="math-display">\[\int_{X}f_n\mathrm{d}\mu\geqslant \int_{E_n}f_n\mathrm{d}\mu\geqslant \alpha\int_{E_n}\varphi\mathrm{d}\mu\]</div>
+<div class="math-display">\[\lim_{n\to\infty}\int_{X}f_n\mathrm{d}\mu\geqslant \sup_{0\leqslant \varphi\leqslant f}\left\{\int_X \varphi\mathrm{d}\mu\right\}=\int_X f\mathrm{d}\mu\]</div>
+<div class="math-display">\[\int_{X}\liminf_{n\to\infty}f_n\mathrm{d}\mu\leqslant \liminf_{n\to\infty}\int_{X}f_n\mathrm{d}\mu\]</div>
+<div class="math-display">\[\begin{aligned}
+\int_{X}\liminf_{n\to\infty}f_n\mathrm{d}\mu &amp;= \int_{X}\lim_{n\to\infty}\inf_{k\geqslant n}f_k\mathrm{d}\mu=\lim_{n\to\infty}\int_{X}\inf_{k\geqslant n}f_k\mathrm{d}\mu\\
+&amp;= \liminf_{n\to\infty}\int_{X}\inf_{k\geqslant n}f_k\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_{X}f_n\mathrm{d}\mu
+\end{aligned}\]</div>
+<h4>符号测度</h4>
+<div class="math-display">\[\nu (E)=\int_{E}f\mathrm{d}\mu,  \forall E\in\mathcal{M}\]</div></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

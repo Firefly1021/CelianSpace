@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="LearningCode/CPP/LearningCPP/MathCPP/VFUNC.H" />
+  <title>VFUNC.H | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>VFUNC.H</h1><p class="doc-subtitle">LearningCode / code / 9.7 KB</p><div class="doc-chips"><span>LearningCode</span><span>code</span></div><p class="source-path">来源：LearningCode/CPP/LearningCPP/MathCPP/VFUNC.H · <a href="../../materials/LearningCode/CPP/LearningCPP/MathCPP/VFUNC.H">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/LearningCode/CPP/LearningCPP/MathCPP/VFUNC.H">打开原始文件</a><a class="button-link" href="../materials/learning-code-source.html">返回分类</a></div><pre><code>#ifndef VFUNC_H
+#define VFUNC_H
+
+#include &lt;math.h&gt;
+
+#include &quot;matrix.h&quot;
+
+class valgo	// 矩阵算法类
+{
+ private:
+	DOUBLE yfactor;		// 乘因子，初始化为1
+	DOUBLE xfactor;		// x轴放大因子，初始化为1
+	DOUBLE addconst;	// 加和，初始化为0
+	DOUBLE xshift;		// x平移量，初始化为0
+ public:
+	unsigned refnum;		// 引用数,初始化为1
+	valgo():refnum(1),yfactor(1.0),xfactor(1.0),addconst(0.0),xshift(0.0){};
+	 // 构造函数,产生y=x线性函数
+	valgo(DOUBLE xs, DOUBLE xf,DOUBLE adc=0, DOUBLE yf=1):refnum(1),yfactor(yf),
+		addconst(adc),xshift(xs),xfactor(xf){}; // 为子类的调用而存在的构造函数
+	valgo(DOUBLE a):refnum(1),yfactor(0.0),xfactor(1.0),addconst(a),xshift(0.0){};
+	 // 常函数的构造，输出结构与输入矩阵同样阶数的常数矩阵
+	valgo(valgo &amp; alg):yfactor(alg.yfactor),xfactor(alg.xfactor),
+		addconst(alg.addconst),xshift(alg.xshift),refnum(1){}; // 拷贝构造函数
+	virtual ~valgo(){};
+	matrix cal(matrix &amp; x); // 计算算法值
+	virtual matrix&amp; calculate(matrix &amp; x)
+		{return x;}; // 本身算法,将被继承子类改写, 返回的引用须与x同
+	virtual valgo * clone(); // 克隆自己，必须被继承子类改写
+	valgo * mul(DOUBLE a);	// 乘a
+	valgo * add(DOUBLE a);	// 加a
+	valgo * neg(); // 取负
+	valgo * setxfactor(DOUBLE x);		// 设置x轴因子
+	valgo * xroom(DOUBLE x);	// 将xfactor扩大x倍
+	valgo * setxshift(DOUBLE x); // 设置xshift的值
+	valgo * xshiftas(DOUBLE x);	// 从当前开始平移x
+};
+
+#ifndef FUNC_H
+//enum	method {cadd,csub,cmul,cdiv,cpow,ccom}; // 枚举加减乘除乘方复合这四种运算
+const int cadd = 1;
+const int csub = 2;
+const int cmul = 3;
+const int cdiv = 4;
+const int cpow = 5;
+const int ccom = 6;
+#endif
+
+class valgojoin : public valgo // 结合算法
+{
+ public:
+	valgo * leftalgo;	// 左算法，初始化为0
+	valgo * rightalgo; // 右算法，初始化为0
+	int met;	// 指明算法
+	valgojoin(valgo * l, valgo * r, int m):leftalgo(l),
+		rightalgo(r), met(m)
+		{ if(leftalgo)
+				leftalgo-&gt;refnum++;
+		  if(rightalgo)
+				rightalgo-&gt;refnum++;
+		};
+	valgojoin(valgojoin&amp; alg):valgo(alg),
+		leftalgo(alg.leftalgo),rightalgo(alg.rightalgo),met(alg.met){
+			if(leftalgo)
+				leftalgo-&gt;refnum++;
+			if(rightalgo)
+				rightalgo-&gt;refnum++;};
+			// 拷贝构造函数
+	virtual ~valgojoin() {
+		if(leftalgo) {	// 如左或者右算法已经没有被引用，则删除
+			leftalgo-&gt;refnum--;
+			if(!leftalgo-&gt;refnum) delete leftalgo;
+		}
+		if(rightalgo) {
+			rightalgo-&gt;refnum--;
+			if(!rightalgo-&gt;refnum) delete rightalgo;
+		}
+	};
+	virtual valgo * clone(); // 克隆自己
+	virtual matrix&amp; calculate(matrix&amp; x);	// 实施结合算法
+};
+
+class valgofun : public valgo	// 函数算法
+{
+ public:
+	matrix&amp; (*f)(matrix&amp;);	// 函数指针
+	valgofun(matrix&amp; (*fun)(matrix&amp;)):f(fun){};	// 用函数指针进行初始化
+	valgofun(valgofun&amp; alg):valgo(alg),f(alg.f){}; // 拷贝构造函数
+	virtual matrix&amp; calculate(matrix&amp; x);	// 实施函数算法
+	virtual valgo * clone(); // 克隆自己
+};
+
+class valgofun1 : public valgo	// 标量到向量的函数算法
+{
+ public:
+	matrix (*f)(DOUBLE);	// 标量到向量的函数指针
+	valgofun1(matrix (*fun)(DOUBLE)):f(fun){};	// 用函数指针进行初始化
+	valgofun1(valgofun1&amp; alg):valgo(alg),f(alg.f){}; // 拷贝构造函数
+	virtual matrix&amp; calculate(matrix&amp; x);	// 实施函数算法
+	virtual valgo * clone(); // 克隆自己
+};
+
+class valgodiff : public valgo	// 微分方程组函数算法
+{
+ public:
+	matrix (*f)(DOUBLE,matrix&amp;);	// 表示f(t,y)的函数指针,y为向量
+	DOUBLE t0;	// 初始变量
+	matrix y0;	// 初值或称边界条件
+	DOUBLE tnow;	// 最近值
+	matrix ynow;	// 最近算得的y值
+	valgodiff(matrix (*fun)(DOUBLE,matrix&amp;), DOUBLE tt0, matrix&amp; yy0):
+		f(fun),t0(tt0),y0(yy0),tnow(tt0),ynow(yy0){};
+	valgodiff(valgodiff&amp; alg):valgo(alg),f(alg.f),t0(alg.t0),y0(alg.y0),
+		tnow(alg.tnow),ynow(alg.ynow){};	// 拷贝构造函数
+	virtual matrix&amp; calculate(matrix&amp; x);	// 实施函数算法
+	virtual valgo * clone(); // 克隆自己
+	matrix&amp; calcul(DOUBLE t, DOUBLE eps=defaulterr);	// 标量算法
+};
+
+class vfunc {	// 矩阵函数类
+ public:
+	valgo * alg;	// 决定函数的算法
+
+	vfunc();	// 缺省构造函数
+	vfunc(DOUBLE a);	// 常函数的构造函数
+	vfunc(matrix&amp; (*fun)(matrix&amp;));	// 函数指针的构造函数
+	vfunc(matrix (*fun)(DOUBLE)); // 标量到向量的函数指针构造函数
+	vfunc(const vfunc &amp; fn);	// 拷贝构造函数
+	vfunc(valgo * a):alg(a){} // 算法构造函数，使用要小心，不能将一个算法产生
+									// 两个函数，除非自己控制引用数的增加
+	virtual ~vfunc() {		// 析构函数
+		if(alg) {
+			alg-&gt;refnum--;	// 引用数减一，如再无其它引用，则删除算法
+			if(!alg-&gt;refnum)
+				delete alg;
+		}
+	};
+
+	matrix operator()(matrix&amp; x){return alg-&gt;cal(x);}; // 计算x的函数值
+	vfunc&amp; operator=(const vfunc&amp; fn);	// 赋值运算符
+	vfunc&amp; operator=(matrix&amp; (*fn)(matrix&amp;)); // 用函数指针的赋值运算符
+	vfunc&amp; operator=(DOUBLE a); // 常函数的赋值运算符
+
+	vfunc&amp; operator+=(vfunc&amp; fn);	// 自身加一个函数
+	vfunc&amp; operator+=(DOUBLE a){alg=alg-&gt;add(a);return (*this);};//自身加一个常数
+	vfunc&amp; operator+=(matrix&amp; (*f)(matrix&amp;)); // 自身加一个函数指针
+	vfunc operator+(vfunc&amp; fn);	// 相加产生新函数
+	vfunc operator+(DOUBLE a);	// 与常数相加产生新函数
+	friend vfunc operator+(DOUBLE a, vfunc&amp; f); // 同上但常数在前
+	vfunc operator+(matrix&amp; (*f)(matrix&amp;)); // 加一个函数指针产生新函数
+	friend vfunc operator+(matrix&amp; (*f)(matrix&amp;),vfunc&amp; fn);
+		 // 同上但函数指针在前
+
+	vfunc&amp; neg(); // 自身取负
+	vfunc operator-(); // 产生负函数
+
+	vfunc&amp; operator-=(vfunc&amp; fn); // 自身减一个函数
+	vfunc&amp; operator-=(DOUBLE a){alg=alg-&gt;add(-a);return (*this);};
+				//自身减一个常数
+	vfunc&amp; operator-=(matrix&amp; (*f)(matrix&amp;)); // 自身减一个函数指针
+	vfunc operator-(vfunc&amp; fn);	// 相减产生新函数
+	vfunc operator-(DOUBLE a);	// 与常数相减产生新函数
+	friend vfunc operator-(DOUBLE a, vfunc&amp; f); // 同上但常数在前
+	vfunc operator-(matrix&amp; (*f)(matrix&amp;)); // 减一个函数指针产生新函数
+	friend vfunc operator-(matrix&amp; (*f)(matrix&amp;),vfunc&amp; fn); // 函数指针减函数
+
+	vfunc&amp; operator*=(vfunc&amp; fn);	// 自身乘一个函数
+	vfunc&amp; operator*=(DOUBLE a){alg=alg-&gt;mul(a);return (*this);};//自身乘一个常数
+	vfunc&amp; operator*=(matrix&amp; (*f)(matrix&amp;)); // 自身乘一个函数指针
+	vfunc operator*(vfunc&amp; fn);	// 相乘产生新函数
+	vfunc operator*(DOUBLE a);	// 与常数相乘产生新函数
+	friend vfunc operator*(DOUBLE a, vfunc&amp; f); // 同上但常数在前
+	vfunc operator*(matrix&amp; (*f)(matrix&amp;)); // 乘一个函数指针产生新函数
+	friend vfunc operator*(matrix&amp; (*f)(matrix&amp;),vfunc&amp; fn); // 函数指针乘函数
+
+	vfunc&amp; operator/=(vfunc&amp; fn);	// 自身除以一个函数
+	vfunc&amp; operator/=(DOUBLE a){alg=alg-&gt;mul(1.0/a);return (*this);
+			};//自身除以常数
+	vfunc&amp; operator/=(matrix&amp; (*f)(matrix&amp;)); // 自身除以一个函数指针
+	vfunc operator/(vfunc&amp; fn);	// 相除产生新函数
+	vfunc operator/(DOUBLE a);	// 与常数相除产生新函数
+	friend vfunc operator/(DOUBLE a, vfunc&amp; f); // 常数除以函数
+	vfunc operator/(matrix&amp; (*f)(matrix&amp;)); // 除以一个函数指针产生新函数
+	friend vfunc operator/(matrix&amp; (*f)(matrix&amp;),vfunc&amp; fn); // 函数指针除以函数
+
+	vfunc operator()(vfunc &amp; fn);	// 复合函数，产生新的函数
+
+	void setxfactor(DOUBLE a);	// 设置x因子为a
+	void xroom(DOUBLE a);	  // x方向扩大a倍
+	void setxshift(DOUBLE a);	// 设置函数沿x轴平移a
+	void shiftxas(DOUBLE a); // 函数沿x轴右移a
+};
+
+class vfuncdiff : public vfunc	// 微分方程函数
+{
+ public:
+	vfuncdiff(matrix (*fun)(DOUBLE,matrix&amp;), DOUBLE t0, matrix&amp; y0):
+		vfunc(new valgodiff(fun,t0,y0)){};	// 构造函数，fun为微分方程右端函数
+				// 的函数指针，t0起始时间，y0为起始值
+	matrix&amp; operator()(DOUBLE t) {
+		return ((valgodiff*)alg)-&gt;calcul(t); };
+};
+
+class linemodel  // 线性动态观测系统模型
+					// 用作测试卡尔曼滤波器而产生仿真观测数据
+{
+ public:
+	matrix	x;		// 当前状态变量
+	matrix	a;		// 当前状态转移矩阵
+	matrix	h;		// 当前观测矩阵
+	gassvector w;	// 模型噪声源
+	gassvector v;	// 观测噪声源
+	matrix	y;		// 当前观测向量
+	linemodel(matrix&amp; va, matrix &amp; vh, matrix &amp; q, matrix &amp; r, matrix &amp; vx);
+			// 构造函数，va初始状态转移矩阵，vh初始观测矩阵，q当前模型噪声协
+			// 方差阵，r当前观测噪声协方差阵，vx初始状态变量
+	void setdata(matrix&amp; va, matrix &amp; vh, matrix &amp; q, matrix &amp; r);
+	void seta(matrix&amp; va);
+	void seth(matrix&amp; vh);
+	void setq(matrix&amp; q);
+	void setr(matrix&amp; r);
+	matrix &amp; next();	// 计算下一级x值并返回新的x对应的y值
+};
+
+class kalman 	// 卡尔曼滤波类
+{
+ public:
+	matrix	x;		// 当前状态变量的估值
+	matrix	p;		// 当前估值的误差协方差阵
+	matrix	a;		// 当前状态转移矩阵
+	matrix	h;		// 当前观测矩阵
+	matrix	y;		// 当前观测向量
+	matrix	q;		// 当前模型噪声协方差阵
+	matrix	r;		// 当前观测噪声协方差阵
+	kalman(matrix &amp;va,matrix&amp; vq,matrix&amp; vr,matrix&amp; vh,matrix&amp; vx,matrix&amp; vp);
+		// 构造函数，va为状态转移矩阵，vh观测矩阵，vq模型噪声协方差阵，
+		// vr当前观测噪声协方差阵，vx初始状态变量估值，vp初始估值协方差阵
+	void setdata(matrix &amp;va,matrix&amp; vq,matrix&amp; vr,matrix&amp; vh);
+		// 为时变系统随时设置系统参数，va为状态转移矩阵，vh观测矩阵，vq模型噪
+		// 声协方差阵，vr当前观测噪声协方差阵
+	void seta(matrix&amp; va);
+	void seth(matrix&amp; vh);
+	void setq(matrix&amp; vq);
+	void setr(matrix&amp; vr);
+	matrix&amp; next(matrix&amp; y);	// 根据下一个观测值获得新的状态变量的估值
+};
+
+inline vfunc operator+(DOUBLE a, vfunc&amp; f) // 常数加函数
+{	return f+a; }
+
+inline vfunc operator+(matrix&amp; (*f)(matrix&amp;),vfunc&amp; fn) // 函数指针加函数
+{	return fn+f;}
+
+vfunc operator-(DOUBLE a, vfunc&amp; f); // 常数减函数
+vfunc operator-(matrix&amp; (*f)(matrix&amp;),vfunc&amp; fn); // 函数指针减函数
+
+inline vfunc operator*(DOUBLE a, vfunc&amp; f) // 常数乘函数
+{	return f*a; }
+inline vfunc operator*(matrix&amp; (*f)(matrix&amp;),vfunc&amp; fn) // 函数指针乘函数
+{	return fn*f;}
+
+vfunc operator/(DOUBLE a, vfunc&amp; f); // 常数除以函数
+vfunc operator/(matrix&amp; (*f)(matrix&amp;),vfunc&amp; fn); // 函数指针除以函数
+
+class regress	// 多元线性回归分析类
+{
+ public:
+	matrix a;	// 算出的回归系数m+1维向量
+	matrix v;	// 算出的偏相关系数m维向量
+	DOUBLE q;	// 偏差平方和
+	DOUBLE s;	// 平均标准偏差
+	DOUBLE r;	// 复相关系数
+	DOUBLE u;	// 回归平方和
+	regress(matrix&amp; x, matrix&amp; y);	// x为mXn维矩阵，y为n个观测值
+	DOUBLE operator()(matrix&amp; x); // 回归后的线性函数，x是自变量
+};
+
+#endif // VFUNC_H</code></pre></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>

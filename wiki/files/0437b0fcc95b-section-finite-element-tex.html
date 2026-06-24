@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="数学基础/Section/Finite_Element.tex" />
+  <title>Finite_Element.tex | CelianSpace Wiki</title>
+  <link rel="stylesheet" href="../assets/wiki.css" />
+  <script defer src="../assets/search-index.js"></script>
+  <script defer src="../assets/wiki.js"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body data-depth="1">
+  <header class="wiki-topbar">
+    <button class="menu-toggle" type="button" aria-label="打开目录">目录</button>
+    <a class="top-brand" href="../index.html">CelianSpace Wiki</a>
+    <label class="wiki-search"><span>搜索</span><input id="wiki-search" type="search" placeholder="搜索数学、代码、模板、文件..." autocomplete="off" /></label>
+    <a class="top-link" href="../../index.html">个人主页</a>
+  </header>
+  <div class="search-results" id="search-results" hidden></div>
+  <div class="wiki-shell">
+    <aside class="wiki-sidebar" id="wiki-sidebar"><a class="sidebar-home" href="../index.html">CelianSpace Wiki</a>
+<details open><summary>数学基础</summary><nav>
+<a class="" href="../math/algebra-number-theory.html">代数与数论</a>
+<a class="" href="../math/classical-calculus.html">经典微积分</a>
+<a class="" href="../math/complex-analysis.html">复变函数</a>
+<a class="" href="../math/finite-element.html">有限元方法初步</a>
+<a class="" href="../math/pde-fourier-analysis.html">偏微分方程与傅里叶分析</a>
+<a class="" href="../math/functional-analysis.html">泛函分析</a>
+<a class="" href="../math/machine-learning.html">机器学习基础</a>
+<a class="" href="../math/numerical-analysis.html">数值分析</a>
+<a class="" href="../math/real-analysis.html">实分析</a>
+<a class="" href="../math/set-axiomatics.html">集合与公理化</a>
+<a class="" href="../math/topology-geometry.html">拓扑与几何</a>
+</nav></details>
+<details open><summary>完整资料</summary><nav>
+<a class="" href="../materials/index.html">资料总览</a>
+<a class="" href="../materials/math-source.html">数学基础源文件</a>
+<a class="" href="../materials/templates-source.html">各种模板</a>
+<a class="" href="../materials/learning-code-source.html">LearningCode</a>
+<a class="" href="../materials/code-docs-source.html">code学习文档</a>
+</nav></details>
+<details open><summary>专题入口</summary><nav>
+<a class="" href="../templates/index.html">模板总览</a>
+<a class="" href="../code/index.html">代码实验</a>
+<a class="" href="../docs/index.html">学习文档</a>
+</nav></details></aside>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>Finite_Element.tex</h1><p class="doc-subtitle">数学基础 / latex / 78.1 KB</p><div class="doc-chips"><span>数学基础</span><span>latex</span></div><p class="source-path">来源：数学基础/Section/Finite_Element.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Finite_Element.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Finite_Element.tex">打开原始文件</a><a class="button-link" href="../materials/math-source.html">返回分类</a></div><p></p>
+<h2>有限元方法初步</h2>
+<h3>变分问题</h3>
+<p>设$a(\cdot,\cdot)$是赋范线性空间$H$上的双线性形式.若存在常数$C&gt;0$使得</p>
+<div class="math-display">\[|a(v,w)|\leqslant C\|v\|_H\|w\|_H,  \forall v,w\in H\]</div>
+<p>我们称$a(\cdot,\cdot)$是有界的(连续的).若存在常数$\alpha &gt;0$使得</p>
+<div class="math-display">\[a(v,v)\geqslant \alpha \|v\|^2_H,  \forall v\in V\subset H\]</div>
+<p>我们称$a(\cdot,\cdot)$在$V\subset H$上强制. 变分问题:设$H$为Hilbert空间,$V\subset H$为闭子空间,$a(\cdot,\cdot)$为$H$上的有界且在$V$上强制的双线性形式,那么非对称变分问题是指给定$F\in V&#x27;$,找到$u\in V$使得</p>
+<div class="math-display">\[a(u,v)=\langle F,v\rangle,  \forall v\in H\]</div>
+<div class="math-display">\[u_h=\sum_{j=1}^nU_j\phi_j\]</div>
+<div class="math-display">\[\begin{cases}
+U_1a(\phi_1,\phi_1)+U_2a(\phi_2,\phi_1)+\cdots+U_na(\phi_n,\phi_1)=\langle F,\phi_1\rangle\\
+U_1a(\phi_1,\phi_2)+U_2a(\phi_2,\phi_2)+\cdots+U_na(\phi_n,\phi_2)=\langle F,\phi_2\rangle\\
+\cdots\cdots\cdots\cdots\cdots\cdots\\
+U_1a(\phi_1,\phi_n)+U_2a(\phi_2,\phi_n)+\cdots+U_na(\phi_n,\phi_n)=\langle F,\phi_n\rangle
+\end{cases}\]</div>
+<div class="math-display">\[KU=F\]</div>
+<div class="math-display">\[\|u-u_h\|_V\leqslant \frac{C}{\alpha}\inf_{v\in V_h}\|u-v\|_V\]</div>
+<div class="math-display">\[a(u-u_h,v)=0,  \forall v\in V_h\]</div>
+<div class="math-display">\[\begin{aligned}
+\alpha \|u-u_h\|^2_V &amp;\leqslant a(u-u_h,u-u_h)\\
+&amp;=a(u-u_h,u-v)+a(u-u_h,v-u_h)\\
+&amp;= a(u-u_h,u-v)\\
+&amp;\leqslant C\|u-u_h\|_V\|u-v\|_V
+\end{aligned}\]</div>
+<div class="math-display">\[\|u-u_h\|_V\leqslant \frac{C}{\alpha}\inf_{v\in V_h}\|u-v\|_V\]</div>
+<h3>有限元空间的构造</h3>
+<div class="math-display">\[V_h=\{p\in \mathcal{P}_k(\Omega)\}\]</div>
+<div class="math-display">\[N_i(\phi_j)=\delta_{ij}=
+\begin{cases}
+1,&amp; i=j\\
+0,&amp;i\neq j
+\end{cases}\]</div>
+<div class="math-display">\[0=x_0&lt;x_1&lt;\cdots&lt;x_{n-1}&lt;x_n=1\]</div>
+<div class="math-display">\[\mathcal{P}=\operatorname{span}\{1,x\}\]</div>
+<div class="math-display">\[\phi_{i-1}(x_{i-1})=1,\phi_{i}(x_{i-1})=0;\phi_{i-1}(x_i)=0,\phi_{i}(x_i)=1\]</div>
+<div class="math-display">\[N_{i-1}(\phi)=\phi(x_{i-1});N_{i}(\phi)=\phi(x_i)\]</div>
+<div class="math-display">\[N_i(\phi)=\phi(x_i)\]</div>
+<div class="math-display">\[\begin{aligned}
+N_1(\psi) &amp;=\psi(0)=a=0\\
+N_2(\psi) &amp;=\psi(1)=a+b=0
+\end{aligned}\]</div>
+<div class="math-display">\[\phi_1=1-x-y,\phi_2=x,\phi_3=y\]</div>
+<div class="math-display">\[\mathcal{I}_K f=\sum_{i=1}^{k}N_i(f)\phi_i\]</div>
+<div class="math-display">\[\mathcal{I}_{\mathcal{T}}f|_{K_i}=\mathcal{I}_{K_i} f\]</div>
+<div class="math-display">\[\mathcal{I}_{\mathcal{T}}f=
+\begin{cases}
+x+y,&amp; (x,y)\in K_1\\
+2-x-y,&amp; (x,y)\in K_2
+\end{cases}\]</div>
+<figure class="asset-figure"><img src="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Figure/sin%28pi%28x%2By%292%29.png" alt="sin(pi(x+y)2).png" loading="lazy" /><figcaption>数学基础/Figure/sin(pi(x+y)2).png</figcaption></figure>
+<h3>混合有限元</h3>
+<h4>混合变分公式示例</h4>
+<div class="math-display">\[\sum\limits_{{j = 1}}^{n}{a}_{ij}\left( x\right) \frac{\partial p}{\partial {x}_{j}}\left( x\right)  = {u}_{i}\left( x\right) \;\forall i = 1,\ldots ,n.\]</div>
+<div class="math-display">\[V:=\left\{  {v \in  {L}^{2}{\left( \Omega \right) }^{n} : \operatorname{div}v \in  {L}^{2}\left( \Omega \right) }\right\}  .\]</div>
+<div class="math-display">\[a(v,v)\geqslant \alpha\|v\|^2_V\]</div>
+<h4>抽象混合公式</h4>
+<div class="math-display">\[b(v,p)=(y_v,p),  \forall p\in\varPi\]</div>
+<div class="math-display">\[b(v,p)=(\mathcal{B}v,p),  \forall p\in\varPi\]</div>
+<div class="math-display">\[Z = \left\{  {v \in  H\left( \operatorname{div}\right)  : \operatorname{div}v = 0}\right\}  .\]</div>
+<div class="math-display">\[\begin{aligned}
+a\left( {u_0,v}\right)  + a(u_1,v)+b\left( {v,p}\right)  &amp;= F\left( v\right) \;\forall v \in  V \\
+b\left( {u_1,q}\right)  &amp;= G\left( q\right) \;\forall q \in  \varPi
+\end{aligned}\]</div>
+<div class="math-display">\[a(u_0,v)=F(v)-a(u_1,v),  \forall v\in Z\]</div>
+<div class="math-display">\[\alpha \| v\|_{V} \leq  \mathop{\sup }\limits_{{w \in  V}}\frac{a\left( {w,v}\right) }{\| w\|_{V}}\;\forall v \in  V\]</div>
+<div class="math-display">\[\| {Tp}\|_{V} = \mathop{\sup }\limits_{{v \in  {Z}^{ \bot  }}}\frac{b\left( {v,p}\right) }{\| v\|_{V}} \leq  C\| p\|_{\varPi },\]</div>
+<div class="math-display">\[\widetilde{F}\left( v\right)  = {\left( u,v\right) }_{V}\;\forall v \in  {Z}^{ \bot  }\]</div>
+<div class="math-display">\[\begin{aligned}
+\beta {\begin{Vmatrix}{p}_{j} - {p}_{k}\end{Vmatrix}}_{\varPi } &amp;\leq  \mathop{\sup }\limits_{{w \in  {Z}^{ \bot  }}}\frac{b\left( {w,{p}_{j} - {p}_{k}}\right) }{\| w\|_{V}}\\
+&amp;= \mathop{\sup }\limits_{{w \in  {Z}^{ \bot  }}}\frac{{\left( w,T{p}_{j} - T{p}_{k}\right) }_{V}}{\| w\|_{V}}\\
+&amp;= {\begin{Vmatrix}T{p}_{j} - T{p}_{k}\end{Vmatrix}}_{V}
+\end{aligned}\]</div>
+<div class="math-display">\[\| w\|_{{H}^{1}{\left( \Omega \right) }^{n}} \leq  \left( {1/\beta }\right) \| p\|_{{L}^{2}\left( \Omega \right) }\]</div>
+<div class="math-display">\[\beta \| p\|_{{L}^{2}\left( \Omega \right) } = \beta \frac{b\left( {w,p}\right) }{\| p\|_{{L}^{2}\left( \Omega \right) }} \leq  \frac{b\left( {w,p}\right) }{\| w\|_{{H}^{1}{\left( \Omega \right) }^{n}}} \leq  \sqrt{n}\frac{b\left( {w,p}\right) }{\| w\|_{H\left( \operatorname{div}\right) }},\]</div>
+<h4>离散混合公式</h4>
+<div class="math-display">\[\|u - u_{h}\|_{V} \leq \left( 1 + \frac{C}{\alpha} \right) \inf_{v \in Z_{h}} \|u - v\|_{V} + \frac{1}{\alpha} \sup_{w \in Z_{h} \setminus \{0\}} \frac{|a(u - u_{h}, w)|}{\|w\|_{V}}\]</div>
+<div class="math-display">\[|b(w, p - q)| \leq C \|w\|_{V} \|p - q\|_{\varPi}.\]</div>
+<div class="math-display">\[|a(u - u_{h}, w)| \leq C \|w\|_{V} \inf_{q \in \varPi_{h}} \|p - q\|_{\varPi}.\]</div>
+<div class="math-display">\[\|u - u_{h}\|_{V} \leq \left( 1 + \frac{C}{\alpha} \right) \inf_{v \in Z_{h}} \|u - v\|_{V} + \frac{C}{\alpha} \inf_{q \in \varPi_{h}} \|p - q\|_{\varPi}\]</div>
+<h4>速度近似的收敛性结果</h4>
+<div class="math-display">\[\inf_{q \in V_{h}^{k - 1}} \|p - q\|_{L^{2}(\Omega)} \leq C h^{s} \|p\|_{H^{s}(\Omega)},   0 \leq s \leq k.\]</div>
+<div class="math-display">\[\|\psi - \psi_{h}\|_{H^{2}(\Omega)} \leq C h^{s} |\psi|_{H^{s + 2}(\Omega)}.\]</div>
+<div class="math-display">\[Z = \left\{ v \in H(\operatorname{div}) : \operatorname{div}\underset{\sim}{v} = 0 \right\}\]</div>
+<div class="math-display">\[V_{h} = V_{h}^{k} \times V_{h}^{k}\]</div>
+<div class="math-display">\[\|\underset{\sim}{a} \operatorname{grad}p - \underset{\sim}{u}_{h}\|_{L^{2}(\Omega)^{2}} \leq C h^{s + 1} \|\underset{\sim}{a} \operatorname{grad}p\|_{H^{s + 1}(\Omega)^{2}}\]</div>
+<div class="math-display">\[\|\underset{\sim}{u} - \underset{\sim}{u}_{h}\|_{H^{1}(\Omega)^{2}} \leq C h^{s} \|\underset{\sim}{u}\|_{H^{s + 1}(\Omega)^{2}}\]</div>
+<div class="math-display">\[\|u - u_{h}\|_{h} \leq C h \left( \|u\|_{H^{2}(\Omega)^{2}} + \|p\|_{H^{1}(\Omega)} \right).\]</div>
+<div class="math-display">\[\|\underset{\sim}{u} - u_{h}\|_{h} \leq \inf_{\underset{\sim}{v} \in Z_{h}} \|\underset{\sim}{u} - \underset{\sim}{v}\|_{h} + \sup_{\underset{\sim}{w} \in Z_{h} \setminus \{0\}} \frac{|a_{h}(\underset{\sim}{u} - u_{h}, \underline{w})|}{\|\underset{\sim}{w}\|_{h}}.\]</div>
+<div class="math-display">\[\begin{aligned}
+a_{h}(\underset{\sim}{u} - \underset{\sim}{u}_{h}, \underset{\sim}{w}) &amp;= a_{h}(\underset{\sim}{u}, \underset{\sim}{w}) - \int_{\Omega} \underset{\sim}{f} \cdot \underset{\sim}{w} dx \\
+&amp;= a_{h}(\underset{\sim}{u}, \underset{\sim}{w}) - \int_{\Omega} \left( -\Delta \underset{\sim}{u} + \operatorname{grad}p \right) \cdot \underset{\sim}{w} dx   &amp;\text{(由 相关方程)} \\
+&amp;= \sum_{e} \int_{e} \sum_{i = 1,2} \frac{\partial u_{i}}{\partial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds - b_{h}(\underset{\sim}{w}, p)
+\end{aligned}\]</div>
+<div class="math-display">\[\left| \sum_{e} \int_{e} \sum_{i = 1,2} \frac{\partial u_{i}}{\partial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds \right| \leq C h \left( \|u\|_{H^{2}(\Omega)^{2}} + \|p\|_{H^{1}(\Omega)} \right) \|\underline{w}\|_{h}.\]</div>
+<div class="math-display">\[\begin{aligned}
+\left| b_{h}(w, p) \right| &amp;\leq \sqrt{2} \|w\|_{h} \inf_{q \in \varPi_{h}} \|p - q\|_{L^{2}(\Omega)} \\
+&amp;\leq C h \|w\|_{h} \|p\|_{H^{1}(\Omega)}
+\end{aligned}\]</div>
+<div class="math-display">\[\inf_{v \in Z_{h}} \|u - v\|_{h} \leq C h \|u\|_{H^{2}(\Omega)^{2}}\]</div>
+<h4>离散 Inf-Sup 条件</h4>
+<div class="math-display">\[T : {V}_{h} \rightarrow  {\mathbb{R}}^{\dim {\varPi }_{h}}\text{ 其中 }{\left( Tv\right) }_{i}:=b\left( {v,{q}_{i}}\right)\]</div>
+<div class="math-display">\[\sum\limits_{{i = 1}}^{{\dim {\varPi }_{h}}}{c}_{i}{\left( Tv\right) }_{i} = 0\]</div>
+<div class="math-display">\[\dim {Z}_{h} = \dim \text{ kernel } T = \dim {V}_{h} - \dim \text{ image } T = \dim {V}_{h} - \dim {\varPi }_{h}.\]</div>
+<div class="math-display">\[\| M\|_{V \rightarrow  \varPi }:=\mathop{\sup }\limits_{{0 \neq  u \in  {V}_{h}}}\frac{\| {Mu}\|_{\varPi }}{\| u\|_{V}} \leq  \frac{1}{\beta }\]</div>
+<div class="math-display">\[{\begin{Vmatrix}p - {p}_{h}\end{Vmatrix}}_{\varPi } \leq  \frac{C}{\beta }{\begin{Vmatrix}u - {u}_{h}\end{Vmatrix}}_{V} + \left( {1 + \frac{C}{\beta }}\right) \mathop{\inf }\limits_{{q \in  {\varPi }_{h}}}\| p - q\|_{\varPi }\]</div>
+<div class="math-display">\[{\begin{Vmatrix}p - {p}_{h}\end{Vmatrix}}_{\varPi } \leq  c\mathop{\inf }\limits_{{v \in  {Z}_{h}}}\| u - v\|_{V} + \left( {1 + c}\right) \mathop{\inf }\limits_{{q \in  {\varPi }_{h}}}\| p - q\|_{\varPi },\]</div>
+<div class="math-display">\[b\left( {w,q}\right)  = b\left( {u - v,q}\right) \;\forall q \in  {\varPi }_{h}.\]</div>
+<div class="math-display">\[\| w\|_{V} \leq  \frac{1}{\beta }\| \mathcal{D}\left( {u - v}\right) \|_{\varPi } \leq  \frac{C}{\beta }\| u - v\|_{V}.\]</div>
+<div class="math-display">\[\mathop{\inf }\limits_{{z \in  {Z}_{h}^{G}}}\| u - z\|_{V} \leq  \left( {1 + \frac{C}{\beta }}\right) \mathop{\inf }\limits_{{v \in  {V}_{h}}}\| u - v\|_{V}.\]</div>
+<div class="math-display">\[{\begin{Vmatrix}u - {u}_{h}\end{Vmatrix}}_{V} + {\begin{Vmatrix}p - {p}_{h}\end{Vmatrix}}_{\varPi } \leq  c\left( {\mathop{\inf }\limits_{{v \in  {V}_{h}}}\| u - v\|_{V} + \mathop{\inf }\limits_{{q \in  {\varPi }_{h}}}\| p - q\|_{\varPi }}\right) .\]</div>
+<div class="math-display">\[\left| {a\left( {u - {u}_{h},w}\right) }\right|  \leq  C\| w\|_{V}\mathop{\inf }\limits_{{q \in  {\varPi }_{h}}}\| p - q\|_{\varPi }\]</div>
+<div class="math-display">\[{\begin{Vmatrix}u - {u}_{h}\end{Vmatrix}}_{V} \leq  c\| u\|_{V}\]</div>
+<h4>Inf-Sup 条件的验证</h4>
+<div class="math-display">\[b(\underset{\sim}{v},p) = \int_{\Omega} \underset{\sim}{v} \cdot \operatorname{grad}p dx.\]</div>
+<div class="math-display">\[\varPi_{h}^{K} = \left\{ q \in \varPi_{h} : \|q\|_{L^{2}(\Omega)} \leq K \left[ \sum_{T \in \mathcal{T}^{h}} |T| |q|_{H^{1}(T)}^{2} \right]^{1/2} \right\}.\]</div>
+<div class="math-display">\[-\operatorname{div}\underset{\sim}{u} = p \text{ in } \Omega\]</div>
+<div class="math-display">\[\beta \|q\|_{L^{2}(\Omega)} \leq \sup_{\underset{\sim}{v} \in v_{h}} \frac{|b(\underset{\sim}{v},q)|}{\|\underset{\sim}{v}\|_{H^{1}(\Omega)^{2}}} \;\forall q \in \varPi_{h},\]</div>
+<div class="math-display">\[\|u - u_{h}\|_{H^{1}(\Omega)^{2}} + \|p - p_{h}\|_{L^{2}(\Omega)} \leq C h^{s} \left( \|u\|_{H^{s + 1}(\Omega)^{2}} + \|p\|_{H^{s}(\Omega)} \right)\]</div>
+<div class="math-display">\[\|\underset{\sim}{u}\|_{H^{1}(\Omega)^{2}} = \inf_{\underset{\sim}{v} \in Z_{h}} \|\underset{\sim}{u} - \underset{\sim}{v}\|_{H^{1}(\Omega)^{2}} \leq \left( 1 + \frac{1}{\beta} \right) Ch \|\underset{\sim}{u}\|_{H^{2}(\Omega)^{2}}.\]</div>
+<div class="math-display">\[\beta \|q\|_{L^{2}(\Omega)} \leq \sup_{v \in v_{h}} \frac{|b(v,q)|}{\|v\|_{H^{1}(\Omega)^{2}}} \;\forall q \in \varPi_{h},\]</div>
+<div class="math-display">\[\|Ep\|_{H^{s}(B)} \leq C \|p\|_{H^{s}(\Omega)}.\]</div>
+<div class="math-display">\[\|\phi\|_{H^{s + 2}(B)} \leq C \|Ep\|_{H^{s}(B)} \leq C^{\prime} \|p\|_{H^{s}(\Omega)}.\]</div>
+<div class="math-display">\[V_{h}^{k - 1} \subset \operatorname{div}(V_{h}^{k} \times V_{h}^{k})\]</div>
+<div class="math-display">\[\left\{ q \in V_{h}^{k - 1} : \int_{\Omega} q(x) dx = 0 \right\} \subset \operatorname{div}v_{h}\]</div>
+<div class="math-display">\[\|p - p_{h}\|_{L^{2}(\Omega)} \leq C h^{s} (\|u\|_{H^{s + 1}(\Omega)^{2}} + \|p\|_{H^{s}(\Omega)}),   0 \leq s \leq k,\]</div>
+<div class="math-display">\[\|p - p_{h}\|_{L^{2}(\Omega)} \leq C h^{s + 1} \|\underset{\approx}{a} \operatorname{grad}p\|_{H^{s + 1}(\Omega)^{2}} + C h^{s} \|p\|_{H^{s}(\Omega)},   0 \leq s \leq k,\]</div>
+<div class="math-display">\[\|p - p_{h}\|_{L^{2}(\Omega)} \leq C h (\|\underset{\sim}{u}\|_{H^{2}(\Omega)^{2}} + \|p\|_{H^{1}(\Omega)})\]</div>
+<h3>计算的步骤以及实际例子</h3>
+<div class="math-display">\[\begin{bmatrix}
+1 &amp; 2\\
+2 &amp; 3\\
+3 &amp; 4\\
+4 &amp; 5\\
+5 &amp; 6
+\end{bmatrix}\]</div>
+<div class="math-display">\[\begin{bmatrix}
+0\\
+0.2\\
+0.4\\
+0.6\\
+0.8\\
+1
+\end{bmatrix}\]</div>
+<div class="math-display">\[\begin{bmatrix}
+1 &amp; 0
+\end{bmatrix}\]</div>
+<div class="math-display">\[\Phi_1 = 1-\xi,\Phi_2 = \xi,  \xi\in [0,1]\]</div>
+<div class="math-display">\[u^e=\sum_{i=1}^{2}u^e_i\Phi_i\]</div>
+<div class="math-display">\[\int_{x_1^e}^{x_2^e}\Phi_i\frac{\mathrm{d}u}{\mathrm{d}x}\mathrm{d}x=\sum_{j=1}^{2}u_j^e\left(\int_0^1\Phi_i(\xi)\frac{\mathrm{d}\Phi_j}{\mathrm{d}\xi}\mathrm{d}\xi\right)=h_e\int_0^1\Phi_i(\xi)\mathrm{d}\xi\]</div>
+<div class="math-display">\[\frac{1}{2}
+\begin{bmatrix}
+-1 &amp; 1\\
+-1 &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+u^e_1\\
+u^e_2
+\end{bmatrix}
+=
+\frac{h_e}{2}
+\begin{bmatrix}
+1\\
+1
+\end{bmatrix}\]</div></section></article></main>
+    <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
+  </div>
+</body>
+</html>
