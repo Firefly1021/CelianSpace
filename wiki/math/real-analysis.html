@@ -8,9 +8,9 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="Lebesgue 测度、抽象测度和积分。" />
   <title>实分析 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-tikzjax" />
-  <script defer src="../assets/search-index.js?v=20260624-tikzjax"></script>
-  <script defer src="../assets/wiki.js?v=20260624-tikzjax"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-hide-source" />
+  <script defer src="../assets/search-index.js?v=20260624-hide-source"></script>
+  <script defer src="../assets/wiki.js?v=20260624-hide-source"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   
@@ -39,13 +39,6 @@
 <a class="active" href="../math/real-analysis.html">实分析</a>
 <a class="" href="../math/set-axiomatics.html">集合与公理化</a>
 <a class="" href="../math/topology-geometry.html">拓扑与几何</a>
-</nav></details>
-<details open><summary>完整资料</summary><nav>
-<a class="" href="../materials/index.html">资料总览</a>
-<a class="" href="../materials/math-source.html">数学基础源文件</a>
-<a class="" href="../materials/templates-source.html">各种模板</a>
-<a class="" href="../materials/learning-code-source.html">LearningCode</a>
-<a class="" href="../materials/code-docs-source.html">code学习文档</a>
 </nav></details>
 <details open><summary>专题入口</summary><nav>
 <a class="" href="../templates/index.html">模板总览</a>
@@ -306,35 +299,7 @@ A \cup B &amp;= \bigcup_{i,j} \left( \left(A_i^{(1)} \times A_i^{(2)}\right) \cu
         \node at (6.5*\side,1.4*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$};
         \node at (6.5*\side,0.7*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cap B_2)$};
         \node at (6.9*\side,0.05*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$};
-    \end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">    \begin{tikzpicture}[scale=1]
-        \def\side{1.8cm}
-        \fill[cyan!30] (0,\side) rectangle (\side,2*\side);
-        \fill[gray!50] (\side,\side) rectangle (3*\side,2*\side);
-        \fill[pattern=north west lines, pattern color=gray!50] (0,0) rectangle (\side,\side);
-        \draw (\side,0) rectangle (3*\side,\side);
-        \fill[pattern=north west lines, pattern color=gray!50] (3*\side,0) rectangle (4*\side,\side);
-        \fill[gray!50] (\side,-\side) rectangle (3*\side,0);
-        \fill[cyan!30] (3*\side,-\side) rectangle (4*\side,0);
-        \fill[gray!50] (4.7*\side,1.2*\side) rectangle (5.2*\side,1.6*\side);
-        \fill[pattern=north west lines, pattern color=gray!50] (4.7*\side,0.5*\side) rectangle (5.2*\side,0.9*\side);
-        \fill[cyan!30] (4.7*\side,-0.1*\side) rectangle (5.2*\side,0.2*\side);
-        \draw[line width = 2pt] (0,0) -- (0,2*\side);
-        \draw[line width = 2pt] (0,2*\side) -- (3*\side,2*\side);
-        \draw[line width = 2pt] (\side,-\side) -- (4*\side,-\side);
-        \draw[line width = 2pt] (4*\side,-\side) -- (4*\side,\side);
-        \draw (0,\side) -- (4*\side,\side);
-        \draw (0,0) -- (4*\side,0);
-        \draw (\side,-\side) -- (\side,2*\side);
-        \draw (3*\side,-\side) -- (3*\side,2*\side);
-        \node at (1.5*\side,2.2*\side) {$A_1$};
-        \node at (-0.2*\side,\side) {$B_1$};
-        \node at (2.5*\side,-1.2*\side) {$A_2$};
-        \node at (4.2*\side,0) {$B_2$};
-        \node at (2*\side,0.5*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cap B_2)$};
-        \node at (6.5*\side,1.4*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$};
-        \node at (6.5*\side,0.7*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cap B_2)$};
-        \node at (6.9*\side,0.05*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$};
-    \end{tikzpicture}</code></pre></div></details></figure>
+    \end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption></figure>
 <p>2.$A \cap B \in \tR$.这也是显然的,因为</p>
 <div class="math-display">\[\begin{aligned}
 A \cap B &amp;= \bigcup_{i,j} \left( \left(A_i^{(1)} \times A_i^{(2)}\right) \cap \left(B_j^{(1)} \times B_j^{(2)}\right) \right) \\
@@ -435,29 +400,7 @@ A^c &amp;= \left( \bigcup_i \left(A_i^{(1)} \times A_i^{(2)}\right) \right)^c = 
         \node[blue] at (5,1.8) {$f^+(x)$};
         \node[red] at (3,-1.2) {$f^-(x)$};
         \node at (2,0.3) {$f(x)$};
-      \end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">    \begin{tikzpicture}[scale=1.5]
-        \draw[-{Latex[length=4mm,width=1.5mm]}] (-0.5,0) -- (6.5,0) node[right] {$x$};
-        \draw[-{Latex[length=4mm,width=1.5mm]}] (0,-1.5) -- (0,2.5) node[above] {$y$};
-        \draw[domain=0:6, smooth, samples=200, thick]
-          plot (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)});
-        \begin{scope}
-          \clip (0,0) rectangle (6.5,2.5);
-          \fill[pattern=north west lines, pattern color=gray!50]
-            plot[domain=0:6, smooth, samples=200]
-              (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)})
-            -- (6,0) -- (0,0) -- cycle;
-        \end{scope}
-        \begin{scope}
-          \clip (0,-1.5) rectangle (6.5,0);
-          \fill[gray!20]
-            plot[domain=0:6, smooth, samples=200]
-              (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)})
-            -- (6,0) -- (0,0) -- cycle;
-        \end{scope}
-        \node[blue] at (5,1.8) {$f^+(x)$};
-        \node[red] at (3,-1.2) {$f^-(x)$};
-        \node at (2,0.3) {$f(x)$};
-      \end{tikzpicture}</code></pre></div></details></figure>
+      \end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption></figure>
 <p>当$f:X\to \mathbb{C}$是复值可积函数时,我们按照它的实部和虚部来定义积分:</p>
 <div class="math-display">\[\int_X f\mathrm{d}\mu=\int_X \operatorname{Re}(f)\mathrm{d}\mu+\mathrm{i}\int_X \operatorname{Im}(f)\mathrm{d}\mu\]</div>
 <aside class="wiki-note">
@@ -499,7 +442,7 @@ A^c &amp;= \left( \bigcup_i \left(A_i^{(1)} \times A_i^{(2)}\right) \right)^c = 
 <p>关于符号测度一个重要的例子如下:</p>
 <p><strong>命题</strong>$^\clubsuit $:设$\X$为测度空间,$f$为其上的可积函数.定义$\mathcal{M}$上的函数:</p>
 <div class="math-display">\[\nu (E)=\int_{E}f\mathrm{d}\mu,  \forall E\in\mathcal{M}\]</div>
-<p>则$\nu$是$\mathcal{M}$上的一个符号测度.</p><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Real_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：38.7 KB</span><span>位置：数学基础/Section/Real_Analysis.tex</span></div></details></section><nav class="prev-next"><a href="numerical-analysis.html">上一页：数值分析</a><a href="set-axiomatics.html">下一页：集合与公理化</a></nav></article></main>
+<p>则$\nu$是$\mathcal{M}$上的一个符号测度.</p></section><nav class="prev-next"><a href="numerical-analysis.html">上一页：数值分析</a><a href="set-axiomatics.html">下一页：集合与公理化</a></nav></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

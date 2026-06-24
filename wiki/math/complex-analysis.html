@@ -8,9 +8,9 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="复数、全纯函数、积分表示与级数展开。" />
   <title>复变函数 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-tikzjax" />
-  <script defer src="../assets/search-index.js?v=20260624-tikzjax"></script>
-  <script defer src="../assets/wiki.js?v=20260624-tikzjax"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-hide-source" />
+  <script defer src="../assets/search-index.js?v=20260624-hide-source"></script>
+  <script defer src="../assets/wiki.js?v=20260624-hide-source"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   
@@ -39,13 +39,6 @@
 <a class="" href="../math/real-analysis.html">实分析</a>
 <a class="" href="../math/set-axiomatics.html">集合与公理化</a>
 <a class="" href="../math/topology-geometry.html">拓扑与几何</a>
-</nav></details>
-<details open><summary>完整资料</summary><nav>
-<a class="" href="../materials/index.html">资料总览</a>
-<a class="" href="../materials/math-source.html">数学基础源文件</a>
-<a class="" href="../materials/templates-source.html">各种模板</a>
-<a class="" href="../materials/learning-code-source.html">LearningCode</a>
-<a class="" href="../materials/code-docs-source.html">code学习文档</a>
 </nav></details>
 <details open><summary>专题入口</summary><nav>
 <a class="" href="../templates/index.html">模板总览</a>
@@ -647,23 +640,7 @@ f(a) &amp;=\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-a}\mathrm{
 \node at (60:\bigradius+0.4){$\gamma_{R}$};
 \draw[-Latex] (-1.5*\bigradius,0) -- (1.5*\bigradius,0) node[below]{$\operatorname{Re}$} ;
 \draw[-Latex] (0,-0.2*\bigradius) -- (0,1.2*\bigradius) node[right]{$\operatorname{Im}$};
-\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">\begin{tikzpicture}[&gt;={Kite[inset=0pt,length=0.3cm,bend]},
-    decoration={markings,
-    mark= at position .17 with {\arrow{&gt;}},
-    mark= at position .4 with {\arrow{&gt;}},
-    mark= at position 0.7 with {\arrow{&gt;}},
-    mark= at position 0.93 with {\arrow{&gt;}},
-    }]
-\def\bigradius{4}
-\def\littleradius{0.5}
-\filldraw[postaction = {decorate}, thick ,fill=gray!40]
-    (0:\bigradius) node[yshift=-8pt]{$R$}   arc (0:180:\bigradius) node[yshift=-8pt]{$-R$}--
-    (-\littleradius,0) node[yshift=-8pt]{$-\rho$} arc (180:0:\littleradius) node[yshift=-8pt]{$\rho$} -- cycle;
-\draw[thick,-&gt;] (180:\littleradius) arc(180:30:\littleradius) node [yshift=12pt]{$\gamma_{\rho}$};
-\node at (60:\bigradius+0.4){$\gamma_{R}$};
-\draw[-Latex] (-1.5*\bigradius,0) -- (1.5*\bigradius,0) node[below]{$\operatorname{Re}$} ;
-\draw[-Latex] (0,-0.2*\bigradius) -- (0,1.2*\bigradius) node[right]{$\operatorname{Im}$};
-\end{tikzpicture}</code></pre></div></details></figure>
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption></figure>
 <p><strong>Solution</strong>:取函数$f(z)=\frac{e^{\mathrm{i}z}}{z}$,取围道如上图,它由线段$[-R,-\rho],[\rho,R]$和半圆周$\gamma_\rho,\gamma_R$组成.在这个围道围成的域中,$f$是全纯的,因而由Cauchy积分定理得</p>
 <div class="math-display">\[\int^{-\rho}_{-R}\frac{e^{\mathrm{i}x}}{x}\mathrm{d}x+\int\limits_{\gamma^-_\rho}\frac{e^{\mathrm{i}z}}{z}\mathrm{d}z+\int^{R}_{\rho}\frac{e^{\mathrm{i}x}}{x}\mathrm{d}x+\int\limits_{\gamma_R}\frac{e^{\mathrm{i}z}}{z}\mathrm{d}z=0\]</div>
 <p>由Jordan引理知道</p>
@@ -737,7 +714,7 @@ f(a) &amp;=\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-a}\mathrm{
 <p><strong>例</strong>$^\spadesuit$ :求方程$z^8-4z^5+z^2-1=0$在单位圆内零点的个数.</p>
 <p><strong>Solution</strong>:令$f(z)=-4z^5,g(z)=z^8-4z^5+z^2-1$.于是在单位圆周上,$|f(z)|=4$,于是</p>
 <div class="math-display">\[|f(z)-g(z)|=|z^8+z^2-1|\leqslant 3&lt;4=|f(z)|\]</div>
-<p>根据Rouch$\acute{e}$定理,$g$和$f$在$|z|&lt;1$中的零点个数相同.而$f(z)$在$z=0$处有1个5阶零点,因而原方程在$|z|&lt;1$中有5个零点.</p><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Complex_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：60.0 KB</span><span>位置：数学基础/Section/Complex_Analysis.tex</span></div></details></section><nav class="prev-next"><a href="classical-calculus.html">上一页：经典微积分</a><a href="finite-element.html">下一页：有限元方法初步</a></nav></article></main>
+<p>根据Rouch$\acute{e}$定理,$g$和$f$在$|z|&lt;1$中的零点个数相同.而$f(z)$在$z=0$处有1个5阶零点,因而原方程在$|z|&lt;1$中有5个零点.</p></section><nav class="prev-next"><a href="classical-calculus.html">上一页：经典微积分</a><a href="finite-element.html">下一页：有限元方法初步</a></nav></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

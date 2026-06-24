@@ -8,7 +8,7 @@
 2. 进入 **Pages**。
 3. Source 选择 **Deploy from a branch**。
 4. Branch 选择 `main`，文件夹选择根目录。
-5. 网站地址是：
+5. 网站地址：
 
 ```text
 https://firefly1021.github.io/CelianSpace/
@@ -16,14 +16,13 @@ https://firefly1021.github.io/CelianSpace/
 
 ## 文件说明
 
-- `index.html`：页面结构与中文内容
-- `styles.css`：视觉系统与响应式布局
-- `script.js`：项目筛选、资料库检索、滚动进度与动态实验画布
-- `assets/hero-celianspace.png`：首页插画
-- `wiki/`：多页面文档站，包含数学基础、模板、代码实验和学习文档
-- `materials/`：迁移进仓库的原始学习资料与模板源文件
+- `index.html`：主页结构与中文内容。
+- `styles.css`：视觉系统与响应式布局。
+- `script.js`：项目筛选、滚动进度与动态实验画布。
+- `assets/hero-celianspace.png`：首页插画。
+- `wiki/`：多页面文档站，包含数学基础、模板、代码实验和学习文档。
+- `materials/`：站点生成所需的本地支撑材料。
 
+## 文档站生成
 
-## 资料库生成
-
-`wiki/` 现在包含 `materials/` 中全部有效文件的完整资料索引：TeX、Markdown 和代码以网页形式展示，图片与 PDF 直接预览，数据文件提供摘要和原始文件入口。
+`wiki/` 展示的是整理后的公开页面：数学正文按章节渲染，专题页按模块概览展示。底层支撑材料与单文件详情页不会作为网页入口公开。
