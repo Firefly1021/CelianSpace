@@ -104,7 +104,6 @@ def human_size(size: int) -> str:
 
 def clean_latex(text: str) -> str:
     text = re.sub(r"%.*$", "", text).strip()
-    text = re.sub(r"\\par\b", "", text)
     for old, new in [
         ("\\newpage", ""),
         ("\\quad", " "),
@@ -118,6 +117,38 @@ def clean_latex(text: str) -> str:
     text = re.sub(r"\\eqref\{[^}]+\}", "相关方程", text)
     text = re.sub(r"\\cite\{[^}]+\}", "", text)
     return text.strip()
+
+
+def code_language(path: Path | None = None, lang: str = "") -> str:
+    if lang:
+        return re.sub(r"[^A-Za-z0-9_+#.-]+", "", lang).lower()
+    if not path:
+        return "text"
+    ext = path.suffix.lower()
+    return {
+        ".cpp": "cpp",
+        ".c": "c",
+        ".h": "cpp",
+        ".hpp": "cpp",
+        ".py": "python",
+        ".cmake": "cmake",
+        ".md": "markdown",
+        ".tex": "tex",
+        ".bib": "bibtex",
+        ".sty": "tex",
+        ".csv": "csv",
+        ".txt": "text",
+    }.get(ext, "text")
+
+
+def code_panel(code: str, title: str = "代码片段", lang: str = "text") -> str:
+    safe_lang = html.escape(lang or "text")
+    return (
+        '<div class="code-block">'
+        f'<div class="code-title"><span>{html.escape(title)}</span><em>{safe_lang}</em></div>'
+        f'<pre><code class="language-{safe_lang}">{html.escape(code)}</code></pre>'
+        "</div>"
+    )
 
 
 def inline_html(text: str) -> str:
@@ -140,11 +171,12 @@ def resolve_image(current_file: Path, expr: str):
 
 
 def render_latex(text: str, current_file: Path, depth: int) -> str:
+    text = text.replace("\\par", "\n\n")
     out, para = [], []
     env, env_lines = None, []
     in_code, code_lines = False, []
     in_display, display_lines = False, []
-    note_envs = {"Definition", "Theorem", "Lemma", "Proposition", "Corollary", "example", "remark"}
+    note_envs = {"Definition", "Theorem", "Lemma", "Proposition", "Corollary", "Example", "Remark", "definition", "theorem", "lemma", "proposition", "corollary", "example", "remark"}
     math_envs = {"equation", "equation*", "align", "align*", "gather", "gather*", "cases", "matrix", "pmatrix", "bmatrix"}
 
     def flush_para():
@@ -172,20 +204,17 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
             continue
         if in_code:
             if re.match(r"\\end\{(lstlisting|minted|verbatim)\}", line):
-                out.append(f"<pre><code>{html.escape(chr(10).join(code_lines))}</code></pre>")
+                out.append(code_panel(chr(10).join(code_lines), "LaTeX 代码", "tex"))
                 in_code, code_lines = False, []
             else:
                 code_lines.append(raw.rstrip())
             continue
         if in_display:
-            if line.startswith("$$") or line.startswith("\\]"):
-                rest = line[2:].strip()
-                if rest and rest not in {".", ",", ";"}:
-                    display_lines.append(rest)
-                push_math(display_lines)
-                in_display, display_lines = False, []
-            elif line.endswith("$$") or line.endswith("\\]"):
-                display_lines.append(line[:-2].strip())
+            marker_line = line.replace("\\]", "$$")
+            if "$$" in marker_line:
+                before = marker_line.split("$$", 1)[0].strip()
+                if before and before not in {".", ",", ";"}:
+                    display_lines.append(before)
                 push_math(display_lines)
                 in_display, display_lines = False, []
             else:
@@ -199,8 +228,9 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
         if line.startswith("$$") or line.startswith("\\["):
             flush_para()
             rest = line[2:].strip()
-            if (line.endswith("$$") or line.endswith("\\]")) and rest:
-                push_math([rest[:-2].strip()])
+            marker_rest = rest.replace("\\]", "$$")
+            if "$$" in marker_rest and marker_rest.split("$$", 1)[0].strip():
+                push_math([marker_rest.split("$$", 1)[0].strip()])
             else:
                 in_display, display_lines = True, ([rest] if rest else [])
             continue
@@ -227,6 +257,17 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
             if resolved:
                 href = raw_href(resolved, depth)
                 out.append(f'<figure class="asset-figure"><img src="{href}" alt="{html.escape(Path(resolved).name)}" loading="lazy" /><figcaption>{html.escape(resolved)}</figcaption></figure>')
+            continue
+        if line.startswith("\\begin{tcolorbox"):
+            flush_para()
+            title = re.search(r"title\s*=\s*\\textbf\{([^}]*)\}", line)
+            out.append('<aside class="wiki-note">')
+            if title:
+                out.append(f'<strong>{inline_html(title.group(1))}</strong>')
+            continue
+        if line.startswith("\\end{tcolorbox"):
+            flush_para()
+            out.append("</aside>")
             continue
         begin = re.match(r"\\begin\{([^}]+)\}", line)
         if begin:
@@ -258,17 +299,17 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
         if line in {"\\begin{document}", "\\end{document}", "\\maketitle", "\\cover", "\\reference"}:
             continue
         if line.startswith(("\\input", "\\include")):
-            out.append(f'<p class="source-path">{inline_html(line)}</p>')
+            out.append(f'<p class="inline-source">{inline_html(line)}</p>')
             continue
         para.append(line)
     flush_para()
     if in_code and code_lines:
-        out.append(f"<pre><code>{html.escape(chr(10).join(code_lines))}</code></pre>")
+        out.append(code_panel(chr(10).join(code_lines), "LaTeX 代码", "tex"))
     return "\n".join(out) or "<p>该文件主要包含样式、宏定义或参考条目，请使用原始文件查看。</p>"
 
 
 def render_markdown(text: str) -> str:
-    out, para, code, code_lines = [], [], False, []
+    out, para, code, code_lines, code_lang = [], [], False, [], "text"
 
     def flush():
         nonlocal para
@@ -280,11 +321,12 @@ def render_markdown(text: str) -> str:
         line = raw.rstrip()
         if line.strip().startswith("```"):
             if code:
-                out.append(f"<pre><code>{html.escape(chr(10).join(code_lines))}</code></pre>")
-                code, code_lines = False, []
+                out.append(code_panel(chr(10).join(code_lines), "Markdown 代码块", code_lang))
+                code, code_lines, code_lang = False, [], "text"
             else:
                 flush()
                 code = True
+                code_lang = code_language(lang=line.strip()[3:].strip() or "text")
             continue
         if code:
             code_lines.append(line)
@@ -305,22 +347,47 @@ def render_markdown(text: str) -> str:
         para.append(line.strip())
     flush()
     if code and code_lines:
-        out.append(f"<pre><code>{html.escape(chr(10).join(code_lines))}</code></pre>")
+        out.append(code_panel(chr(10).join(code_lines), "Markdown 代码块", code_lang))
     return "\n".join(out)
+
+
+KIND_LABELS = {"latex": "TeX", "code": "代码", "markdown": "Markdown", "image": "图片", "pdf": "PDF", "csv": "CSV", "data": "数据", "text": "文本", "file": "文件"}
+
+
+def folder_label(record) -> str:
+    parts = record["material_rel"].split("/")
+    if len(parts) <= 2:
+        return record["group"]
+    return " / ".join(parts[1:-1])
+
+
+def file_details(record, depth: int) -> str:
+    raw = raw_href(record["material_rel"], depth)
+    return (
+        '<details class="file-info">'
+        '<summary>文件入口</summary>'
+        '<div class="file-info-body">'
+        f'<a class="button-link" href="{raw}">打开原始文件</a>'
+        f'<span>分类：{html.escape(record["group"])}</span>'
+        f'<span>类型：{html.escape(KIND_LABELS.get(record["kind"], "文件"))}</span>'
+        f'<span>大小：{human_size(record["size"])}</span>'
+        f'<span>位置：{html.escape(record["material_rel"])}</span>'
+        '</div></details>'
+    )
 
 
 def render_file(path: Path, record, depth: int) -> str:
     raw = raw_href(record["material_rel"], depth)
     kind = record["kind"]
     if kind == "image":
-        return f'<figure class="asset-figure large"><img src="{raw}" alt="{html.escape(path.name)}" loading="lazy" /><figcaption>{html.escape(record["material_rel"])}</figcaption></figure>'
+        return f'<figure class="asset-figure large"><img src="{raw}" alt="{html.escape(path.name)}" loading="lazy" /><figcaption>{html.escape(path.stem)}</figcaption></figure>'
     if kind == "pdf":
-        return f'<div class="pdf-frame"><iframe src="{raw}" title="{html.escape(path.name)}"></iframe></div><p><a class="button-link" href="{raw}">打开 PDF 原文件</a></p>'
+        return f'<div class="pdf-frame"><iframe src="{raw}" title="{html.escape(path.name)}"></iframe></div>'
     if kind == "csv":
         lines = read_text(path).splitlines()
-        return f'<p>CSV 共约 {len(lines)} 行。页面显示前 300 行，完整数据可通过原始文件打开。</p><pre><code>{html.escape(chr(10).join(lines[:300]))}</code></pre>'
+        return f'<p>CSV 共约 {len(lines)} 行。页面显示前 300 行。</p>{code_panel(chr(10).join(lines[:300]), path.name, "csv")}'
     if kind == "data":
-        return f'<p>这是数据文件或压缩数据包，大小 {human_size(path.stat().st_size)}。为保持网页可读，页面提供文件入口而不展开二进制内容。</p><p><a class="button-link" href="{raw}">下载或打开原始数据</a></p>'
+        return f'<p>这是数据文件或压缩数据包，大小 {human_size(path.stat().st_size)}。为保持网页可读，页面不展开二进制内容。</p>'
     if kind == "markdown":
         return render_markdown(read_text(path))
     if kind == "latex":
@@ -329,12 +396,12 @@ def render_file(path: Path, record, depth: int) -> str:
         text = read_text(path)
         if not text.strip():
             return '<p>该源码文件当前为空。</p>'
-        return f'<pre><code>{html.escape(text)}</code></pre>'
+        return code_panel(text, path.name, code_language(path))
     if path.suffix.lower() in TEXT_EXTS:
         text = read_text(path)
         if not text.strip():
             return '<p>该文本文件当前为空。</p>'
-        return f'<pre><code>{html.escape(text)}</code></pre>'
+        return code_panel(text, path.name, code_language(path))
     return '<p>该文件无法作为文本展开，请使用原始文件链接查看。</p>'
 
 
@@ -416,13 +483,9 @@ def page(title: str, body: str, current: str, depth: int, math_pages, descriptio
 def article_header(title: str, subtitle="", chips=None, source="", source_url="") -> str:
     chips = chips or []
     chip_html = "".join(f"<span>{html.escape(c)}</span>" for c in chips)
-    src = ""
-    if source:
-        src = f'<p class="source-path">来源：{html.escape(source)}'
-        if source_url:
-            src += f' · <a href="{source_url}">原始文件</a>'
-        src += "</p>"
-    return f'<article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>{html.escape(title)}</h1><p class="doc-subtitle">{html.escape(subtitle)}</p><div class="doc-chips">{chip_html}</div>{src}</header>'
+    subtitle_html = f'<p class="doc-subtitle">{html.escape(subtitle)}</p>' if subtitle else ""
+    chips_html = f'<div class="doc-chips">{chip_html}</div>' if chip_html else ""
+    return f'<article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>{html.escape(title)}</h1>{subtitle_html}{chips_html}</header>'
 
 
 def close_article() -> str:
@@ -430,16 +493,41 @@ def close_article() -> str:
 
 
 def file_card(record, depth: int) -> str:
-    labels = {"latex": "TeX", "code": "代码", "markdown": "MD", "image": "图片", "pdf": "PDF", "csv": "CSV", "data": "数据", "text": "文本"}
     return f'''<a class="file-card" data-kind="{record["kind"]}" data-group="{html.escape(record["group"])}" href="{wiki_href(record["page_url"], depth)}">
-  <span class="file-kind">{labels.get(record["kind"], "文件")}</span><strong>{html.escape(record["title"])}</strong><small>{html.escape(record["material_rel"])}</small><em>{human_size(record["size"])}</em>
+  <span class="file-kind">{KIND_LABELS.get(record["kind"], "文件")}</span><strong>{html.escape(record["title"])}</strong><small>{html.escape(folder_label(record))}</small>
 </a>'''
+
+
+def group_folder_key(record) -> str:
+    parts = record["material_rel"].split("/")
+    if len(parts) <= 2:
+        return KIND_LABELS.get(record["kind"], "文件")
+    return parts[1]
+
+
+def folded_file_panels(items, depth: int, mode: str = "folder", open_first: bool = True) -> str:
+    buckets = {}
+    for record in items:
+        key = record["group"] if mode == "group" else group_folder_key(record)
+        buckets.setdefault(key, []).append(record)
+    parts = []
+    for index, key in enumerate(sorted(buckets, key=lambda k: (k != "Section", k.lower()))):
+        subset = buckets[key]
+        open_attr = " open" if open_first and index == 0 else ""
+        cards = "".join(file_card(r, depth) for r in subset)
+        parts.append(
+            f'<details class="fold-panel"{open_attr}>'
+            f'<summary><strong>{html.escape(key)}</strong><span>{len(subset)} 个条目</span></summary>'
+            f'<div class="file-grid">{cards}</div>'
+            '</details>'
+        )
+    return '<div class="fold-list">' + "".join(parts) + "</div>"
 
 
 def main():
     for d in ["files", "materials", "math", "templates", "code", "docs", "assets"]:
         (WIKI / d).mkdir(parents=True, exist_ok=True)
-    for folder in [WIKI / "files", WIKI / "materials"]:
+    for folder in [WIKI / "files", WIKI / "materials", WIKI / "math", WIKI / "templates", WIKI / "code", WIKI / "docs"]:
         for child in folder.rglob("*"):
             if child.is_file():
                 child.unlink()
@@ -458,6 +546,7 @@ def main():
             "page_url": page_id(mrel),
             "search_text": search_excerpt(path, kind),
         })
+    records_by_rel = {r["material_rel"]: r for r in records}
 
     math_pages = []
     for filename, (slug, title, category, desc) in MATH_META.items():
@@ -473,8 +562,9 @@ def main():
             })
 
     for record in records:
-        body = article_header(record["title"], f'{record["group"]} / {record["kind"]} / {human_size(record["size"])}', [record["group"], record["kind"]], record["material_rel"], raw_href(record["material_rel"], 1))
-        body += f'<section class="doc-section"><div class="file-actions"><a class="button-link" href="{raw_href(record["material_rel"], 1)}">打开原始文件</a><a class="button-link" href="{wiki_href(category_url(record["group"]), 1)}">返回分类</a></div>{render_file(record["path"], record, 1)}</section>{close_article()}'
+        kind_label = KIND_LABELS.get(record["kind"], "文件")
+        body = article_header(record["title"], f'{record["group"]} 中的{kind_label}资料。', [record["group"], kind_label])
+        body += f'<section class="doc-section"><div class="file-actions"><a class="button-link" href="{wiki_href(category_url(record["group"]), 1)}">返回分类</a></div>{render_file(record["path"], record, 1)}{file_details(record, 1)}</section>{close_article()}'
         write(WIKI / record["page_url"], page(record["title"], body, record["page_url"], 1, math_pages, record["material_rel"]))
 
     for index, item in enumerate(math_pages):
@@ -484,19 +574,20 @@ def main():
         pn += f'<a href="{prev_item["slug"]}.html">上一页：{html.escape(prev_item["title"])}</a>' if prev_item else "<span></span>"
         pn += f'<a href="{next_item["slug"]}.html">下一页：{html.escape(next_item["title"])}</a>' if next_item else "<span></span>"
         pn += "</nav>"
-        body = article_header(item["title"], item["description"], [item["category"], "完整正文"], item["source"], raw_href(item["source"], 1))
-        body += f'<section class="doc-section">{item["html"]}</section>{pn}{close_article()}'
+        source_details = file_details(records_by_rel[item["source"]], 1) if item["source"] in records_by_rel else ""
+        body = article_header(item["title"], item["description"], [item["category"], "完整正文"])
+        body += f'<section class="doc-section">{item["html"]}{source_details}</section>{pn}{close_article()}'
         write(WIKI / "math" / f'{item["slug"]}.html', page(item["title"], body, f'math/{item["slug"]}.html', 1, math_pages, item["description"]))
 
     def group_page(group: str, title: str, subtitle: str):
         subset = [r for r in records if r["group"] == group]
         stats = {}
         for r in subset:
-            stats[r["kind"]] = stats.get(r["kind"], 0) + 1
+            label = KIND_LABELS.get(r["kind"], "文件")
+            stats[label] = stats.get(label, 0) + 1
         stat_html = "".join(f"<span>{html.escape(k)}：{v}</span>" for k, v in sorted(stats.items()))
-        cards = "\n".join(file_card(r, 1) for r in subset)
         body = article_header(title, subtitle, [f"{len(subset)} 个文件", "完整索引"])
-        body += f'<section class="doc-section"><div class="material-tools"><input id="materialFilter" type="search" placeholder="筛选本页文件..." /><div class="kind-summary">{stat_html}</div></div><div class="file-grid">{cards}</div></section>{close_article()}'
+        body += f'<section class="doc-section"><div class="material-tools"><input id="materialFilter" type="search" placeholder="筛选本页文件..." /><div class="kind-summary">{stat_html}</div></div>{folded_file_panels(subset, 1, "folder")}</section>{close_article()}'
         write(WIKI / category_url(group), page(title, body, category_url(group), 1, math_pages, subtitle))
 
     group_page("数学基础", "数学基础源文件", "LaTeX 主文件、11 个完整 Section、样式文件、参考文献和配图。")
@@ -504,10 +595,9 @@ def main():
     group_page("LearningCode", "LearningCode", "Python、C++、数值实验、MNIST 压缩数据和结果图。")
     group_page("code学习文档", "code学习文档", "Markdown、LaTeX、PDF 和 C++ 示例代码。")
 
-    all_cards = "\n".join(file_card(r, 1) for r in records)
     group_cards = "".join(f'<a href="{category_url(g)}"><strong>{html.escape(g)}</strong><span>{sum(1 for r in records if r["group"] == g)} 个文件</span></a>' for g in ["数学基础", "各种模板", "LearningCode", "code学习文档"])
-    body = article_header("完整资料库", "materials/ 中的全部有效资料都已纳入网页，可搜索、筛选、预览或打开原始文件。", [f"{len(records)} 个文件", "完整覆盖", "源文件可达"])
-    body += f'<section class="doc-section"><div class="wiki-hero-grid">{group_cards}</div><h2>全部文件</h2><div class="material-tools"><input id="materialFilter" type="search" placeholder="输入文件名、路径或类型筛选..." /><div class="kind-summary"><span>TeX/代码/Markdown 全文展示</span><span>图片/PDF 嵌入预览</span><span>数据文件提供入口</span></div></div><div class="file-grid">{all_cards}</div></section>{close_article()}'
+    body = article_header("完整资料库", "全部有效资料已按主题收纳，可搜索、筛选、预览或进入正文阅读。", [f"{len(records)} 个文件", "完整覆盖", "可展开目录"])
+    body += f'<section class="doc-section"><div class="wiki-hero-grid">{group_cards}</div><h2>资料目录</h2><div class="material-tools"><input id="materialFilter" type="search" placeholder="输入文件名、主题或类型筛选..." /><div class="kind-summary"><span>TeX / 代码 / Markdown 正文展示</span><span>图片 / PDF 嵌入预览</span><span>数据文件提供入口</span></div></div>{folded_file_panels(records, 1, "group", open_first=False)}</section>{close_article()}'
     write(WIKI / "materials" / "index.html", page("完整资料库", body, "materials/index.html", 1, math_pages, "完整资料库"))
 
     for out, current, title, subtitle, group in [
@@ -517,7 +607,7 @@ def main():
     ]:
         subset = [r for r in records if r["group"] == group]
         body = article_header(title, subtitle, [f"{len(subset)} 个文件", "专题入口"])
-        body += f'<section class="doc-section"><div class="material-tools"><input id="materialFilter" type="search" placeholder="筛选本页文件..." /></div><div class="file-grid">{"".join(file_card(r, 1) for r in subset)}</div></section>{close_article()}'
+        body += f'<section class="doc-section"><div class="material-tools"><input id="materialFilter" type="search" placeholder="筛选本页文件..." /></div>{folded_file_panels(subset, 1, "folder")}</section>{close_article()}'
         write(out, page(title, body, current, 1, math_pages, subtitle))
 
     category_cards = []
@@ -547,9 +637,9 @@ def main():
     write(ASSETS / "search-index.json", json.dumps(search_items, ensure_ascii=False, indent=2))
     write(ASSETS / "search-index.js", "window.WIKI_SEARCH_INDEX = " + json.dumps(search_items, ensure_ascii=False, indent=2) + ";\n")
 
-    css = r''':root{--bg:#f6f8fb;--surface:#fff;--line:#d9e0e8;--text:#1f2937;--muted:#64748b;--brand:#128276;--brand-soft:#e0f4f0;--code:#172724;--shadow:0 18px 55px rgba(30,45,70,.08);--radius:8px;--mono:"Cascadia Code",Consolas,monospace;--sans:Inter,"Segoe UI",system-ui,sans-serif;--serif:Georgia,"Noto Serif SC","Songti SC",serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75}.wiki-topbar{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:auto auto minmax(260px,560px) auto;gap:16px;align-items:center;height:58px;padding:0 24px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(16px)}.top-brand{font-weight:800;color:var(--brand);text-decoration:none}.top-link{justify-self:end;color:var(--muted);font-size:.9rem;text-decoration:none}.menu-toggle{display:none;border:1px solid var(--line);border-radius:6px;background:#fff;padding:7px 10px}.wiki-search{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;color:var(--muted);font-size:.82rem}.wiki-search input,.material-tools input{height:36px;border:1px solid var(--line);border-radius:999px;padding:0 14px;font:inherit;background:#fff}.search-results{position:fixed;top:60px;left:50%;z-index:40;width:min(680px,calc(100% - 32px));max-height:420px;overflow:auto;transform:translateX(-50%);border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}.search-results a{display:block;padding:12px 14px;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}.search-results small{display:block;color:var(--brand);font-family:var(--mono)}.wiki-shell{display:grid;grid-template-columns:280px minmax(0,1fr) 220px;gap:28px;max-width:1500px;margin:0 auto;padding:28px 26px}.wiki-sidebar{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:14px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}.sidebar-home{display:block;margin-bottom:12px;color:var(--brand);font-weight:800;text-decoration:none}.wiki-sidebar details{border-top:1px solid var(--line);padding:10px 0}.wiki-sidebar summary{cursor:pointer;font-weight:700}.wiki-sidebar nav{display:grid;gap:2px;margin-top:8px}.wiki-sidebar a{display:block;padding:7px 9px;border-radius:6px;color:var(--muted);font-size:.92rem;text-decoration:none}.wiki-sidebar a:hover,.wiki-sidebar a.active{background:var(--brand-soft);color:var(--brand)}.wiki-main{min-width:0}.doc-article{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}.doc-header{padding:42px 48px 28px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#fff,#eefaf7)}.breadcrumb,.source-path{margin:0;color:var(--muted);font-family:var(--mono);font-size:.78rem}.source-path a{color:var(--brand)}.doc-header h1{margin:12px 0 0;font-family:var(--serif);font-size:clamp(2.2rem,5vw,4.6rem);line-height:1.05;font-weight:500;overflow-wrap:anywhere}.source-path,.doc-subtitle{overflow-wrap:anywhere}.doc-subtitle{max-width:840px;color:var(--muted);font-size:1.08rem}.doc-chips,.kind-summary{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.doc-chips span,.kind-summary span{padding:5px 10px;border:1px solid rgba(18,130,118,.2);border-radius:999px;background:#fff;color:var(--brand);font-family:var(--mono);font-size:.74rem}.doc-section{padding:34px 48px}.doc-section h2{margin:36px 0 12px;padding-top:4px;font-family:var(--serif);font-size:2rem;line-height:1.18}.doc-section h3{margin:30px 0 10px;font-size:1.35rem}.doc-section h4{margin:24px 0 8px}.doc-section p{margin:12px 0}.doc-section p code{padding:2px 5px;border-radius:4px;background:#eef3f6}.caption{color:var(--muted);font-size:.9rem}.math-display{overflow-x:auto;margin:18px 0;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:#fbfdfc}.wiki-note,blockquote{margin:18px 0;padding:14px 16px;border-left:4px solid var(--brand);background:var(--brand-soft);color:#22413d}.doc-list{padding-left:22px}.doc-section pre{overflow:auto;max-height:78vh;margin:18px 0;padding:18px;border-radius:var(--radius);background:var(--code);color:#effaf6;font:0.86rem/1.7 var(--mono)}.wiki-hero-grid,.category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.wiki-hero-grid a,.category-card{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;text-decoration:none;color:var(--text)}.wiki-hero-grid strong,.category-card strong{display:block;font-family:var(--serif);font-size:1.35rem;font-weight:500}.wiki-hero-grid span,.category-card span{display:block;color:var(--muted)}.category-card a{display:block;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);text-decoration:none;color:var(--text)}.file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-top:18px}.file-card{display:grid;gap:6px;min-height:132px;padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;color:var(--text);text-decoration:none}.file-card:hover{border-color:rgba(18,130,118,.45);box-shadow:0 12px 35px rgba(30,45,70,.08)}.file-card strong{overflow-wrap:anywhere}.file-card small{color:var(--muted);font-family:var(--mono);font-size:.74rem;overflow-wrap:anywhere}.file-card em{align-self:end;color:var(--muted);font-style:normal;font-size:.82rem}.file-kind{width:max-content;padding:2px 8px;border-radius:999px;background:var(--brand-soft);color:var(--brand);font-family:var(--mono);font-size:.72rem}.material-tools{display:grid;gap:10px;margin:4px 0 18px}.file-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}.button-link{display:inline-block;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--brand);text-decoration:none}.asset-figure{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}.asset-figure img{display:block;max-width:100%;height:auto;margin:auto}.asset-figure.large img{max-height:78vh}.asset-figure figcaption{margin-top:8px;color:var(--muted);font-family:var(--mono);font-size:.75rem;overflow-wrap:anywhere}.pdf-frame{height:72vh;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}.pdf-frame iframe{width:100%;height:100%;border:0}.wiki-toc{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;color:var(--muted);font-size:.88rem}.wiki-toc p{margin:0 0 10px;color:var(--text);font-weight:700}.wiki-toc a{display:block;padding:5px 0;color:var(--muted);text-decoration:none}.wiki-toc a:hover{color:var(--brand)}.prev-next{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.prev-next a,.prev-next span{padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;color:var(--brand);text-decoration:none}mjx-container[display="true"]{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden}mjx-container[display="true"] svg{max-width:100%;height:auto}@media(max-width:1100px){.wiki-shell{grid-template-columns:240px minmax(0,1fr)}.wiki-toc{display:none}}@media(max-width:760px){.wiki-topbar{grid-template-columns:auto 1fr auto;height:auto;min-height:58px;padding:10px 14px}.menu-toggle{display:inline-block}.wiki-search{grid-column:1/-1;grid-template-columns:1fr}.wiki-search span{display:none}.top-link{display:none}.wiki-shell{display:block;padding:14px}.wiki-sidebar{position:fixed;top:0;bottom:0;left:0;z-index:60;width:min(86vw,320px);max-height:none;transform:translateX(-105%);transition:transform .2s ease;border-radius:0}.wiki-sidebar.open{transform:translateX(0)}.doc-header{padding:30px 22px 22px}.doc-section{padding:24px 22px}.wiki-hero-grid,.category-grid,.prev-next{grid-template-columns:1fr}.doc-header h1{font-size:2.35rem}.doc-section p{overflow-x:auto}.file-grid{grid-template-columns:1fr}}'''
+    css = r''':root{--bg:#f6f8fb;--surface:#fff;--line:#d9e0e8;--text:#1f2937;--muted:#64748b;--brand:#128276;--brand-soft:#e0f4f0;--code:#172724;--shadow:0 18px 55px rgba(30,45,70,.08);--radius:8px;--mono:"Cascadia Code",Consolas,monospace;--sans:Inter,"Segoe UI",system-ui,sans-serif;--serif:Georgia,"Noto Serif SC","Songti SC",serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75}.wiki-topbar{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:auto auto minmax(260px,560px) auto;gap:16px;align-items:center;height:58px;padding:0 24px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(16px)}.top-brand{font-weight:800;color:var(--brand);text-decoration:none}.top-link{justify-self:end;color:var(--muted);font-size:.9rem;text-decoration:none}.menu-toggle{display:none;border:1px solid var(--line);border-radius:6px;background:#fff;padding:7px 10px}.wiki-search{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;color:var(--muted);font-size:.82rem}.wiki-search input,.material-tools input{height:36px;border:1px solid var(--line);border-radius:999px;padding:0 14px;font:inherit;background:#fff}.search-results{position:fixed;top:60px;left:50%;z-index:40;width:min(680px,calc(100% - 32px));max-height:420px;overflow:auto;transform:translateX(-50%);border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}.search-results a{display:block;padding:12px 14px;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}.search-results small{display:block;color:var(--brand);font-family:var(--mono)}.wiki-shell{display:grid;grid-template-columns:280px minmax(0,1fr) 220px;gap:28px;max-width:1500px;margin:0 auto;padding:28px 26px}.wiki-sidebar{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:14px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}.sidebar-home{display:block;margin-bottom:12px;color:var(--brand);font-weight:800;text-decoration:none}.wiki-sidebar details{border-top:1px solid var(--line);padding:10px 0}.wiki-sidebar summary{cursor:pointer;font-weight:700}.wiki-sidebar nav{display:grid;gap:2px;margin-top:8px}.wiki-sidebar a{display:block;padding:7px 9px;border-radius:6px;color:var(--muted);font-size:.92rem;text-decoration:none}.wiki-sidebar a:hover,.wiki-sidebar a.active{background:var(--brand-soft);color:var(--brand)}.wiki-main{min-width:0}.doc-article{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}.doc-header{padding:42px 48px 28px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#fff,#eefaf7)}.breadcrumb,.inline-source{margin:0;color:var(--muted);font-family:var(--mono);font-size:.78rem}.doc-header h1{margin:12px 0 0;font-family:var(--serif);font-size:clamp(2.2rem,5vw,4.6rem);line-height:1.05;font-weight:500;overflow-wrap:anywhere}.doc-subtitle{max-width:840px;color:var(--muted);font-size:1.08rem;overflow-wrap:anywhere}.doc-chips,.kind-summary{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.doc-chips span,.kind-summary span{padding:5px 10px;border:1px solid rgba(18,130,118,.2);border-radius:999px;background:#fff;color:var(--brand);font-family:var(--mono);font-size:.74rem}.doc-section{padding:34px 48px}.doc-section h2{margin:36px 0 12px;padding-top:4px;font-family:var(--serif);font-size:2rem;line-height:1.18}.doc-section h3{margin:30px 0 10px;font-size:1.35rem}.doc-section h4{margin:24px 0 8px}.doc-section p{margin:12px 0}.doc-section p code{padding:2px 5px;border-radius:4px;background:#eef3f6}.caption{color:var(--muted);font-size:.9rem}.math-display{overflow-x:auto;margin:18px 0;padding:18px;border:1px solid var(--line);border-radius:var(--radius);background:#fbfdfc}.wiki-note,blockquote{margin:18px 0;padding:14px 16px;border-left:4px solid var(--brand);background:var(--brand-soft);color:#22413d}.wiki-note strong{display:block;margin-bottom:6px}.doc-list{padding-left:22px}.code-block{overflow:hidden;margin:18px 0;border:1px solid #203c36;border-radius:var(--radius);background:var(--code)}.code-title{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.08);color:#c8eee6;font:0.78rem/1.4 var(--mono)}.code-title span{overflow-wrap:anywhere}.code-title em{font-style:normal;color:#8ccfc3}.doc-section pre{overflow:auto;max-height:78vh;margin:0;padding:18px;background:transparent;color:#effaf6;font:0.86rem/1.7 var(--mono)}.wiki-hero-grid,.category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.wiki-hero-grid a,.category-card{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;text-decoration:none;color:var(--text)}.wiki-hero-grid strong,.category-card strong{display:block;font-family:var(--serif);font-size:1.35rem;font-weight:500}.wiki-hero-grid span,.category-card span{display:block;color:var(--muted)}.category-card a{display:block;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);text-decoration:none;color:var(--text)}.fold-list{display:grid;gap:12px}.fold-panel{border:1px solid var(--line);border-radius:var(--radius);background:#fff}.fold-panel summary{display:flex;justify-content:space-between;gap:16px;align-items:center;cursor:pointer;padding:15px 18px;color:var(--text)}.fold-panel summary strong{font-family:var(--serif);font-size:1.2rem;font-weight:500}.fold-panel summary span{color:var(--muted);font-size:.9rem}.fold-panel[open] summary{border-bottom:1px solid var(--line);background:#fbfdfc}.file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:18px}.file-card{display:grid;gap:6px;min-height:116px;padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;color:var(--text);text-decoration:none}.file-card:hover{border-color:rgba(18,130,118,.45);box-shadow:0 12px 35px rgba(30,45,70,.08)}.file-card strong{overflow-wrap:anywhere}.file-card small{color:var(--muted);font-family:var(--mono);font-size:.74rem;overflow-wrap:anywhere}.file-kind{width:max-content;padding:2px 8px;border-radius:999px;background:var(--brand-soft);color:var(--brand);font-family:var(--mono);font-size:.72rem}.material-tools{display:grid;gap:10px;margin:4px 0 18px}.file-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}.button-link{display:inline-block;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--brand);text-decoration:none}.file-info{margin-top:28px;border:1px solid var(--line);border-radius:var(--radius);background:#fbfdfc}.file-info summary{cursor:pointer;padding:11px 14px;color:var(--brand);font-weight:700}.file-info-body{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;padding:0 14px 14px;color:var(--muted);font-size:.88rem}.file-info-body span{overflow-wrap:anywhere}.asset-figure{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}.asset-figure img{display:block;max-width:100%;height:auto;margin:auto}.asset-figure.large img{max-height:78vh}.asset-figure figcaption{margin-top:8px;color:var(--muted);font-family:var(--mono);font-size:.75rem;overflow-wrap:anywhere}.pdf-frame{height:72vh;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}.pdf-frame iframe{width:100%;height:100%;border:0}.wiki-toc{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;color:var(--muted);font-size:.88rem}.wiki-toc p{margin:0 0 10px;color:var(--text);font-weight:700}.wiki-toc a{display:block;padding:5px 0;color:var(--muted);text-decoration:none}.wiki-toc a:hover{color:var(--brand)}.prev-next{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.prev-next a,.prev-next span{padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;color:var(--brand);text-decoration:none}mjx-container[display="true"]{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden}mjx-container[display="true"] svg{max-width:100%;height:auto}@media(max-width:1100px){.wiki-shell{grid-template-columns:240px minmax(0,1fr)}.wiki-toc{display:none}}@media(max-width:760px){.wiki-topbar{grid-template-columns:auto 1fr auto;height:auto;min-height:58px;padding:10px 14px}.menu-toggle{display:inline-block}.wiki-search{grid-column:1/-1;grid-template-columns:1fr}.wiki-search span{display:none}.top-link{display:none}.wiki-shell{display:block;padding:14px}.wiki-sidebar{position:fixed;top:0;bottom:0;left:0;z-index:60;width:min(86vw,320px);max-height:none;transform:translateX(-105%);transition:transform .2s ease;border-radius:0}.wiki-sidebar.open{transform:translateX(0)}.doc-header{padding:30px 22px 22px}.doc-section{padding:24px 22px}.wiki-hero-grid,.category-grid,.prev-next{grid-template-columns:1fr}.doc-header h1{font-size:2.35rem}.doc-section p{overflow-x:auto}.file-grid{grid-template-columns:1fr;margin:14px}.fold-panel summary{align-items:flex-start;flex-direction:column;gap:2px}}'''
     write(ASSETS / "wiki.css", css + "\n")
-    js = r'''const depth=Number(document.body.dataset.depth||0);const prefix='../'.repeat(depth);const sidebar=document.querySelector('#wiki-sidebar');document.querySelector('.menu-toggle')?.addEventListener('click',()=>sidebar.classList.toggle('open'));document.addEventListener('click',event=>{if(innerWidth<760&&sidebar?.classList.contains('open')&&!sidebar.contains(event.target)&&!event.target.closest('.menu-toggle'))sidebar.classList.remove('open')});const toc=document.querySelector('#page-toc');[...document.querySelectorAll('.doc-section h2, .doc-section h3')].forEach((heading,index)=>{if(!heading.id)heading.id=`section-${index+1}`;const a=document.createElement('a');a.href=`#${heading.id}`;a.textContent=heading.textContent;if(heading.tagName==='H3')a.style.paddingLeft='12px';toc?.appendChild(a)});const input=document.querySelector('#wiki-search');const box=document.querySelector('#search-results');let searchIndex=window.WIKI_SEARCH_INDEX||[];if(!searchIndex.length)fetch(`${prefix}assets/search-index.json`).then(r=>r.json()).then(data=>{searchIndex=data}).catch(()=>{});input?.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();if(!q){box.hidden=true;box.innerHTML='';return}const hits=searchIndex.filter(item=>`${item.title} ${item.category} ${item.text}`.toLowerCase().includes(q)).slice(0,12);box.innerHTML=hits.length?hits.map(item=>`<a href="${prefix}${item.url}"><small>${item.category}</small>${item.title}</a>`).join(''):'<a>没有找到匹配内容</a>';box.hidden=false});input?.addEventListener('blur',()=>setTimeout(()=>{box.hidden=true},180));const materialFilter=document.querySelector('#materialFilter');materialFilter?.addEventListener('input',()=>{const q=materialFilter.value.trim().toLowerCase();document.querySelectorAll('.file-card').forEach(card=>{card.hidden=q&&!card.textContent.toLowerCase().includes(q)&&!(card.dataset.kind||'').includes(q)&&!(card.dataset.group||'').toLowerCase().includes(q)})});window.addEventListener('load',()=>setTimeout(()=>document.querySelectorAll('mjx-assistive-mml').forEach(node=>node.remove()),600));'''
+    js = r'''const depth=Number(document.body.dataset.depth||0);const prefix='../'.repeat(depth);const sidebar=document.querySelector('#wiki-sidebar');document.querySelector('.menu-toggle')?.addEventListener('click',()=>sidebar.classList.toggle('open'));document.addEventListener('click',event=>{if(innerWidth<760&&sidebar?.classList.contains('open')&&!sidebar.contains(event.target)&&!event.target.closest('.menu-toggle'))sidebar.classList.remove('open')});const toc=document.querySelector('#page-toc');[...document.querySelectorAll('.doc-section h2, .doc-section h3')].forEach((heading,index)=>{if(!heading.id)heading.id=`section-${index+1}`;const a=document.createElement('a');a.href=`#${heading.id}`;a.textContent=heading.textContent;if(heading.tagName==='H3')a.style.paddingLeft='12px';toc?.appendChild(a)});const input=document.querySelector('#wiki-search');const box=document.querySelector('#search-results');let searchIndex=window.WIKI_SEARCH_INDEX||[];if(!searchIndex.length)fetch(`${prefix}assets/search-index.json`).then(r=>r.json()).then(data=>{searchIndex=data}).catch(()=>{});input?.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();if(!q){box.hidden=true;box.innerHTML='';return}const hits=searchIndex.filter(item=>`${item.title} ${item.category} ${item.text}`.toLowerCase().includes(q)).slice(0,12);box.innerHTML=hits.length?hits.map(item=>`<a href="${prefix}${item.url}"><small>${item.category}</small>${item.title}</a>`).join(''):'<a>没有找到匹配内容</a>';box.hidden=false});input?.addEventListener('blur',()=>setTimeout(()=>{box.hidden=true},180));const materialFilter=document.querySelector('#materialFilter');materialFilter?.addEventListener('input',()=>{const q=materialFilter.value.trim().toLowerCase();document.querySelectorAll('.file-card').forEach(card=>{card.hidden=!!q&&!card.textContent.toLowerCase().includes(q)&&!(card.dataset.kind||'').toLowerCase().includes(q)&&!(card.dataset.group||'').toLowerCase().includes(q)});document.querySelectorAll('.fold-panel').forEach(panel=>{const cards=[...panel.querySelectorAll('.file-card')];const hasVisible=cards.some(card=>!card.hidden);panel.hidden=q&&!hasVisible;if(q&&hasVisible)panel.open=true})});window.addEventListener('load',()=>setTimeout(()=>document.querySelectorAll('mjx-assistive-mml').forEach(node=>node.remove()),600));'''
     write(ASSETS / "wiki.js", js + "\n")
 
     readme = SITE / "README.md"

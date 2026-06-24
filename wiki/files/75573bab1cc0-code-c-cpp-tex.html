@@ -46,7 +46,7 @@
 <a class="" href="../code/index.html">代码实验</a>
 <a class="" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>CPP学习笔记.tex</h1><p class="doc-subtitle">code学习文档 / latex / 3.6 KB</p><div class="doc-chips"><span>code学习文档</span><span>latex</span></div><p class="source-path">来源：code学习文档/c++/CPP学习笔记.tex · <a href="../../materials/code%E5%AD%A6%E4%B9%A0%E6%96%87%E6%A1%A3/c%2B%2B/CPP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/code%E5%AD%A6%E4%B9%A0%E6%96%87%E6%A1%A3/c%2B%2B/CPP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.tex">打开原始文件</a><a class="button-link" href="../materials/code-docs-source.html">返回分类</a></div><p>\tcbuselibrary{minted}</p>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>CPP学习笔记.tex</h1><p class="doc-subtitle">code学习文档 中的TeX资料。</p><div class="doc-chips"><span>code学习文档</span><span>TeX</span></div></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../materials/code-docs-source.html">返回分类</a></div><p>\tcbuselibrary{minted}</p>
 <p>\definecolor{onedarkback}{RGB}{40, 44, 52}</p>
 <p>\tcbset{ macosstyle/.style={ listing engine=minted, minted language=cpp,</p>
 <p>minted options={ fontsize=\small, breaklines, linenos, numbersep=10pt, tabsize=4, style=one-dark, autogobble }, enhanced, colback=onedarkback, colupper=white, colframe=onedarkframe, left=12mm, top=5mm, arc=3mm, boxrule=0.5pt, overlay={ \fill[macred] ([xshift=10mm, yshift=-4mm]frame.north west) circle (1.5mm); \fill[macyellow] ([xshift=15mm, yshift=-4mm]frame.north west) circle (1.5mm); \fill[macgreen] ([xshift=20mm, yshift=-4mm]frame.north west) circle (1.5mm); }, fonttitle=\bfseries\sffamily\footnotesize, coltitle=gray!30, attach boxed title to top center={yshift=-3.5mm}, boxed title style={empty, size=minimal, top=0pt, bottom=0pt}, title={#1}</p>
@@ -57,15 +57,15 @@
 <h2>函数模版</h2>
 <h3>1. 直接引入本地源文件</h3>
 <p>这里直接引入了当前目录下的 \texttt{main.cpp}。</p>
-<p class="source-path">\includeclist{./codeexamples/main.cpp}{快速排序主程序}</p>
+<p class="inline-source">\includeclist{./codeexamples/main.cpp}{快速排序主程序}</p>
 <h3>2. 只引入特定的函数片段</h3>
-<p class="source-path">\includeclistpart{firstline=2, lastline=6}{./codeexamples/main.cpp}{核心算法逻辑}</p>
+<p class="inline-source">\includeclistpart{firstline=2, lastline=6}{./codeexamples/main.cpp}{核心算法逻辑}</p>
 <p>通过参数，只展示文件中的核心逻辑（例如第 5 到 15 行）。</p>
 <h3>3. 手动插入简短代码</h3>
 <p>如果你不想创建文件，也可以直接在 LaTeX 中写：</p>
 <p>#include &lt;memory&gt; #include &lt;iostream&gt;</p>
 <p>void demo() { auto ptr = std::make_shared&lt;int&gt;(100); std::cout &lt;&lt; &quot;Value: &quot; &lt;&lt; *ptr &lt;&lt; std::endl; }</p>
-<p>在行内讨论变量 \cppin{std::vector&lt;int&gt; v;} 时也非常方便。</p></section></article></main>
+<p>在行内讨论变量 \cppin{std::vector&lt;int&gt; v;} 时也非常方便。</p><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/code%E5%AD%A6%E4%B9%A0%E6%96%87%E6%A1%A3/c%2B%2B/CPP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.tex">打开原始文件</a><span>分类：code学习文档</span><span>类型：TeX</span><span>大小：3.6 KB</span><span>位置：code学习文档/c++/CPP学习笔记.tex</span></div></details></section></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

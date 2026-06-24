@@ -46,7 +46,7 @@
 <a class="" href="../code/index.html">代码实验</a>
 <a class="" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>Numerical_Analysis.tex</h1><p class="doc-subtitle">数学基础 / latex / 62.2 KB</p><div class="doc-chips"><span>数学基础</span><span>latex</span></div><p class="source-path">来源：数学基础/Section/Numerical_Analysis.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Numerical_Analysis.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Numerical_Analysis.tex">打开原始文件</a><a class="button-link" href="../materials/math-source.html">返回分类</a></div><p></p>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>Numerical_Analysis.tex</h1><p class="doc-subtitle">数学基础 中的TeX资料。</p><div class="doc-chips"><span>数学基础</span><span>TeX</span></div></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../materials/math-source.html">返回分类</a></div><p></p>
 <h2>数值分析</h2>
 <h3>守恒律方程</h3>
 <h4>特征线理论</h4>
@@ -94,10 +94,16 @@ x_0+t,&amp; \text{若}x_0\leqslant 0\\
 x_0+(1-x_0)t,&amp; \text{若}x_0\in [0,1]\\
 x_0,&amp; \text{若}x_0\geqslant 1
 \end{cases}\]</div>
-<div class="math-display">\[\left\{  \begin{array}{ll} {\partial }_{t}u + {\partial }_{x}\left( \frac{{u}^{2}}{2}\right)  = 0 &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  ,t &gt; 0, \\  u\left( {x,0}\right)  = \sin x &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  . \end{array}\right.\]</div>
+<div class="math-display">\[\left\{  \begin{array}{ll} {
+tial }_{t}u + {
+tial }_{x}\left( \frac{{u}^{2}}{2}\right)  = 0 &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  ,t &gt; 0, \\  u\left( {x,0}\right)  = \sin x &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  . \end{array}\right.\]</div>
 <div class="math-display">\[x(t)=x(0)+\sin(x(0))t\]</div>
 <div class="math-display">\[u-\sin(x-tu)=0\]</div>
-<div class="math-display">\[\frac{\partial u}{\partial x} = \frac{\cos(x-tu)}{1+t\cos(x-tu)},  \frac{\partial u}{\partial t} = -\frac{u\cos(x-tu)}{1+t\cos(x-tu)}\]</div>
+<div class="math-display">\[\frac{
+tial u}{
+tial x} = \frac{\cos(x-tu)}{1+t\cos(x-tu)},  \frac{
+tial u}{
+tial t} = -\frac{u\cos(x-tu)}{1+t\cos(x-tu)}\]</div>
 <div class="math-display">\[t_b=\min\left(-\frac{1}{\cos(x-tu)}\right)=1\]</div>
 <div class="math-display">\[u_{n+1}=u_n-\frac{f(u_n)}{f&#x27;(u_n)}=u_n-\frac{u_n-\sin(x-tu_n)}{1+t\cos(x-tu_n)}\]</div>
 <p class="caption">牛顿法求解隐式解 $u = \sin(x - tu)$</p>
@@ -123,7 +129,9 @@ x_0,&amp; \text{若}x_0\geqslant 1
 <div class="math-display">\[(u_l-u_r)\nu_2+(F(u_l)-F(u_r))\nu_1=0\]</div>
 <div class="math-display">\[F(u_l)-F(u_r)=\dot{s}(u_l-u_r)\]</div>
 <div class="math-display">\[[F(u)]=\dot{s}[u]\]</div>
-<div class="math-display">\[\left\{  \begin{array}{ll} {\partial }_{t}u + {\partial }_{x}\left( \frac{{u}^{2}}{2}\right)  = 0 &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  ,t &gt; 0, \\  u\left( {x,0}\right)  = \sin x &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  . \end{array}\right.\]</div>
+<div class="math-display">\[\left\{  \begin{array}{ll} {
+tial }_{t}u + {
+tial }_{x}\left( \frac{{u}^{2}}{2}\right)  = 0 &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  ,t &gt; 0, \\  u\left( {x,0}\right)  = \sin x &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  . \end{array}\right.\]</div>
 <div class="math-display">\[\dot{s}=\frac{F(u_l)-F(u_r)}{u_l-u_r}=\frac{\frac{u_l^2}{2}-\frac{u_r^2}{2}}{u_l-u_r}=\frac{u_l+u_r}{2}\]</div>
 <h4>熵条件</h4>
 <div class="math-display">\[g(x)=
@@ -233,12 +241,13 @@ E_0^*=E_N^*=0
 <div class="math-display">\[\begin{cases}
 \begin{alignedat}{2}
 \Delta u(x,y) &amp;= f(x,y),     &amp;&amp; (x, y) \in \Omega \\[3pt]
-u(x, y)       &amp;= \alpha(x,y),  &amp;&amp; (x, y) \in \partial\Omega
+u(x, y)       &amp;= \alpha(x,y),  &amp;&amp; (x, y) \in
+tial\Omega
 \end{alignedat}
 \end{cases}\]</div>
 <div class="math-display">\[\begin{aligned}
 \Omega_h&amp;=\{(x_i,y_j)|1\leqslant i\leqslant I,1\leqslant j\leqslant J\}\\
-\partial\Omega_h&amp;=\{(x_i,y_j)|i=0\text{或}I+1,j=0\text{或}J+1\}
+tial\Omega_h&amp;=\{(x_i,y_j)|i=0\text{或}I+1,j=0\text{或}J+1\}
 \end{aligned}\]</div>
 <div class="math-display">\[\begin{aligned}
 \Delta_h &amp;= \frac{u_{i+1,j}-2u_{i,j}+u_{i-1,j}}{h^2} + \frac{u_{i,j+1}-2u_{i,j}+u_{i,j-1}}{h^2}\\
@@ -247,18 +256,23 @@ u(x, y)       &amp;= \alpha(x,y),  &amp;&amp; (x, y) \in \partial\Omega
 <div class="math-display">\[\begin{cases}
 \begin{alignedat}{2}
 \Delta_h u_{i,j}&amp;= f_{i,j},&amp;&amp;(x_i,y_j)\in\Omega_h\\[3pt]
-u_{i,j}&amp;=\alpha(x_i,y_j),&amp;&amp;(x_i,y_j)\in\partial\Omega_h
+u_{i,j}&amp;=\alpha(x_i,y_j),&amp;&amp;(x_i,y_j)\in
+tial\Omega_h
 \end{alignedat}
 \end{cases}\]</div>
 <div class="math-display">\[\begin{aligned}
 R_{h}u_{i,j} &amp;= \Delta_h u_{i,j} - \Delta u(x_i,y_j)\\
-&amp;= \frac{1}{12}\left(h^2\partial^{(4)}_x u(\xi_i,y_j)+k^2\partial^{(4)}_y u(x_i,\eta_j)\right)
+&amp;= \frac{1}{12}\left(h^2
+tial^{(4)}_x u(\xi_i,y_j)+k^2
+tial^{(4)}_y u(x_i,\eta_j)\right)
 \end{aligned}\]</div>
-<div class="math-display">\[\max_{\Omega_h}|u_{i,j}|\leqslant \max_{\partial\Omega_h}|u(x_i,y_j)|+\frac{1}{2}a^2\max_{\Omega_h}|\Delta_h u_{i,j}|\]</div>
+<div class="math-display">\[\max_{\Omega_h}|u_{i,j}|\leqslant \max_{
+tial\Omega_h}|u(x_i,y_j)|+\frac{1}{2}a^2\max_{\Omega_h}|\Delta_h u_{i,j}|\]</div>
 <div class="math-display">\[\begin{cases}
 \begin{alignedat}{2}
 \Delta u &amp;= f,     &amp;&amp; (x, y) \in \Omega \\[3pt]
-u       &amp;= \alpha,  &amp;&amp; (x, y) \in \partial\Omega
+u       &amp;= \alpha,  &amp;&amp; (x, y) \in
+tial\Omega
 \end{alignedat}
 \end{cases}\]</div>
 <div class="math-display">\[\max_{\Omega_h}|u_{i,j}-u(x_i,y_j)|\leqslant \frac{1}{24}a^2\|u\|_{C^4(\overline{\Omega})}(h^2+k^2)\]</div>
@@ -266,10 +280,12 @@ u       &amp;= \alpha,  &amp;&amp; (x, y) \in \partial\Omega
 <div class="math-display">\[\begin{cases}
 \begin{alignedat}{2}
 |\Delta_h w_{i,j}| &amp;\leqslant \frac{1}{12}\|u\|_{C^4(\overline{\Omega})}(h^2 + k^2),&amp;&amp; (x_i,y_j)\in\Omega_h\\[3pt]
-w_{i,j} &amp; = 0,&amp;&amp; (x_i,y_j)\in\partial\Omega_h
+w_{i,j} &amp; = 0,&amp;&amp; (x_i,y_j)\in
+tial\Omega_h
 \end{alignedat}
 \end{cases}\]</div>
-<div class="math-display">\[\max_{\Omega_h}|w_{i,j}|\leqslant \max_{\partial\Omega_h}|w(x_i,y_j)|+\frac{1}{2}a^2\max_{\Omega_h}|\Delta_h w_{i,j}|\leqslant \frac{1}{24}a^2\|u\|_{C^4(\overline{\Omega})}(h^2+k^2)\]</div>
+<div class="math-display">\[\max_{\Omega_h}|w_{i,j}|\leqslant \max_{
+tial\Omega_h}|w(x_i,y_j)|+\frac{1}{2}a^2\max_{\Omega_h}|\Delta_h w_{i,j}|\leqslant \frac{1}{24}a^2\|u\|_{C^4(\overline{\Omega})}(h^2+k^2)\]</div>
 <div class="math-display">\[[y_1,y_2,\cdots,y_I,y_{I+1},\cdots,y_{(I-1)(J-1)}]^T=[u_{11},u_{21},\cdots,u_{I-1,1},u_{12},\cdots,u_{I-1,J-1}]^T\]</div>
 <div class="math-display">\[\vecb{A}=\frac{1}{h^2}
 \begin{bmatrix}
@@ -389,7 +405,9 @@ u^0(x)=u^0(x_j),&amp;(j-\frac{1}{2})h\leqslant x&lt;(j+\frac{1}{2})h\\
 <div class="math-display">\[\re \induct{Ax,x}\leqslant 0,  \forall x\in D(A)\]</div>
 <div class="math-display">\[\widehat{f}(\xi)=\int_{\mathbb{R}^n}f(x)\mathrm{e}^{-\mathrm{i}x\cdot\xi}\mathrm{d}x\]</div>
 <div class="math-display">\[\check{f}(x)=\frac{1}{(2\pi)^n} \int_{\mathbb{R}^n}f(\xi)\mathrm{e}^{\mathrm{i}x\cdot\xi}\mathrm{d}\xi\]</div>
-<div class="math-display">\[\frac{\partial}{\partial t}\widehat{u}(\xi,t)+\left(\sum_{|\alpha|\leqslant m}a_{\alpha}(\mathrm{i}\xi)^{\alpha}\right)\widehat{u}(\xi,t)=0\]</div>
+<div class="math-display">\[\frac{
+tial}{
+tial t}\widehat{u}(\xi,t)+\left(\sum_{|\alpha|\leqslant m}a_{\alpha}(\mathrm{i}\xi)^{\alpha}\right)\widehat{u}(\xi,t)=0\]</div>
 <div class="math-display">\[\widehat{u}(\xi,t)=\widehat{u}(\xi,0)\mathrm{e}^{\lambda(\xi)t}\]</div>
 <div class="math-display">\[u(x,t)=\frac{1}{(2\pi)^n} \int_{\mathbb{R}^n}\left(\widehat{u}(\xi,0)\mathrm{e}^{\lambda(\xi)t}\right)\mathrm{e}^{\mathrm{i}x\cdot\xi}\mathrm{d}\xi\]</div>
 <div class="math-display">\[u(x,t)=\frac{1}{(2\pi)^n} \int_{\mathbb{R}^n}\left(\widehat{u}(\xi,0)\mathrm{e}^{\alpha(\xi)t}\right)\mathrm{e}^{\mathrm{i}(x\cdot\xi+\beta(\xi)t)}\mathrm{d}\xi\]</div>
@@ -399,34 +417,46 @@ u^0(x)=u^0(x_j),&amp;(j-\frac{1}{2})h\leqslant x&lt;(j+\frac{1}{2})h\\
 <div class="math-display">\[\begin{aligned}
 H^m(\mathcal{T}_h) &amp; =\{v\in L^2(\Omega):v|_K\in H^m(K),\forall K\in\mathcal{T}_h\}\\
 H(\mathrm{div};\mathcal{T}_h) &amp; =\{\vecb{v}\in [L^2(\Omega)]^d:\vecb{v}|_K\in H(\mathrm{div};K),\forall K\in\mathcal{T}_h\}\\
-H^{\frac{1}{2}}(\mathcal{E}_h) &amp;= \left\{\mu\in \Pi_{K\in\mathcal{T}_h}H^{\frac{1}{2}}(\partial K):\exists v\in H^1(\mathcal{T}_h),\text{ s.t. }\mu|_{\partial K}=v|_{\partial K},K\in \mathcal{T}_h\right\}\\
-H^{-\frac{1}{2}}(\mathcal{E}_h) &amp; =\left\{\mu\in \Pi_{K\in\mathcal{T}_h}H^{-\frac{1}{2}}(\partial K):\exists \vecb{\sigma}\in H^1(\mathrm{div};\Omega),\text{ s.t. }\mu|_{\partial K}=\vecb{\sigma}\cdot\vecb{n}|_{\partial K},K\in \mathcal{T}_h\right\}
+H^{\frac{1}{2}}(\mathcal{E}_h) &amp;= \left\{\mu\in \Pi_{K\in\mathcal{T}_h}H^{\frac{1}{2}}(
+tial K):\exists v\in H^1(\mathcal{T}_h),\text{ s.t. }\mu|_{
+tial K}=v|_{
+tial K},K\in \mathcal{T}_h\right\}\\
+H^{-\frac{1}{2}}(\mathcal{E}_h) &amp; =\left\{\mu\in \Pi_{K\in\mathcal{T}_h}H^{-\frac{1}{2}}(
+tial K):\exists \vecb{\sigma}\in H^1(\mathrm{div};\Omega),\text{ s.t. }\mu|_{
+tial K}=\vecb{\sigma}\cdot\vecb{n}|_{
+tial K},K\in \mathcal{T}_h\right\}
 \end{aligned}\]</div>
 <div class="math-display">\[\llbracket v\rrbracket_F=v^{K_1}|_F\vecb{n}^K_F+v^{K_2}|_F\vecb{n}^K_F,  \{v\}_F=\frac{1}{2}(v^{K_1}|_{F}+v^{K_2}|_{F})\]</div>
 <div class="math-display">\[\sum_{K\in\mathcal{T}_h}\int_K \mathcal{K}\nabla u\cdot\nabla v \mathrm{d}x=\int_\Omega fv \mathrm{d}x\]</div>
-<div class="math-display">\[\sum_{K\in\mathcal{T}_h}\int_K (-\nabla\cdot(\mathcal{K}\nabla u)-f)v \mathrm{d}x+\int_{\partial\Omega} (\mathcal{K}\nabla u\cdot\vecb{n})v \mathrm{d}S=0\]</div>
+<div class="math-display">\[\sum_{K\in\mathcal{T}_h}\int_K (-\nabla\cdot(\mathcal{K}\nabla u)-f)v \mathrm{d}x+\int_{
+tial\Omega} (\mathcal{K}\nabla u\cdot\vecb{n})v \mathrm{d}S=0\]</div>
 <div class="math-display">\[J(u)=\frac{1}{2}(\mathcal{K}\nabla u,\nabla u)_{\mathcal{T}_h}-(\langle f,u\rangle)_{\mathcal{T}_h}\]</div>
 <div class="math-display">\[\mathcal{L}(u,\lambda)=\frac{1}{2}(\mathcal{K}\nabla u,\nabla u)_{\mathcal{T}_h}-(f,u)_{\mathcal{T}_h}+\langle \lambda\vecb{n},\llbracket u\rrbracket\rangle_{\mathcal{E}_h}+(\lambda,g_D)_{\mathcal{E}_D}\]</div>
 <h2>Helmholtz Equation</h2>
 <h3>Introduction</h3>
 <div class="math-display">\[a(u,v)=(\nabla u,\nabla v)-k^2(u,v)+\ii k\langle u,v\rangle\]</div>
-<div class="math-display">\[(x-x_\Omega)\cdot n\geqslant C_{\Omega},  \forall x\in \partial\Omega\]</div>
+<div class="math-display">\[(x-x_\Omega)\cdot n\geqslant C_{\Omega},  \forall x\in
+tial\Omega\]</div>
 <div class="math-display">\[\|v-\mathcal{I}_hv\|_{L^2(\Omega)}\lesssim h^2|v|_{H^2(\Omega)},  \|v-\mathcal{I}_h v\|_{H^1(\Omega)}\lesssim h|v|_{H^2(\Omega)}\]</div>
 <div class="math-display">\[|v-\mathcal{I}_K v|_{W^{s,p}(K)}\lesssim (\diam K)^{k-s}|v|_{W^{k,p}(K)}\]</div>
 <div class="math-display">\[\|v-\mathcal{I}_K v\|_{W^{0,2}(K)}\lesssim (\diam K)^{2-0}|v|_{W^{2,2}(K)}\]</div>
 <div class="math-display">\[\|v-\mathcal{I}_hv\|_{L^2(\Omega)}=\left(\sum_{K\in\mathcal{M}_h}\|v-\mathcal{I}_K v\|_{L^2(K)}^2\right)^{1/2}\lesssim h^2\left(\sum_{K\in\mathcal{M}_h}|v|_{H^2(K)}^2\right)^{1/2}=h^2|v|_{H^2(\Omega)}\]</div>
 <div class="math-display">\[\|v-\mathcal{I}_hv\|_{H^1(\Omega)}=\|v-\mathcal{I}_hv\|_{L^2(\Omega)}+|v-\mathcal{I}_K v|_{H^1(K)}\lesssim h_k|v|_{H^2(\Omega)}\]</div>
 <div class="math-display">\[\tnorm{v}=\sqrt{\|\nabla v\|^2_{L^2(\Omega)}+k^2\|v\|^2_{L^2(\Omega)}}\]</div>
-<div class="math-display">\[\|v\|_{L^2(\partial\Omega)}\lesssim \tnorm{v}^2,  \forall v\in H^1(\Omega)\]</div>
-<div class="math-display">\[\norm{v}_{L^p(\partial\Omega)}\leqslant C\|v\|^{1-\frac{1}{p}}_{L^p(\Omega)}\|v\|^{\frac{1}{p}}_{W^{1,p}(\Omega)},  \forall v\in W^{1,p}(\Omega)\]</div>
+<div class="math-display">\[\|v\|_{L^2(
+tial\Omega)}\lesssim \tnorm{v}^2,  \forall v\in H^1(\Omega)\]</div>
+<div class="math-display">\[\norm{v}_{L^p(
+tial\Omega)}\leqslant C\|v\|^{1-\frac{1}{p}}_{L^p(\Omega)}\|v\|^{\frac{1}{p}}_{W^{1,p}(\Omega)},  \forall v\in W^{1,p}(\Omega)\]</div>
 <div class="math-display">\[\begin{aligned}
-k\|v\|_{L^2(\partial\Omega)}&amp;\lesssim k\|v\|_{L^2(\Omega)}\|v\|_{H^1(\Omega)}\\
+k\|v\|_{L^2(
+tial\Omega)}&amp;\lesssim k\|v\|_{L^2(\Omega)}\|v\|_{H^1(\Omega)}\\
 &amp;\lesssim k\|v\|^2_{L^2(\Omega)}+k\|v\|_{L^2(\Omega)}\|\nabla v\|_{L^2(\Omega)}\\
 &amp;\lesssim k^2\|v\|^2_{L^2(\Omega)}+\frac{1}{2}\|\nabla v\|^2_{L^2(\Omega)}+\frac{k^2}{2}\|v\|^2_{L^2(\Omega)}  \text{注意到}k\gg 1\\
 &amp;\lesssim \tnorm{v}^2
 \end{aligned}\]</div>
 <div class="math-display">\[|a(u,v)|\lesssim \tnorm{u}\tnorm{v}\]</div>
-<div class="math-display">\[\re a(v,v)=\tnorm{v}^2-2k^2\|v\|^2_{L^2(\Omega)},  \im a(v,v)=k\|v\|^2_{L^2(\partial\Omega)}\]</div></section></article></main>
+<div class="math-display">\[\re a(v,v)=\tnorm{v}^2-2k^2\|v\|^2_{L^2(\Omega)},  \im a(v,v)=k\|v\|^2_{L^2(
+tial\Omega)}\]</div><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Numerical_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：62.2 KB</span><span>位置：数学基础/Section/Numerical_Analysis.tex</span></div></details></section></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

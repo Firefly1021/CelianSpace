@@ -46,11 +46,16 @@
 <a class="" href="../code/index.html">代码实验</a>
 <a class="" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>拓扑与几何</h1><p class="doc-subtitle">拓扑学基本知识和微分几何。</p><div class="doc-chips"><span>代数与几何</span><span>完整正文</span></div><p class="source-path">来源：数学基础/Section/Topology_Geometry.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Topology_Geometry.tex">原始文件</a></p></header><section class="doc-section"><p></p>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>拓扑与几何</h1><p class="doc-subtitle">拓扑学基本知识和微分几何。</p><div class="doc-chips"><span>代数与几何</span><span>完整正文</span></div></header><section class="doc-section"><p></p>
 <h2>拓扑与几何</h2>
 <h3>拓扑学基本知识</h3>
+<aside class="wiki-note">
+<strong>拓扑空间</strong>
 <p>设$X$是一个集合,$\mathcal{T} \subset \mathcal{P} (X)$,如果$\ttt$满足下面三条性质:<br> 1. $\emptyset \in \mathcal{T},X\in \mathcal{T}$;<br> 2. $\forall A_i \in \mathcal{T} (i\in I)$,则$\bigcup_{i\in I}A_i \in \mathcal{T}$;<br> 3. $\forall A_i \in \mathcal{T} (i=1,2)$,则$A_1\cap A_2 \in \mathcal{T}$.</p>
-<p>就称$\ttt$为$X$上的一个拓扑,又称$\ttt$中的元素为$X$上的开集.当$X$装备了拓扑结构$\ttt$之后,称$(X,\ttt)$为拓扑空间. <strong>定义</strong>$^\clubsuit $:设$(X,\ttt)$为一拓扑空间,$E\subset X$是闭集当且仅当$X-E$是开集;事实上,闭集还可以定义为满足$E=E&#x27;$的$E$为闭集. 设$(X,\ttt)$为一拓扑空间,$S$是$X$的一个子集,可以在$S$上定义一个与$\ttt$相容的拓扑</p>
+</aside>
+<p>就称$\ttt$为$X$上的一个拓扑,又称$\ttt$中的元素为$X$上的开集.当$X$装备了拓扑结构$\ttt$之后,称$(X,\ttt)$为拓扑空间.</p>
+<p><strong>定义</strong>$^\clubsuit $:设$(X,\ttt)$为一拓扑空间,$E\subset X$是闭集当且仅当$X-E$是开集;事实上,闭集还可以定义为满足$E=E&#x27;$的$E$为闭集.</p>
+<p>设$(X,\ttt)$为一拓扑空间,$S$是$X$的一个子集,可以在$S$上定义一个与$\ttt$相容的拓扑</p>
 <div class="math-display">\[\ttt _{S}=\{O\cap S;O\in\ttt\}\]</div>
 <p>称$\ttt _{S}$是$\ttt$在$S$上的诱导拓扑,$(S,\ttt _{S})$是$(X,\ttt)$的拓扑子空间.</p>
 <h3>微分几何</h3>
@@ -60,8 +65,12 @@
 <div class="math-display">\[\varphi_{\beta}\circ \varphi_{\alpha}^{-1}:\varphi_{\alpha}(U_{\alpha}\cap U_{\beta})\to \varphi_{\beta}(U_{\alpha}\cap U_{\beta})\]</div>
 <div class="math-display">\[\psi\circ f\circ \varphi^{-1}:\varphi(U)\to \psi(V)\]</div>
 <div class="math-display">\[\varphi_{\beta}\circ\varphi^{-1}_{\alpha}(x)=(y^1,y^2,\cdots,y^n)\]</div>
-<div class="math-display">\[J(\varphi_{\beta}\circ\varphi^{-1}_{\alpha})=\left(\frac{\partial y^i}{\partial x^j}\right)_{n\times n}\]</div>
-<div class="math-display">\[\det J(\varphi_{\beta}\circ\varphi^{-1}_{\alpha})(p)=\frac{\partial (y^1,y^2,\cdots,y^n)}{\partial (x^1,x^2,\cdots,x^n)}(\varphi_{\alpha}(p)),  p\in U_{\alpha}\cap U_{\beta}\]</div>
+<div class="math-display">\[J(\varphi_{\beta}\circ\varphi^{-1}_{\alpha})=\left(\frac{
+tial y^i}{
+tial x^j}\right)_{n\times n}\]</div>
+<div class="math-display">\[\det J(\varphi_{\beta}\circ\varphi^{-1}_{\alpha})(p)=\frac{
+tial (y^1,y^2,\cdots,y^n)}{
+tial (x^1,x^2,\cdots,x^n)}(\varphi_{\alpha}(p)),  p\in U_{\alpha}\cap U_{\beta}\]</div>
 <div class="math-display">\[S^1=\{(x,y)\in\mathbb{R}^2:x^2+y^2=1\}=\{\mathrm{e}^{\mathrm{i}\theta}:\theta\in[0,2\pi]\}\]</div>
 <div class="math-display">\[U_1=\{\mathrm{e}^{\mathrm{i}\theta}:\theta\in(0,2\pi)\},  U_2=\{\mathrm{e}^{\mathrm{i}\theta}:\theta\in(\pi,3\pi)\}\]</div>
 <div class="math-display">\[\begin{aligned}
@@ -77,7 +86,7 @@
 \begin{cases}
 \theta+2\pi, &amp; \theta\in(0,\pi)\\[3pt]
 \theta, &amp; \theta\in(\pi,2\pi)
-\end{cases}\]</div></section><nav class="prev-next"><a href="set-axiomatics.html">上一页：集合与公理化</a><span></span></nav></article></main>
+\end{cases}\]</div><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Topology_Geometry.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：13.1 KB</span><span>位置：数学基础/Section/Topology_Geometry.tex</span></div></details></section><nav class="prev-next"><a href="set-axiomatics.html">上一页：集合与公理化</a><span></span></nav></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

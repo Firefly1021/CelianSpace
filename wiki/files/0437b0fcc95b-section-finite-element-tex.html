@@ -46,15 +46,19 @@
 <a class="" href="../code/index.html">代码实验</a>
 <a class="" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>Finite_Element.tex</h1><p class="doc-subtitle">数学基础 / latex / 78.1 KB</p><div class="doc-chips"><span>数学基础</span><span>latex</span></div><p class="source-path">来源：数学基础/Section/Finite_Element.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Finite_Element.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Finite_Element.tex">打开原始文件</a><a class="button-link" href="../materials/math-source.html">返回分类</a></div><p></p>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>Finite_Element.tex</h1><p class="doc-subtitle">数学基础 中的TeX资料。</p><div class="doc-chips"><span>数学基础</span><span>TeX</span></div></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../materials/math-source.html">返回分类</a></div><p></p>
 <h2>有限元方法初步</h2>
 <h3>变分问题</h3>
 <p>设$a(\cdot,\cdot)$是赋范线性空间$H$上的双线性形式.若存在常数$C&gt;0$使得</p>
 <div class="math-display">\[|a(v,w)|\leqslant C\|v\|_H\|w\|_H,  \forall v,w\in H\]</div>
 <p>我们称$a(\cdot,\cdot)$是有界的(连续的).若存在常数$\alpha &gt;0$使得</p>
 <div class="math-display">\[a(v,v)\geqslant \alpha \|v\|^2_H,  \forall v\in V\subset H\]</div>
-<p>我们称$a(\cdot,\cdot)$在$V\subset H$上强制. 变分问题:设$H$为Hilbert空间,$V\subset H$为闭子空间,$a(\cdot,\cdot)$为$H$上的有界且在$V$上强制的双线性形式,那么非对称变分问题是指给定$F\in V&#x27;$,找到$u\in V$使得</p>
+<p>我们称$a(\cdot,\cdot)$在$V\subset H$上强制.</p>
+<p>变分问题:设$H$为Hilbert空间,$V\subset H$为闭子空间,$a(\cdot,\cdot)$为$H$上的有界且在$V$上强制的双线性形式,那么非对称变分问题是指给定$F\in V&#x27;$,找到$u\in V$使得</p>
+<aside class="wiki-note">
+<strong>Lax-Milgram定理</strong>
 <div class="math-display">\[a(u,v)=\langle F,v\rangle,  \forall v\in H\]</div>
+</aside>
 <div class="math-display">\[u_h=\sum_{j=1}^nU_j\phi_j\]</div>
 <div class="math-display">\[\begin{cases}
 U_1a(\phi_1,\phi_1)+U_2a(\phi_2,\phi_1)+\cdots+U_na(\phi_n,\phi_1)=\langle F,\phi_1\rangle\\
@@ -63,7 +67,10 @@ U_1a(\phi_1,\phi_2)+U_2a(\phi_2,\phi_2)+\cdots+U_na(\phi_n,\phi_2)=\langle F,\ph
 U_1a(\phi_1,\phi_n)+U_2a(\phi_2,\phi_n)+\cdots+U_na(\phi_n,\phi_n)=\langle F,\phi_n\rangle
 \end{cases}\]</div>
 <div class="math-display">\[KU=F\]</div>
+<aside class="wiki-note">
+<strong>Céa引理</strong>
 <div class="math-display">\[\|u-u_h\|_V\leqslant \frac{C}{\alpha}\inf_{v\in V_h}\|u-v\|_V\]</div>
+</aside>
 <div class="math-display">\[a(u-u_h,v)=0,  \forall v\in V_h\]</div>
 <div class="math-display">\[\begin{aligned}
 \alpha \|u-u_h\|^2_V &amp;\leqslant a(u-u_h,u-u_h)\\
@@ -99,7 +106,9 @@ x+y,&amp; (x,y)\in K_1\\
 <figure class="asset-figure"><img src="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Figure/sin%28pi%28x%2By%292%29.png" alt="sin(pi(x+y)2).png" loading="lazy" /><figcaption>数学基础/Figure/sin(pi(x+y)2).png</figcaption></figure>
 <h3>混合有限元</h3>
 <h4>混合变分公式示例</h4>
-<div class="math-display">\[\sum\limits_{{j = 1}}^{n}{a}_{ij}\left( x\right) \frac{\partial p}{\partial {x}_{j}}\left( x\right)  = {u}_{i}\left( x\right) \;\forall i = 1,\ldots ,n.\]</div>
+<div class="math-display">\[\sum\limits_{{j = 1}}^{n}{a}_{ij}\left( x\right) \frac{
+tial p}{
+tial {x}_{j}}\left( x\right)  = {u}_{i}\left( x\right) \;\forall i = 1,\ldots ,n.\]</div>
 <div class="math-display">\[V:=\left\{  {v \in  {L}^{2}{\left( \Omega \right) }^{n} : \operatorname{div}v \in  {L}^{2}\left( \Omega \right) }\right\}  .\]</div>
 <div class="math-display">\[a(v,v)\geqslant \alpha\|v\|^2_V\]</div>
 <h4>抽象混合公式</h4>
@@ -138,9 +147,13 @@ b\left( {u_1,q}\right)  &amp;= G\left( q\right) \;\forall q \in  \varPi
 <div class="math-display">\[\begin{aligned}
 a_{h}(\underset{\sim}{u} - \underset{\sim}{u}_{h}, \underset{\sim}{w}) &amp;= a_{h}(\underset{\sim}{u}, \underset{\sim}{w}) - \int_{\Omega} \underset{\sim}{f} \cdot \underset{\sim}{w} dx \\
 &amp;= a_{h}(\underset{\sim}{u}, \underset{\sim}{w}) - \int_{\Omega} \left( -\Delta \underset{\sim}{u} + \operatorname{grad}p \right) \cdot \underset{\sim}{w} dx   &amp;\text{(由 相关方程)} \\
-&amp;= \sum_{e} \int_{e} \sum_{i = 1,2} \frac{\partial u_{i}}{\partial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds - b_{h}(\underset{\sim}{w}, p)
+&amp;= \sum_{e} \int_{e} \sum_{i = 1,2} \frac{
+tial u_{i}}{
+tial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds - b_{h}(\underset{\sim}{w}, p)
 \end{aligned}\]</div>
-<div class="math-display">\[\left| \sum_{e} \int_{e} \sum_{i = 1,2} \frac{\partial u_{i}}{\partial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds \right| \leq C h \left( \|u\|_{H^{2}(\Omega)^{2}} + \|p\|_{H^{1}(\Omega)} \right) \|\underline{w}\|_{h}.\]</div>
+<div class="math-display">\[\left| \sum_{e} \int_{e} \sum_{i = 1,2} \frac{
+tial u_{i}}{
+tial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds \right| \leq C h \left( \|u\|_{H^{2}(\Omega)^{2}} + \|p\|_{H^{1}(\Omega)} \right) \|\underline{w}\|_{h}.\]</div>
 <div class="math-display">\[\begin{aligned}
 \left| b_{h}(w, p) \right| &amp;\leq \sqrt{2} \|w\|_{h} \inf_{q \in \varPi_{h}} \|p - q\|_{L^{2}(\Omega)} \\
 &amp;\leq C h \|w\|_{h} \|p\|_{H^{1}(\Omega)}
@@ -210,7 +223,7 @@ u^e_2
 \begin{bmatrix}
 1\\
 1
-\end{bmatrix}\]</div></section></article></main>
+\end{bmatrix}\]</div><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Finite_Element.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：78.1 KB</span><span>位置：数学基础/Section/Finite_Element.tex</span></div></details></section></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

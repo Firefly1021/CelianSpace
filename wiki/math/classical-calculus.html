@@ -46,24 +46,38 @@
 <a class="" href="../code/index.html">代码实验</a>
 <a class="" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>经典微积分</h1><p class="doc-subtitle">微分、积分与经典分析结果。</p><div class="doc-chips"><span>分析基础</span><span>完整正文</span></div><p class="source-path">来源：数学基础/Section/Classical_Calculus.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Classical_Calculus.tex">原始文件</a></p></header><section class="doc-section"><h2>微积分中的一些结果</h2>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>经典微积分</h1><p class="doc-subtitle">微分、积分与经典分析结果。</p><div class="doc-chips"><span>分析基础</span><span>完整正文</span></div></header><section class="doc-section"><h2>微积分中的一些结果</h2>
 <h3>微分</h3>
 <p><strong>定义</strong>$^\clubsuit $:令$A\subset\mathbb{R}^n$为开集,$f:A\to \mathbb{R}^m$,设$A$包含$a$的一个邻域.如果有线性映射$L:\mathbb{R}^n\to \mathbb{R}^m$使得</p>
 <div class="math-display">\[\lim\limits_{h\to 0}\frac{|f(a+h)-f(a)-L(h)|}{|h|}=0\]</div>
 <p>则称$f$在$a$处可微,并且称$L$为$f$在$a$处的微分,记为$Df(a)$.如果记$f=(f_1,\cdots,f_m)$,那么$Df(a)$是一个$m\times n$矩阵,即</p>
 <div class="math-display">\[Df(a)=
 \begin{pmatrix}
-\frac{\partial f_1}{\partial x_1}(a) &amp; \cdots &amp; \frac{\partial f_1}{\partial x_n}(a)\\
+\frac{
+tial f_1}{
+tial x_1}(a) &amp; \cdots &amp; \frac{
+tial f_1}{
+tial x_n}(a)\\
 \vdots &amp; \ddots &amp; \vdots\\
-\frac{\partial f_m}{\partial x_1}(a) &amp; \cdots &amp; \frac{\partial f_m}{\partial x_n}(a)\\
+\frac{
+tial f_m}{
+tial x_1}(a) &amp; \cdots &amp; \frac{
+tial f_m}{
+tial x_n}(a)\\
 \end{pmatrix}\]</div>
+<aside class="wiki-note">
+<strong>微分中值定理</strong>
 <p>设 $D\subset\mathbb{R}^{n}$ 为凸域，函数 $f:D\rightarrow\mathbb{R}$在$D$中处处可微,则任给 $x,y\in D$,存在$\theta\in(0,1)$,使得</p>
 <div class="math-display">\[f(x)-f(y)=\nabla f(\xi)\cdot(x-y), \xi=\theta x+(1-\theta)y.\]</div>
+</aside>
 <p><strong>Proof</strong>:令$\sigma(t)=t x+(1-t)y$ .由$D$为凸域可知当 $t\in[0,1]$ 时 $\sigma(t)\in D$.对一元函数$\varphi(t)=f(\sigma(t))$用微分中值定理可知,存在 $\theta\in(0,1)$ ,使得 $\varphi(1)-\varphi(0)=\varphi^{\prime}(\theta)$.由复合函数求导可得</p>
 <div class="math-display">\[\varphi(1)-\varphi(0)=\nabla f(\xi)\cdot\sigma^{\prime}(\theta)=\nabla f(\xi)\cdot(x-y),\]</div>
 <p>其中$\xi=\sigma(\theta)=\theta x+(1-\theta)y.$由$f(x)=\varphi(1)$,$f(y)=\varphi(0)$ 可知欲证结论成立.</p>
+<aside class="wiki-note">
+<strong>拟微分中值定理</strong>
 <p>设 $D\subset\mathbb{R}^{n}$为凸域,$f:D\rightarrow\mathbb{R}^{m}$ 在 $D$ 中处处可微,则任给 $x,y\in D$ ,存在 $\xi\in D$ ,使得</p>
 <div class="math-display">\[\|f(x)-f(y)\|\leqslant\|Df(\xi)\|\cdot\|x-y\|.\]</div>
+</aside>
 <p><strong>Proof</strong>:基本的想法是对 $f$ 的分量的线性组合应用微分中值定理,为此,不妨设 $f\left(x\right)\neq f\left(y\right)$ 任意取定 $\mathbb{R}^{m}$ 中的单位向量 $u=(u_{1},u_{2},\cdots,u_{m})$ ,记</p>
 <div class="math-display">\[g=u\cdot f=\sum_{i=1}^{m}u_{i}f_{i},\]</div>
 <p>则 $g$为$D$中可微函数.根据微分中值定理,存在 $\xi\in D$ ,使得</p>
@@ -73,7 +87,10 @@
 <p>由 $g(x)-g(y)=u\cdot\left[f(x)-f(y)\right]$ 可得</p>
 <div class="math-display">\[\left|u\cdot[f(x)-f(y)]\right|\leqslant\|\nabla g(\xi)\|\cdot\|x-y\|\leqslant\|Df(\xi)\|\cdot\|x-y\|.\]</div>
 <p>在上式中取 $u={\frac{f(x)-f(y)}{\|f(x)-f(y)\|}}$ 就完成了定理的证明.</p>
+<aside class="wiki-note">
+<strong>逆映射定理</strong>
 <p>设 $D\subset\mathbb{R}^{n}$ 为开集, $f:D\to\mathbb{R}^{n}$ 为 $C^{k}(k\geqslant1)$ 映射,$x^{0}\in D$ 如果 $\operatorname*{det}J f(x^{0})\neq0$ ,则存在 $x^{0}$ 的开邻域 $U\subset D$ 以及 $y^{0}=f(x^{0})$ 的开邻域 $V\subset\mathbb{R}^{n}$ 使得 $f|_{U}:U\to V$ 是可逆映射,且其逆仍为 $C^{k}$ 映射.</p>
+</aside>
 <p><strong>Proof</strong>:不失一般性,可设 $x^{0}=0$ $y^{0}=0$ 以 $L$ 记 $f$ 在 $x^{0}=0$ 处的微分,则 $L$ 可逆,且 $L^{-1}\circ f$ 在 $x^{0}$ 处的微分为恒同映射.如果欲证结论对 $L^{-1}\circ f$ 成立,则对 $f$ 也成立.因此,不妨从一开始就假设 $D f(x^{0})=I_{n}$ 在 $x^{0}=0$ 附近, $f$ 是恒同映射的小扰动:</p>
 <div class="math-display">\[f(x)=x+g(x),D g(0)=0.\]</div>
 <p>扰动项 $g(x)=f(x)-x$ 为 $C^{k}$ 映射,因此,存在 $\delta&gt;0$ 使得</p>
@@ -96,20 +113,57 @@ h(y)-h(y_{0})&amp;=(y-y_{0})-\big[g(h(y))-g(h(y_{0}))\big]\\
 <div class="math-display">\[t f(x)+(1-t)f(y)\geqslant f(z)+\nabla f(z)\cdot\left[t(x-z)+(1-t)(y-z)\right]=f(z).\]</div>
 <div class="math-display">\[f(\boldsymbol{y})=f(\boldsymbol{x})+\nabla f(\boldsymbol{x})\cdot(\boldsymbol{y}-\boldsymbol{x})+\frac{1}{2}(\boldsymbol{y}-\boldsymbol{x})\nabla^{2}f(\boldsymbol{\xi})(\boldsymbol{y}-\boldsymbol{x})^{\mathrm{T}}.\]</div>
 <div class="math-display">\[f(x+t h)=f(x)+t\nabla f(x)\cdot h+{\frac{1}{2}}t^{2}h\nabla^{2}f(x)h^{\mathrm{T}}+o(t^{2}) (t\to0).\]</div>
+<aside class="wiki-note">
+<strong>Taylor公式</strong>
 <div class="math-display">\[f(x)=\sum_{|\alpha|\leqslant m}{\frac{\mathrm{D}^{\alpha}f(a)}{\alpha!}}(x-a)^{\alpha}+\sum_{|\alpha|=m+1}{\frac{\mathrm{D}^{\alpha}f(a+\theta(x-a))}{\alpha!}}(x-a)^{\alpha}.\]</div>
+</aside>
 <div class="math-display">\[F:\mathbb{R}^{2}\to\mathbb{R}^{2},F(x,y)=(x,f(x,y)).\]</div>
-<div class="math-display">\[\operatorname*{det}D F(x^{0},y^{0})=\left|{\begin{array}{c c}{1}&amp;{0}\\ {{\cfrac{\partial f}{\partial x}}(x^{0},y^{0})}&amp;{{\cfrac{\partial f}{\partial y}}(x^{0},y^{0})}\end{array}}\right|={\cfrac{\partial f}{\partial y}}(x^{0},y^{0})\neq0.\]</div>
+<div class="math-display">\[\operatorname*{det}D F(x^{0},y^{0})=\left|{\begin{array}{c c}{1}&amp;{0}\\ {{\cfrac{
+tial f}{
+tial x}}(x^{0},y^{0})}&amp;{{\cfrac{
+tial f}{
+tial y}}(x^{0},y^{0})}\end{array}}\right|={\cfrac{
+tial f}{
+tial y}}(x^{0},y^{0})\neq0.\]</div>
 <div class="math-display">\[F^{-1}\bigl(x,f(x^{0},y^{0})\bigr)=\bigl(\varphi(x),\psi(x)\bigr),\]</div>
 <div class="math-display">\[\bigl(\varphi(x),f(\varphi(x),\psi(x))\bigr)=\bigl(x,f(x^{0},y^{0})\bigr),\]</div>
-<div class="math-display">\[{\frac{\partial f}{\partial x}}(x,\psi(x))+{\frac{\partial f}{\partial y}}\big(x,\psi(x)\big)\cdot\psi^{\prime}(x)=0,\]</div>
-<div class="math-display">\[\psi^{\prime}(x)=-\Big[\frac{\partial f}{\partial y}(x,\psi(x))\Big]^{-1}\frac{\partial f}{\partial x}(x,\psi(x)).\]</div>
+<div class="math-display">\[{\frac{
+tial f}{
+tial x}}(x,\psi(x))+{\frac{
+tial f}{
+tial y}}\big(x,\psi(x)\big)\cdot\psi^{\prime}(x)=0,\]</div>
+<div class="math-display">\[\psi^{\prime}(x)=-\Big[\frac{
+tial f}{
+tial y}(x,\psi(x))\Big]^{-1}\frac{
+tial f}{
+tial x}(x,\psi(x)).\]</div>
+<aside class="wiki-note">
+<strong>隐映射定理</strong>
 <div class="math-display">\[f(x,y)=(f_{1}(x,y),f_{2}(x,y),\cdots,f_{m}(x,y)).\]</div>
+</aside>
 <h3>积分</h3>
-<div class="math-display">\[\int_{\Omega}\nabla\cdot\mathbf{F}dx=\int_{\partial\Omega}\mathbf{F}\cdot\mathbf{\nu}dS.\]</div>
-<div class="math-display">\[\int_{\Omega}\Delta u dx=\int_{\partial\Omega}Du\cdot\mathbf{\nu}dS=\int_{\partial\Omega}\frac{\partial u}{\partial\mathbf{\nu}}dS.\]</div>
-<div class="math-display">\[\int_{\Omega}vDu\mathrm{d}x=-\int_{\Omega}uDv\mathrm{d}x+\int_{\partial\Omega}uv\mathbf{\nu}\mathrm{d}S.\]</div>
-<div class="math-display">\[\int_{\Omega}v\Delta u dx+\int_{\Omega}Du\cdot Dvdx=\int_{\partial\Omega}v\frac{\partial u}{\partial \mathbf{\nu}}dS.\]</div>
-<div class="math-display">\[\int_{\Omega}\left(v\Delta u-u\Delta v\right)dx=\int_{\partial\Omega}\left(v\frac{\partial u}{\partial \mathbf{\nu}}-u\frac{\partial v}{\partial \mathbf{\nu}}\right)dS.\]</div></section><nav class="prev-next"><a href="algebra-number-theory.html">上一页：代数与数论</a><a href="complex-analysis.html">下一页：复变函数</a></nav></article></main>
+<div class="math-display">\[\int_{\Omega}\nabla\cdot\mathbf{F}dx=\int_{
+tial\Omega}\mathbf{F}\cdot\mathbf{\nu}dS.\]</div>
+<div class="math-display">\[\int_{\Omega}\Delta u dx=\int_{
+tial\Omega}Du\cdot\mathbf{\nu}dS=\int_{
+tial\Omega}\frac{
+tial u}{
+tial\mathbf{\nu}}dS.\]</div>
+<div class="math-display">\[\int_{\Omega}vDu\mathrm{d}x=-\int_{\Omega}uDv\mathrm{d}x+\int_{
+tial\Omega}uv\mathbf{\nu}\mathrm{d}S.\]</div>
+<aside class="wiki-note">
+<strong>Green恒等式</strong>
+<div class="math-display">\[\int_{\Omega}v\Delta u dx+\int_{\Omega}Du\cdot Dvdx=\int_{
+tial\Omega}v\frac{
+tial u}{
+tial \mathbf{\nu}}dS.\]</div>
+<div class="math-display">\[\int_{\Omega}\left(v\Delta u-u\Delta v\right)dx=\int_{
+tial\Omega}\left(v\frac{
+tial u}{
+tial \mathbf{\nu}}-u\frac{
+tial v}{
+tial \mathbf{\nu}}\right)dS.\]</div>
+</aside><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Classical_Calculus.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：11.9 KB</span><span>位置：数学基础/Section/Classical_Calculus.tex</span></div></details></section><nav class="prev-next"><a href="algebra-number-theory.html">上一页：代数与数论</a><a href="complex-analysis.html">下一页：复变函数</a></nav></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

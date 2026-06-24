@@ -46,61 +46,165 @@
 <a class="" href="../code/index.html">代码实验</a>
 <a class="" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>复变函数</h1><p class="doc-subtitle">复数、全纯函数、积分表示与级数展开。</p><div class="doc-chips"><span>分析基础</span><span>完整正文</span></div><p class="source-path">来源：数学基础/Section/Complex_Analysis.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Complex_Analysis.tex">原始文件</a></p></header><section class="doc-section"><h2>复变函数</h2>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>复变函数</h1><p class="doc-subtitle">复数、全纯函数、积分表示与级数展开。</p><div class="doc-chips"><span>分析基础</span><span>完整正文</span></div></header><section class="doc-section"><h2>复变函数</h2>
 <h3>复数</h3>
 <p>复数$z=a+\mathrm{i}b$也可以表示成</p>
 <div class="math-display">\[z=r(\cos\theta+\mathrm{i}\sin\theta)=re^{\mathrm{i}\theta}\]</div>
 <p>其中$r=|z|$,$\theta$称为$z$的辐角,记为$\theta=\operatorname{Arg}z$.容易看出如果$\theta$是$z$的辐角,那么$\theta+2k\pi$也是$z$的辐角,因此$z$的辐角有无穷多个(这也说明$\operatorname{Arg}z$并不是一个数,而是一个集合,关于它的等式都是集合意义上的相等).但在$\operatorname{Arg}z$中,只有一个满足$-\pi&lt;\theta\leqslant \pi$,称这个$\theta$为$z$的辐角主值,记为$\arg z$.因此</p>
 <div class="math-display">\[\operatorname{Arg}z=\arg z+2k\pi,k\in \mathbb{Z}\]</div>
-<p>注意到辐角函数$\operatorname{Arg}z$是多值函数,如果我们将复平面$\mathbb{C}$沿负实轴割开,辐角主值就是相应的单值解析分支. 设$z_1,z_2$为两个复数,那么有</p>
+<p>注意到辐角函数$\operatorname{Arg}z$是多值函数,如果我们将复平面$\mathbb{C}$沿负实轴割开,辐角主值就是相应的单值解析分支.</p>
+<p>设$z_1,z_2$为两个复数,那么有</p>
 <div class="math-display">\[\begin{aligned}
 \operatorname{Arg}(z_1z_2)&amp;=\operatorname{Arg}z_1+\operatorname{Arg}z_2\\
 \operatorname{Arg}\left(\frac{z_1}{z_2}\right)&amp;=\operatorname{Arg}z_1-\operatorname{Arg}z_2
 \end{aligned}\]</div>
-<p>由第二个等式,说明向量$z_1,z_2$之间的夹角可以用$\operatorname{Arg}\left(\frac{z_1}{z_2}\right)$表示.如果$z_1$与$z_2$垂直,那么应当有$\arg\left(\frac{z_1}{z_2}\right)=\pm\frac{\pi}{2}$,这说明$\frac{z_1}{z_2}$是一个纯虚数,因而$z_1\overline{z_2}=\frac{z_1}{z_2}|z_2|^2$是一个纯虚数,即$\operatorname{Re} (z_1\overline{z_2})=0$,这也是$z_1$与$z_2$垂直的充要条件.同理可知$z_1$与$z_2$平行的充要条件是$\operatorname{Im} (z_1\overline{z_2})=0$. 一般来讲,$\arg (z-z_0)=\theta_0$表示从$z_0$出发,与正实轴夹角为$\theta_0$的一条射线. 如果给定了复数$z=x+\mathrm{i}y$,可以用下面的方式求其辐角主值:</p>
+<p>由第二个等式,说明向量$z_1,z_2$之间的夹角可以用$\operatorname{Arg}\left(\frac{z_1}{z_2}\right)$表示.如果$z_1$与$z_2$垂直,那么应当有$\arg\left(\frac{z_1}{z_2}\right)=\pm\frac{\pi}{2}$,这说明$\frac{z_1}{z_2}$是一个纯虚数,因而$z_1\overline{z_2}=\frac{z_1}{z_2}|z_2|^2$是一个纯虚数,即$\operatorname{Re} (z_1\overline{z_2})=0$,这也是$z_1$与$z_2$垂直的充要条件.同理可知$z_1$与$z_2$平行的充要条件是$\operatorname{Im} (z_1\overline{z_2})=0$.</p>
+<p>一般来讲,$\arg (z-z_0)=\theta_0$表示从$z_0$出发,与正实轴夹角为$\theta_0$的一条射线.</p>
+<p>如果给定了复数$z=x+\mathrm{i}y$,可以用下面的方式求其辐角主值:</p>
 <div class="math-display">\[\arg z=
 \begin{cases}
 \arctan\frac{y}{x}&amp;,z\text{在第I,IV象限};\\
 \arctan\frac{y}{x}\pm \pi&amp;,z\text{在第II(+),III(-)象限}.
 \end{cases}\]</div>
-<p><strong>定义</strong>$^\clubsuit $:设$f(z)=u(x,y)+\mathrm{i}v(x,y)$是定义在域$D$上的函数,$z_0=x_0+\mathrm{i}y_0\in D$.我们说$f$在$z_0$处实可微,是指$u$和$v$作为$x,y$的二元函数在$(x_0,y_0)$处可微. 引入算子</p>
+<p><strong>定义</strong>$^\clubsuit $:设$f(z)=u(x,y)+\mathrm{i}v(x,y)$是定义在域$D$上的函数,$z_0=x_0+\mathrm{i}y_0\in D$.我们说$f$在$z_0$处实可微,是指$u$和$v$作为$x,y$的二元函数在$(x_0,y_0)$处可微.</p>
+<p>引入算子</p>
 <div class="math-display">\[\begin{aligned}
-\frac{\partial}{\partial z}&amp;=\frac{1}{2}\left(\frac{\partial}{\partial x}-\mathrm{i}\frac{\partial}{\partial y}\right),\\
-\frac{\partial}{\partial \overline{z}}&amp;=\frac{1}{2}\left(\frac{\partial}{\partial x}+\mathrm{i}\frac{\partial}{\partial y}\right).
+\frac{
+tial}{
+tial z}&amp;=\frac{1}{2}\left(\frac{
+tial}{
+tial x}-\mathrm{i}\frac{
+tial}{
+tial y}\right),\\
+\frac{
+tial}{
+tial \overline{z}}&amp;=\frac{1}{2}\left(\frac{
+tial}{
+tial x}+\mathrm{i}\frac{
+tial}{
+tial y}\right).
 \end{aligned}\]</div>
 <p>因此有</p>
-<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=\frac{\partial}{\partial z}(z_0)\Delta z+\frac{\partial}{\partial \overline{z}}(z_0)\overline{\Delta z}+o(|\Delta z|)\]</div>
-<p>则可以得到下面的定理. <strong>定理</strong>$^\clubsuit $:设$f:D\to \mathbb{C}$是定义在域$D$上的函数,$z_0\in D$,那么$f$在$z_0$处实可微的充分必要条件是</p>
-<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=\frac{\partial}{\partial z}(z_0)\Delta z+\frac{\partial}{\partial \overline{z}}(z_0)\overline{\Delta z}+o(|\Delta z|)\]</div>
-<p>成立. 注意一点,我们目前说的都是$f$在$z_0$处实可微,并不是$f$在$z_0$处可微.对于$f$在$z_0$处可微有下面的定理</p>
-<p>设$f$是定义在域$D$上的函数,$z_0\in D$,那么$f$在$z_0$处可微的充分必要条件是$f$在$z_0$处实可微且$\frac{\partial f}{\partial \overline{z}}(z_0)=0$.在可微的情况下,$f&#x27;(z_0)=\frac{\partial f}{\partial z}(z_0)$.</p>
-<p><strong>注</strong>:$\frac{\partial f}{\partial \overline{z}}(z_0)=0$称为Cauchy-Riemann方程.从这个方程就可以得到$f$的实部和虚部应满足的条件. <strong>Proof</strong>:如果$f$在$z_0$处可微,则</p>
+<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=\frac{
+tial}{
+tial z}(z_0)\Delta z+\frac{
+tial}{
+tial \overline{z}}(z_0)\overline{\Delta z}+o(|\Delta z|)\]</div>
+<p>则可以得到下面的定理.</p>
+<p><strong>定理</strong>$^\clubsuit $:设$f:D\to \mathbb{C}$是定义在域$D$上的函数,$z_0\in D$,那么$f$在$z_0$处实可微的充分必要条件是</p>
+<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=\frac{
+tial}{
+tial z}(z_0)\Delta z+\frac{
+tial}{
+tial \overline{z}}(z_0)\overline{\Delta z}+o(|\Delta z|)\]</div>
+<p>成立.</p>
+<p>注意一点,我们目前说的都是$f$在$z_0$处实可微,并不是$f$在$z_0$处可微.对于$f$在$z_0$处可微有下面的定理</p>
+<aside class="wiki-note">
+<strong>Cauchy-Riemann方程</strong>
+<p>设$f$是定义在域$D$上的函数,$z_0\in D$,那么$f$在$z_0$处可微的充分必要条件是$f$在$z_0$处实可微且$\frac{</p>
+<p>tial f}{</p>
+<p>tial \overline{z}}(z_0)=0$.在可微的情况下,$f&#x27;(z_0)=\frac{</p>
+<p>tial f}{</p>
+<p>tial z}(z_0)$.</p>
+</aside>
+<p><strong>注</strong>:$\frac{</p>
+<p>tial f}{</p>
+<p>tial \overline{z}}(z_0)=0$称为Cauchy-Riemann方程.从这个方程就可以得到$f$的实部和虚部应满足的条件.</p>
+<p><strong>Proof</strong>:如果$f$在$z_0$处可微,则</p>
 <div class="math-display">\[f(z_0+\Delta z)-f(z_0)=f&#x27;(z_0)\Delta z+o(|\Delta z|)\]</div>
-<p>则由上一个定理知$f$在$z_0$处是实可微,且$\frac{\partial f}{\partial \overline{z}}(z_0)=0$,$f&#x27;(z_0)=\frac{\partial f}{\partial z}(z_0)$. 反之,若$f$在$z_0$处是实可微,且$\frac{\partial f}{\partial \overline{z}}(z_0)=0$,再由上一个定理知</p>
+<p>则由上一个定理知$f$在$z_0$处是实可微,且$\frac{</p>
+<p>tial f}{</p>
+<p>tial \overline{z}}(z_0)=0$,$f&#x27;(z_0)=\frac{</p>
+<p>tial f}{</p>
+<p>tial z}(z_0)$.</p>
+<p>反之,若$f$在$z_0$处是实可微,且$\frac{</p>
+<p>tial f}{</p>
+<p>tial \overline{z}}(z_0)=0$,再由上一个定理知</p>
 <div class="math-display">\[f(z_0+\Delta z)-f(z_0)=f&#x27;(z_0)\Delta z+o(|\Delta z|)\]</div>
-<p>由此知$f$在$z_0$处可微,而且$f&#x27;(z_0)=\frac{\partial f}{\partial z}(z_0)$. 我们可以得到下面的函数类包含关系</p>
+<p>由此知$f$在$z_0$处可微,而且$f&#x27;(z_0)=\frac{</p>
+<p>tial f}{</p>
+<p>tial z}(z_0)$.</p>
+<p>我们可以得到下面的函数类包含关系</p>
 <div class="math-display">\[H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)\]</div>
-<p>我们已经知道,如果$f$是域$D$上的全纯函数,那么$f$在$D$上有任意阶导数.若记$f=u+\mathrm{i}v\in H(D)$,则$u,v\in C^{\infty}(D)$,不仅如此,我们还可以得到$u$和$v$都是调和函数. 由</p>
-<div class="math-display">\[\frac{\partial u}{\partial \overline{z}}=\frac{1}{2}\left(\frac{\partial u}{\partial x}+\mathrm{i}\frac{\partial u}{\partial y}\right).\]</div>
+<p>我们已经知道,如果$f$是域$D$上的全纯函数,那么$f$在$D$上有任意阶导数.若记$f=u+\mathrm{i}v\in H(D)$,则$u,v\in C^{\infty}(D)$,不仅如此,我们还可以得到$u$和$v$都是调和函数.</p>
+<p>由</p>
+<div class="math-display">\[\frac{
+tial u}{
+tial \overline{z}}=\frac{1}{2}\left(\frac{
+tial u}{
+tial x}+\mathrm{i}\frac{
+tial u}{
+tial y}\right).\]</div>
 <p>所以</p>
 <div class="math-display">\[\begin{aligned}
-\frac{\partial^2 u}{\partial z\partial \overline{z}}&amp;= \frac{\partial }{\partial z}\left(\frac{\partial u}{\partial \overline{z}}\right)\\
-&amp;= \frac{1}{4}\left[\frac{\partial}{\partial x}\left(\frac{\partial}{\partial x}-\mathrm{i}\frac{\partial}{\partial y}\right)+\mathrm{i}\frac{\partial}{\partial y}\left(\frac{\partial}{\partial x}-\mathrm{i}\frac{\partial}{\partial y}\right).\right]\\
-&amp;= \frac{1}{4}\left(\frac{\partial ^2u}{\partial x^2}+\frac{\partial ^2u}{\partial y^2}\right)=\frac{1}{4}\Delta u
+\frac{
+tial^2 u}{
+tial z
+tial \overline{z}}&amp;= \frac{
+tial }{
+tial z}\left(\frac{
+tial u}{
+tial \overline{z}}\right)\\
+&amp;= \frac{1}{4}\left[\frac{
+tial}{
+tial x}\left(\frac{
+tial}{
+tial x}-\mathrm{i}\frac{
+tial}{
+tial y}\right)+\mathrm{i}\frac{
+tial}{
+tial y}\left(\frac{
+tial}{
+tial x}-\mathrm{i}\frac{
+tial}{
+tial y}\right).\right]\\
+&amp;= \frac{1}{4}\left(\frac{
+tial ^2u}{
+tial x^2}+\frac{
+tial ^2u}{
+tial y^2}\right)=\frac{1}{4}\Delta u
 \end{aligned}\]</div>
-<p>即$\Delta u=4\frac{\partial^2 u}{\partial z\partial \overline{z}}$.由$f\in H(D)$,从而</p>
-<div class="math-display">\[\frac{\partial f}{\partial \overline{z}}=0,\frac{\partial\overline{f}}{\partial z}=0\]</div>
+<p>即$\Delta u=4\frac{</p>
+<p>tial^2 u}{</p>
+<p>tial z</p>
+<p>tial \overline{z}}$.由$f\in H(D)$,从而</p>
+<div class="math-display">\[\frac{
+tial f}{
+tial \overline{z}}=0,\frac{
+tial\overline{f}}{
+tial z}=0\]</div>
 <p>所以</p>
-<div class="math-display">\[\frac{\partial^2 f}{\partial z\partial \overline{z}}=\frac{\partial^2 \overline{f}}{\partial z\partial \overline{z}}=0\]</div>
+<div class="math-display">\[\frac{
+tial^2 f}{
+tial z
+tial \overline{z}}=\frac{
+tial^2 \overline{f}}{
+tial z
+tial \overline{z}}=0\]</div>
 <p>由$u=\frac{1}{2}(f+\overline{f})$即得</p>
-<div class="math-display">\[\Delta u=4\frac{\partial^2 u}{\partial z\partial \overline{z}}=0\]</div>
-<p>同理知$\Delta v=0$. <strong>分式线性变换</strong>$^\clubsuit $:我们称函数</p>
+<div class="math-display">\[\Delta u=4\frac{
+tial^2 u}{
+tial z
+tial \overline{z}}=0\]</div>
+<p>同理知$\Delta v=0$.</p>
+<p><strong>分式线性变换</strong>$^\clubsuit $:我们称函数</p>
 <div class="math-display">\[w=f(z)=\frac{az+b}{cz+d},(ad-bc\neq 0)\]</div>
-<p>为分式线性变换(Mobius变换). 我们称$f(z)=z$的点$z$为分式线性变换的不动点,不动点满足的方程为</p>
+<p>为分式线性变换(Mobius变换).</p>
+<p>我们称$f(z)=z$的点$z$为分式线性变换的不动点,不动点满足的方程为</p>
 <div class="math-display">\[c_z^2+(d-a)z-b=0\]</div>
-<p>因此,不为恒等变换的分式线性变换至多只有两个不动点.如果一个分式线性变换有三个不动点,则必为恒等变换. 分式线性变换可以分成下面四类: (1).$w=z+a(a\in\mathbb{C})$为平移变换; (2).$w=e^{\mathrm{i}\theta}z(\theta\in\mathbb{R})$为旋转变换; (3).$w=rz(r&gt;0)$为伸缩变换; (4).$w=\frac{1}{z}$为反演变换. 由</p>
+<p>因此,不为恒等变换的分式线性变换至多只有两个不动点.如果一个分式线性变换有三个不动点,则必为恒等变换.</p>
+<p>分式线性变换可以分成下面四类:</p>
+<p>(1).$w=z+a(a\in\mathbb{C})$为平移变换;</p>
+<p>(2).$w=e^{\mathrm{i}\theta}z(\theta\in\mathbb{R})$为旋转变换;</p>
+<p>(3).$w=rz(r&gt;0)$为伸缩变换;</p>
+<p>(4).$w=\frac{1}{z}$为反演变换.</p>
+<p>由</p>
 <div class="math-display">\[f(z)=\frac{az+b}{cz+d}=\frac{bc-ad}{c^2\left(z+\frac{d}{c}\right)}+\frac{a}{c}  (c\neq 0)\]</div>
-<p>可以知道每一个分式线性变化一定是平移,旋转,伸缩,反演变换的复合(有的变换可以不出现). <strong>定理</strong>$^\clubsuit $:(1).分式线性变换把圆周变为圆周;     (2).设分式线性变化把圆周$\Gamma_1$变为圆周$\Gamma_2$,则它把关于$\Gamma_1$的对称点变为关于$\Gamma_2$的对称点. 只需要对反演变换验证即可.第二条是求具体的分式线性变换经常用的. 设$\gamma$是以$a$为中心,以$R$为半径的圆周,点$z_1,z_2$关于圆周$\gamma$对称,因为它们位于从圆心出发的射线上,所以</p>
+<p>可以知道每一个分式线性变化一定是平移,旋转,伸缩,反演变换的复合(有的变换可以不出现).</p>
+<p><strong>定理</strong>$^\clubsuit $:(1).分式线性变换把圆周变为圆周;</p>
+<p>(2).设分式线性变化把圆周$\Gamma_1$变为圆周$\Gamma_2$,则它把关于$\Gamma_1$的对称点变为关于$\Gamma_2$的对称点.</p>
+<p>只需要对反演变换验证即可.第二条是求具体的分式线性变换经常用的.</p>
+<p>设$\gamma$是以$a$为中心,以$R$为半径的圆周,点$z_1,z_2$关于圆周$\gamma$对称,因为它们位于从圆心出发的射线上,所以</p>
 <div class="math-display">\[\arg (z_1-a)=\arg (z_2-a)=\theta\]</div>
 <p>因而</p>
 <div class="math-display">\[z_1-a=|z_1-a|e^{\mathrm{i}\theta}, z_2-a=|z_2-a|e^{\mathrm{i}\theta}\]</div>
@@ -108,17 +212,21 @@
 <div class="math-display">\[z_1-a=\frac{R^2}{|z_2-a|}e^{\mathrm{i}\theta}=\frac{R^2}{|z_2-a|e^{-\mathrm{i}\theta}}=\frac{R^2}{\overline{z_2-a}}\]</div>
 <p>因此</p>
 <div class="math-display">\[z_1=a+\frac{R^2}{\overline{z_2}-\overline{a}}\]</div>
-<p>由此可见,圆心和无穷远点是关于圆周的一对对称点. <strong>例</strong>$^\spadesuit$ :求一分式线性变换,把上半平面变为单位圆的内部,但要求把上半平面给定的点$a$变为圆心. <strong>Solution</strong>:容易知道实轴就是上半平面的边界,因此$a$的对称点应当是$\overline{a}$,并且该分式线性变换一定把实轴变为圆周.已知$a$变为0,所以$\overline{a}$变为$\infty$,于是这个变换可以写成</p>
+<p>由此可见,圆心和无穷远点是关于圆周的一对对称点.</p>
+<p><strong>例</strong>$^\spadesuit$ :求一分式线性变换,把上半平面变为单位圆的内部,但要求把上半平面给定的点$a$变为圆心.</p>
+<p><strong>Solution</strong>:容易知道实轴就是上半平面的边界,因此$a$的对称点应当是$\overline{a}$,并且该分式线性变换一定把实轴变为圆周.已知$a$变为0,所以$\overline{a}$变为$\infty$,于是这个变换可以写成</p>
 <div class="math-display">\[w=\lambda\frac{z-a}{z-\overline{a}}\]</div>
 <p>为了把实轴变为圆周,$z=0$应当变为圆周上的点,即$z=0$时应有$|w|=1$,由此得$\lambda=e^{\mathrm{i}\theta}$.故所求的变换为</p>
 <div class="math-display">\[w=e^{\mathrm{i}\theta}\frac{z-a}{z-\overline{a}}\]</div>
-<p><strong>例</strong>$^\spadesuit$ :求一分式线性变换,把单位圆得内部变为单位圆的内部,而且把圆内指定点$a$变为圆心. <strong>Solution</strong>:因为$a$关于圆周的对称点为$\frac{1}{\overline{a}}$,所以这个变换把$a$和$\frac{1}{\overline{a}}$分别变为$0$和$\infty$,故这个变换可以写成</p>
+<p><strong>例</strong>$^\spadesuit$ :求一分式线性变换,把单位圆得内部变为单位圆的内部,而且把圆内指定点$a$变为圆心.</p>
+<p><strong>Solution</strong>:因为$a$关于圆周的对称点为$\frac{1}{\overline{a}}$,所以这个变换把$a$和$\frac{1}{\overline{a}}$分别变为$0$和$\infty$,故这个变换可以写成</p>
 <div class="math-display">\[w=\lambda\frac{z-a}{z-\frac{1}{\overline{a}}}=-\lambda\overline{a}\frac{z-a}{1-\overline{a}z}=\mu\frac{z-a}{1-\overline{a}z}\]</div>
 <p>为了把单位圆周变为单位圆周,即将满足$|z|=1$的$z$变为满足$|w|=1$的$w$,$\mu$必须满足</p>
 <div class="math-display">\[1=|w|=|\mu|\frac{|z-a|}{|1-\overline{a}z|}=|\mu|\frac{|z-a|}{|z||1-\overline{a}z|}=|\mu|\frac{|z-a|}{|\overline{z}-\overline{a}|}=|\mu|\]</div>
 <p>即$\mu=e^{\mathrm{i}\theta}$,故所求的变换为</p>
 <div class="math-display">\[w=e^{\mathrm{i}\theta}\frac{z-a}{1-\overline{a}z}\]</div>
-<p>这个变换是把单位圆盘一一地变为自己的变换.事实上,把单位圆盘一一地变为自己的全纯映射只能是这种样子,再没有其他的变换. 我们考虑对数函数$w=\operatorname{Ln}z$,如果沿负实轴割开复平面,可以得到无穷多个单值连续解析分支,我们取主值支</p>
+<p>这个变换是把单位圆盘一一地变为自己的变换.事实上,把单位圆盘一一地变为自己的全纯映射只能是这种样子,再没有其他的变换.</p>
+<p>我们考虑对数函数$w=\operatorname{Ln}z$,如果沿负实轴割开复平面,可以得到无穷多个单值连续解析分支,我们取主值支</p>
 <div class="math-display">\[\ln z=\ln|z|+\mathrm{i}\arg z,(-\pi&lt;\arg z&lt;\pi)\]</div>
 <p>考虑函数</p>
 <div class="math-display">\[w=f(z)=\sqrt[n]{\frac{P(z)}{Q(z)}}\]</div>
@@ -127,15 +235,23 @@
 P(z)&amp;= A(z-a_1)^{\alpha_1}(z-a_2)^{\alpha_2}\cdots(z-a_m)^{\alpha_m},\alpha_1+\cdots+\alpha_m=N\\
 Q(z)&amp;= B(z-b_1)^{\beta_1}(z-b_2)^{\beta_2}\cdots(z-b_l)^{\beta_l},\beta_1+\cdots+\beta_l=M
 \end{aligned}\]</div>
-<p>则$f(z)$可能的支点是$a_1,\cdots,a_m$和$b_1,\cdots,b_l$以及$\infty$.那么<br> (1).当且仅当$n$不能整除$\alpha_i$或$\beta_j$时,相应的$a_i$或$b_j$是支点;<br> (2).当且仅当$n$不能整除$N-M$时,$\infty$是$f(z)$的支点;<br> (3).如果$n$可以整除$\alpha_1,\cdots,\alpha_m,-\beta_1,\cdots,-\beta_l$中若干个之和(一般可以按顺序),那么相对应的$a_1,\cdots,a_m,b_1,\cdots,b_l$就可以连接成支割线,如果连的话还剩一些支点,那这些支点就可以和$\infty$连接. 举个例子:考虑函数</p>
+<p>则$f(z)$可能的支点是$a_1,\cdots,a_m$和$b_1,\cdots,b_l$以及$\infty$.那么<br> (1).当且仅当$n$不能整除$\alpha_i$或$\beta_j$时,相应的$a_i$或$b_j$是支点;<br> (2).当且仅当$n$不能整除$N-M$时,$\infty$是$f(z)$的支点;<br> (3).如果$n$可以整除$\alpha_1,\cdots,\alpha_m,-\beta_1,\cdots,-\beta_l$中若干个之和(一般可以按顺序),那么相对应的$a_1,\cdots,a_m,b_1,\cdots,b_l$就可以连接成支割线,如果连的话还剩一些支点,那这些支点就可以和$\infty$连接.</p>
+<p>举个例子:考虑函数</p>
 <div class="math-display">\[w=\sqrt{z(z-1)(z-2)(z-3)(z-4)}\]</div>
-<p>那么有$n=2,\alpha_1=\alpha_=\alpha_3=\alpha_4=\alpha_5=1,N=5$,因此$n$不能整除$\alpha_i(i=1,\cdots,5)$,所以0,1,2,3,4都是支点.$n$不能整除$N$,所以$\infty$是支点. $n|\alpha_1+\alpha_2,n|\alpha_3,+\alpha_4$,所以就可以将0和1,2和3连接,还剩下一个4和$\infty$连接; $n|\alpha_1+\alpha_2+\alpha_3+\alpha_4$,所以就可以将0,1,2,3一起连,还剩下一个4和$\infty$连接; 我们经常遇到这样的问题:证明在将$z$平面适当割开后,函数</p>
+<p>那么有$n=2,\alpha_1=\alpha_=\alpha_3=\alpha_4=\alpha_5=1,N=5$,因此$n$不能整除$\alpha_i(i=1,\cdots,5)$,所以0,1,2,3,4都是支点.$n$不能整除$N$,所以$\infty$是支点.</p>
+<p>$n|\alpha_1+\alpha_2,n|\alpha_3,+\alpha_4$,所以就可以将0和1,2和3连接,还剩下一个4和$\infty$连接;</p>
+<p>$n|\alpha_1+\alpha_2+\alpha_3+\alpha_4$,所以就可以将0,1,2,3一起连,还剩下一个4和$\infty$连接;</p>
+<p>我们经常遇到这样的问题:证明在将$z$平面适当割开后,函数</p>
 <div class="math-display">\[f(z)=\sqrt[n]{(z-a_1)^{\alpha_1}(z-a_2)^{\alpha_2}\cdots(z-a_m)^{\alpha_m}}\]</div>
-<p>能分解出$n$个单值解析分支,(有时会给出$f(z_1)=a$),并求出在割线上岸取正值那一支在$z_2$的值. 这类问题 第一步:确定支点(用上面的方法),画出割线L(未必是一条),然后在$D=\mathbb{C}\setminus L$内可以把$f(z)$分成$n$个单值解析分支; 第二步:令$z-a_i=r_ie^{\mathrm{i}\theta_i(z)},i=1,\cdots,m$(事实上不必全都这么设,只需要设那些支点就行.这里为了方便假设全是支点),那么$f(z)$的$n$个单值解析分支就是</p>
+<p>能分解出$n$个单值解析分支,(有时会给出$f(z_1)=a$),并求出在割线上岸取正值那一支在$z_2$的值.</p>
+<p>这类问题</p>
+<p>第一步:确定支点(用上面的方法),画出割线L(未必是一条),然后在$D=\mathbb{C}\setminus L$内可以把$f(z)$分成$n$个单值解析分支;</p>
+<p>第二步:令$z-a_i=r_ie^{\mathrm{i}\theta_i(z)},i=1,\cdots,m$(事实上不必全都这么设,只需要设那些支点就行.这里为了方便假设全是支点),那么$f(z)$的$n$个单值解析分支就是</p>
 <div class="math-display">\[f_k(z)=\sqrt[n]{r_1^{\alpha_1}\cdots r_m^{\alpha_m}}\exp\left\{\frac{\alpha_1\theta_1(z)+\cdots+\alpha_m\theta_m(z)+2k\pi}{n}\right\},(z\in D,k=0,1,\cdots,n-1)\]</div>
 <p>因为在割线上岸(一般割线是在实轴上取),所以上述辐角均为零.那么</p>
 <div class="math-display">\[f_k(z)=\sqrt[n]{r_1^{\alpha_1}\cdots r_m^{\alpha_m}}\exp\left\{\frac{2k\pi}{n}\right\},(z\in D,k=0,1,\cdots,n-1)\]</div>
-<p>因为要求取正值,关键就在$\exp\left\{\frac{2k\pi}{n}\right\}$,故我们只需要找出让它是正数(负数,纯虚数都不行)的那些$k_0$,则$f_{k_0}$就是在割线上岸取正值的分支(一般普通考试题目都只有一支); 第三步:取连接$z_1,z_2$(没有给$z_1$的话自己找一个好算的)的曲线$C$(绕过割线),利用公式</p>
+<p>因为要求取正值,关键就在$\exp\left\{\frac{2k\pi}{n}\right\}$,故我们只需要找出让它是正数(负数,纯虚数都不行)的那些$k_0$,则$f_{k_0}$就是在割线上岸取正值的分支(一般普通考试题目都只有一支);</p>
+<p>第三步:取连接$z_1,z_2$(没有给$z_1$的话自己找一个好算的)的曲线$C$(绕过割线),利用公式</p>
 <div class="math-display">\[f(z_2)=|f(z_2)|\exp\left\{\mathrm{i}\Delta_{C}\arg f(z)+\mathrm{i}\arg f(z_1)\right\}\]</div>
 <p>这里的关键是求出$\Delta_{C}\arg f(z)$(就是当$z$沿$C$从$z_1$到$z_2$,$f(z)$辐角改变量.),事实上</p>
 <div class="math-display">\[\Delta_{C}\arg f(z)=\frac{1}{n}\left[\alpha_1\Delta_{C}\arg (z-a_1)+\cdots+\alpha_m\Delta_{C}\arg (z-a_m)\right]\]</div>
@@ -149,7 +265,8 @@ Q(z)&amp;= B(z-b_1)^{\beta_1}(z-b_2)^{\beta_2}\cdots(z-b_l)^{\beta_l},\beta_1+\c
 <div class="math-display">\[f(z)\mathrm{d}z=(u+iv)(\mathrm{d}x+i\mathrm{d}y)=(u\mathrm{d}x-v\mathrm{d}y)+i(v\mathrm{d}x+u\mathrm{d}y)\]</div>
 <p>如果曲线是光滑的,还可以通过曲线的参数方程来计算积分.<br> 2.如果$z=\gamma (t) (a\leqslant t\leqslant b)$是一条光滑曲线,$f$在$\gamma$上连续,那么</p>
 <div class="math-display">\[\int_{\gamma}f(z)\mathrm{d}z=\int^b_a f(\gamma(t))\gamma^{\prime}(t)\mathrm{d}t\]</div>
-<p><strong>例</strong>$^\spadesuit$ :计算积分$\int_{\gamma}\frac{\mathrm{d}z}{(z-a)^n}$,这里$n$是任意整数,$\gamma$是以$a$为中心,以$r$为半径的圆周,逆时针方向. <strong>Solution</strong>:设$\gamma$的参数方程为$z=a+re^{\mathrm{i}t},(0\leqslant t\leqslant 2\pi)$,则</p>
+<p><strong>例</strong>$^\spadesuit$ :计算积分$\int_{\gamma}\frac{\mathrm{d}z}{(z-a)^n}$,这里$n$是任意整数,$\gamma$是以$a$为中心,以$r$为半径的圆周,逆时针方向.</p>
+<p><strong>Solution</strong>:设$\gamma$的参数方程为$z=a+re^{\mathrm{i}t},(0\leqslant t\leqslant 2\pi)$,则</p>
 <div class="math-display">\[\int_{\gamma}\frac{\mathrm{d}z}{(z-a)^n}=\int^{2\pi}_0\frac{\mathrm{i}re^{\mathrm{i}t}}{r^ne^{\mathrm{i}nt}}\mathrm{d}t=r^{1-n}\mathrm{i}\int^{2\pi}_0e^{\mathrm{i}(1-n)t}\mathrm{d}t\]</div>
 <p>所以,</p>
 <div class="math-display">\[\int_{\gamma}\frac{\mathrm{d}z}{(z-a)^n}=
@@ -157,29 +274,47 @@ Q(z)&amp;= B(z-b_1)^{\beta_1}(z-b_2)^{\beta_2}\cdots(z-b_l)^{\beta_l},\beta_1+\c
 0 &amp;,n\neq 1\\
 2\pi\mathrm{i} &amp;, n=1
 \end{cases}\]</div>
-<p>这是一个很重要(常见)的积分,其结果和计算方法应当记住. 如果说前面这些东西不过是实分析里也有的,没什么稀奇,那么接下来的定理就能看出实分析与复分析是完全不同的领域,以及复分析有着比实分析更优美的结论.</p>
+<p>这是一个很重要(常见)的积分,其结果和计算方法应当记住.</p>
+<p>如果说前面这些东西不过是实分析里也有的,没什么稀奇,那么接下来的定理就能看出实分析与复分析是完全不同的领域,以及复分析有着比实分析更优美的结论.</p>
+<aside class="wiki-note">
+<strong>Cauchy积分定理</strong>
 <p>设$D$是$\mathbb{C}$中的单连通区域,如果$f\in H(D)$,那么对于$D$中任意可求长闭曲线$\gamma$,均有</p>
 <div class="math-display">\[\int_{\gamma}f(z)\mathrm{d}z=0\]</div>
-<p>这个定理的证明比较复杂.值得注意的是,对于非单连通的域,定理不一定成立.例如,$D$是去除原点的单位圆盘,$f(z)=\frac{1}{z}$当然在$D$中全纯,若设$\gamma=\{z:|z|=r&lt;1\}$,则容易得到$\int_{\gamma}\frac{\mathrm{d}z}{z}=2\pi \mathrm{i}\neq 0$. 但是Cauchy定理的条件可以减弱为:$f\in H(D)\cap C(\overline{D})$. 然而,如果定理仅仅对单连通域成立,颇有一种满汉全席却味同嚼蜡之感.幸运的是,在下面的意义下,Cauchy 积分定理在多连通域内也成立.设$\gamma_0,\gamma_1,\cdots,\gamma_n$是$n+1$ 条可求长的简单闭曲线, 如果$\gamma_1,\cdots,\gamma_n$都在$\gamma_0$的内部$,\gamma_1,\cdots,\gamma_n$中的每一条都在其他$n-1$条的外部,这样的$n+1$条曲线就围成了一个$n+1$连通域$D$ ,这个域$D$的边界$\gamma$ 由$\gamma_0,\gamma_1,\cdots,\gamma_n$共$n+1$条曲线组成. $\gamma$的正方向规定如下：当我们沿着$\gamma$的正方向运动时，$D$总是在我们的左边.这时，对$\gamma_0$来说是逆时针方向，而对$\gamma_1,\cdots,\gamma_n$则是顺时针方向. 对于这样的域和边界,Cauchy积分定理也成立.即有下面的推论. <strong>推论</strong>$^\clubsuit $:设$\gamma_0,\gamma_1,\cdots,\gamma_n$是$n+1$条可求长简单闭曲线$,\gamma_1,\cdots,\gamma_n$都在$\gamma_0$的内部$,\gamma_1,\cdots,\gamma_n$ 中的每一条都在其他 $n-1$ 条的外部$,D$ 是由这 $n+1$ 条曲线围成的域,用$\gamma$记$D$的边界.如果$f\in H(D)\cap C(\overline{D})$,那么</p>
+</aside>
+<p>这个定理的证明比较复杂.值得注意的是,对于非单连通的域,定理不一定成立.例如,$D$是去除原点的单位圆盘,$f(z)=\frac{1}{z}$当然在$D$中全纯,若设$\gamma=\{z:|z|=r&lt;1\}$,则容易得到$\int_{\gamma}\frac{\mathrm{d}z}{z}=2\pi \mathrm{i}\neq 0$.</p>
+<p>但是Cauchy定理的条件可以减弱为:$f\in H(D)\cap C(\overline{D})$.</p>
+<p>然而,如果定理仅仅对单连通域成立,颇有一种满汉全席却味同嚼蜡之感.幸运的是,在下面的意义下,Cauchy 积分定理在多连通域内也成立.设$\gamma_0,\gamma_1,\cdots,\gamma_n$是$n+1$ 条可求长的简单闭曲线, 如果$\gamma_1,\cdots,\gamma_n$都在$\gamma_0$的内部$,\gamma_1,\cdots,\gamma_n$中的每一条都在其他$n-1$条的外部,这样的$n+1$条曲线就围成了一个$n+1$连通域$D$ ,这个域$D$的边界$\gamma$ 由$\gamma_0,\gamma_1,\cdots,\gamma_n$共$n+1$条曲线组成. $\gamma$的正方向规定如下：当我们沿着$\gamma$的正方向运动时，$D$总是在我们的左边.这时，对$\gamma_0$来说是逆时针方向，而对$\gamma_1,\cdots,\gamma_n$则是顺时针方向. 对于这样的域和边界,Cauchy积分定理也成立.即有下面的推论.</p>
+<p><strong>推论</strong>$^\clubsuit $:设$\gamma_0,\gamma_1,\cdots,\gamma_n$是$n+1$条可求长简单闭曲线$,\gamma_1,\cdots,\gamma_n$都在$\gamma_0$的内部$,\gamma_1,\cdots,\gamma_n$ 中的每一条都在其他 $n-1$ 条的外部$,D$ 是由这 $n+1$ 条曲线围成的域,用$\gamma$记$D$的边界.如果$f\in H(D)\cap C(\overline{D})$,那么</p>
 <div class="math-display">\[\int\limits_{\gamma}f(z)\mathrm{d}z=0\]</div>
 <p>这里,积分沿$\gamma$的正方向进行.上式也可写为</p>
 <div class="math-display">\[\int\limits_{\gamma_0}f(z)\mathrm{d}z=\int\limits_{\gamma_1}f(z)\mathrm{d}z+\cdots+\int\limits_{\gamma_n}f(z)\mathrm{d}z\]</div>
-<p>右端的积分分别沿$\gamma_1,\cdots,\gamma_n$的逆时针方向进行. 当$n=1$时,我们可以得到一个有用小结论:设$\gamma_0,\gamma_1$是两条可求长简单闭曲线,$\gamma_1$在$\gamma_0$的内部,$D$是由$\gamma_0$和$\gamma_1$围成的域.如果$f\in H(D)\cap C(\overline{D})$,那么</p>
+<p>右端的积分分别沿$\gamma_1,\cdots,\gamma_n$的逆时针方向进行.</p>
+<p>当$n=1$时,我们可以得到一个有用小结论:设$\gamma_0,\gamma_1$是两条可求长简单闭曲线,$\gamma_1$在$\gamma_0$的内部,$D$是由$\gamma_0$和$\gamma_1$围成的域.如果$f\in H(D)\cap C(\overline{D})$,那么</p>
 <div class="math-display">\[\int\limits_{\gamma_0}f(z)\mathrm{d}z=\int\limits_{\gamma_1}f(z)\mathrm{d}z\]</div>
-<p>有了积分之后,我们就想复变函数中是否也有类似于Newton-Leibniz公式的定理.答案是肯定的.在此之前,我们需要介绍一下原函数的概念. <strong>定义</strong>$^{\clubsuit}$:设$f:D\to \mathbb{C}$是定义在域$D$上的一个函数.如果存在$F(z)\in H(D)$,使得$F^{\prime}(z)=f(z)$,那么称$F(z)$是$f(z)$在$D$上的一个原函数. 如果$f\in H(D)$,是否一定存在原函数呢?答案是否定的.例如,设$f(z)=\frac{1}{z}$,那么$f(z)$在去除原点的单位圆盘$D$上全纯,但是$f(z)$在$D$上没有原函数.问题出在$D$不是单连通域上.但是,如果$f(z)$在$D$上全纯,且$D$是单连通域,那么$f(z)$在$D$上一定有原函数. <strong>引理</strong>$^\clubsuit$:设$f$在域$D$上连续,且对$D$内的任意可求长闭曲线$\gamma$,均有$\int_{\gamma}f(z)\mathrm{d}z=0$,那么</p>
+<p>有了积分之后,我们就想复变函数中是否也有类似于Newton-Leibniz公式的定理.答案是肯定的.在此之前,我们需要介绍一下原函数的概念.</p>
+<p><strong>定义</strong>$^{\clubsuit}$:设$f:D\to \mathbb{C}$是定义在域$D$上的一个函数.如果存在$F(z)\in H(D)$,使得$F^{\prime}(z)=f(z)$,那么称$F(z)$是$f(z)$在$D$上的一个原函数.</p>
+<p>如果$f\in H(D)$,是否一定存在原函数呢?答案是否定的.例如,设$f(z)=\frac{1}{z}$,那么$f(z)$在去除原点的单位圆盘$D$上全纯,但是$f(z)$在$D$上没有原函数.问题出在$D$不是单连通域上.但是,如果$f(z)$在$D$上全纯,且$D$是单连通域,那么$f(z)$在$D$上一定有原函数.</p>
+<p><strong>引理</strong>$^\clubsuit$:设$f$在域$D$上连续,且对$D$内的任意可求长闭曲线$\gamma$,均有$\int_{\gamma}f(z)\mathrm{d}z=0$,那么</p>
 <div class="math-display">\[F(z)=\int_{z_0}^zf(\zeta)\mathrm{d}\zeta\]</div>
-<p>是$D$中的全纯函数,且在$D$中有$F^{\prime}(z)=f(z)$,这里$z_0$是$D$中一固定点. 当$D$是$\mathbb{C}$中的单连通域且$f\in H(D)$时,在上述引理的假设下,根据Cauchy积分定理,知道$f$沿$D$内任意可求长闭曲线的积分都为零.因此$F(z)=\int_{z_0}^zf(\zeta)\mathrm{d}\zeta$是$f(z)$在$D$上的一个原函数. 不仅如此,我们还能得到类似于微积分中的Newton-Leibniz公式,即 <strong>定理</strong>$^\clubsuit$:设$f\in H(D)$,其中$D$是$\mathbb{C}$中的单连通域,$\varPhi (z)$是$f(z)$在$D$上的一个原函数,那么对于$D$内的任意两点$z_0,z$,有</p>
+<p>是$D$中的全纯函数,且在$D$中有$F^{\prime}(z)=f(z)$,这里$z_0$是$D$中一固定点.</p>
+<p>当$D$是$\mathbb{C}$中的单连通域且$f\in H(D)$时,在上述引理的假设下,根据Cauchy积分定理,知道$f$沿$D$内任意可求长闭曲线的积分都为零.因此$F(z)=\int_{z_0}^zf(\zeta)\mathrm{d}\zeta$是$f(z)$在$D$上的一个原函数.</p>
+<p>不仅如此,我们还能得到类似于微积分中的Newton-Leibniz公式,即</p>
+<p><strong>定理</strong>$^\clubsuit$:设$f\in H(D)$,其中$D$是$\mathbb{C}$中的单连通域,$\varPhi (z)$是$f(z)$在$D$上的一个原函数,那么对于$D$内的任意两点$z_0,z$,有</p>
 <div class="math-display">\[\int_{z_0}^zf(\zeta)\mathrm{d}\zeta=\varPhi (z)-\varPhi (z_0)\]</div>
 <p>Cauchy积分公式 Cauchy 积分定理最重要的推论之一,它是全纯函数的一种积分表示,通过这种表示,我们可以证明全纯函数有任意阶导数,而且可以展开成幂级数.</p>
+<aside class="wiki-note">
+<strong>Cauchy积分公式</strong>
 <p>设$D$是可求长简单闭曲线$\gamma$围成的单连通域,$f\in H(D)\cap C(\overline{D})$,那么对于任意$z\in D$,有</p>
 <div class="math-display">\[f(z)=\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-z}\mathrm{d}\zeta\]</div>
+</aside>
 <p><strong>Proof</strong>:任取$z\in D$,因为$f$在$z$点连续,所以对任意的$\varepsilon$,存在$\delta&gt;0$,使得当$|\zeta-z|&lt;\delta$时,有$|f(\zeta)-f(z)|&lt;\varepsilon$.取$\rho &lt;\delta$,使得$B(z,\rho)\subset D$. 记$\gamma_{\rho}=\{\zeta:|\zeta-z|=\rho\}$,由$\gamma $和$\gamma_{\rho}$围成的区域记为$D&#x27;$,则$\frac{f(\zeta)}{\zeta-z}$在$D&#x27;$上全纯,在$\overline{D}$上连续.于是有</p>
 <div class="math-display">\[\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-z}\mathrm{d}\zeta=\frac{1}{2\pi\mathrm{i}}\int_{\gamma_{\rho}}\frac{f(\zeta)}{\zeta-z}\mathrm{d}\zeta\]</div>
 <p>又因为$\frac{1}{2\pi\mathrm{i}}\int_{\gamma_{\rho}}\frac{\mathrm{d}\zeta}{\zeta-z}=1$,所以</p>
 <div class="math-display">\[f(z)=\frac{1}{2\pi\mathrm{i}}\int_{\gamma_{rho}}\frac{f(z)}{\zeta-z}\mathrm{d}\zeta\]</div>
 <p>于是</p>
 <div class="math-display">\[\left\lvert f(z)-\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-z}\mathrm{d}\zeta \right\rvert =\left\rvert \frac{1}{2\pi\mathrm{i}}\int_{\gamma_{\rho}}\frac{f(z)-f(\zeta)}{\zeta-z}\mathrm{d}\zeta\right\rvert \leqslant \frac{1}{2\pi}\int_{\gamma_{\rho}}\frac{\varepsilon}{\rho}\mathrm{d}s=\varepsilon\]</div>
-<p>Cauchy积分公式表明全纯函数在域中的值由它在边界上的值所完全确定.由Cauchy积分公式可以证明:若$f$是域$D$上的全纯函数,那么$f$在$D$上有任意阶导数. <strong>定理</strong>$^\clubsuit$:设$D$是可求长简单闭曲线$\gamma$围成的域,如果$f\in H(D)\cap C(\overline{D})$,那么$f$在$D$上有任意阶导数,且对任意$z\in D$,有</p>
+<p>Cauchy积分公式表明全纯函数在域中的值由它在边界上的值所完全确定.由Cauchy积分公式可以证明:若$f$是域$D$上的全纯函数,那么$f$在$D$上有任意阶导数.</p>
+<p><strong>定理</strong>$^\clubsuit$:设$D$是可求长简单闭曲线$\gamma$围成的域,如果$f\in H(D)\cap C(\overline{D})$,那么$f$在$D$上有任意阶导数,且对任意$z\in D$,有</p>
 <div class="math-display">\[f^{n}(z)=\frac{n!}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{(\zeta-z)^{n+1}}\mathrm{d}\zeta,n=1,2,\cdots\]</div>
 <p>若设$f$在$B(a,R)$中全纯,且对任意$z\in B(a,R)$,有$|f(z)|\leqslant M$.取$0&lt;r&lt;R$,则$f$在$\overline{B(a,r)}$中全纯,因此</p>
 <div class="math-display">\[f^{n}(a)=\frac{n!}{2\pi\mathrm{i}}\int\limits_{|\zeta-a|=r}\frac{f(\zeta)}{(\zeta-a)^{n+1}}\mathrm{d}\zeta,n=1,2,\cdots\]</div>
@@ -187,25 +322,45 @@ Q(z)&amp;= B(z-b_1)^{\beta_1}(z-b_2)^{\beta_2}\cdots(z-b_l)^{\beta_l},\beta_1+\c
 <div class="math-display">\[|f^{n}(a)|\leqslant \frac{n!}{2\pi}\cdot \frac{M}{r^{n+1}}\cdot 2\pi r=\frac{n!M}{r^n}\]</div>
 <p>令$r\to R$就得到了Cauchy不等式</p>
 <div class="math-display">\[|f^{n}(a)|\leqslant \frac{n!M}{R^n},n=1,2,\cdots\]</div>
-<p>这个不等式给出了圆盘上全纯函数的各阶导数在圆心处值的估计,利用这个估计可以证明下面的 <strong>定理(Liouville)</strong>$^\clubsuit$:有界整函数必为常数. <strong>Proof</strong>:设$f$为一有界整函数,其模的上界设为$M$,即对任意$z\in C$,有$|f(z)|\leqslant M$.任取$a\in C$,以$a$为中心,$R$为半径作圆,因为$f$为整函数,故由Cauchy不等式可得</p>
+<p>这个不等式给出了圆盘上全纯函数的各阶导数在圆心处值的估计,利用这个估计可以证明下面的</p>
+<p><strong>定理(Liouville)</strong>$^\clubsuit$:有界整函数必为常数.</p>
+<p><strong>Proof</strong>:设$f$为一有界整函数,其模的上界设为$M$,即对任意$z\in C$,有$|f(z)|\leqslant M$.任取$a\in C$,以$a$为中心,$R$为半径作圆,因为$f$为整函数,故由Cauchy不等式可得</p>
 <div class="math-display">\[|f&#x27;(a)|\leqslant \frac{M}{R}\]</div>
-<p>这个不等式对任意$R&gt;0$都成立,让$R\to\infty$,即得$f&#x27;(a)=0$.因为$a$是任意的,所以在全平面上有$f&#x27;(z)\equiv 0$,因而$f$是常数. 从Liouville定理立刻可得 <strong>代数学基本定理</strong>$^\clubsuit$:任意复系数多项式</p>
+<p>这个不等式对任意$R&gt;0$都成立,让$R\to\infty$,即得$f&#x27;(a)=0$.因为$a$是任意的,所以在全平面上有$f&#x27;(z)\equiv 0$,因而$f$是常数.</p>
+<p>从Liouville定理立刻可得</p>
+<p><strong>代数学基本定理</strong>$^\clubsuit$:任意复系数多项式</p>
 <div class="math-display">\[P(z)=a_0z^n+a_1z^{n-1}+\cdots+a_n,a_0\neq0\]</div>
-<p>在$\mathbb{C}$中必有零点. <strong>Proof</strong>:如果$P(z)$在$\mathbb{C}$中没有零点,那么$f(z)=\frac{1}{P(z)}$是一个整函数.由于$\lim_{z\to\infty}P(z)=\infty$,故当$|z|&gt;R$时,$|f(z)|\leqslant 1$; 而当$|z|\leqslant R$时,$f$是有界的,因而$f$是一有界整函数.由Liouville定理,$f$应是一常数.这个矛盾证明了$P$在$C$中必有零点. 下面的Cauchy积分定理的逆定理也是对的</p>
+<p>在$\mathbb{C}$中必有零点.</p>
+<p><strong>Proof</strong>:如果$P(z)$在$\mathbb{C}$中没有零点,那么$f(z)=\frac{1}{P(z)}$是一个整函数.由于$\lim_{z\to\infty}P(z)=\infty$,故当$|z|&gt;R$时,$|f(z)|\leqslant 1$; 而当$|z|\leqslant R$时,$f$是有界的,因而$f$是一有界整函数.由Liouville定理,$f$应是一常数.这个矛盾证明了$P$在$C$中必有零点.</p>
+<p>下面的Cauchy积分定理的逆定理也是对的</p>
+<aside class="wiki-note">
+<strong>Morera</strong>
 <p>如果$f$是域$D$上的连续函数,且沿$D$内任一可求长闭曲线的积分为0,那么$f$在$D$上全纯.</p>
+</aside>
 <h3>全纯函数的级数展开</h3>
-<p><strong>定义</strong>$^\clubsuit$:如果级数$\sum^{\infty}_{n=1}f_n(z)$在域$D$的任意紧子集上一致收敛,就称$\sum^{\infty}_{n=1}f_n(z)$在$D$中内闭一致收敛. <strong>定理(Weierstrass)</strong>$^\clubsuit$:设$D$是$\mathbb{C}$中的域,如果$\{f_n\}$是$D$中全纯函数列,且$\sum^{\infty}_{n=1}f_n(z)$在域$D$内闭一致收敛到$f(z)$.那么有$f\in H(D)$; 且对任意自然数$k$,$\sum^{\infty}_{n=1}f_n^{(k)}(z)$在域$D$内闭一致收敛到$f^{(k)}(z)$. <strong>例</strong>$^\spadesuit$ :研究函数$\zeta(z)=\sum_{n=1}^{\infty}\frac{1}{n^{z}}$. <strong>Solution</strong>:因为$n^z=\mathrm{e}^{z\log n}$,若记$z=x+\mathrm{i}y$,则</p>
+<p><strong>定义</strong>$^\clubsuit$:如果级数$\sum^{\infty}_{n=1}f_n(z)$在域$D$的任意紧子集上一致收敛,就称$\sum^{\infty}_{n=1}f_n(z)$在$D$中内闭一致收敛.</p>
+<p><strong>定理(Weierstrass)</strong>$^\clubsuit$:设$D$是$\mathbb{C}$中的域,如果$\{f_n\}$是$D$中全纯函数列,且$\sum^{\infty}_{n=1}f_n(z)$在域$D$内闭一致收敛到$f(z)$.那么有$f\in H(D)$; 且对任意自然数$k$,$\sum^{\infty}_{n=1}f_n^{(k)}(z)$在域$D$内闭一致收敛到$f^{(k)}(z)$.</p>
+<p><strong>例</strong>$^\spadesuit$ :研究函数$\zeta(z)=\sum_{n=1}^{\infty}\frac{1}{n^{z}}$.</p>
+<p><strong>Solution</strong>:因为$n^z=\mathrm{e}^{z\log n}$,若记$z=x+\mathrm{i}y$,则</p>
 <div class="math-display">\[|n^{z}|=|\mathrm{e}^{x\log n}\cdot\mathrm{e}^{\mathrm{i}y\log n}|=n^{x}\]</div>
-<p>当$\operatorname{Re}z=x\geqslant x_{0}&gt;1$时,$\left|\frac{1}{n^{z}}\right|\leqslant\frac{1}{n^{x_{0}}}$,故级数$\sum_{n=1}^{\infty}\frac{1}{n^{z}}$在$\operatorname{Re}z&gt;1$中内闭一致收敛. 由Weierstrass定理,$\zeta(z)$是半平面$\operatorname{Re}z&gt;1$上的全纯函数. 现在我们来考虑幂级数</p>
+<p>当$\operatorname{Re}z=x\geqslant x_{0}&gt;1$时,$\left|\frac{1}{n^{z}}\right|\leqslant\frac{1}{n^{x_{0}}}$,故级数$\sum_{n=1}^{\infty}\frac{1}{n^{z}}$在$\operatorname{Re}z&gt;1$中内闭一致收敛. 由Weierstrass定理,$\zeta(z)$是半平面$\operatorname{Re}z&gt;1$上的全纯函数.</p>
+<p>现在我们来考虑幂级数</p>
 <div class="math-display">\[\sum^{\infty}_{n=0}a_n(z-z_0)^n=a_0+a_1(z-z_0)+\cdots+a_n(z-z_0)^n+\cdots\]</div>
 <p>为简单起见,令$z_0=0$,这时幂级数就变为</p>
 <div class="math-display">\[\sum^{\infty}_{n=0}a_n z^n=a_0+a_1 z+\cdots+a_n z^n+\cdots\]</div>
 <p>类似于数学分析中的定理有</p>
+<aside class="wiki-note">
+<strong>Abel</strong>
 <p>如果$\sum^{\infty}_{n=0}a_n z^n$在$z=z_0\neq 0$处收敛,则必在$\{z:|z|&lt;|z_0|\}$中内闭绝对一致收敛.</p>
+</aside>
 <p><strong>Proof</strong>:设$K$是$\{z:|z|&lt;|z_0|\}$中的一个紧集,选取$r&lt;|z_0|$,使得$K\subset B(0,r)$.于是,当$z\in K$时,有$|z|&lt;r$.因为$\sum_{n=0}^{\infty}a_nz_0^n$收敛,所以$|a_nz_0^n|&lt;M$,这里,$M$是一个常数.于是,当$z\in K$时,有</p>
 <div class="math-display">\[|a_nz^n|=\left|a_nz_0^n\frac{z^n}{z_0^n}\right|\leqslant M\frac{|z|^n}{|z_0|^n}\leqslant M\left(\frac r{|z_0|}\right)^n\]</div>
-<p>因为 $r&lt;|z_0|$,所以由Weierstrass判别法,$\sum_{n=0}^{\infty}|a_nz^n|$在$K$中一致收敛. 由Abel定理和Weierstrass定理可以得到:<strong>幂级数在其收敛圆内确定一个全纯函数.</strong>现在反过来问,在一个圆内全纯的函数是否一定可以展开成幂级数?答案是肯定的.</p>
+<p>因为 $r&lt;|z_0|$,所以由Weierstrass判别法,$\sum_{n=0}^{\infty}|a_nz^n|$在$K$中一致收敛.</p>
+<p>由Abel定理和Weierstrass定理可以得到:<strong>幂级数在其收敛圆内确定一个全纯函数.</strong>现在反过来问,在一个圆内全纯的函数是否一定可以展开成幂级数?答案是肯定的.</p>
+<aside class="wiki-note">
+<strong>全纯函数的Taylor展开</strong>
 <p>若$f\in H(B(z_0,R))$,则$f$可以在$B(z_0,R)$中展开成幂级数:</p>
+</aside>
 <div class="math-display">\[f(z)=\frac{1}{2\pi i}\int_{\gamma_\rho} \frac{f(\zeta)}{\zeta - z}d\zeta\]</div>
 <div class="math-display">\[\begin{aligned}
 \frac{1}{\zeta - z} &amp;= \frac{1}{(\zeta - z_0) - (z - z_0)} \\
@@ -217,7 +372,10 @@ f(z) &amp;= \frac{1}{2\pi i}\int_{\gamma_\rho} \sum_{n=0}^{\infty} f(\xi)\frac{(
 &amp;= \sum_{n=0}^{\infty} \left( \frac{1}{2\pi i}\int_{\gamma_\rho} \frac{f(\zeta)}{(\zeta - z_0)^{n+1}}d\zeta\right)(z - z_0)^n\\
 &amp;= \sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n
 \end{aligned}\]</div>
+<aside class="wiki-note">
+<strong>全纯函数的Taylor展开</strong>
 <div class="math-display">\[f(z)=\sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n, z\in B(z_0,R)\]</div>
+</aside>
 <div class="math-display">\[f(z_0)=f&#x27;(z_0)=\cdots=f^{(m-1)}(z_0)=0,f^{(m)}(z_0)\neq 0\]</div>
 <div class="math-display">\[\begin{aligned}
 f(z)&amp;=\sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n\\
@@ -225,11 +383,17 @@ f(z)&amp;=\sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n\\
 &amp;=(z-z_0)^mg(z)\Bigl\{\frac{f^{(m)}(z_0)}{m!}+\frac{f^{(m+1)}(z_0)}{(m+1)!}(z-z_0)+\cdots \Bigr\}
 \end{aligned}\]</div>
 <div class="math-display">\[g(z_0)=\frac{f^{(m)}(z_0)}{m!}\neq 0\]</div>
+<aside class="wiki-note">
+<strong>唯一性定理</strong>
+</aside>
 <div class="math-display">\[f(a)=\frac{1}{2\pi}\int_0^{2\pi}f(a+re^{\mathrm{t}\theta})\mathrm{d}\theta  (0&lt;r&lt;R)\]</div>
 <div class="math-display">\[\begin{aligned}
 f(a) &amp;=\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-a}\mathrm{d}\zeta=\frac{1}{2\pi\mathrm{i}}\int_0^{2\pi}\frac{f(a+re^{\mathrm{t}\theta})}{re^{\mathrm{t}\theta}}re^{\mathrm{t}\theta}\mathrm{d}\theta\\
 &amp;= \frac{1}{2\pi}\int_0^{2\pi}f(a+re^{\mathrm{t}\theta})\mathrm{d}\theta
 \end{aligned}\]</div>
+<aside class="wiki-note">
+<strong>最大模原理</strong>
+</aside>
 <div class="math-display">\[\begin{aligned}
 \Omega_1 &amp;= \{z\in D:|f(z)|=M\};\\
 \Omega_2 &amp;= \{z\in D:|f(z)|&lt;M\}.
@@ -279,7 +443,10 @@ f(a) &amp;=\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-a}\mathrm{
 <div class="math-display">\[\operatorname{Res}(f,a)=\frac{g^{(m-1)}(a)}{(m-1)!}=\frac{1}{(m-1)!}\lim_{z\to a}\frac{\mathrm{d}^{m-1}}{\mathrm{d}z^{m-1}}((z-a)^mf(z)).\]</div>
 <div class="math-display">\[\operatorname{Res}(f,a)=\lim_{z\to a}(z-a)f(z)\]</div>
 <div class="math-display">\[\operatorname{Res}(f,a)=\lim_{z\to a}(z-a)\frac{g(z)}{h(z)}=\lim_{z\to a}\frac{g(z)}{\frac{h(z)-h(z)}{z-a}}=\frac{g(a)}{h&#x27;(a)}\]</div>
+<aside class="wiki-note">
+<strong>留数定理</strong>
 <div class="math-display">\[\int\limits_{\gamma}f(z)\mathrm{d}z=2\pi\mathrm{i}\sum^n_{k=1}\operatorname{Res}(f,z_k)\]</div>
+</aside>
 <div class="math-display">\[\int_{-\infty}^{+\infty}f(x)\mathrm{d}x=2\pi\mathrm{i}\sum^n_{k=1}\operatorname{Res}(f,a_k)\]</div>
 <div class="math-display">\[\int^R_{-R}f(x)\mathrm{d}x+\int\limits_{\gamma_R}f(z)\mathrm{d}z=2\pi\mathrm{i}\sum^n_{k=1}\operatorname{Res}(f,a_k)\]</div>
 <div class="math-display">\[\left|\int\limits_{\gamma_R}f(z)\mathrm{d}z\right|=\left|\int^\pi_0f(Re^{\mathrm{i}\theta})R\mathrm{i}e^{\mathrm{i}\theta}\right|\leqslant\pi RM(R)\ 0(R\to\infty)\]</div>
@@ -304,10 +471,13 @@ f(a) &amp;=\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-a}\mathrm{
 <div class="math-display">\[\int_{-\infty}^{+\infty}\frac{\cos ax}{b^2+x^2}\mathrm{d}x(a&gt;0,b&gt;0)\]</div>
 <div class="math-display">\[\operatorname{Res}\left(\frac{e^{1\alpha z}}{b^2+z^2},b\mathrm{i}\right)=\frac{e^{-ab}}{2b\mathrm{i}}\]</div>
 <div class="math-display">\[\int_{-\infty}^{+\infty}\frac{\cos ax}{b^2+x^2}\mathrm{d}x=\frac{\pi}{b}e^{-ab}\]</div>
+<aside class="wiki-note">
+<strong>大圆弧引理和小圆弧引理</strong>
 <div class="math-display">\[G=\{z=a+\rho e^{\mathrm{i}\theta}:\rho\leqslant R_0,\theta_1\leqslant \theta\leqslant \theta_2\}\]</div>
 <div class="math-display">\[\lim_{\rho\to\infty}\int\limits_{\gamma_\rho}f(z)\mathrm{d}z=\mathrm{i}A(\theta_2-\theta_1)\]</div>
 <div class="math-display">\[G=\{z=a+\rho e^{\mathrm{i}\theta}:0&lt;\rho\leqslant\rho_0,\theta_1\leqslant \theta\leqslant \theta_2\}\]</div>
 <div class="math-display">\[\lim_{\rho\to 0}\int\limits_{\gamma_\rho}f(z)\mathrm{d}z=\mathrm{i}B(\theta_2-\theta_1)\]</div>
+</aside>
 <div class="math-display">\[\left|\int\limits_{\gamma_\rho}\frac{g(z)}{z-a}\mathrm{d}z\right|=\left|\int^{\theta_2}_{\theta_1}\frac{g(a+\rho e^{\mathrm{i}\theta})}{\rho e^{\mathrm{i}\theta}}\rho \mathrm{i}e^{\mathrm{i}\theta}\mathrm{d}\theta\right|\leqslant M_{\rho}(\theta_2-\theta_1)\to 0(\rho\to 0)\]</div>
 <div class="math-display">\[\int\limits_{\gamma_\rho}f(z)\mathrm{d}z=\mathrm{i}B(\theta_2-\theta_1)+\int\limits_{\gamma_\rho}\frac{g(z)}{z-a}\mathrm{d}z\to \mathrm{i}B(\theta_2-\theta_1)(\rho \to 0)\]</div>
 <div class="math-display">\[\int_0^{\infty}\frac{\sin x}{x}\mathrm{d}x\]</div>
@@ -322,7 +492,10 @@ f(a) &amp;=\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-a}\mathrm{
 <div class="math-display">\[\cos\theta=\frac{1}{2}\left(z+\frac{1}{z}\right),\sin\theta=\frac{1}{2\mathrm{i}}\left(z-\frac{1}{z}\right),\mathrm{d}\theta=\frac{1}{\mathrm{i}z}\mathrm{d}z\]</div>
 <div class="math-display">\[\int_0^{2\pi}R(\sin\theta,\cos\theta)\mathrm{d}\theta=\int\limits_{|z|=1}R(\frac{1}{2\mathrm{i}}\left(z-\frac{1}{z}\right),\frac{1}{2}\left(z+\frac{1}{z}\right))\frac{1}{\mathrm{i}z}\mathrm{d}z\]</div>
 <div class="math-display">\[\frac{1}{2\pi \mathrm{i} }\int_{\gamma}\varphi (z)\frac{f&#x27;(z)}{f(z)}\mathrm{d}z=\sum^n_{k=1}\alpha _k\varphi (a_k)-\sum^m_{j=1}\beta _j\varphi (b_j)\]</div>
+<aside class="wiki-note">
+<strong>辐角原理</strong>
 <div class="math-display">\[N-P=\frac{1}{2\pi \mathrm{i} }\int_{\gamma}\frac{f&#x27;(z)}{f(z)}\mathrm{d}z\]</div>
+</aside>
 <div class="math-display">\[\Delta_\Gamma \text{Arg } w = \theta(b)-\theta(a).\]</div>
 <div class="math-display">\[\frac{1}{2\pi}\Delta_\Gamma \text{Arg } w =
 \begin{cases}
@@ -337,9 +510,12 @@ f(a) &amp;=\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-a}\mathrm{
 <div class="math-display">\[\frac{1}{2\pi \mathrm{i}}\int_{\Gamma}\frac{1}{w}\mathrm{d}w = \frac{1}{2\pi}\Delta_\Gamma \text{Arg } w\]</div>
 <div class="math-display">\[\frac{1}{2\pi \mathrm{i}}\int_{\Gamma}\frac{f&#x27;(z)}{f(z)}\mathrm{d}z=\frac{1}{2\pi}\Delta_\Gamma \text{Arg }f(z)\]</div>
 <div class="math-display">\[\frac{1}{2\pi}\Delta_\Gamma \text{Arg }f(z)=N\]</div>
+<aside class="wiki-note">
+<strong>Rouch$\acute{e</strong>
+</aside>
 <div class="math-display">\[\left|1-\frac{g(z)}{f(z)}\right|&lt;1\]</div>
 <div class="math-display">\[\Delta_{\gamma}\operatorname{Arg}f(z)=\Delta_{\gamma}\operatorname{Arg}g(z)\]</div>
-<div class="math-display">\[|f(z)-g(z)|=|z^8+z^2-1|\leqslant 3&lt;4=|f(z)|\]</div></section><nav class="prev-next"><a href="classical-calculus.html">上一页：经典微积分</a><a href="finite-element.html">下一页：有限元方法初步</a></nav></article></main>
+<div class="math-display">\[|f(z)-g(z)|=|z^8+z^2-1|\leqslant 3&lt;4=|f(z)|\]</div><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Complex_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：60.0 KB</span><span>位置：数学基础/Section/Complex_Analysis.tex</span></div></details></section><nav class="prev-next"><a href="classical-calculus.html">上一页：经典微积分</a><a href="finite-element.html">下一页：有限元方法初步</a></nav></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

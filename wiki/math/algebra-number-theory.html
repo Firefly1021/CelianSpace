@@ -46,33 +46,46 @@
 <a class="" href="../code/index.html">代码实验</a>
 <a class="" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>代数与数论</h1><p class="doc-subtitle">群、环、数论结构与代数对象。</p><div class="doc-chips"><span>代数与几何</span><span>完整正文</span></div><p class="source-path">来源：数学基础/Section/Algebra_NumberTheory.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Algebra_NumberTheory.tex">原始文件</a></p></header><section class="doc-section"><h2>代数与数论</h2>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>代数与数论</h1><p class="doc-subtitle">群、环、数论结构与代数对象。</p><div class="doc-chips"><span>代数与几何</span><span>完整正文</span></div></header><section class="doc-section"><h2>代数与数论</h2>
 <h3>群</h3>
-<p>一个很简单的例子是:整数集$\mathbb{Z}$关于整数的加法构成群,我们称之为整数加群. 设$m$为大于1的整数,考虑$\mathbb{Z}_m=\{\overline{0},\overline{1},\overline{2},\cdots,\overline{m-1}\}$.在其上定义加法和乘法:对$\overline{a},\overline{b}\in\mathbb{Z}_m$</p>
+<p>一个很简单的例子是:整数集$\mathbb{Z}$关于整数的加法构成群,我们称之为整数加群.</p>
+<p>设$m$为大于1的整数,考虑$\mathbb{Z}_m=\{\overline{0},\overline{1},\overline{2},\cdots,\overline{m-1}\}$.在其上定义加法和乘法:对$\overline{a},\overline{b}\in\mathbb{Z}_m$</p>
 <div class="math-display">\[\overline{a}+\overline{b}=\overline{a+b},  \overline{a}\cdot\overline{b}=\overline{ab}\]</div>
-<p>则$(\mathbb{Z}_m,+)$构成群,称之为$\mathbb{Z}$的模$m$剩余类群.值得注意的是$\mathbb{Z}_m$关于它的乘法不构成群.但是$\mathbb{Z}_m$的部分元素关于剩余类的乘法是可以构成群的. 设$m$为大于1的整数,定义集合</p>
+<p>则$(\mathbb{Z}_m,+)$构成群,称之为$\mathbb{Z}$的模$m$剩余类群.值得注意的是$\mathbb{Z}_m$关于它的乘法不构成群.但是$\mathbb{Z}_m$的部分元素关于剩余类的乘法是可以构成群的.</p>
+<p>设$m$为大于1的整数,定义集合</p>
 <div class="math-display">\[U(m)=\{\overline{a}\in\mathbb{Z}_m:(a,m)=1\}\]</div>
-<p>关于剩余类的乘法构成群.不仅如此,这还是一个交换群.当$m=p$是素数的时候,我们常记$U(p)=\mathbb{Z}_{p}^{*}$. 由数论的知识可以知道,$U(m)$的阶为$\varphi (m)$,这里$\varphi (m)$是欧拉函数,表示所有不大于$m$且和$m$互素的正整数的个数.利用算术基本定理:</p>
+<p>关于剩余类的乘法构成群.不仅如此,这还是一个交换群.当$m=p$是素数的时候,我们常记$U(p)=\mathbb{Z}_{p}^{*}$.</p>
+<p>由数论的知识可以知道,$U(m)$的阶为$\varphi (m)$,这里$\varphi (m)$是欧拉函数,表示所有不大于$m$且和$m$互素的正整数的个数.利用算术基本定理:</p>
 <div class="math-display">\[m=p_{1}^{r_1}p_{2}^{r_2}\cdots p_{s}^{r_s}\]</div>
 <p>其中$p_1,p_2,\cdots,p_s$为$m$的不同素因子,那么</p>
 <div class="math-display">\[\varphi (m)=m\prod_{i=1}^{s}\left(1-\frac{1}{p_i}\right)\]</div>
 <p>设$m$是一个整数,记</p>
 <div class="math-display">\[H=\{mz:z\in\mathbb{Z}\}\]</div>
 <p>则$H$为整数加群$\mathbb{Z}$的子群.我们常记作$m\mathbb{Z}$.</p>
+<aside class="wiki-note">
+<strong>Lagrange定理</strong>
 <p>设$G$为有限群,$H$是$G$的一个子群,则</p>
 <div class="math-display">\[|G|=|H|[G:H]\]</div>
-<p><strong>Proof</strong>:我们先证明两个事实. <strong>Part1.$H$的任意两个左(右)陪集或者相等,或者不相交</strong> 设$aH,bH$是两个左陪集.假如它们有公共元素,即有$h_1,h_2\in H$使得</p>
+</aside>
+<p><strong>Proof</strong>:我们先证明两个事实.</p>
+<p><strong>Part1.$H$的任意两个左(右)陪集或者相等,或者不相交</strong></p>
+<p>设$aH,bH$是两个左陪集.假如它们有公共元素,即有$h_1,h_2\in H$使得</p>
 <div class="math-display">\[ah_1=bh_2\]</div>
 <p>于是$a=bh_2h_1^{-1}=bh_3$,由$ah=bh_3h\in bH$可知$aH\subset bH$.同理有$bH\subset aH$.这样就证明了</p>
 <div class="math-display">\[aH=bH\]</div>
-<p><strong>Part2.群$G$可以表示成若干个不相交的左(右)陪集之并</strong> 因为$a\in aH$,所以$G=\bigcup_{a\in G}aH$.把其中重复的陪集去掉,即得</p>
+<p><strong>Part2.群$G$可以表示成若干个不相交的左(右)陪集之并</strong></p>
+<p>因为$a\in aH$,所以$G=\bigcup_{a\in G}aH$.把其中重复的陪集去掉,即得</p>
 <div class="math-display">\[G=\bigcup_{\alpha}a_{\alpha}H\]</div>
-<p>其中当$\alpha\neq \beta$时,有$a_{\alpha}H\neq a_{\beta}H$. 因为$G$是有限群,由上面可以知道</p>
+<p>其中当$\alpha\neq \beta$时,有$a_{\alpha}H\neq a_{\beta}H$.</p>
+<p>因为$G$是有限群,由上面可以知道</p>
 <div class="math-display">\[G=a_1H\cup a_2H\cup\cdots \cup a_rH\]</div>
 <p>所以$|G|=\sum_{i=1}^r|a_iH|=\sum_{i=1}^r|H|=|H|[G:H]$.</p>
 <p><strong>定义</strong>$^\clubsuit $:设$H$是群$G$的子群,如果对每个$a\in G$都有$aH=Ha$,则称$H$是群$G$的一个正规子群,记作$H\lhd G$.</p>
+<aside class="wiki-note">
+<strong>群同态基本定理</strong>
 <p>设$\varphi :G\to G&#x27;$为同态映射,则</p>
 <div class="math-display">\[G/\ker \varphi\cong \operatorname{Im}\varphi\]</div>
+</aside>
 <p><strong>Proof</strong>:定义映射</p>
 <div class="math-display">\[\begin{aligned}
 \psi :G/\ker \varphi&amp;\to \operatorname{Im}\varphi\\
@@ -83,16 +96,21 @@ a\ker \varphi&amp;\mapsto \varphi (a)
 a\ker \varphi=b\ker \varphi &amp;\Rightarrow a^{-1}b\in \ker \varphi\Rightarrow \varphi(a^{-1}b)=e&#x27;\\
 &amp;\Rightarrow \varphi(b^{-1})\varphi(a)=e&#x27;\Rightarrow \varphi(a)=\varphi(b)\\
 \end{aligned}\]</div>
-<p>这就证明了$\psi$是良定义的,并且是单射.根据$\psi$的定义可以得到它是满射. 因为</p>
+<p>这就证明了$\psi$是良定义的,并且是单射.根据$\psi$的定义可以得到它是满射.</p>
+<p>因为</p>
 <div class="math-display">\[\begin{aligned}
 \psi[(a\ker \varphi)(b\ker \varphi)] &amp;= \psi(ab\ker \varphi)=\varphi(ab)\\
 &amp;=\varphi(a)\varphi(b)=\psi(a\ker \varphi)\psi(b\ker \varphi)
 \end{aligned}\]</div>
 <p>综上表明$\psi$是一个$G/\ker\varphi$到$\operatorname{Im}\varphi$的同构映射.从而</p>
 <div class="math-display">\[G/\ker \varphi\cong \operatorname{Im}\varphi\]</div>
+<aside class="wiki-note">
+<strong>第一群同构定理</strong>
 <p>设$G$是一个群,$H&lt;G,N\triangleright G$,则</p>
 <div class="math-display">\[H/(H\cap N)\cong HN/N\]</div>
-<p><strong>Proof</strong>:思路是构造一个同构映射$\varphi$使得$\operatorname{Im}\varphi=HN/N$且$\ker\varphi =H\cap N$. 首先容易得到$HN&lt;G$,又因为$N\triangleright G$,所以$N\triangleright HN$.令</p>
+</aside>
+<p><strong>Proof</strong>:思路是构造一个同构映射$\varphi$使得$\operatorname{Im}\varphi=HN/N$且$\ker\varphi =H\cap N$.</p>
+<p>首先容易得到$HN&lt;G$,又因为$N\triangleright G$,所以$N\triangleright HN$.令</p>
 <div class="math-display">\[\begin{aligned}
 \varphi:H &amp;\to HN/N\\
 h &amp;\mapsto hN
@@ -108,30 +126,45 @@ h\in\ker \varphi &amp;\Leftrightarrow h\in H,\varphi(h)=N \Leftrightarrow h\in H
 \end{aligned}\]</div>
 <p>因此$\ker\varphi=H\cap N$,从而$H\cap N\triangleright H$,且</p>
 <div class="math-display">\[H/(H\cap N)\cong HN/N\]</div>
+<aside class="wiki-note">
+<strong>第二群同构定理</strong>
 <p>设$G$是一个群,$N\triangleright G$,$H$是$G$的包含$N$的正规子群,则$(H/N)\triangleright (G/N)$且</p>
 <div class="math-display">\[(G/N)/(H/N)\cong G/H\]</div>
+</aside>
 <p><strong>Proof</strong>:</p>
-<p>设$G$是群,如果存在$a\in G$,使得$G=\langle a\rangle$,则称$G$为一个循环群,此时称$a$为$G$的一个生成元. 根据群的定义可以看出,如果$G$是有限群时,则$G=\langle a \rangle\Leftrightarrow |G|=\operatorname{ord}a$,根据这个结论我们就可以发现,素数阶群一定是循环群. 现在有一个问题,如果$G$是$n$阶循环群,那么它有多少生成元,以及生成元具体是什么样的呢? 我们知道对于任意的$a\in G$,那么$\operatorname{ord}a=n$,对于任意$r\in\mathbb{Z}$,则$\operatorname{ord}a^r=\frac{n}{(n,r)}$,从而</p>
+<p>设$G$是群,如果存在$a\in G$,使得$G=\langle a\rangle$,则称$G$为一个循环群,此时称$a$为$G$的一个生成元.</p>
+<p>根据群的定义可以看出,如果$G$是有限群时,则$G=\langle a \rangle\Leftrightarrow |G|=\operatorname{ord}a$,根据这个结论我们就可以发现,素数阶群一定是循环群.</p>
+<p>现在有一个问题,如果$G$是$n$阶循环群,那么它有多少生成元,以及生成元具体是什么样的呢?</p>
+<p>我们知道对于任意的$a\in G$,那么$\operatorname{ord}a=n$,对于任意$r\in\mathbb{Z}$,则$\operatorname{ord}a^r=\frac{n}{(n,r)}$,从而</p>
 <div class="math-display">\[\begin{aligned}
 a^r\text{为$G$的生成元} &amp;\Longleftrightarrow \operatorname{ord} a^r=n\\
 &amp;\Longleftrightarrow \frac{n}{(n,r)}=n\\
 &amp;\Longleftrightarrow (n,r)=1
 \end{aligned}\]</div>
 <p>根据Euler函数的定义就知道,$G$的生成元的个数就是$\phi(n)$.</p>
+<aside class="wiki-note">
+<strong>循环群的结构定理</strong>
 <p>设$G$为循环群.<br> (1)如果$G=\langle a\rangle$是无限阶循环群,则$G\cong (\mathbb{Z},+)$;<br> (2)如果$G=\langle a\rangle$是$n$阶循环群,则$G\cong (\mathbb{Z}_n,+)$.</p>
-<p><strong>Proof</strong>:这两个结论的证明是类似的,容易的. 从这个定理可以看出,在同构的意义下,循环群只有两类. <strong>例</strong>$^\spadesuit$ :任一偶数阶群必含有阶为2的元素. <strong>Proof</strong>:设$G$是偶数阶群,定义集合</p>
+</aside>
+<p><strong>Proof</strong>:这两个结论的证明是类似的,容易的.</p>
+<p>从这个定理可以看出,在同构的意义下,循环群只有两类.</p>
+<p><strong>例</strong>$^\spadesuit$ :任一偶数阶群必含有阶为2的元素.</p>
+<p><strong>Proof</strong>:设$G$是偶数阶群,定义集合</p>
 <div class="math-display">\[\begin{aligned}
 S &amp;= \{a\in G:\operatorname{ord}a&gt;2\}\\
 H &amp;= \{a\in G:\operatorname{ord}a\leqslant 2\}
 \end{aligned}\]</div>
-<p>则$G=S\cup H$且$S\cap H=\varnothing$.任意$x\in S$,我们知道$\operatorname{ord}x^{-1}=\operatorname{ord}x&gt;2$,所以$x^{-1}\in S$且$x^{-1}\neq x$,所以$S$中的元素一定有偶数个,这表明$H$中也有偶数个元素. 又群$G$只有单位元$e$的阶是1,所以$|H|\neq 0$,故$|H|\geqslant 2$,这就说明$G$必有阶为2的元素. 一个群到它自身的同构映射成为自同构映射,事实上,一个群的全部自同构在变换的乘法下成一个群,我们称之为自同构群,记为$\operatorname{Aut}(G)$. 设$G$为任意一个群,$a\in G$为一固定元素.我们定义映射</p>
+<p>则$G=S\cup H$且$S\cap H=\varnothing$.任意$x\in S$,我们知道$\operatorname{ord}x^{-1}=\operatorname{ord}x&gt;2$,所以$x^{-1}\in S$且$x^{-1}\neq x$,所以$S$中的元素一定有偶数个,这表明$H$中也有偶数个元素. 又群$G$只有单位元$e$的阶是1,所以$|H|\neq 0$,故$|H|\geqslant 2$,这就说明$G$必有阶为2的元素.</p>
+<p>一个群到它自身的同构映射成为自同构映射,事实上,一个群的全部自同构在变换的乘法下成一个群,我们称之为自同构群,记为$\operatorname{Aut}(G)$.</p>
+<p>设$G$为任意一个群,$a\in G$为一固定元素.我们定义映射</p>
 <div class="math-display">\[\begin{aligned}
 \sigma_a:G &amp;\to G\\
 x &amp;\mapsto axa^{-1}
 \end{aligned}\]</div>
 <p>显然,对于所有的$a\in G$,$\sigma_a$是群$G$的自同构.这样由$G$中元素引起的自同构称为内自同构.容易验证</p>
 <div class="math-display">\[\sigma_a\sigma_b = \sigma_{ab}\]</div>
-<p>这就是说,$a\mapsto \sigma_a$给出了群$G$到$\operatorname{Aut}(G)$的一个同态,这个映射的像集就是$G$的全体内自同构,它们是$\operatorname{Aut}(G)$的一个子群,记为$\operatorname{Inn}(G)$,称为$G$的内自同构群. 我们用$f:G\to \operatorname{Inn}(G)$表示同态$a\mapsto \sigma_a$.对于任意的$a\in\operatorname{ker}(f)$,那么</p>
+<p>这就是说,$a\mapsto \sigma_a$给出了群$G$到$\operatorname{Aut}(G)$的一个同态,这个映射的像集就是$G$的全体内自同构,它们是$\operatorname{Aut}(G)$的一个子群,记为$\operatorname{Inn}(G)$,称为$G$的内自同构群.</p>
+<p>我们用$f:G\to \operatorname{Inn}(G)$表示同态$a\mapsto \sigma_a$.对于任意的$a\in\operatorname{ker}(f)$,那么</p>
 <div class="math-display">\[\sigma_a(x)=axa^{-1}=x\]</div>
 <p>这就是说$a$与$G$中所有元素可交换.在任意一个群$G$中,所有与$G$的全体元素可交换的元素的集合称为$G$的中心,记为$Z(G)$:</p>
 <div class="math-display">\[Z(G)=\{g\in G:gx=xg,\forall x\in G\}\]</div>
@@ -148,34 +181,51 @@ x &amp;\mapsto axa^{-1}
 \end{aligned}\]</div>
 <p>即</p>
 <div class="math-display">\[\tau\sigma_a\tau^{-1}(x)=\sigma_{\tau(a)}(x)\in\operatorname{Inn}(G)\]</div>
-<p>这就证明了结论. <strong>群作用</strong>$^\clubsuit $:设$G$是一个群,$X$是一个非空集合,若有映射</p>
+<p>这就证明了结论.</p>
+<p><strong>群作用</strong>$^\clubsuit $:设$G$是一个群,$X$是一个非空集合,若有映射</p>
 <div class="math-display">\[\begin{aligned}
 f :G\times X&amp;\to X\\
 (g,x)&amp;\mapsto f (g,x)
 \end{aligned}\]</div>
-<p>满足对任意的$x\in X$和任意的$g_1,g_2\in G$,都有 (1)$f(e,x)=x$,这里$e$是$G$的单位元; (2)$f(g_1g_2,x)=f(g_1,f(g_2,x))$.<br> 那么我们就说,$f$决定了群$G$在集合$X$上的作用.一般来讲我们常常把$f(g,x)$简写成$g(x)$. <strong>左平移</strong>$^\spadesuit$ :设$G$是一个群,取$X=G$,定义映射</p>
+<p>满足对任意的$x\in X$和任意的$g_1,g_2\in G$,都有</p>
+<p>(1)$f(e,x)=x$,这里$e$是$G$的单位元;</p>
+<p>(2)$f(g_1g_2,x)=f(g_1,f(g_2,x))$.<br> 那么我们就说,$f$决定了群$G$在集合$X$上的作用.一般来讲我们常常把$f(g,x)$简写成$g(x)$.</p>
+<p><strong>左平移</strong>$^\spadesuit$ :设$G$是一个群,取$X=G$,定义映射</p>
 <div class="math-display">\[g(x)=gx,  \forall g,x\in G\]</div>
-<p>这就给出了一个群在集合$G$上的作用,称之为左平移. <strong>共轭变换</strong>$^\spadesuit$ :设$G$是一个群,取$X=G$,定义映射</p>
+<p>这就给出了一个群在集合$G$上的作用,称之为左平移.</p>
+<p><strong>共轭变换</strong>$^\spadesuit$ :设$G$是一个群,取$X=G$,定义映射</p>
 <div class="math-display">\[g(x)=gxg^{-1},  \forall g,x\in G\]</div>
-<p>这就是通常所谓的群上的共轭变换.在共轭变换下,元素$gxg^{-1}$称为元素$x$的共轭元素.同样,子群$gHg^{-1}$称为与子群$H$共轭. 设群$G$作用在集合$X$上,$x\in X$,称$X$的子集</p>
+<p>这就是通常所谓的群上的共轭变换.在共轭变换下,元素$gxg^{-1}$称为元素$x$的共轭元素.同样,子群$gHg^{-1}$称为与子群$H$共轭.</p>
+<p>设群$G$作用在集合$X$上,$x\in X$,称$X$的子集</p>
 <div class="math-display">\[O_x=\{g(x):g\in G\}\]</div>
-<p>为$x$在$G$下的轨道.如果$X$本身是一个轨道,则称群$G$在集合$X$上的作用是传递的. 事实上,我们可以证明$X$是一些不同轨道的并</p>
+<p>为$x$在$G$下的轨道.如果$X$本身是一个轨道,则称群$G$在集合$X$上的作用是传递的.</p>
+<p>事实上,我们可以证明$X$是一些不同轨道的并</p>
 <div class="math-display">\[X=\bigcup_{x}O_x\]</div>
-<p>其中$x$取遍不同的轨道代表元素.这一结论依赖于:对于任意的$x,y\in X$,$O_x$与$O_y$要么完全相同,要么没有公共给元素. 若设$O_x\cap O_y\neq \varnothing$,任取$z\in O_x\cap O_y$,则存在$g_1,g_2\in G$,使得$g_1(x)=z=g_2(y)$.于是$y=g_2^{-1}g_1x\in O_x$,这就得到了$O_y\subset O_x$.同理可得$O_x\subset O_y$.所以$O_x=O_y$. 因为对于任意的$x\in X$,都有$x\in O_x$,所以$X=\bigcup_{x}O_x$.接着去掉重复的轨道即可. 如果再设$X$是一个有限集,那么可以得到</p>
+<p>其中$x$取遍不同的轨道代表元素.这一结论依赖于:对于任意的$x,y\in X$,$O_x$与$O_y$要么完全相同,要么没有公共给元素.</p>
+<p>若设$O_x\cap O_y\neq \varnothing$,任取$z\in O_x\cap O_y$,则存在$g_1,g_2\in G$,使得$g_1(x)=z=g_2(y)$.于是$y=g_2^{-1}g_1x\in O_x$,这就得到了$O_y\subset O_x$.同理可得$O_x\subset O_y$.所以$O_x=O_y$.</p>
+<p>因为对于任意的$x\in X$,都有$x\in O_x$,所以$X=\bigcup_{x}O_x$.接着去掉重复的轨道即可.</p>
+<p>如果再设$X$是一个有限集,那么可以得到</p>
 <div class="math-display">\[X=\bigsqcup_{i=1}^t O_{x_i}\]</div>
 <p>因为$O_{x_{i}}\cap O_{x_j}=\varnothing,i\neq j$,所以</p>
 <div class="math-display">\[|X|=\sum_{i=1}^t|O_{x_i}|\]</div>
 <p>设群$G$作用在集合$X$上,$x\in X$,称</p>
 <div class="math-display">\[S_x=\{g\in G:g(x)=x\}\]</div>
-<p>为$x$在$G$中的稳定子.事实上$S_x$是$G$的子群,所以我们也称$S_x$为$x$的稳定子群. <strong>例</strong>$^\spadesuit$ :设群$G$作用在集合$X$上,$x\in X$,则</p>
+<p>为$x$在$G$中的稳定子.事实上$S_x$是$G$的子群,所以我们也称$S_x$为$x$的稳定子群.</p>
+<p><strong>例</strong>$^\spadesuit$ :设群$G$作用在集合$X$上,$x\in X$,则</p>
 <div class="math-display">\[\begin{aligned}
 \phi :O_x &amp;\to G/S_x\\
 g(x) &amp;\mapsto gS_x
 \end{aligned}\]</div>
-<p>为$O_x$到$G/S_x$的双射. <strong>Proof</strong>:显然这个映射是良定义的.对任意的$gS_x\in G/S_x$,有$g(x)\in O_x$使得</p>
+<p>为$O_x$到$G/S_x$的双射.</p>
+<p><strong>Proof</strong>:显然这个映射是良定义的.对任意的$gS_x\in G/S_x$,有$g(x)\in O_x$使得</p>
 <div class="math-display">\[\phi(g(x))=gS_x\]</div>
-<p>所以$\phi$是$O_x$到$G/S_x$的满射. 再设$g_1x,g_2x\in O_x$.如果$\phi(g_1x)=\phi(g_2x)$,即$g_1S_x=g_2S_x$,于是$g_1^{-1}g_2x=x$,由此得$g_1x=g_2x$.所以$phi$是$O_x$到$G/S_x$的单射. 综上所述,我们得到下面的结论</p>
+<p>所以$\phi$是$O_x$到$G/S_x$的满射.</p>
+<p>再设$g_1x,g_2x\in O_x$.如果$\phi(g_1x)=\phi(g_2x)$,即$g_1S_x=g_2S_x$,于是$g_1^{-1}g_2x=x$,由此得$g_1x=g_2x$.所以$phi$是$O_x$到$G/S_x$的单射.</p>
+<p>综上所述,我们得到下面的结论</p>
+<aside class="wiki-note">
+<strong>轨道公式</strong>
 <p>设有限群$G$作用在有限集$X$上,则<br> (1).$|G|=|O_x||S_x|$;<br> (2).$|X|=\sum_{x}[G:S_{x}]$,其中$x$取遍不同的轨道代表元素.</p>
+</aside>
 <p>设群$G$<strong>共轭作用</strong>于自身,$x\in G$,容易知道</p>
 <div class="math-display">\[O_x=\{g(x):g\in G\}=\{gxg^{-1}:g\in G\}\]</div>
 <p>所以$O_x$由所有与$x$共轭的元素组成,称为$x$的共轭类.而</p>
@@ -188,15 +238,27 @@ S_x=\{g\in G:g(x)=x\} &amp;= \{g\in G:gxg^{-1}=x\}\\
 [G:C(x)]=1 &amp;\Longleftrightarrow G=C(x)\\
 &amp;\Longleftrightarrow x\in Z(G)
 \end{aligned}\]</div>
+<aside class="wiki-note">
+<strong>群方程</strong>
 <div class="math-display">\[|G|=|Z(G)|+\sum_{x}[G:C(x)]\]</div>
+</aside>
+<aside class="wiki-note">
+<strong>Sylow定理</strong>
 <div class="math-display">\[r\equiv 1(\operatorname{mod} p),  \text{且}r|m\]</div>
+</aside>
 <h3>环</h3>
 <div class="math-display">\[(a_1,a_2,\cdots,a_n)=\{r_1a_1+r_2a_2+\cdots+r_na_n:r_i\in R,i=1,2,\cdots,n\}\]</div>
 <div class="math-display">\[(a)=aR=\{ar:r\in R\}\]</div>
+<aside class="wiki-note">
+<strong>多项式环的理想</strong>
+</aside>
 <div class="math-display">\[f(x)=q(x)m(x)+r(x),  \deg r(x)&lt;\deg m(x)\]</div>
 <div class="math-display">\[r(x)=f(x)-q(x)m(x)\]</div>
 <div class="math-display">\[f(x)=q(x)m(x)\in (m(x))\]</div>
+<aside class="wiki-note">
+<strong>中国剩余定理</strong>
 <div class="math-display">\[R\big/\bigcap_{i=1}^n J_i\cong \bigoplus\limits_{i=1}^n R/J_i\]</div>
+</aside>
 <div class="math-display">\[\begin{aligned}
 \varphi :R &amp;\to \bigoplus\limits_{i=1}^n R/J_i\\
 r &amp;\mapsto (r+J_1,r+J_2,\cdots,r+J_n)
@@ -207,7 +269,7 @@ r &amp;\mapsto (r+J_1,r+J_2,\cdots,r+J_n)
 <div class="math-display">\[\varphi(r)=(r+J_1,r+J_2,\cdots,r+J_n)=(a_1+J_1,a_2+J_2,\cdots,a_n+J_n)\]</div>
 <div class="math-display">\[r+J_i=0+J_i\]</div>
 <div class="math-display">\[\ker\varphi=\bigcap_{i=1}^n J_i\]</div>
-<div class="math-display">\[n\cdot \mathbf{1}_R=\mathbf{0}_R\]</div></section><nav class="prev-next"><span></span><a href="classical-calculus.html">下一页：经典微积分</a></nav></article></main>
+<div class="math-display">\[n\cdot \mathbf{1}_R=\mathbf{0}_R\]</div><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Algebra_NumberTheory.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：18.3 KB</span><span>位置：数学基础/Section/Algebra_NumberTheory.tex</span></div></details></section><nav class="prev-next"><span></span><a href="classical-calculus.html">下一页：经典微积分</a></nav></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

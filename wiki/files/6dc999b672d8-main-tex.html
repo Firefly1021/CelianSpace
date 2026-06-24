@@ -46,7 +46,7 @@
 <a class="" href="../code/index.html">代码实验</a>
 <a class="" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>main.tex</h1><p class="doc-subtitle">各种模板 / latex / 30.8 KB</p><div class="doc-chips"><span>各种模板</span><span>latex</span></div><p class="source-path">来源：各种模板/湘潭大学课程报告模板/main.tex · <a href="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/main.tex">原始文件</a></p></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/main.tex">打开原始文件</a><a class="button-link" href="../materials/templates-source.html">返回分类</a></div><p>\usetikzlibrary{arrows.meta,calc}</p>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>main.tex</h1><p class="doc-subtitle">各种模板 中的TeX资料。</p><div class="doc-chips"><span>各种模板</span><span>TeX</span></div></header><section class="doc-section"><div class="file-actions"><a class="button-link" href="../materials/templates-source.html">返回分类</a></div><p>\usetikzlibrary{arrows.meta,calc}</p>
 <p>\cover</p>
 <p>\pagestyle{abstractcnstyle} \pagenumbering{Roman}</p>
 <p>本文以二维频域 Maxwell 方程为研究对象,围绕 $H(\text{curl})$ 空间、弱形式推导、Nédélec 边缘元离散以及稀疏矩阵实现展开讨论.通过将完整三维电磁问题简化为二维有界区域上的双旋方程,本文保留了 Maxwell 方程的核心旋度结构,同时降低了函数空间与有限元构造的复杂度.文中首先建立带理想电导体边界条件的二维强形式模型,随后在 $H_0(\text{curl};\Omega)$ 空间中推导相应弱形式,并说明 Nédélec 边缘元相较于传统节点元在保持切向连续性和避免伪模态方面的优势.最后,结合三角剖分、边自由度、稀疏矩阵组装、数值实验和先验误差分析,给出二维计算电磁问题的一套较完整的理论与实现框架.数值结果表明,最低阶 Nédélec 边缘元在光滑制造解算例中呈现接近一阶的收敛行为.</p>
@@ -70,20 +70,29 @@
 <p>考虑一个由理想导体包裹的二维有界 Lipschitz 区域</p>
 <div class="math-display">\[\Omega\subset\R^2,
  
-\Gamma=\partial\Omega.\]</div>
+\Gamma=
+tial\Omega.\]</div>
 <p>该区域可以看作二维截面上的谐振腔或波导简化模型.假设场量具有时谐因子 $e^{j\omega t}$,其中 $\omega$ 为角频率,$j=\sqrt{-1}$.在频域下,时间微分可转化为乘以 $j\omega$,从而得到仅依赖空间变量的复值方程.</p>
 <p>在二维情形中,平面向量场的旋度定义为标量:</p>
 <div class="math-display">\[\curl \E
 =
-\frac{\partial E_2}{\partial x}
+\frac{
+tial E_2}{
+tial x}
 -
-\frac{\partial E_1}{\partial y}.\]</div>
+\frac{
+tial E_1}{
+tial y}.\]</div>
 <p>另一方面,对于标量函数 $\phi$,定义其旋度为二维向量:</p>
 <div class="math-display">\[\curl \phi
 =
 \begin{pmatrix}
-\dfrac{\partial \phi}{\partial y}\\[4pt]
--\dfrac{\partial \phi}{\partial x}
+\dfrac{
+tial \phi}{
+tial y}\\[4pt]
+-\dfrac{
+tial \phi}{
+tial x}
 \end{pmatrix}.\]</div>
 <p>因此,$\curl\E$ 是标量,而 $\curl(\mu_r^{-1}\curl\E)$ 又是二维向量.这种记号使二维双旋方程仍可写成与三维形式相近的表达.</p>
 <p>令</p>
@@ -263,7 +272,7 @@ M_{ij}
 \bm{N}_j\cdot\overline{\bm{N}_i} d\Omega.\]</div>
 <h2>数值计算与高性能实现</h2>
 <div class="math-display">\[\bm{A}\bm{x}=\bm{b}.\]</div>
-<pre><code>#include &lt;Eigen/Sparse&gt;
+<div class="code-block"><div class="code-title"><span>LaTeX 代码</span><em>tex</em></div><pre><code class="language-tex">#include &lt;Eigen/Sparse&gt;
 #include &lt;Eigen/Dense&gt;
 #include &lt;complex&gt;
 #include &lt;vector&gt;
@@ -294,7 +303,7 @@ for (const auto&amp; element : mesh.elements) {
 SparseMatrixC A(N, N);
 // Eigen 会自动把相同位置的三元组贡献累加
 A.setFromTriplets(tripletList.begin(), tripletList.end());
-A.makeCompressed();</code></pre>
+A.makeCompressed();</code></pre></div>
 <div class="math-display">\[A_{ij}^{(K)}
 =
 \int_K
@@ -315,7 +324,7 @@ k_0^2
 k_0^2\varepsilon_r
 \int_K
 \bm{N}_j\cdot\overline{\bm{N}_i} dK.\]</div>
-<pre><code>#include &lt;Eigen/SparseLU&gt;
+<div class="code-block"><div class="code-title"><span>LaTeX 代码</span><em>tex</em></div><pre><code class="language-tex">#include &lt;Eigen/SparseLU&gt;
 Eigen::Matrix&lt;Complex, Eigen::Dynamic, 1&gt; b(N);
 Eigen::Matrix&lt;Complex, Eigen::Dynamic, 1&gt; x(N);
 Eigen::SparseLU&lt;SparseMatrixC&gt; solver;
@@ -327,8 +336,8 @@ if (solver.info() != Eigen::Success) {
 x = solver.solve(b);
 if (solver.info() != Eigen::Success) {
     std::cerr &lt;&lt; &quot;Linear solve failed.&quot; &lt;&lt; std::endl;
-}</code></pre>
-<pre><code>#include &lt;Eigen/IterativeLinearSolvers&gt;
+}</code></pre></div>
+<div class="code-block"><div class="code-title"><span>LaTeX 代码</span><em>tex</em></div><pre><code class="language-tex">#include &lt;Eigen/IterativeLinearSolvers&gt;
 Eigen::BiCGSTAB&lt;SparseMatrixC, Eigen::IncompleteLUT&lt;Complex&gt;&gt; solver;
 solver.setTolerance(1e-10);
 solver.setMaxIterations(1000);
@@ -338,7 +347,7 @@ if (solver.info() != Eigen::Success) {
 }
 x = solver.solve(b);
 std::cout &lt;&lt; &quot;Iterations: &quot; &lt;&lt; solver.iterations() &lt;&lt; std::endl;
-std::cout &lt;&lt; &quot;Estimated error: &quot; &lt;&lt; solver.error() &lt;&lt; std::endl;</code></pre>
+std::cout &lt;&lt; &quot;Estimated error: &quot; &lt;&lt; solver.error() &lt;&lt; std::endl;</code></pre></div>
 <h2>数值实验与结果分析</h2>
 <div class="math-display">\[\Omega=(0,1)^2\]</div>
 <div class="math-display">\[\E(x,y)
@@ -348,7 +357,8 @@ std::cout &lt;&lt; &quot;Estimated error: &quot; &lt;&lt; solver.error() &lt;&lt
 \sin(\pi x)\sin(\pi y)
 \end{pmatrix}.\]</div>
 <div class="math-display">\[\tvec\cdot\E=0,
-  \text{on } \partial\Omega.\]</div>
+  \text{on }
+tial\Omega.\]</div>
 <div class="math-display">\[\curl\curl\E-k_0^2\E=\bm{f}\]</div>
 <div class="math-display">\[\|\E-\E_h\|_{L^2(\Omega)},
  
@@ -419,7 +429,7 @@ C h^r
 \text{局部加密}
 \longrightarrow
 \text{重新求解}.\]</div>
-<h2>结论</h2></section></article></main>
+<h2>结论</h2><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/main.tex">打开原始文件</a><span>分类：各种模板</span><span>类型：TeX</span><span>大小：30.8 KB</span><span>位置：各种模板/湘潭大学课程报告模板/main.tex</span></div></details></section></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

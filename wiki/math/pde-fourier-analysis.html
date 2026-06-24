@@ -46,11 +46,14 @@
 <a class="" href="../code/index.html">代码实验</a>
 <a class="" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace / Wiki</p><h1>偏微分方程与傅里叶分析</h1><p class="doc-subtitle">古典 PDE、广义函数、Sobolev 空间与椭圆方程。</p><div class="doc-chips"><span>PDE 与分析</span><span>完整正文</span></div><p class="source-path">来源：数学基础/Section/Foutier_Analysis.tex · <a href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Foutier_Analysis.tex">原始文件</a></p></header><section class="doc-section"><h2>偏微分方程</h2>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>偏微分方程与傅里叶分析</h1><p class="doc-subtitle">古典 PDE、广义函数、Sobolev 空间与椭圆方程。</p><div class="doc-chips"><span>PDE 与分析</span><span>完整正文</span></div></header><section class="doc-section"><h2>偏微分方程</h2>
 <h3>三大古典偏微分方程</h3>
 <h4>位势方程</h4>
 <p>考虑下面的Dirichlet边界条件的定解问题</p>
+<aside class="wiki-note">
+<strong>弱极大值原理</strong>
 <div class="math-display">\[\max_{\overline{\Omega}}u=\max_{\pa\Omega}u.\]</div>
+</aside>
 <div class="math-display">\[Du(x_0)=0,  \operatorname{Hessi}u(x_0)\text{负定}\]</div>
 <div class="math-display">\[u_{\varepsilon}(x)=u(x)+\varepsilon|x|^2\]</div>
 <div class="math-display">\[\Delta u_{\varepsilon}=\Delta u +2n\varepsilon\geqslant 2n\varepsilon&gt;0\]</div>
@@ -59,7 +62,10 @@
 &amp;=\max_{\pa\Omega}(u+\varepsilon|x|^2)\leqslant \max_{\pa\Omega}u+\varepsilon\max_{\pa\Omega}|x|^2
 \end{aligned}\]</div>
 <div class="math-display">\[\min_{\pa\Omega}u\leqslant u(x)\leqslant \max_{\pa\Omega}u,  x\in\Omega\]</div>
+<aside class="wiki-note">
+<strong>最大模估计</strong>
 <div class="math-display">\[\max_{\overline{\Omega}}|u|\leqslant\max_{\pa\Omega}|\varphi|+\frac{d^2}{2n}\max_{\overline{\Omega}}|f|\]</div>
+</aside>
 <div class="math-display">\[w(x)=\Phi+\frac{M}{2n}(d^2-|x-x_0|^2)-u(x)\]</div>
 <div class="math-display">\[\begin{cases}
 \Delta w=-M-f\leqslant 0,&amp;x\in\Omega\\
@@ -84,6 +90,9 @@ u(x)=\varphi(x),&amp;x\in\pa\Omega
 \frac{\pa^2 \Phi}{\pa x_i^2} &amp;= \frac{1}{\alpha(n)}\frac{x_i^2}{|x|^{n+1}}-\frac{1}{n\alpha(n)}\frac{1}{|x|^n}
 \end{cases}
   (i=1,2,\cdots,n)\]</div>
+<aside class="wiki-note">
+<strong>Poisson方程的解</strong>
+</aside>
 <div class="math-display">\[\frac{u(x+he_i)-u(x)}{h}=\int_{\mathbb{R}^n}\Phi(y)\frac{f(x+he_i-y)-f(x-y)}{h}\mathrm{d}y\]</div>
 <div class="math-display">\[u_{x_i}=\int_{\mathbb{R}^n}\Phi(y)f_{x_i}(x-y)\mathrm{d}y\]</div>
 <div class="math-display">\[\begin{aligned}
@@ -103,7 +112,10 @@ u(x)=\varphi(x),&amp;x\in\pa\Omega
 &amp;= -\frac{1}{n\alpha(n)}\int_{\pa B(0,1)}f(x-\varepsilon z)\mathrm{d}S_z
 \end{aligned}\]</div>
 <div class="math-display">\[-\int_{\pa B(0,\varepsilon)}f(x-y)\frac{\pa\Phi}{\pa\nu_{x}}(y)\mathrm{d}S_y\to -f(x)\]</div>
+<aside class="wiki-note">
+<strong>平均值公式</strong>
 <div class="math-display">\[u(x)=\fint_{B(x,r)}u(y)\mathrm{d}y=\fint_{\pa B(x,r)}u(y)\mathrm{d}S\]</div>
+</aside>
 <h4>热传导方程</h4>
 <h4>波动方程</h4>
 <h3>PDE中的其他概念</h3>
@@ -138,7 +150,10 @@ C\exp\left(\frac{1}{|x|^2-1}\right),&amp; |x|&lt;1\\
 \end{cases}\]</div>
 <div class="math-display">\[u_{\varepsilon}(x)=\int_{\R ^n}u(x-y)\eta_{\varepsilon}(y)\mathrm{d}y=\int_{\R ^n}u(y)\eta_{\varepsilon}(x-y)\mathrm{d}y\]</div>
 <div class="math-display">\[\lim_{\varepsilon\to 0}\|u_{\varepsilon}-u\|_{L^p(\R ^n)}=0\]</div>
+<aside class="wiki-note">
+<strong>磨光函数的逼近\hypertarget{磨光函数的逼近</strong>
 <div class="math-display">\[\lim_{\varepsilon\to 0}\|u_{\varepsilon}-u\|_{L^p(\R ^n)}=0\]</div>
+</aside>
 <div class="math-display">\[\|u-v\|_{L^p(\R ^n)}\leqslant \delta\]</div>
 <div class="math-display">\[\begin{aligned}
 \|f_\varepsilon\|_{L^p(\mathbb{R}^n)}^p
@@ -176,6 +191,9 @@ C\exp\left(\frac{1}{|x|^2-1}\right),&amp; |x|&lt;1\\
 <div class="math-display">\[|y|\leqslant |x-y|+|x|\leqslant R-1+1=R\]</div>
 <div class="math-display">\[\beta_{R}(x)=\int_{\R^n}\mathbf{1}_{R}(y)\eta (x-y)\dd y=\int_{\R^n}\eta (x-y)\dd y=1\]</div>
 <div class="math-display">\[\sup_{x\in\R ^n}|x^{\alpha}\pa^{\beta}\varphi (x)|\to 0\]</div>
+<aside class="wiki-note">
+<strong>速降函数极限条件的等价定义</strong>
+</aside>
 <div class="math-display">\[\begin{aligned}
 x^{\alpha}\pa^{\beta}\varphi (x) &amp;=\frac{1}{|x|^2}\sum_{j=1}^{n}x^2_jx^{\alpha}\pa^{\beta}\varphi (x)\\
 &amp;=\frac{1}{|x|^2}\sum_{j=1}^{n}x_1^{\alpha_1}x_2^{\alpha_2}\cdots x_{j-1}^{\alpha_{j-1}}x^{2+\alpha_j}_j x_{j+1}^{\alpha_{j+1}}\cdots x^{\alpha_n}_n\pa^{\beta}\varphi (x)\\
@@ -222,6 +240,9 @@ x^{\alpha}\pa^{\beta}\varphi (x) &amp;=\frac{1}{|x|^2}\sum_{j=1}^{n}x^2_jx^{\alp
 \end{cases}\]</div>
 <div class="math-display">\[W^{k,p}(\Omega)=\{u\in W^{k}(\Omega):\pa^{\alpha}u\in L^{p}(\Omega),|\alpha|\leqslant k\}\]</div>
 <div class="math-display">\[\|u\|_{W^{k,p}(\Omega)}=\sum_{|\alpha|\leqslant k}\|\pa ^{\alpha}u\|_{L^{p}(\Omega)}\]</div>
+<aside class="wiki-note">
+<strong>Sobolev空间的完备性</strong>
+</aside>
 <div class="math-display">\[\begin{aligned}
 \|u+v\|_{W^{k,p}(\Omega)} &amp;= \left(\sum_{|\alpha|\leqslant k}\|\paa u+\paa v\|_{L^{p}(\Omega)}^P\right)^{1/p}\\
 &amp;\leqslant \left(\sum_{|\alpha|\leqslant k}(\|\paa u\|_{L^{p}(\Omega)}+\|\paa v\|_{L^{p}(\Omega)})^p\right)^{1/p}\\
@@ -231,7 +252,10 @@ x^{\alpha}\pa^{\beta}\varphi (x) &amp;=\frac{1}{|x|^2}\sum_{j=1}^{n}x^2_jx^{\alp
 <div class="math-display">\[u\in\sbev,\paa u=u_{\alpha}\]</div>
 <div class="math-display">\[\int_{\Omega}u\paa \varphi\dd x=\lim_{m\to\infty}\int_{\Omega}u_m\paa \varphi\dd x=\lim_{m\to\infty}(-1)^{|\alpha|}\int_{\Omega}\paa u_m\varphi\dd x=(-1)^{|\alpha|}\int_{\Omega}\paa u_{\alpha}\varphi\dd x\]</div>
 <h4>逼近定理</h4>
+<aside class="wiki-note">
+<strong>光滑函数的局部逼近</strong>
 <div class="math-display">\[u_{\varepsilon}=\eta_{\varepsilon}\ast u,\text{在$\Omega_{\varepsilon}$中}\]</div>
+</aside>
 <div class="math-display">\[\paa u_{\varepsilon}=\eta_{\varepsilon}\ast \paa u\]</div>
 <div class="math-display">\[\begin{aligned}
 \paa u_{\varepsilon} &amp;= \paa_x\int_{\Omega}\eta_{\varepsilon}(x-y)u(y)\dd y=\int_{\Omega}u(y)\paa_x\eta_{\varepsilon}(x-y)\dd y\\
@@ -241,7 +265,10 @@ x^{\alpha}\pa^{\beta}\varphi (x) &amp;=\frac{1}{|x|^2}\sum_{j=1}^{n}x^2_jx^{\alp
 <div class="math-display">\[\paa u_{\varepsilon}=(-1)^{|\alpha|+|\alpha|}\int_{\Omega}\eta_{\varepsilon}(x-y)\paa u(y)\dd y=[\eta_{\varepsilon}\ast \paa u](x)\]</div>
 <div class="math-display">\[\|u_{\varepsilon}-u\|_{W^{k,p}(V)}=\sum_{|\alpha|\leqslant k}\|\paa u_{\varepsilon}- \paa u\|_{L^p(V)}\to 0\]</div>
 <div class="math-display">\[C^{\infty}(\Omega)\cap\sbev\text{在}\sbev\text{中稠密}\]</div>
+<aside class="wiki-note">
+<strong>光滑函数的全局逼近</strong>
 <div class="math-display">\[u_m\to u\]</div>
+</aside>
 <div class="math-display">\[\Omega_{i}=\left\{x\in \Omega:\operatorname{dist}(x,\pa \Omega)&gt;\frac{1}{i}\right\},  i\geqslant 1\]</div>
 <div class="math-display">\[\Omega_1\subset\subset \Omega_2\subset\subset\cdots\subset\subset \Omega_N\subset\subset\cdots\subset\subset\Omega\]</div>
 <div class="math-display">\[\begin{cases}
@@ -265,7 +292,10 @@ y_i=x_i,&amp;(i=1,\cdots,n-1)\\
 y_n=x_n-\gamma(x_1,\cdots,x_{n-1})
 \end{cases}\]</div>
 <div class="math-display">\[\mathbf{\varPhi}(x&#x27;,x_n)=(x&#x27;,x_n-\gamma(x&#x27;))=(y&#x27;,y_n)\]</div>
+<aside class="wiki-note">
+<strong>用光滑到边界的函数全局逼近</strong>
 <div class="math-display">\[u_m\to u\]</div>
+</aside>
 <div class="math-display">\[\Omega\cap B(x_0,r)=\{x\in B(x_0,r):x_n&gt;\gamma (x_1,\cdots,x_{n-1})\}\]</div>
 <div class="math-display">\[\supp (\eta_{\varepsilon}\ast u)\subset \supp u+\overline{B(0,\varepsilon)}\]</div>
 <div class="math-display">\[x_{\varepsilon}=x+\lambda\varepsilon e_n\]</div>
@@ -292,8 +322,11 @@ y_n=x_n-\gamma(x_1,\cdots,x_{n-1})
 <div class="math-display">\[\sum_{i=0}^{N}\|\paa (\varphi_iv_i)-\paa (\varphi_i u)\|_{L^{p}(V_i)}\leqslant C\sum_{i=0}^{N}\|v_i-u\|_{\Wkp[V_i]{k}{p}}\leqslant C(N+1)\delta\]</div>
 <h4>延拓与迹定理</h4>
 <div class="math-display">\[f(x)=1,x\in[-1,1]\]</div>
+<aside class="wiki-note">
+<strong>延拓定理</strong>
 <div class="math-display">\[\mathbf{E}:\Wkp[\Omega]{1}{p}\to \Wkp[\R ^n]{1}{p}\]</div>
 <div class="math-display">\[\|\mathbf{E}u\|_{\Wkp[\R ^n]{1}{p}}\leqslant C\|u\|_{\Wkp[\Omega]{1}{p}}\]</div>
+</aside>
 <div class="math-display">\[\begin{cases}
 B^+&amp;=B^0\cap \{x_n\geqslant 0\}\subset \overline{\Omega}\\
 B^-&amp;=B^0\cap \{x_n\leqslant 0\}\subset \R^n-\overline{\Omega}
@@ -376,8 +409,11 @@ u(x&#x27;,x_n),&amp;x\in B^+\\
 &amp;\lesssim \sum^N_{i=0}\|u\|^p_{W^{1,p}(\Omega)}\lesssim \|u\|^p_{W^{1,p}(\Omega)}
 \end{aligned}\]</div>
 <div class="math-display">\[\|\mathbf{E}u_m-\mathbf{E}u_n\|_{W^{1,p}(\R ^n)}\leqslant C\|u_m-u_n\|_{W^{1,p}(\Omega)}\]</div>
+<aside class="wiki-note">
+<strong>迹定理</strong>
 <div class="math-display">\[\mathbf{T}:W^{1,p}(\Omega)\to L^p(\pa\Omega)\]</div>
 <div class="math-display">\[\|\mathbf{T}u\|_{L^p(\pa\Omega)}\leqslant C\|u\|_{W^{1,p}(\Omega)}\]</div>
+</aside>
 <div class="math-display">\[\int_{\Gamma}|u|^p\mathrm{d}x&#x27;\lesssim \int_{B^+}(|u|^p+|\nabla u|^p)\mathrm{d}x\]</div>
 <div class="math-display">\[\int_{\Gamma}|u|^p\mathrm{d}x&#x27;\leqslant \int_{x_n=0}\zeta |u|^p\mathrm{d}x&#x27;\]</div>
 <div class="math-display">\[\begin{aligned}
@@ -397,6 +433,9 @@ p\left|\int_{B^+}\zeta |u|^{p-1}u_{x_n}\mathrm{d}x\right| &amp;\leqslant p\left(
 <div class="math-display">\[\|\mathbf{T}u_m-\mathbf{T}u_n\|_{L^p(\pa\Omega)}\leqslant C\|u_m-u_n\|_{W^{1,p}(\Omega)}\]</div>
 <div class="math-display">\[\mathbf{T}u_m=u_m|_{\pa\Omega}\]</div>
 <div class="math-display">\[\|u_m|_{\pa\Omega}-u|_{\pa\Omega}\|_{L^p(\pa\Omega)}\to 0\]</div>
+<aside class="wiki-note">
+<strong>$W^{1,p</strong>
+</aside>
 <h4>Sobolev不等式</h4>
 <div class="math-display">\[\|x\|_Y\leqslant C\|x\|_X,  \forall x\in X\]</div>
 <div class="math-display">\[\|u\|_Y\leqslant \eta\|u\|_{X}+C_{\eta}\|u\|_Z,  \forall u\in X\]</div>
@@ -421,7 +460,10 @@ p\left|\int_{B^+}\zeta |u|^{p-1}u_{x_n}\mathrm{d}x\right| &amp;\leqslant p\left(
 \end{aligned}\]</div>
 <div class="math-display">\[\gamma:=\frac{p(n-1)}{n-p}&gt;1\]</div>
 <div class="math-display">\[\left(\int_{\R^n}|u|^{p^*}\mathrm{d}x\right)^{\frac{1}{p^*}}\leqslant \gamma \left(\int_{\R^n}|\nabla u|^p\mathrm{d}x\right)^{\frac{1}{p}}\]</div>
+<aside class="wiki-note">
+<strong>Morrey不等式</strong>
 <div class="math-display">\[\|u\|_{C^{0,\gamma}(\mathbb{R}^n)}\leqslant C\|u\|_{W^{1,p}(\mathbb{R}^n)}\]</div>
+</aside>
 <div class="math-display">\[\sup_{x\in\mathbb{R}^n}|u(x)|+\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}\leqslant C\left(\|u\|^p_{L^p(\mathbb{R}^n)}+\|Du\|^p_{L^p(\mathbb{R}^n)}\right)^{1/p}\]</div>
 <div class="math-display">\[\sup_{x\in\mathbb{R}^n}|u(x)|+\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}\leqslant C\left(\|u\|_{L^p(\mathbb{R}^n)}+\|Du\|_{L^p(\mathbb{R}^n)}\right)\]</div>
 <div class="math-display">\[\|u\|_{W^{k,p}(\Omega)}=\sum_{|\alpha|\leqslant k}\|\pa ^{\alpha}u\|_{L^{p}(\Omega)}\]</div>
@@ -432,14 +474,21 @@ p\left|\int_{B^+}\zeta |u|^{p-1}u_{x_n}\mathrm{d}x\right| &amp;\leqslant p\left(
 &amp;=\left|\int_0^s Du(x+tw)\cdot w\mathrm{d}t\right|\\
 &amp;\leqslant \int_0^s|Du(x+tw)|\mathrm{d}t
 \end{aligned}\]</div>
-<div class="math-display">\[\int_{\partial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w\leqslant \int_0^s\int_{\partial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t\]</div>
+<div class="math-display">\[\int_{
+tial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w\leqslant \int_0^s\int_{
+tial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t\]</div>
 <div class="math-display">\[\begin{aligned}
-\int_0^s\int_{\partial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t &amp;= \int_0^s\int_{\partial B(x,t)}\frac{Du(y)}{t^{n-1}}\mathrm{d}S_y\mathrm{d}t \\
+\int_0^s\int_{
+tial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t &amp;= \int_0^s\int_{
+tial B(x,t)}\frac{Du(y)}{t^{n-1}}\mathrm{d}S_y\mathrm{d}t \\
 &amp;= \int_{B(x,s)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y \\
 &amp;\leqslant \int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y
 \end{aligned}\]</div>
-<div class="math-display">\[\int_{\partial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w=\frac{1}{s^{n-1}}\int_{\partial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\]</div>
-<div class="math-display">\[\int_{\partial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\leqslant s^{n-1}\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y\]</div>
+<div class="math-display">\[\int_{
+tial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w=\frac{1}{s^{n-1}}\int_{
+tial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\]</div>
+<div class="math-display">\[\int_{
+tial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\leqslant s^{n-1}\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y\]</div>
 <div class="math-display">\[\fint_{B(x,r)}|u(y)-u(x)|\mathrm{d}y\leqslant \frac{1}{n\alpha(n)}\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y\]</div>
 <div class="math-display">\[\begin{aligned}
 |u(x)| &amp;\leqslant \fint_{B(x,1)}|u(y)-u(x)|\mathrm{d}y+\fint_{B(x,1)}|u(y)|\mathrm{d}y\\
@@ -462,7 +511,10 @@ p\left|\int_{B^+}\zeta |u|^{p-1}u_{x_n}\mathrm{d}x\right| &amp;\leqslant p\left(
 &amp;\lesssim \|Du\|_{L^p(\mathbb{R}^n)}+\|u\|_{L^p(\mathbb{R}^n)}=\|u\|_{W^{1,p}(\mathbb{R}^n)}
 \end{aligned}\]</div>
 <h4>$H^1_0(\Omega)$的对偶空间$H^{-1}(\Omega)$</h4>
+<aside class="wiki-note">
+<strong>$H^{-1</strong>
 <div class="math-display">\[\langle f,v\rangle=(f,v)_{L^2(\Omega)}=\int_\Omega fv\mathrm{d}x,  v\in H^1_0(\Omega)\]</div>
+</aside>
 <div class="math-display">\[\langle f,v\rangle=\int_\Omega\left(f_0v+\sum^{n}_{i=1}f_iv_{x_i}\right)\mathrm{d}x,  \forall v\in H^1_0(\Omega)\]</div>
 <div class="math-display">\[\|f\|_{H^{-1}(\Omega)}=\inf\left\{\left(\int_\Omega \sum^{n}_{i=1}|f_i|^2\mathrm{d}x\right)^{1/2}\right\}\]</div>
 <div class="math-display">\[\langle f,v\rangle=(f,v)_{L^2(\Omega)}=\int_\Omega fv\mathrm{d}x,  v\in H^1_0(\Omega)\]</div>
@@ -488,7 +540,7 @@ p\left|\int_{B^+}\zeta |u|^{p-1}u_{x_n}\mathrm{d}x\right| &amp;\leqslant p\left(
 &amp;\leqslant \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\|f\|_{L^2(\Omega)}\|v\|_{L^2(\Omega)}}{\|v\|_{H^1_0(\Omega)}}\\
 &amp;\leqslant \|f\|_{L^2(\Omega)}
 \end{aligned}\]</div>
-<h3>二阶椭圆方程</h3></section><nav class="prev-next"><a href="finite-element.html">上一页：有限元方法初步</a><a href="functional-analysis.html">下一页：泛函分析</a></nav></article></main>
+<h3>二阶椭圆方程</h3><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Foutier_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：81.3 KB</span><span>位置：数学基础/Section/Foutier_Analysis.tex</span></div></details></section><nav class="prev-next"><a href="finite-element.html">上一页：有限元方法初步</a><a href="functional-analysis.html">下一页：泛函分析</a></nav></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>
