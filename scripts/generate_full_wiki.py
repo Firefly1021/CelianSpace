@@ -9,6 +9,7 @@ SITE = Path(__file__).resolve().parents[1]
 MATERIALS = SITE / "materials"
 WIKI = SITE / "wiki"
 ASSETS = WIKI / "assets"
+ASSET_VERSION = "20260624-cn-fix"
 
 TEXT_EXTS = {".tex", ".sty", ".bib", ".md", ".cpp", ".c", ".h", ".hpp", ".py", ".txt", ".cmake"}
 CODE_EXTS = {".cpp", ".c", ".h", ".hpp", ".py", ".cmake"}
@@ -455,11 +456,14 @@ def page(title: str, body: str, current: str, depth: int, math_pages, descriptio
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <meta name="description" content="{html.escape(description or title)}" />
   <title>{html.escape(title)} | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="{pre}assets/wiki.css" />
-  <script defer src="{pre}assets/search-index.js"></script>
-  <script defer src="{pre}assets/wiki.js"></script>
+  <link rel="stylesheet" href="{pre}assets/wiki.css?v={ASSET_VERSION}" />
+  <script defer src="{pre}assets/search-index.js?v={ASSET_VERSION}"></script>
+  <script defer src="{pre}assets/wiki.js?v={ASSET_VERSION}"></script>
   {MATHJAX}
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
