@@ -9,7 +9,7 @@ SITE = Path(__file__).resolve().parents[1]
 MATERIALS = SITE / "materials"
 WIKI = SITE / "wiki"
 ASSETS = WIKI / "assets"
-ASSET_VERSION = "20260624-cn-fix"
+ASSET_VERSION = "20260624-latex-env-fix"
 
 TEXT_EXTS = {".tex", ".sty", ".bib", ".md", ".cpp", ".c", ".h", ".hpp", ".py", ".txt", ".cmake"}
 CODE_EXTS = {".cpp", ".c", ".h", ".hpp", ".py", ".cmake"}
@@ -226,6 +226,16 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
             in_code = True
             code_lines = []
             continue
+        if env:
+            if re.match(r"\\end\{" + re.escape(env) + r"\}", line):
+                if env in note_envs:
+                    out.append(f'<aside class="wiki-note">{inline_html(" ".join(env_lines))}</aside>')
+                else:
+                    push_math(env_lines, env)
+                env, env_lines = None, []
+            else:
+                env_lines.append(line)
+            continue
         if line.startswith("$$") or line.startswith("\\["):
             flush_para()
             rest = line[2:].strip()
@@ -285,16 +295,6 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
         if line.startswith("\\end{"):
             flush_para()
             continue
-        if env:
-            if re.match(r"\\end\{" + re.escape(env) + r"\}", line):
-                if env in note_envs:
-                    out.append(f'<aside class="wiki-note">{inline_html(" ".join(env_lines))}</aside>')
-                else:
-                    push_math(env_lines, env)
-                env, env_lines = None, []
-            else:
-                env_lines.append(line)
-            continue
         if line.startswith(("\\documentclass", "\\usepackage", "\\newcommand", "\\renewcommand", "\\set", "\\bibliography", "\\bibliographystyle")):
             continue
         if line in {"\\begin{document}", "\\end{document}", "\\maketitle", "\\cover", "\\reference"}:
@@ -306,6 +306,11 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
     flush_para()
     if in_code and code_lines:
         out.append(code_panel(chr(10).join(code_lines), "LaTeX 代码", "tex"))
+    if env and env_lines:
+        if env in note_envs:
+            out.append(f'<aside class="wiki-note">{inline_html(" ".join(env_lines))}</aside>')
+        else:
+            push_math(env_lines, env)
     return "\n".join(out) or "<p>该文件主要包含样式、宏定义或参考条目，请使用原始文件查看。</p>"
 
 

@@ -8,9 +8,9 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="数学基础/Section/Numerical_Analysis.tex" />
   <title>Numerical_Analysis.tex | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-cn-fix" />
-  <script defer src="../assets/search-index.js?v=20260624-cn-fix"></script>
-  <script defer src="../assets/wiki.js?v=20260624-cn-fix"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-env-fix" />
+  <script defer src="../assets/search-index.js?v=20260624-latex-env-fix"></script>
+  <script defer src="../assets/wiki.js?v=20260624-latex-env-fix"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
@@ -54,74 +54,171 @@
 <h3>守恒律方程</h3>
 <h4>特征线理论</h4>
 <p>我们现在考虑非线性一阶PDE</p>
+<div class="math-display">\[F(\vecb{D}u,u,\vecb{x})=0,  \vecb{x}\in \Omega\]</div>
+<p>以及相应的边界条件</p>
+<div class="math-display">\[u(\vecb{x})=g(\vecb{x}),  \vecb{x}\in \Gamma\]</div>
+<p>其中$\Gamma\subset</p>
+<p>tial\Omega,g:\Gamma\to \mathbb{R}$是给定的.</p>
+<p>设$u$是上述边值问题的解,固定任意点$\vecb{x}\in\Omega$,求一条位于$\Omega$中连接$\vecb{x}$和边界$\Gamma$上某点$\vecb{x}_0$的曲线.根据边界条件可知在$\Gamma$上$u=g$,我们知道$u$在一个端点$\vecb{x}_0$上的值,我们希望可以求出$u$在这条曲线上的值,那么$u(\vecb{x})$就求出来了.</p>
+<p>设这条曲线为$\vecb{x}(s)=(x_1(s),x_2(s),\cdots,x_n(s)),s\in I\subset\mathbb{R}$.假设$u$是相关方程的$C^2$解,再定义$z(s)=u(\vecb{x}(s))$,另外再设</p>
 <div class="math-display">\[\vecb{p}(s)=\vecb{D}_{\vecb{x}}u(\vecb{x}(s))=(p_1(s),p_2(s),\cdots,p_n(s))\]</div>
+<p>其中$p_i(s)=\frac{</p>
+<p>tial u}{</p>
+<p>tial x_i}(\vecb{x}(s))$.根据一系列不怎么复杂的计算,我们得到下面的ODE方程组</p>
+<div class="math-display">\[\begin{cases}
+\dot{\vecb{p}}(s) &amp;= -\vecb{D}_{\vecb{x}}F(\vecb{p}(s),z(s),\vecb{x}(s))-F_{z}(\vecb{p}(s),z(s),\vecb{x}(s))\vecb{p}(s)\\
+\dot{z}(s) &amp;= \vecb{D}_{\vecb{p}}F(\vecb{p}(s),z(s),\vecb{x}(s))\cdot\vecb{p}(s)\\
+\dot{\vecb{x}}(s) &amp;= \vecb{D}_{\vecb{p}}F(\vecb{p}(s),z(s),\vecb{x}(s))
+\end{cases}\]</div>
 <div class="math-display">\[F(\vecb{p}(s),z(s),\vecb{x}(s))\equiv 0\]</div>
+<p>我们将相关方程这$2n+1$个一阶常微分方程构成的方程组叫做非线性一阶PDE相关方程的特征线方程组,曲线$\vecb{x}(s)$叫做投影特征.</p>
+<p>如果我们给定下面的线性齐次方程</p>
 <div class="math-display">\[F(\vecb{D}u,u,\vecb{x})=\vecb{b}(\vecb{x})\cdot\vecb{D}u+c(\vecb{x})u=0\]</div>
+<p>那么$F(\vecb{p},z,\vecb{x})=\vecb{b}(\vecb{x})\cdot\vecb{p}+c(\vecb{x})z$.因此特征线方程组相关方程可以写成</p>
 <div class="math-display">\[\begin{cases}
 \dot{\vecb{x}}(s)&amp;=\vecb{b}(\vecb{x}(s))\\
 \dot{z}(s)&amp;=-c(\vecb{x}(s))z(s)
 \end{cases}\]</div>
+<p>下面考虑拟线性方程</p>
 <div class="math-display">\[F(\vecb{D}u,u,\vecb{x})=\vecb{b}(u(\vecb{x}),\vecb{x})\cdot\vecb{D}u(\vecb{x})+c(u(\vecb{x}),\vecb{x})u=0\]</div>
+<p>此时$F(\vecb{p},z,\vecb{x})=\vecb{b}(z,\vecb{x})\cdot\vecb{p}+c(z,\vecb{x})z$.因此特征线方程组相关方程可以写成</p>
 <div class="math-display">\[\begin{cases}
 \dot{\vecb{x}}(s)&amp;=\vecb{b}(z(s),\vecb{x}(s))\\
 \dot{z}(s)&amp;=-c(z(s),\vecb{x}(s))z(s)
 \end{cases}\]</div>
+<p>考虑标量守恒律:在$\Omega=\mathbb{R}^n\times (0,\infty)$上</p>
 <div class="math-display">\[G(\vecb{D}u,u_t,u,\vecb{x},t)=u_t+\operatorname{div}\vecb{F}(u)=u_t+\vecb{F}&#x27;(u)\cdot\vecb{D}u=0\]</div>
+<p>初始条件为</p>
 <div class="math-display">\[u(\vecb{x},0)=g(\vecb{x}),  \vecb{x}\in\mathbb{R}^n\]</div>
+<p>我们记$t=x_{n+1},\vecb{q}=(\vecb{p},p_{n+1}),\vecb{y}=(\vecb{x},t)$.其中$p_{n+1}=u_t$.因此方程转化为</p>
 <div class="math-display">\[G(\vecb{q},z,\vecb{y})=p_{n+1}+\vecb{F}&#x27;(z)\cdot\vecb{p}=(\vecb{F}&#x27;(z),1)\cdot\vecb{q}=0\]</div>
+<p>经过简单的计算可以得出</p>
 <div class="math-display">\[\vecb{D}_{\vecb{q}}G=(\vecb{F}&#x27;(z),1),  \vecb{D}_{\vecb{y}}G=0,  \vecb{D}_{z}G=\vecb{F}&#x27;&#x27;(z)\cdot\vecb{p}\]</div>
+<p>所以特征方程组为</p>
 <div class="math-display">\[\begin{cases}
 \dot{\vecb{q}}(s)&amp;=-(\vecb{F}&#x27;&#x27;(z(s))\cdot\vecb{p}(s))\vecb{q}(s)\\
 \dot{z}(s)&amp;=0\\
 \dot{\vecb{y}}(s)&amp;=(\vecb{F}&#x27;(z(s)),1)
 \end{cases}\]</div>
+<p>关于最后一个等式我们可以看到</p>
 <div class="math-display">\[\frac{\mathrm{d}x}{\mathrm{d}s}=\vecb{F}&#x27;(z(s)),  \frac{\mathrm{d}t}{\mathrm{d}s}=1\]</div>
+<p>因此我们不妨直接设参数$s=t$.由此得到第二个等式的意义:解$u$在特征线上是常数.并且由$\frac{\mathrm{d}x}{\mathrm{d}t}=\vecb{F}&#x27;(z(t))$知道投影特征线在空间中的演化速度为$\vecb{F}&#x27;(z(t))$.</p>
+<p>由于$\frac{\mathrm{d}z}{\mathrm{d}t}=0$,所以</p>
 <div class="math-display">\[z(t)=z(0)=u(\vecb{x}(0),0)=g(\vecb{x})\]</div>
+<p>带入到轨迹方程中得到$\frac{\mathrm{d}x}{\mathrm{d}t}=\vecb{F}&#x27;(g(\vecb{x}))$,这就说明我们固定一点$\vecb{x}_0\in\mathbb{R}^n$,特征线的斜率恒定为$\vecb{F}&#x27;(g(\vecb{x}_0))$.因此特征线是时空平面中的直线.由此对从$\vecb{x}_0$出发的轨迹方程积分可以得到特征方程</p>
 <div class="math-display">\[\vecb{x}(t)=\vecb{x}_0+\vecb{F}&#x27;(g(\vecb{x}_0))t\]</div>
+<p>从上面的形式我们也可以观察到,初值是可以影响到特征线的斜率的.</p>
 <h4>一维标量守恒律</h4>
+<p>我们看一个例子:Burgers方程的初值问题</p>
 <div class="math-display">\[\begin{cases}
 \begin{alignedat}{2}
 u_t + \left( \frac{u^2}{2} \right)_x &amp;= 0,     &amp;&amp; (x, t) \in \mathbb{R} \times (0, \infty) \\
 u(x, 0)                             &amp;= g(x),   &amp;&amp; x \in \mathbb{R}
 \end{alignedat}
 \end{cases}\]</div>
+<p>我们取初值数据为</p>
 <div class="math-display">\[g(x)=
 \begin{cases}
 1,&amp; \text{若}x\leqslant 0\\
 1-x,&amp; \text{若}x\in [0,1]\\
 0,&amp; \text{若}x\geqslant 1
 \end{cases}\]</div>
+<p>按照特征线方程的样子,我们很容易求出特征线的方程为</p>
 <div class="math-display">\[x(t)=
 \begin{cases}
 x_0+t,&amp; \text{若}x_0\leqslant 0\\
 x_0+(1-x_0)t,&amp; \text{若}x_0\in [0,1]\\
 x_0,&amp; \text{若}x_0\geqslant 1
 \end{cases}\]</div>
+<p>我们很容易就可以将图像画出来,不过需要注意的是,我们将$x$作为横轴.$x_0$就是从$x$轴上出发的点.</p>
+<p>\draw[-&gt;] (-1.5,0) -- (4,0) node[right] {$x$}; \draw[-&gt;] (0,0) -- (0,3) node[above] {$t$};</p>
+<p>\node[below] at (0,0) {$0$}; \node[below] at (1,0) {$1$};</p>
+<p>\foreach \xzero in {-1, -0.8, ..., 0} { \draw[blue, opacity=0.3] (\xzero, 0) -- (\xzero + 2.5, 2.5); }</p>
+<p>\foreach \xzero in {0.05, 0.1, ..., 0.95} {</p>
+<p>\draw[red, opacity=0.5] (\xzero, 0) -- (1, 1); }</p>
+<p>\foreach \xzero in {1.2, 1.4, ..., 3.5} { \draw[green!60!black, opacity=0.3] (\xzero, 0) -- (\xzero, 2.5); }</p>
+<p>\draw[black, ultra thick, dashed] (1,1) -- (1.75, 2.5) node[right, font=\small] {Shock Path};</p>
+<p>\filldraw[red] (1,1) circle (1.5pt) node[left, black, xshift=-2pt] {$t_b=1$};</p>
+<p>从图上我们看到了特征线相交.</p>
+<p>如果我们考虑下面的初值问题</p>
 <div class="math-display">\[\left\{  \begin{array}{ll} {
 tial }_{t}u + {
 tial }_{x}\left( \frac{{u}^{2}}{2}\right)  = 0 &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  ,t &gt; 0, \\  u\left( {x,0}\right)  = \sin x &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  . \end{array}\right.\]</div>
+<p>容易求出特征线为</p>
 <div class="math-display">\[x(t)=x(0)+\sin(x(0))t\]</div>
+<p>并且$u$沿此特征线为常数$g(x(0))=\sin(x(0))$.对于固定的$(x,t)$,因为$x(0)=x-t\sin(x(0))$,于是$u$满足下面的方程</p>
 <div class="math-display">\[u-\sin(x-tu)=0\]</div>
+<p>这是一个关于$u$的非线性方程.在此之前我们先关注$u-\sin(x-tu)=0$,由隐函数定理可知</p>
 <div class="math-display">\[\frac{
 tial u}{
 tial x} = \frac{\cos(x-tu)}{1+t\cos(x-tu)},  \frac{
 tial u}{
 tial t} = -\frac{u\cos(x-tu)}{1+t\cos(x-tu)}\]</div>
+<p>当分母$1+t\cos(x-tu)=0$时,导数$\frac{</p>
+<p>tial u}{</p>
+<p>tial x}$无界,此时$u$产生间断,我们现在寻找第一次发生间断的时间$t_b$,显然</p>
 <div class="math-display">\[t_b=\min\left(-\frac{1}{\cos(x-tu)}\right)=1\]</div>
+<p>当$t=1$时,$\cos(x-tu)=-1$,解得$x-u=(2k+1)\pi$,根据方程$u-\sin(x-u)=0$以及$x\in [0,2\pi]$得到$x=\pi$,这说明$t=1$时在$x=\pi$处产生间断,激波形成.</p>
+<p>事实上,通过特征线的表达式我们可以看出,当$x\in [0,\pi)$时,特征线的斜率$\sin(x(0))$为正,因此特征线向右传播;当$x\in (\pi,2\pi]$时,特征线的斜率$\sin(x(0))$为负,因此特征线向左传播;当$x=\pi$时,特征线的斜率$\sin(x(0))$为零,因此特征线垂直于时间轴.并且根据$\sin x$关于$x=\pi$中心对称,那么在$x-t$平面上特征线关于$x=\pi$对称地相交于射线$x=\pi$上.</p>
+<p>axis lines = middle, xmin = 0, xmax = 6.8, ymin = 0, ymax = 3.5, xlabel = {$x$}, ylabel = {$t$}, ylabel style={ at={(axis description cs:0,0.9)},</p>
+<p>\def\xpi{3.14159265} \def\tshock{1.0}</p>
+<p>\foreach \delta in {0.2, 0.4, 0.7, 1.0, 1.4, 1.8, 2.2, 2.6, 3.1} {</p>
+<p>\foreach \direction in {-1, 1} { \pgfmathsetmacro{\xzero}{\xpi + \direction * \delta} \pgfmathsetmacro{\u}{sin(\xzero r)}</p>
+<p>\ifdim \delta pt &lt; 0.01pt \def\tend{3.5} \else \pgfmathsetmacro{\tcalc}{(\xpi - \xzero) / \u} \ifdim \tcalc pt &gt; 1.0pt \pgfmathsetmacro{\tend}{min(3.5, \tcalc)} \else \def\tend{3.5} \fi \fi</p>
+<p>\addplot[domain=0:\tend, samples=2, thin] ({\xzero + x*sin(\xzero r)}, {x}); } }</p>
+<p>\draw[thick, red, dashed] (axis cs: \xpi, 0) -- (axis cs: \xpi, 1);</p>
+<p>\draw[thin, red] (axis cs: \xpi, 1) -- (axis cs: \xpi, 3.5) node[right, pos=0.8] {$x=\pi$};</p>
+<p>\draw[fill=white, draw=red, thick] (axis cs: \xpi, 1) circle (1.5pt);</p>
+<p>记$f(u)=u-\sin(x-tu)$.给定$(x,t)$求$u$的值,此时就等价于求解$f(u)=0$.因此我们可以在$t\in [0,1)$的时间区间内求解上述非线性方程.</p>
+<p>利用Newton迭代法,首先我们需要求出$f&#x27;(u)$,有$f&#x27;(u)=1+t\cos(x-tu)$,于是现在得到迭代公式</p>
 <div class="math-display">\[u_{n+1}=u_n-\frac{f(u_n)}{f&#x27;(u_n)}=u_n-\frac{u_n-\sin(x-tu_n)}{1+t\cos(x-tu_n)}\]</div>
+<p>值得注意的是,因为我们要求$t\in[0,1)$,那么$f&#x27;(u)$不会为零,这保证了迭代是合理的.</p>
+<p>利用下面的算法</p>
 <p class="caption">牛顿法求解隐式解 $u = \sin(x - tu)$</p>
+<p>\State <strong>Input:</strong> 空间位置 $x$,时间 $t$,初始猜测值 $u^{(0)}$,容差 $\varepsilon$,最大迭代次数 $M$ \State <strong>Initialization:</strong> $k = 0$,误差 err $= \infty$ \While {err $&gt; \varepsilon$ <strong>and</strong> $k &lt; M$} \State $f(u^{(k)}) = u^{(k)} - \sin(x - t \cdot u^{(k)})$ \State $f&#x27;(u^{(k)}) = 1 + t \cdot \cos(x - t \cdot u^{(k)})$ \State 更新解:</p>
 <div class="math-display">\[u^{(k+1)} = u^{(k)} - \frac{f(u^{(k)})}{f&#x27;(u^{(k)})}\]</div>
+<p>\State err $= |u^{(k+1)} - u^{(k)}|$ \State $k = k + 1$ \EndWhile \State <strong>Output:</strong> $u^{(k)}$</p>
+<p>下面我们将$[0,2\pi]$等分为500份,并按步长50取值作为空间位置$x$.下面左侧的表格给出了$t=0,0.5,0.9$时刻$u$在不同位置的数值解,右侧的表格给出了对应时间的函数图像.</p>
+<p>\vspace{0pt} \centering</p>
+<p>\centering \captionof{table}{各空间点 $x$ 在不同时刻 $t$ 的数值解}  \small</p>
+<p>\hline <strong>$x$</strong> &amp; <strong>$u(x, 0.0)$</strong> &amp; <strong>$u(x, 0.5)$</strong> &amp; <strong>$u(x, 0.9)$</strong> <br> \hline 0.0000 &amp; 0.0000 &amp; 0.0000 &amp; 0.0000 <br> \hline 0.6283 &amp; 0.5878 &amp; 0.4105 &amp; 0.3275 <br> \hline 1.2566 &amp; 0.9511 &amp; 0.7665 &amp; 0.6337 <br> \hline 1.8850 &amp; 0.9511 &amp; 0.9842 &amp; 0.8856 <br> \hline 2.5133 &amp; 0.5878 &amp; 0.8752 &amp; 0.9991 <br> \hline 3.1416 &amp; 0.0000 &amp; 0.0000 &amp; 0.0000 <br> \hline 3.7699 &amp; -0.5878 &amp; -0.8752 &amp; -0.9991 <br> \hline 4.3982 &amp; -0.9511 &amp; -0.9842 &amp; -0.8856 <br> \hline 5.0265 &amp; -0.9511 &amp; -0.7665 &amp; -0.6337 <br> \hline 5.6549 &amp; -0.5878 &amp; -0.4105 &amp; -0.3275 <br> \hline 6.2832 &amp; 0.0000 &amp; -0.0000 &amp; -0.0000 <br> \hline</p>
+<p>\hfill</p>
+<p>\vspace{0pt} \centering</p>
 <p class="caption">对应时刻的数值解曲线演化图</p>
 <figure class="asset-figure"><img src="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Figure/t0.png" alt="t0.png" loading="lazy" /><figcaption>数学基础/Figure/t0.png</figcaption></figure>
+<p><br>[0.1cm]</p>
 <figure class="asset-figure"><img src="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Figure/t1.png" alt="t1.png" loading="lazy" /><figcaption>数学基础/Figure/t1.png</figcaption></figure>
+<p><br>[0.1cm]</p>
 <figure class="asset-figure"><img src="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Figure/t2.png" alt="t2.png" loading="lazy" /><figcaption>数学基础/Figure/t2.png</figcaption></figure>
+<p></p>
+<p>图像中两条虚线是函数最高点与最低点对应到$x$轴的坐标,从上面的表格与图可以看出,随着时间$t$的增加,$x=\pi$左侧的函数图像如同波浪一样往右传播,$x=\pi$右侧的函数往左传播,最终形成间断.从我们的直觉来看,随着时间的演化,函数图像会变成Z字型,然而这不符合数学事实.其实到后面我们将看到,函数图像只会在$x=\pi$垂直坠落.</p>
 <h4>Rankine-Hugoniot条件</h4>
+<p>现在我们考虑一维标量守恒律的初值问题</p>
+<div class="math-display">\[\begin{cases}
+\begin{alignedat}{2}
+u_t + F(u)_x &amp;= 0, &amp;&amp; (x,t)\in\mathbb{R}\times (0,\infty)\\
+u(x, 0) &amp;= g(x),   &amp;&amp; x \in \mathbb{R}
+\end{alignedat}
+
+\end{cases}\]</div>
+<p>其中$F:\mathbb{R}\to\mathbb{R}, g:\mathbb{R}\to\mathbb{R}$是给定的函数.</p>
+<p>从上面的分析中我们可以看出,相关方程一般没有在$t&gt;0$上的连续解.因此我们现在寻找一种弱解.</p>
+<p>设$v:\mathbb{R}\times [0,\infty)\to\mathbb{R}$是光滑且具有紧支集的函数.那么</p>
 <div class="math-display">\[\begin{aligned}
 0 &amp;= \int_0^\infty\int_{-\infty}^\infty (u_t+F(u)_x)v\mathrm{d}x\mathrm{d}t\\
 &amp;= \int_0^\infty\int_{-\infty}^\infty u v_t\mathrm{d}x\mathrm{d}t -\int_{-\infty}^\infty uv\mathrm{d}x|_{t=0}-\int_0^\infty\int_{-\infty}^\infty F(u)v_x\mathrm{d}x\mathrm{d}t\\
 \end{aligned}\]</div>
+<p>再根据边界条件$u(x,0)=g(x)$得到下面的恒等式</p>
 <div class="math-display">\[\int_0^\infty\int_{-\infty}^\infty (u v_t+F(u)v_x)\mathrm{d}x\mathrm{d}t + \int_{-\infty}^\infty g(x)v(x,0)\mathrm{d}x = 0\]</div>
+<p>如果上式对每一个检验函数$v$都成立,则称$u\in L^{\infty}(\mathbb{R}\times (0,\infty))$是相关方程的弱解.</p>
+<p>\tikzset{every picture/.style={line width=0.5pt}}</p>
+<p>\draw [fill={rgb, 255:red, 220; green, 220; blue, 220}, fill opacity=0.5] (239,93) .. controls (257,71) and (389,47) .. (399,81) .. controls (409,115) and (445,135) .. (409,164) .. controls (373,193) and (300,180) .. (280,150) .. controls (260,120) and (221,115) .. (239,93) -- cycle;</p>
+<p>\draw [thick] (265,252) .. controls (341,221) and (275,82) .. (421,29) node [anchor=south west, xshift=-2pt, yshift=-2pt] {$C$};</p>
+<p>\draw (285,115) node [font=\normalsize] {$V_l$}; \draw (365,125) node [font=\normalsize] {$V_r$};</p>
+<p>我们知道,特征线的交叉形成了间断点.下面我们获得间断点的传播速率.假设在某一开区域$V\subset \mathbb{R}\times (0,\infty)$内,$u$在光滑曲线$C$的每一侧是光滑的.现在假设$u$是相关方程的弱解,且$u$及其一阶导数在$V_l,V_r$内是一致连续的.选择一个紧支集包含在$V_l$内的检验函数$v$,那么</p>
 <div class="math-display">\[0=\int_0^\infty\int_{-\infty}^\infty (u v_t+F(u)v_x)\mathrm{d}x\mathrm{d}t=-\int_0^\infty\int_{-\infty}^\infty (u_t+F(u)_x)v\mathrm{d}x\mathrm{d}t\]</div>
+<p>上式对所有紧支集包含在$V_l$内的检验函数$v$都成立.因此$u_t+F(u)_x=0,(x,t)\in V_l$.同理,$u_t+F(u)_x=0,(x,t)\in V_r$.</p>
+<p>现在再选择一个检验函数$v$,使得$v$的支集包含在$V$内,并且$v$在$C$上不必为零.因此</p>
 <div class="math-display">\[\begin{aligned}
 0 &amp;=\int_0^\infty\int_{-\infty}^\infty (u v_t+F(u)v_x)\mathrm{d}x\mathrm{d}t\\
 &amp;=\iint_{V_l} (u v_t+F(u)v_x)\mathrm{d}x\mathrm{d}t+\iint_{V_r} (u v_t+F(u)v_x)\mathrm{d}x\mathrm{d}t\\
@@ -129,51 +226,117 @@ tial t} = -\frac{u\cos(x-tu)}{1+t\cos(x-tu)}\]</div>
 &amp;+\left\{\int_{C}[u_l\nu_2+F(u_l)\nu_1]v\mathrm{d}l-\int_{C}[u_r\nu_2+F(u_r)\nu_1]v\mathrm{d}l\right\}\\
 &amp;= \int_{C} \left[(u_l-u_r)\nu_2+(F(u_l)-F(u_r))\nu_1\right]v\mathrm{d}l
 \end{aligned}\]</div>
+<p>其中$(\nu_1,\nu_2)$是曲线$C$的单位法向量,从$V_l$指向$V_r$.$u_l,u_r$分别表示在曲线$C$左侧和右侧的极限值.因为上式对每一个检验函数$v$都成立,所以沿着曲线$C$有</p>
 <div class="math-display">\[(u_l-u_r)\nu_2+(F(u_l)-F(u_r))\nu_1=0\]</div>
+<p>假设曲线$C=\{(x,t):x=s(t),s:[0,\infty)\to\mathbb{R}\text{是一个光滑函数}\}$,则我们现在取$(\nu_1,\nu_2)=(\frac{-\dot{s}}{\sqrt{1+(\dot{s})^2}}, \frac{1}{\sqrt{1+(\dot{s})^2}})$,那么在$V$中沿着$u$的间断曲线$C$有</p>
 <div class="math-display">\[F(u_l)-F(u_r)=\dot{s}(u_l-u_r)\]</div>
+<p>如果我们记$[u]=u_l-u_r$和$[F(u)]=F(u_l)-F(u_r)$,那么上式可以写成</p>
 <div class="math-display">\[[F(u)]=\dot{s}[u]\]</div>
+<p>因此间断点的传播速率$\dot{s}$满足上式.我们称上式为<strong>Rankine-Hugoniot条件</strong>.</p>
+<p>回顾初值问题</p>
 <div class="math-display">\[\left\{  \begin{array}{ll} {
 tial }_{t}u + {
 tial }_{x}\left( \frac{{u}^{2}}{2}\right)  = 0 &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  ,t &gt; 0, \\  u\left( {x,0}\right)  = \sin x &amp; \text{ for }x \in  \left\lbrack  {0,{2\pi }}\right\rbrack  . \end{array}\right.\]</div>
+<p>那么根据Rankine-Hugoniot条件,激波的传播速率为</p>
 <div class="math-display">\[\dot{s}=\frac{F(u_l)-F(u_r)}{u_l-u_r}=\frac{\frac{u_l^2}{2}-\frac{u_r^2}{2}}{u_l-u_r}=\frac{u_l+u_r}{2}\]</div>
+<p>因为$\sin x$关于$x=\pi$中心对称,所以$u_l=-u_r$,因此$\dot{s}=0$.这说明激波在$x=\pi$处形成后,一直停留在$x=\pi$处不动.</p>
 <h4>熵条件</h4>
+<p>如果我们给定初始条件</p>
 <div class="math-display">\[g(x)=
 \begin{cases}
 0,&amp; \text{if}\; x&lt;0\\
 1,&amp; \text{if}\; x&gt;0
 \end{cases}\]</div>
+<p>那么很容易求出特征线方程为</p>
 <div class="math-display">\[x(t)=
 \begin{cases}
 x(0),&amp; \text{if}\; x&lt;0\\
 x(0)+t,&amp; \text{if}\; x&gt;0
 \end{cases}\]</div>
+<p>根据Rankine-Hugoniot条件,激波传播速率为$\dot{s}=\frac{1}{2}$,因此激波线为$x=\frac{1}{2}t$.</p>
+<p>为了直观,我们画出特征线示意图如下</p>
+<p>\draw[-&gt;] (-2.5,0) -- (4,0) node[right] {$x$}; \draw[-&gt;] (0,0) -- (0,3) node[above] {$t$}; \node at (0,0) [below left] {$O$};</p>
+<p>\foreach \x in {-2.0, -1.5, -1.0, -0.5} { \draw[-&gt;,blue, thick] (\x, 0) -- (\x, 2.5); } \node[blue] at (-1.25, 2.7) {\small $x(t) = x(0)$};</p>
+<p>\foreach \x in {0.5, 1.0, 1.5, 2.0} { \draw[-&gt;,red, thick] (\x, 0) -- (\x+2.5, 2.5); } \node[red] at (3, 2.7) {\small $x(t) = x(0) + t$};</p>
+<p>\fill[gray, opacity=0.1] (0,0) -- (0,2.5) -- (2.5,2.5) -- cycle; \node[text width=3cm, align=center] at (0.8, 1.8) {\footnotesize <strong>特征真空区</strong>};</p>
+<p>\draw[dashed, line width=1.5pt, black] (0,0) -- (2.5,2.5) ;</p>
+<p>我们发现在特征真空区$\{0&lt;x&lt;t\}$,特征线方法并不能为我们提供任何关于解的信息.如果取</p>
 <div class="math-display">\[u_1(x,t)=
 \begin{cases}
 0,&amp;\text{if}\; x&lt;\frac{t}{2}\\[4pt]
 1,&amp;\text{if}\; x&lt;\frac{t}{2}\\
 \end{cases}\]</div>
+<p>那么$u_1$是初值问题的一个弱解,但你会发现它的一部分信息并不从初值演化而来,而是从间断点无中生有得到的.</p>
+<p>再构造另一种解</p>
 <div class="math-display">\[u_2(x,t)=
 \begin{cases}
 0,&amp;\text{if}\; x&lt;0\\
 \frac{x}{t},&amp;\text{if}\; 0&lt;x&lt;t\\
 1,&amp;\text{if}\; x&gt;t
 \end{cases}\]</div>
+<p>这也是上述初值问题的一个弱解,不过它将特征真空区域利用从原点出发的射线填满了,这符合物理逻辑.</p>
+<p>某些情况下,弱解并不唯一,并且其中有些解是不具有物理意义的.因此,我们需要一个能够判断某解是否可接受的标准,并且还需要验明该标准足以取得一个具备相关物理意义的唯一解.我们将这种唯一解称为熵解.</p>
+<p>判断满足$u_l&lt;u_r$的间断解是否是物理解的熵条件---<strong>Lax熵条件</strong></p>
 <div class="math-display">\[\forall u\in (u_l,u_r):\frac{F(u)-F(u_l)}{u-u_l}\geqslant \dot{s}\geqslant \frac{F(u)-F(u_r)}{u-u_r}\]</div>
+<p>为了进一步简化,假设$F(u)$是严格凸函数,那么间断点处的激波速率为</p>
 <div class="math-display">\[\begin{aligned}
 \dot{s}\leqslant \frac{F(u)-F(u_l)}{u-u_l} &amp;=\frac{F(u_l)+F&#x27;(u_l)(u-u_l)+\frac{1}{2}F&#x27;&#x27;(\xi)(u-u_l)^2-F(u_l)}{u-u_l}\\
 &amp;= F&#x27;(u_l)+\frac{1}{2}F&#x27;&#x27;(\xi)(u-u_l)
 \end{aligned}\]</div>
+<p>如果$u_l&gt;u_r$,那么对于任意$u\in (u_r,u_l)$有$u-u_l&lt;0$,又因为$F&#x27;&#x27;&gt;0$,因此$\dot{s}&lt;F&#x27;(u_l)$,同理有$\dot{s}&gt;F&#x27;(u_r)$.这就产生了简化版的Lax熵条件:</p>
 <div class="math-display">\[F&#x27;(u_l)&gt;\dot{s}&gt;F&#x27;(u_r),  F&#x27;&#x27;(u)&gt;0\]</div>
+<p>我们可以定义<strong>激波</strong>为满足Rankine-Hugoniot条件和熵条件的一个间断曲线.</p>
+<p>这个条件很好理解,左侧的特征线速度大于激波速度,因此特征线一定能追上激波,而右侧特征线速度小于激波速度,所以可以被激波追上,由此两侧特征线相交于激波线.这就是物理激波</p>
+<p>如果$u_l&lt;u_r$,对于凸函数而言一定有$F&#x27;(u_l)&lt;F&#x27;(u_r)$,此时激波速度$\dot{s}$介于两者之间,但这和Lax熵条件矛盾.同时从直觉来看,此时将会产生特征线真空区.</p>
+<p>一种处理方法是将激波线画出来,因为激波是特征线相交产生,因此,此时这条线必须自己产生特征线往两侧扩散才可以填满空白,但这是一种无中生有的做法,需要排除掉.这就是非物理激波.</p>
+<p>还有一种做法是在考虑每一个$u\in (u_l,u_r)$,特征线$x=F&#x27;(u)t$都以自己的速度从原点出发,从而铺满整个空白区域.</p>
+<p>你会疑惑,稀疏波看来也是物理解,但它并不满足Lax熵条件.实际上,Lax熵条件是针对间断解定义的,用来判定满足Rankine-Hugoniot条件的无数个间断解中,哪些是物理解,虽然它不允许$u_l&lt;u_r$的间断解.而稀疏波是满足$u_l&lt;u_r$的连续解.</p>
+<p>我们有下面的称为<strong>Oleinik条件</strong>的熵条件,在仅限于凸通量的情况下,要求满足</p>
 <div class="math-display">\[\forall \varepsilon&gt;0:\frac{u(x+\varepsilon t)-u(x,t)}{\varepsilon}\leqslant \frac{E}{t},  E=\frac{1}{\inf F&#x27;&#x27;},t&gt;0\]</div>
-<div class="math-display">\[\frac{\mathrm{d}}{\mathrm{d}t}\|u(t)-v(t)\|_{L^1}\leqslant 0\]</div>
+<p>这个条件不关心间断还是连续,如果有$u_l&lt;u_r$的间断解,那么当$\varepsilon\to 0$时,左侧的斜率趋于$+\infty$,但右边是有限值,这就矛盾了,由此将非物理激波排除了解的候选范围.而对于稀疏波,它是连续解,因此它的值是从$u_l$慢慢爬到$u_r$的,只要这段爬升的斜率小于$\frac{E}{t}$,Oleinik条件就满足.这说明即使是连续的情况,斜率也不能超过给定的界限.</p>
+<p>虽然熵条件给出了确定可接受解的判定方法,但是唯一性依然不确定,为了解决这个问题,我们考虑下面的定理</p>
+<aside class="wiki-note">设$u$和$v$是相关方程的分段光滑弱解,并且具有凸通量.假设所有间断点都是激波,那么 $$ \frac{\mathrm{d}}{\mathrm{d}t}\|u(t)-v(t)\|_{L^1}\leqslant 0 $$</aside>
+<p>这被称为$L^1-$收缩性.令$u(0)=v(0)$,那么可以得到下面的推论:如果$u$是相关方程的一个具有凸通量的弱解,且满足熵条件,那么解是唯一的.</p>
+<p>更进一步,如果某个间断点违背了熵条件,那么就会存在一个解$v$,满足</p>
 <div class="math-display">\[\frac{\mathrm{d}}{\mathrm{d}t}\|u(t)-v(t)\|_{L^1}\geqslant 0\]</div>
+<p>以上就说明了熵条件和Rankine-Hugoniot条件一同保证了解的唯一性.但是这类解能否由一般的初始条件产生呢?也就是说,会不会熵条件过强而导致得不到真解.</p>
+<p>我们考虑修正后的问题</p>
+<div class="math-display">\[\frac{
+tial u_{\varepsilon}}{
+tial t}+\frac{
+tial F(u_{\varepsilon})}{
+tial x}=\varepsilon\frac{
+tial^2 u_{\varepsilon}}{
+tial x^2},  u_{\varepsilon}(x,0)=g(x)\]</div>
+<p>其中$u_{\varepsilon}$是相关方程的黏性消去解.</p>
+<aside class="wiki-note">假设通量$F(u)$是凸的,那么取极限$\varepsilon\to 0$时,相关方程的解是$相关方程$的弱解并满足熵条件.</aside>
+<p></p>
 <h3>偏微分方程数值解</h3>
 <h4>椭圆型偏微分方程的差分方法</h4>
+<p>从一个简单的例子谈起</p>
+<div class="math-display">\[\begin{cases}
+-\frac{\mathrm{d}^2u}{\mathrm{d}x^2}=f(x),&amp;0&lt;x&lt;1\\[3pt]
+u(0)=u(1)=0
+\end{cases}\]</div>
+<p>一种自然的想法是进行两次积分可以得到</p>
 <div class="math-display">\[u(x)=\int_0^1x(1-s)f(s)\mathrm{d}s-\int_0^x (x-s)f(s)\mathrm{d}s\]</div>
+<p>如果$f(x)$的形式比较复杂,那么求积分就不是一件容易的事情,只能通过数值积分来求解.但我们的想法是直接从方程本身获得$u(x)$的数值解.</p>
+<p>接下来展示有限差分方法的步骤.</p>
+<p>首先将区间$[0,1]$做$N$等分,令$h=\frac{1}{N}$,节点为$x_i=ih,i=0,1,\cdots,N$.在网格点上将连续信息离散化,容易观察到$u(x_0)=u(x_N)=0$,而在内部节点$x_i,1\leqslant i\leqslant N-1$上,有</p>
 <div class="math-display">\[\left(-\frac{\mathrm{d}^2u}{\mathrm{d}x^2}-f\right)_{x=x_i}=0\]</div>
+<p>使用二阶中心差分近似网格点处的二阶导数,得到</p>
 <div class="math-display">\[\frac{\mathrm{d}^2u}{\mathrm{d}x^2}(x_i)=u&#x27;&#x27;(x_i)\approx \frac{u(x_{i+1})-2u(x_i)+u(x_{i-1})}{h^2}\]</div>
+<p>所以</p>
 <div class="math-display">\[-\frac{u(x_{i+1})-2u(x_i)+u(x_{i-1})}{h^2}\approx f(x_i)=f_i,  1\leqslant i\leqslant N-1\]</div>
+<p>我们记$u_i$作为$u(x_i)$的近似值,则得到差分方程</p>
 <div class="math-display">\[-\frac{u_{i+1}-2u_i+u_{i-1}}{h^2}=f_i,  1\leqslant i\leqslant N-1\]</div>
+<p>再联立边界条件就得到求解相关方程的差分格式:</p>
+<div class="math-display">\[\begin{cases}
+-\frac{u_{i+1}-2u_i+u_{i-1}}{h^2}=f_i,&amp;1\leqslant i\leqslant N-1\\[3pt]
+u_0=u_N=0
+\end{cases}\]</div>
+<p>现在关注的点在于差分格式相关方程的解是否存在且唯一,以及这个解和相关方程的解之间的关系.</p>
+<p>注意到差分格式相关方程等价于如下形式的线性方程组</p>
 <div class="math-display">\[-\frac{1}{h^2}
 \begin{bmatrix}
 -2 &amp; 1 &amp;   &amp;  \\
@@ -194,21 +357,30 @@ f_2\\
 \vdots\\
 f_{N-1}
 \end{bmatrix}\]</div>
+<p>显然系数矩阵是不可约弱对角占优矩阵,可逆.因此差分格式相关方程的解存在且唯一.</p>
+<p>设$u(x)$是微分方程相关方程的充分光滑解,取$u_i=u(x_i)$代入差分方程相关方程判断不满足的程度,即</p>
 <div class="math-display">\[R_i=-\frac{u(x_{i+1})-2u(x_i)+u(x_{i-1})}{h^2}-f(x_i)\]</div>
+<p>的大小.利用Taylor展开可以得到</p>
 <div class="math-display">\[-\frac{u(x_{i+1})-2u(x_i)+u(x_{i-1})}{h^2}-f(x_i)=-\frac{h^2}{12}u^{(4)}(\xi_i)\]</div>
+<p>所以当$h\to 0$时,$R_i\to 0$.该方法是相容的.并且截断误差关于$h$是二阶的.差分格式相关方程的理论计算结果是</p>
 <div class="math-display">\[\begin{cases}
 -\frac{u_{i+1}-2u_i+u_{i-1}}{h^2}=f_i,&amp;1\leqslant i\leqslant N-1\\[7pt]
 u_0=u_N=0
 \end{cases}\]</div>
+<p>而在实际计算过程中,总会有舍入误差与测量误差,于是实际计算结果可设为</p>
 <div class="math-display">\[\begin{cases}
 -\frac{u_{i+1}^*-2u_i^*+u_{i-1}^*}{h^2}=f_i^*+\varepsilon_i,&amp;1\leqslant i\leqslant N-1\\[7pt]
 u_0^*=u_N^*=0
 \end{cases}\]</div>
+<p>引入误差$E_i=u_i^*-u_i$,那么有</p>
 <div class="math-display">\[\begin{cases}
 -\frac{E_{i+1}-2E_i+E_{i-1}}{h^2}=\varepsilon_i,&amp;1\leqslant i\leqslant N-1\\[7pt]
 E_0=E_N=0
 \end{cases}\]</div>
-<div class="math-display">\[l(y_i)=\frac{y_{i+1}-2y_i+y_{i-1}}{h^2},  1\leqslant i\leqslant N-1\]</div>
+<p>现在的问题是给出$E_i$的估计.为此给出如下引理:</p>
+<aside class="wiki-note">任给一组实数$y_i,i=0,1,\cdots,N$,记 $$ l(y_i)=\frac{y_{i+1}-2y_i+y_{i-1}}{h^2},  1\leqslant i\leqslant N-1 $$ 若$l(y_i)\geqslant 0,i=1,2,\cdots,N-1$,则$y_0$或$y_N$必为$\{y_i\}_{i=0}^N$中的最大值;若$l(y_i)\leqslant 0,i=1,2,\cdots,N-1$,则$y_0$或$y_N$必为$\{y_i\}_{i=0}^N$中的最小值;</aside>
+<p>这个引理其实只需要想一下连续的情形就十分直观.</p>
+<p>现在给出$E_i$的估计.构造两个辅助序列:</p>
 <div class="math-display">\[\begin{cases}
 -\frac{E_{i+1}^*-2E_i^*+E_{i-1}^*}{h^2}=\varepsilon, &amp;1\leqslant i\leqslant N-1\\[7pt]
 E_0^*=E_N^*=0
@@ -217,15 +389,23 @@ E_0^*=E_N^*=0
 \frac{\tilde{E}_{i+1}-2\tilde{E}_i+\tilde{E}_{i-1}}{h^2}=\varepsilon, &amp;1\leqslant i\leqslant N-1\\[7pt]
 \tilde{E}_0=\tilde{E}_N=0
 \end{cases}\]</div>
+<p>其中$\varepsilon=\max\limits_{1\leqslant i\leqslant N-1}|\varepsilon_i|$.记$y_i=E_i-E_i^*,i=0,1,\cdots,N$.显然有$l(y_i)\geqslant 0$.由离散极值原理有$y_i\leqslant 0$,即</p>
 <div class="math-display">\[E_i\leqslant E_i^*,  i=0,1,\cdots,N\]</div>
+<p>同理有$\tilde{E}_i\leqslant E_i$,而$\tilde{E}_i=-E^*_i$,所以</p>
 <div class="math-display">\[|E_i|\leqslant E_i^*,  i=0,1,\cdots,N\]</div>
+<p>下面我们将$E_i^*$精确的计算出来.设$\rho(x)$满足</p>
 <div class="math-display">\[\begin{cases}
 -\rho&#x27;&#x27;(x)=\varepsilon\\
 \rho(0)=\rho(1)=0
 \end{cases}\]</div>
+<p>那么$\rho(x)=\frac{\varepsilon}{2}x(1-x)$.于是</p>
 <div class="math-display">\[|E_i|\leqslant \frac{\varepsilon}{2}\max_{0\leqslant x\leqslant 1}|x(1-x)|=\frac{\varepsilon}{8}\]</div>
+<p>这就表明了$\max_{1\leqslant i\leqslant N-1}|E_i|\leqslant \frac{1}{8}\max_{1\leqslant i\leqslant N-1}|\varepsilon_i|$.</p>
+<p>由误差分析可知</p>
 <div class="math-display">\[-\frac{u(x_{i+1})-2u(x_i)+u(x_{i-1})}{h^2}=f_i-\frac{h^2}{12}u^{(4)}(\xi_i)\]</div>
+<p>值得注意的是这里$\varepsilon_i=-\frac{h^2}{12}u^{(4)}(\xi_i)$,所以如果记$M=\max_{1\leqslant i\leqslant N-1}|u^{(4)}(x)|$,则有</p>
 <div class="math-display">\[\max_{1\leqslant i\leqslant N-1}|u(x_i)-u_i|\leqslant \frac{1}{96}h^2M\]</div>
+<p>下面的工作就是数值计算,我们经常遇到下面的矩阵</p>
 <div class="math-display">\[\begin{bmatrix}
 -2 &amp; 1 &amp;   &amp;  \\
 1 &amp; -2 &amp; \ddots &amp;  \\
@@ -240,7 +420,10 @@ E_0^*=E_N^*=0
   &amp; \ddots &amp; \ddots &amp; 1\\
   &amp;   &amp; 1 &amp; 0
 \end{bmatrix}\]</div>
+<p>后一矩阵的特征根及相应的特征向量为</p>
 <div class="math-display">\[\lambda_k=2\cos(\theta_k),\vecb{y}_k=\left[\sin(\theta_k),\sin(2\theta_k),\cdots,\sin(N\theta_k)\right]^T,1\leqslant k\leqslant N\]</div>
+<p>其中$\theta_k=\frac{k\pi}{N+1}$.</p>
+<p>现在考虑下面的Dirichlet问题</p>
 <div class="math-display">\[\begin{cases}
 \begin{alignedat}{2}
 \Delta u(x,y) &amp;= f(x,y),     &amp;&amp; (x, y) \in \Omega \\[3pt]
@@ -248,14 +431,19 @@ u(x, y)       &amp;= \alpha(x,y),  &amp;&amp; (x, y) \in
 tial\Omega
 \end{alignedat}
 \end{cases}\]</div>
+<p>其中$\Omega=(0,a)\times(0,b)$,$f$是给定的函数,$\alpha$则是边界上给定的函数.将区域$\Omega$在$x$方向上进行$I+1$等分,在$y$方向上进行$J+1$等分,得到网格点$(x_i,y_j)=(ih,jk),i=0,1,\cdots,I,j=0,1,\cdots,J$,其中$h=\frac{a}{I+1},k=\frac{b}{J+1}$.将相应的内点集和边界点集分别记为</p>
 <div class="math-display">\[\begin{aligned}
 \Omega_h&amp;=\{(x_i,y_j)|1\leqslant i\leqslant I,1\leqslant j\leqslant J\}\\
 tial\Omega_h&amp;=\{(x_i,y_j)|i=0\text{或}I+1,j=0\text{或}J+1\}
 \end{aligned}\]</div>
+<p>五点差分的所需节点如下图</p>
+<p>\foreach \x / \y in {-1/-1,0/0,1/1} { \draw[black] (\x, -1.5) -- (\x, 1.5); \draw[black] (-1.5, \y) -- (1.5, \y); } \foreach \pose / \lab in {-1/-1,0/,1/+1} { \node[below] at (\pose, -1.5) {$i\lab$}; \node[left] at (-1.5, \pose) {$j\lab$}; } \fill (-1,0) circle (1pt); \fill (0,0) circle (1pt); \fill (1,0) circle (1pt); \fill (0,1) circle (1pt); \fill (0,-1) circle (1pt);</p>
+<p>当$(x_i,y_j)\in\Omega_h$时,对二阶偏导均使用中心差分,于是</p>
 <div class="math-display">\[\begin{aligned}
 \Delta_h &amp;= \frac{u_{i+1,j}-2u_{i,j}+u_{i-1,j}}{h^2} + \frac{u_{i,j+1}-2u_{i,j}+u_{i,j-1}}{h^2}\\
 &amp;= f(x_i,y_j)=f_{i,j}
 \end{aligned}\]</div>
+<p>因此我们得到了求解二维Poisson方程的五点差分格式:</p>
 <div class="math-display">\[\begin{cases}
 \begin{alignedat}{2}
 \Delta_h u_{i,j}&amp;= f_{i,j},&amp;&amp;(x_i,y_j)\in\Omega_h\\[3pt]
@@ -263,23 +451,21 @@ u_{i,j}&amp;=\alpha(x_i,y_j),&amp;&amp;(x_i,y_j)\in
 tial\Omega_h
 \end{alignedat}
 \end{cases}\]</div>
+<p>经过繁琐的计算可以得出截断误差</p>
 <div class="math-display">\[\begin{aligned}
 R_{h}u_{i,j} &amp;= \Delta_h u_{i,j} - \Delta u(x_i,y_j)\\
 &amp;= \frac{1}{12}\left(h^2
 tial^{(4)}_x u(\xi_i,y_j)+k^2
 tial^{(4)}_y u(x_i,\eta_j)\right)
 \end{aligned}\]</div>
+<p>关于离散的极值原理,由于在PDE中已经学过连续的了,所以我们不再赘述了.为了得到误差估计,我们先要利用下面的离散最大模估计</p>
 <div class="math-display">\[\max_{\Omega_h}|u_{i,j}|\leqslant \max_{
 tial\Omega_h}|u(x_i,y_j)|+\frac{1}{2}a^2\max_{\Omega_h}|\Delta_h u_{i,j}|\]</div>
-<div class="math-display">\[\begin{cases}
-\begin{alignedat}{2}
-\Delta u &amp;= f,     &amp;&amp; (x, y) \in \Omega \\[3pt]
-u       &amp;= \alpha,  &amp;&amp; (x, y) \in
-tial\Omega
-\end{alignedat}
-\end{cases}\]</div>
-<div class="math-display">\[\max_{\Omega_h}|u_{i,j}-u(x_i,y_j)|\leqslant \frac{1}{24}a^2\|u\|_{C^4(\overline{\Omega})}(h^2+k^2)\]</div>
+<p>其中$a$是区域$\Omega$关于$x$方向的直径.关于这个的证明需要采用构造函数的方法,然后利用离散极值原理.和PDE中的证明毫无区别.</p>
+<aside class="wiki-note">设$u$为如下Dirichlet问题的解 $$ \begin{cases} \begin{alignedat}{2} \Delta u &amp;= f,     &amp;&amp; (x, y) \in \Omega <br>[3pt] u       &amp;= \alpha,  &amp;&amp; (x, y) \in tial\Omega \end{alignedat} \end{cases} $$ 满足$u\in C^4(\overline{\Omega})$,则五点差分格式收敛且解$u_{i,j}$满足误差估计 $$ \max_{\Omega_h}|u_{i,j}-u(x_i,y_j)|\leqslant \frac{1}{24}a^2\|u\|_{C^4(\overline{\Omega})}(h^2+k^2) $$</aside>
+<p>令$w_{i,j}=u_{i,j}-u(x_i,y_j)$,那么</p>
 <div class="math-display">\[\Delta_h w_{i,j} = \Delta_h u_{i,j} - \Delta_h u(x_i,y_j) = (\Delta u)(x_i,y_j) - \Delta_h u(x_i,y_j)\]</div>
+<p>再根据截断误差的表达式可以得到</p>
 <div class="math-display">\[\begin{cases}
 \begin{alignedat}{2}
 |\Delta_h w_{i,j}| &amp;\leqslant \frac{1}{12}\|u\|_{C^4(\overline{\Omega})}(h^2 + k^2),&amp;&amp; (x_i,y_j)\in\Omega_h\\[3pt]
@@ -287,9 +473,15 @@ w_{i,j} &amp; = 0,&amp;&amp; (x_i,y_j)\in
 tial\Omega_h
 \end{alignedat}
 \end{cases}\]</div>
+<p>因此由最大模估计知</p>
 <div class="math-display">\[\max_{\Omega_h}|w_{i,j}|\leqslant \max_{
 tial\Omega_h}|w(x_i,y_j)|+\frac{1}{2}a^2\max_{\Omega_h}|\Delta_h w_{i,j}|\leqslant \frac{1}{24}a^2\|u\|_{C^4(\overline{\Omega})}(h^2+k^2)\]</div>
+<p>接下来的工作就是数值求解,注意到$u_{i,j}$是分布在二维的网格上的,一种常见的做法是对其进行编号,使之称为一维向量,例如从从左下角开始编号(只看内点,不考虑边界点)</p>
 <div class="math-display">\[[y_1,y_2,\cdots,y_I,y_{I+1},\cdots,y_{(I-1)(J-1)}]^T=[u_{11},u_{21},\cdots,u_{I-1,1},u_{12},\cdots,u_{I-1,J-1}]^T\]</div>
+<p>这样转化成一个线性方程组(矩阵形式不好写,为了理解这种编号形式,可以试试$I=3,J=3$的情形).</p>
+<p>另一种方法不考虑编号,为了方便,我们考虑齐次情形,同时设$a=b=1$.那么五点差分格式可以写成矩阵方程</p>
+<div class="math-display">\[\vecb{AU}+\vecb{UB}=\vecb{F}\]</div>
+<p>其中</p>
 <div class="math-display">\[\vecb{A}=\frac{1}{h^2}
 \begin{bmatrix}
 2 &amp; -1 &amp;   &amp;  \\
@@ -320,17 +512,26 @@ f_{21} &amp; f_{22} &amp; \cdots &amp; f_{2J}\\
 \vdots  &amp; \vdots  &amp;   &amp; \vdots \\
 f_{I1} &amp; f_{I2} &amp; \cdots &amp; f_{IJ}\\
 \end{bmatrix}\]</div>
+<p>设$\vecb{A}\in\mathbb{R}^{m\times m},\vecb{B}\in\mathbb{R}^{n\times n}$定义$\mathbb{R}^{m\times n}$上的线性算子</p>
 <div class="math-display">\[\vecb{T}(\vecb{X})=\vecb{AU}+\vecb{UB}\]</div>
+<p>于是求解矩阵方程相关方程的解$\vecb{U}$,就等价于求解算子方程$\vecb{T}(\vecb{U})=\vecb{F}$.</p>
+<p>容易验证,如果$\vecb{A}\vecb{p}_i=\lambda_i\vecb{p}_i,\vecb{B}\vecb{q}_j=\mu_j\vecb{q}_j$,那么$\vecb{T}\vecb{p}_i\vecb{q}_j^T=(\lambda_i+\mu_j)\vecb{p}_i\vecb{q}_j^T$.在矩阵空间$\mathbb{R}^{I\times J}$上定义内积</p>
 <div class="math-display">\[\langle \vecb{A},\vecb{B}\rangle =\tr(\vecb{B}^T\vecb{A})\]</div>
+<p>那么在$\{\vecb{p}_i\vecb{q}_j^T,1\leqslant i\leqslant I,1\leqslant j\leqslant J\}$中任取两个矩阵$\vecb{p}_{i_1}\vecb{q}_{j_1}^T,\vecb{p}_{i_2}\vecb{q}_{j_2}^T$,那么经过计算有</p>
 <div class="math-display">\[\begin{aligned}
 \langle \vecb{p}_{i_1}\vecb{q}_{j_1}^T, \vecb{p}_{i_2}\vecb{q}_{j_2}^T\rangle &amp;= \tr\left((\vecb{p}_{i_2}\vecb{q}_{j_2}^T)^T\vecb{p}_{i_1}\vecb{q}_{j_1}^T\right)\\
 &amp;= \tr \left(\vecb{q}_{j_2}(\vecb{p}_{i_2}^T\vecb{p}_{i_1})\vecb{q}_{j_1}^T\right)\\
 &amp;= \frac{(I+1)(J+1)}{4}\delta_{i_{1}i_{2}}\delta_{j_{1}j_{2}}
 \end{aligned}\]</div>
+<p>这说明$\{\vecb{p}_i\vecb{q}_j^T,1\leqslant i\leqslant I,1\leqslant j\leqslant J\}$两两正交,并且相同矩阵的内积为$\frac{(I+1)(J+1)}{4}$.于是$\{\vecb{p}_i\vecb{q}_j^T,1\leqslant i\leqslant I,1\leqslant j\leqslant J\}$成为了矩阵空间$\mathbb{R}^{I\times J}$的一组正交基.假设在这组基下</p>
 <div class="math-display">\[\vecb{U}=\sum_{i=1}^I\sum_{j=1}^Jw_{ij}\vecb{p}_i\vecb{q}_j^T\]</div>
+<p>将表达式带入到矩阵方程相关方程中,并与基做内积得到</p>
 <div class="math-display">\[\left\langle \sum_{l=1}^I\sum_{m=1}^Jw_{lm}(\lambda_l+\mu_m)\vecb{p}_l\vecb{q}_m^T, \vecb{p}_i\vecb{q}_j^T\right\rangle = \langle \vecb{F},\vecb{p}_i\vecb{q}_j^T \rangle\]</div>
+<p>因此</p>
 <div class="math-display">\[w_{ij}=\frac{4\induct{\vecb{F}}{\vecb{p}_i\vecb{q}_j^T}}{(\lambda_i+\mu_j)(I+1)(J+1)}=\frac{4}{(\lambda_i+\mu_j)(I+1)(J+1)}\vecb{p}_i^T\vecb{F}\vecb{q}_j\]</div>
+<p>记$\vecb{P}=[\vecb{p}_1,\vecb{p}_2,\cdots,\vecb{p}_I],\vecb{Q}=[\vecb{q}_1,\vecb{q}_2,\cdots,\vecb{q}_J]$,那么</p>
 <div class="math-display">\[\vecb{P}[i,j]=\sin\frac{ij\pi}{I+1},\vecb{Q}[i,j]=\sin\frac{ij\pi}{J+1}\]</div>
+<p>由此看出$\vecb{P},\vecb{Q}$都是对称矩阵.现在可以写出$\vecb{U}$的具体表达式</p>
 <div class="math-display">\[\begin{aligned}
 \vecb{U} &amp;= \sum_{i=1}^I\sum_{j=1}^Jw_{ij}\vecb{p}_i\vecb{q}_j^T=\sum_{i=1}^I\sum_{j=1}^J\vecb{p}_i w_{ij}\vecb{q}_j^T\\
 &amp;=
@@ -350,34 +551,80 @@ w_{I1} &amp; \cdots &amp; w_{IJ}
 \end{bmatrix}\\
 &amp;= \vecb{P}\vecb{W}\vecb{Q}^T=\vecb{P}\vecb{W}\vecb{Q}
 \end{aligned}\]</div>
+<p>我们发现,以上需要计算两样东西:$\vecb{W}$以及乘积$\vecb{P}\vecb{W}\vecb{Q}$,注意到$\vecb{P}\vecb{F}\vecb{Q}[i,j]=\vecb{p}_i^T\vecb{F}\vecb{q}_j$,那么我们需要计算两个矩阵乘积:$\vecb{P}\vecb{F}\vecb{Q}$和$\vecb{P}\vecb{W}\vecb{Q}$.</p>
 <h4>发展方程的有限差分方法</h4>
+<p>为了一般性,不妨设微分方程为$Lu=0$,相应的差分格式为</p>
 <div class="math-display">\[L_hu^n_j=0\]</div>
+<p>其中$L_h$是依赖空间网格步长$h$和时间步长$\tau$的格点函数映射,称为差分算子,$u^n_j$为定义在$(x_j,t_n)$上的格点函数.不妨考虑对流方程的初值问题($a&gt;0$):</p>
+<div class="math-display">\[\begin{cases}
+u_t+au_x=0\\
+t=0,u=u_0(x)
+\end{cases}\]</div>
+<p>那么$Lu=u_t+au_x$,对时间和空间均采用一阶向前差分得到差分格式</p>
 <div class="math-display">\[L_hu^n_j=\frac{u^{n+1}_j-u^n_j}{\tau}+a\frac{u^n_{j+1}-u^n_j}{h}\]</div>
-<div class="math-display">\[L_hu^n_j=O(\tau^p+h^q)\]</div>
-<div class="math-display">\[\lim_{\tau,h\to 0}L_hu^n_j=0\]</div>
+<aside class="wiki-note">设$u(x,t)$是微分方程$Lu=0$的充分光滑解.如果取$u^n_j=u(x_j,t_n)$,可以得到 $$ L_hu^n_j=O(\tau^p+h^q) $$ 式中$p$和$q$为正常数,则称格式关于时间和空间的截断误差分别为$p$阶和$q$阶.</aside>
+<aside class="wiki-note">如果 $$ \lim_{\tau,h\to 0}L_hu^n_j=0 $$ 则称差分格式是相容的.</aside>
+<p>为了讨论一般差分格式的稳定性,设$\varepsilon^n_j$为$(x_j,t_n)$处计算解与差分格式精确解之间的误差.设差分格式为</p>
 <div class="math-display">\[u^{n+1}_j=S_hu^n_j\]</div>
+<p>其中$S_h$是线性算子,并设其与$n$无关,那么$u^n_j=S^n_hu^0_j$,而相应的误差方程为</p>
 <div class="math-display">\[\varepsilon^n_j=S^n_h\varepsilon^0_j\]</div>
+<p>我们记$\vecb{\varepsilon}^n=\{\varepsilon^n_j\}_{j=-\infty}^{+\infty}$,并用下面的范数度量误差</p>
 <div class="math-display">\[\|\vecb{\varepsilon}^n\|_h=\left(h\sum_{j=-\infty}^{+\infty}(\varepsilon^n_j)^2\right)^{1/2},  \|\vecb{\varepsilon}^n\|_{\infty}=\max_{-\infty&lt;j&lt;+\infty}|\varepsilon^n_j|\]</div>
-<div class="math-display">\[\|\vecb{\varepsilon}^n\|\leqslant K \|\vecb{\varepsilon}^0\|\]</div>
+<aside class="wiki-note">对任意给定的实数$T&gt;0$,存在正数$\tau_0&gt;0$及$K&gt;0$,使得对任意满足$0&lt;\tau\leqslant\tau_0,n\tau\leqslant T$的实数$\tau$和非负整数$n$有 $$ \|\vecb{\varepsilon}^n\|\leqslant K \|\vecb{\varepsilon}^0\| $$ 则称差分格式$u^{n+1}_j=S_hu^n_j$是稳定的.</aside>
+<p>值得注意的是,因为$S_h$是线性算子,因此</p>
 <div class="math-display">\[\|S^n_h\|=\sup_{\|v\|=1}\|S^n_hv\|\]</div>
+<p>于是上面稳定性定义中的误差范数要求等价于$\|S^n_h\|\leqslant K$.</p>
+<p>根据定义判断差分格式的稳定性还是太难了,一种行之有效的方法是Fourier方法.设$u(x)\in L^2(\mathbb{R})$,则其Fourier变换定义为</p>
 <div class="math-display">\[\hat{u}(x)=\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}u(y)\mathrm{e}^{-\mathrm{i}xy}\mathrm{d}y\]</div>
+<p>当然,Fourier变换是一个线性变换,$\hat{u}\in L^2(\mathbb{R})$,并且成立下面的Parseval恒等式</p>
 <div class="math-display">\[\|u\|_{L^2(\mathbb{R})}=\|\hat{u}\|_{L^2(\mathbb{R})}\]</div>
+<p>为了展示Fourier方法,以相关方程的下面的差分格式为例</p>
+<div class="math-display">\[\begin{cases}
+u^{n+1}_j=u^n_j-a\lambda(u^n_{j+1}-u^n_j)\\
+u^0_j=u^0(x_j)
+\end{cases}\]</div>
+<p>定义</p>
 <div class="math-display">\[\begin{cases}
 u^n(x)=u^n_j,&amp;(j-\frac{1}{2})h\leqslant x&lt;(j+\frac{1}{2})h\\[5pt]
 u^0(x)=u^0(x_j),&amp;(j-\frac{1}{2})h\leqslant x&lt;(j+\frac{1}{2})h\\
 \end{cases}\]</div>
+<p>直接验算可知</p>
 <div class="math-display">\[u^{n+1}(x)=u^n(x)-a\lambda[u^n(x+h)-u^n(x)]\]</div>
+<p>对$u^n(x)$做Fourier变换,再根据Fourier变换的线性性质得到</p>
 <div class="math-display">\[\hat{u}^{n+1}(x)=\hat{u}^{n}(x)-a\lambda[\widehat{u^n(y+h)}(x)-\hat{u}^{n}(x)]\]</div>
+<p>其中$\widehat{u^n(y+h)}(x)=\frac{1}{\sqrt{2\pi}}\int_{\mathbb{R}}u(y+h)\mathrm{e}^{-\mathrm{i}xy}\mathrm{d}y=\mathrm{e}^{\mathrm{i}xh}\hat{u}^{n}(x)$,因此可以得到</p>
 <div class="math-display">\[\hat{u}^{n+1}(x)=G(\tau,x)\hat{u}^{n}(x)\]</div>
-<div class="math-display">\[\sup_{x}\|\vecb{G}^n(\tau,x)\|_2\leqslant K\]</div>
+<p>式中$G(\tau,x)=1+a\lambda-a\lambda\mathrm{e}^{\mathrm{i}xh}$称为差分格式相关方程的增长因子.于是$\hat{u}^{n}(x)=G^n(\tau,x)\hat{u}^{0}(x)$.</p>
+<p>这种Fourier方法可以推广到一般的常系数微分方程系统的初值问题</p>
+<div class="math-display">\[\begin{cases}
+tial_t\vecb{u}+\vecb{A}
+tial_x \vecb{u}=\vecb{0}\\
+t=0,\vecb{u}=\vecb{u}_0(x)
+\end{cases}\]</div>
+<p>其中$\vecb{A}$是$p\times p$常系数矩阵.则有下面的定理</p>
+<aside class="wiki-note">设求解问题相关方程的差分格式对应的增长矩阵为$\vecb{G}(\tau,x)$,那么该格式在范数$\|\cdot\|_h$的意义下稳定的充要条件是:对任意给定的实数$T&gt;0$,存在正数$\tau_0&gt;0$及$K&gt;0$,当$0&lt;\tau\leqslant\tau_0,n\tau\leqslant T$时,有 $$ \sup_{x}\|\vecb{G}^n(\tau,x)\|_2\leqslant K $$ 式中$\|\cdot\|_2$指的是矩阵2范数.</aside>
+<p>做Fourier变换还是太麻烦了,有没有从差分格式直接出发的方式呢?实际上,设$\vecb{u}^n_j=\vecb{v}^n\mathrm{e}^{\mathrm{i}jxh}$,将其带入到差分格式就可以得到关系式$\vecb{v}^{n+1}=\vecb{G}(\tau,x)\vecb{v}^n$,则$\vecb{G}(\tau,x)$就是差分格式的增长矩阵.</p>
+<p>依然以差分格式相关方程为例</p>
 <div class="math-display">\[u^{n+1}_j=u^n_j-a\lambda(u^n_{j+1}-u^n_j)\]</div>
+<p>记$u^n_j=v^n\mathrm{e}^{\mathrm{i}jxh}$,代入上式得到</p>
 <div class="math-display">\[v^{n+1}\left[1-a\lambda(\mathrm{e}^{\mathrm{i}xh}-1)\right]v^n\]</div>
+<p>得增长因子为$G(\tau,x)=1-a\lambda(\mathrm{e}^{\mathrm{i}xh}-1)=(1+a\lambda-a\lambda\cos(xh))-\mathrm{i}a\lambda\sin(xh)$,利用二倍角公式$1-\cos(xh)=2\sin^2(\frac{xh}{2})$,得到</p>
 <div class="math-display">\[|G(\tau,x)|^2=1+4a\lambda(1+a\lambda)\sin^2(\frac{xh}{2})\]</div>
+<p>因此当$a&gt;0$时,差分格式相关方程不稳定.</p>
+<p>实际上,差分格式相关方程采用的是空间向前差分,注意到方程$u_t+au_x=0$,其特征线是一族从左向右传播的平行线,这说明信息是从左向右传播的,即$j$处的状态取决于其左侧的$j-1$.当我们计算$j$处的值,向前差分就是想用$j+1$处的值来预测$j$处的值,这当然行不通,毕竟信息还没传过来呢!</p>
+<p>因此,我们采用下面的空间向后的差分格式</p>
 <div class="math-display">\[u^{n+1}_j=u^n_j-a\lambda(u^n_{j}-u^n_{j-1})\]</div>
+<p>经过简单的计算可以得到增长因子为$G(\tau,x)=(1-a\lambda+a\lambda\cos(xh))-\mathrm{i}a\lambda\sin(xh)$,其模:</p>
 <div class="math-display">\[|G(\tau,x)|^2=1-4a\lambda(1-a\lambda)\sin^2(\frac{xh}{2})\]</div>
-<div class="math-display">\[\sup_{x}|\lambda_j(\tau,x)|\leqslant 1+M\tau,  j=1,2,\cdots,p\]</div>
+<p>因此,只要$0\leqslant a\lambda\leqslant 1$,就有$|G(\tau,x)|\leqslant 1$.此时格式稳定.</p>
+<p>然而,验证$\sup_{x}\|\vecb{G}^n(\tau,x)\|_2\leqslant K$并不是一件简单的事,比如矩阵的阶数特别大时.我们将采用下面的von Neumann条件.</p>
+<aside class="wiki-note">给定增长矩阵$\vecb{G}(\tau,x)$,记$\lambda_j(\tau,x)$是$\vecb{G}(\tau,x)$的第$j$个特征值.如果存在$\tau_0&gt;0$和$M&gt;0$,使当$0&lt;\tau\leqslant \tau_0$时,有 $$ \sup_{x}|\lambda_j(\tau,x)|\leqslant 1+M\tau,  j=1,2,\cdots,p $$ 则称增长矩阵$\vecb{G}(\tau,x)$满足<strong>von Neumann条件</strong></aside>
+<p>如果$\vecb{G}(\tau,x)$是某一差分格式的增长矩阵,可以证明,von Neumann条件是该格式在范数$\|\cdot\|_h$的意义下稳定的必要条件;如果增长矩阵酉相似于对角矩阵,则von Neumann条件是该格式在范数$\|\cdot\|_h$的意义下稳定的充分条件.</p>
+<p>考虑抛物型方程$u_t=au_{xx}$如下差分格式的稳定性:</p>
 <div class="math-display">\[\frac{u^{n+1}_j-u^{n-1}_j}{2\tau}=a\frac{u^{n}_{j+1}-2u^n_j+u^n_{j-1}}{h^2}\]</div>
+<p>记网格比$\lambda=\tau/h^2$.整理差分格式为</p>
 <div class="math-display">\[u^{n+1}_j=u^{n-1}_j+2a\lambda(u^{n}_{j+1}-2u^n_j+u^n_{j-1})\]</div>
+<p>引入$v^{n+1}_j=u^n_j$,并记$\vecb{u}^n_j=[u^n_j,v^n_j]^T$,于是</p>
 <div class="math-display">\[\vecb{u}^{n+1}_j=
 \begin{bmatrix}
 2a\lambda &amp; 0\\
@@ -394,29 +641,69 @@ u^0(x)=u^0(x_j),&amp;(j-\frac{1}{2})h\leqslant x&lt;(j+\frac{1}{2})h\\
 0 &amp; 0\\
 \end{bmatrix}
 \vecb{u}^n_{j-1}\]</div>
+<p>取$\vecb{u}^n_j=\vecb{v}^n\mathrm{e}^{\mathrm{i}jxh}$,则有</p>
 <div class="math-display">\[\vecb{v}^{n+1}=
 \begin{bmatrix}
 -8a\lambda\sin^2\left(\frac{xh}{2}\right) &amp; 1\\
 1 &amp; 0\\
 \end{bmatrix}
 \vecb{v}^{n}\]</div>
+<p>经过繁琐的计算可以知道,增长矩阵的特征值为</p>
 <div class="math-display">\[\mu_{\pm}(\tau,x)=-4a\lambda\sin^2\left(\frac{xh}{2}\right)\pm \left(1+16a^2\lambda^2\sin^4\left(\frac{xh}{2}\right)\right)^{1/2}\]</div>
+<p>于是</p>
 <div class="math-display">\[\sup_{x}|\mu_{-}(\tau,x)|=4a\lambda+(1+16a^2\lambda^2)^{1/2}&gt;1+4a\lambda\]</div>
+<p>这就说明差分格式不稳定.</p>
+<p>对于这种多层格式,一种简便获得增长矩阵的方式是:令$u^{n}_j=v^n\mathrm{e}^{\mathrm{i}jxh}$,得到</p>
 <div class="math-display">\[v^{n+1}=v^{n-1}-8a\lambda v^n\sin^2\left(\frac{xh}{2}\right)\]</div>
+<p>再令$\vecb{v}^n=[v^n,v^{n-1}]^T$,就可以得到增长矩阵.</p>
+<p>在判断特征值模的大小时,我们经常用到下面的结果:设$b,c$为实常数,则一元二次方程$\mu^2-b\mu-c=0$的两根按其模均小于或等于1的充要条件是</p>
 <div class="math-display">\[|b|\leqslant 1-c,  |c|\leqslant 1\]</div>
-<div class="math-display">\[|\lambda_2|\leqslant \delta&lt;1\]</div>
+<aside class="wiki-note">设求解问题相关方程的差分格式对应的增长矩阵为$2\times 2$矩阵$\vecb{G}(\tau,x)$,那么该格式在范数$\|\cdot\|_h$的意义下稳定的一个充分条件是: \begin{enumerate}[nosep,label = \roman*)] \item 增长矩阵$\vecb{G}(\tau,x)$满足von Neumann条件; \item 存在正常数$\tau_0$,使得当$0&lt;\tau\leqslant \tau_0,x\in\mathbb{R}$时,$\vecb{G}(\tau,x)$的每个元素关于$\tau$和$x$是一致有界的,且按模最小的特征值$\lambda_2$满足 $$ |\lambda_2|\leqslant \delta&lt;1 $$ 其中$\delta$是与$\tau$和$x$无关的常数. \end{enumerate}</aside>
+<p>设$X$是Banach空间,$x\in X$且$x^*\in X&#x27;$.若满足</p>
+<p>\item $\induct{x^*,x}=\|x\|^2_{X}$; \item $\|x^*\|_{X&#x27;}=\|x\|_{X}$</p>
+<p>则称$x^*$为$x$的规范切泛函.$x$的规范切泛函全体记为$\Gamma(x)$.</p>
+<p>对于Hilbert空间$H$中的元素$x$,易知$x$是其自身的规范切泛函,并且$\Gamma(x)=\{x\}$.</p>
+<p>设$X$是Banach空间且$A$是$X$上的稠定算子.若对每一个$x\in D(A)$,存在$X^*\in\Gamma (x)$使得$\re \induct{x^*,Ax}\geqslant 0$,则称$A$为增值算子.若$-A$是增值算子,则称$A$为耗散算子. 由上面知道,当$X$是Hilbert空间时,$A$是耗散算子当且仅当</p>
 <div class="math-display">\[\re \induct{Ax,x}\leqslant 0,  \forall x\in D(A)\]</div>
-<div class="math-display">\[\widehat{f}(\xi)=\int_{\mathbb{R}^n}f(x)\mathrm{e}^{-\mathrm{i}x\cdot\xi}\mathrm{d}x\]</div>
+<aside class="wiki-note">设$f\in \mathcal{S}(\mathbb{R}^n)$,定义$f$的Fourier变换$\widehat{f}$为 $$ \widehat{f}(\xi)=\int_{\mathbb{R}^n}f(x)\mathrm{e}^{-\mathrm{i}x\cdot\xi}\mathrm{d}x $$ 其中$x\cdot\xi$实际上是内积.</aside>
+<p>我们还可以定义Fourier逆变换为</p>
 <div class="math-display">\[\check{f}(x)=\frac{1}{(2\pi)^n} \int_{\mathbb{R}^n}f(\xi)\mathrm{e}^{\mathrm{i}x\cdot\xi}\mathrm{d}\xi\]</div>
+<p>设$A$为常系数线性算子(一般来讲可以写成$A(D)=\sum_{|\alpha|\leqslant m}a_{\alpha}D^{\alpha}$),考虑发展方程$u_t+Au=0$.假设Fourier变换是合法的,方程两边对$x$做Fourier变换得到</p>
 <div class="math-display">\[\frac{
 tial}{
 tial t}\widehat{u}(\xi,t)+\left(\sum_{|\alpha|\leqslant m}a_{\alpha}(\mathrm{i}\xi)^{\alpha}\right)\widehat{u}(\xi,t)=0\]</div>
+<p>我们记$\lambda(\xi)=-\sum_{|\alpha|\leqslant m}a_{\alpha}(\mathrm{i}\xi)^{\alpha}$.那么上述关于$t$的常微分方程的解就是</p>
 <div class="math-display">\[\widehat{u}(\xi,t)=\widehat{u}(\xi,0)\mathrm{e}^{\lambda(\xi)t}\]</div>
+<p>再利用Fourier逆变换,则</p>
 <div class="math-display">\[u(x,t)=\frac{1}{(2\pi)^n} \int_{\mathbb{R}^n}\left(\widehat{u}(\xi,0)\mathrm{e}^{\lambda(\xi)t}\right)\mathrm{e}^{\mathrm{i}x\cdot\xi}\mathrm{d}\xi\]</div>
+<p>我们把$\xi$叫做波数,而$\mathrm{e}^{\mathrm{i}x\cdot\xi}$就是波数$\xi$下的成分波.所谓成分波的振幅就是$|\widehat{u}(\xi,t)|=|\widehat{u}(\xi,0)\mathrm{e}^{\lambda(\xi)t}|=|\widehat{u}(\xi,0)|\mathrm{e}^{\re(\lambda(\xi))t}$.</p>
+<p>下面我们考虑$\lambda(\xi)=\alpha(\xi)+\mathrm{i}\beta(\xi)$,那么波可以写成如下形式</p>
 <div class="math-display">\[u(x,t)=\frac{1}{(2\pi)^n} \int_{\mathbb{R}^n}\left(\widehat{u}(\xi,0)\mathrm{e}^{\alpha(\xi)t}\right)\mathrm{e}^{\mathrm{i}(x\cdot\xi+\beta(\xi)t)}\mathrm{d}\xi\]</div>
+<p>考虑各种波数成分波的传播速度为$V_p(\xi)=-\frac{\im(\lambda(\xi))}{|\xi|^2}\xi$.</p>
 <h2>MULTISCALE HYBRID-MIXED METHODS</h2>
 <h3>Introduction</h3>
+<p>设$\Omega\subset \mathbb{R}^d,d\in\{2,3\}$为一个有界多面体区域(也就是其边界是多边形,我们记其边界为$</p>
+<p>tial\Omega=</p>
+<p>tial\Omega_D\cup</p>
+<p>tial\Omega_N$,其中$</p>
+<p>tial\Omega_D$和$</p>
+<p>tial\Omega_N$分别是Dirichlet边界和Neumann边界),考虑如下的问题:寻找$u\in H^1(\Omega)$使得</p>
+<div class="math-display">\[\begin{cases}
+\begin{alignedat}{2}
+-\nabla\cdot(\mathcal{K}\nabla u)&amp;=f,&amp;&amp;\text{in }\Omega\\
+u&amp;=g_D,&amp;&amp;\text{on }
+tial\Omega_D\\
+\mathcal{K}\nabla u\cdot\vecb{n}&amp;=0,&amp;&amp;\text{on }
+tial\Omega_N
+\end{alignedat}
+\end{cases}\]</div>
+<p>其中$g_D$和$f$是给定的正则函数.$\mathcal{K}=\{\mathcal{K}_{ij}\}\in [L^\infty(\Omega)]^{d\times d}$是对称张量,并且满足一致椭圆条件,即存在正常数$\alpha$和$\beta$,使得</p>
 <div class="math-display">\[\alpha|\xi|^2\leqslant \sum_{i,j}\mathcal{K}_{ij}\xi_i\xi_j\leqslant \beta|\xi|^2,  \forall \xi\in\mathbb{R}^d,x\in \overline{\Omega}\]</div>
+<p>下面,我们给出一些定义. 首先是关于一些有限元的概念.我们考虑一族$\Omega$的正则三角划分$\{\mathcal{T}_h\}_{h&gt;0}$,对于每个$K\in\mathcal{T}_h$,其直径为$h_K$,记$h=\max_{K\in\mathcal{T}_h}h_K$.三角划分中所有面$F$的集合记为$\mathcal{E}_h$,并记其直径为$h_F$.这个集合被分为内部面集合$\mathcal{E}_h^0$,Dirichlet边界面集合$\mathcal{E}_D$以及Neumann边界面集合$\mathcal{E}_N$.对每一个$F\in \mathcal{E}_h$,我们关联一个指向$</p>
+<p>tial\Omega$外的单位法向量$\vecb{n}$.对每一个$K\in\mathcal{T}_h$,我们定义$</p>
+<p>tial\Omega$上指向外部的单位法向量$\vecb{n}^K$.并且对每一个$F\subset</p>
+<p>tial K$,令$\vecb{n}^K_F:=\vecb{n}^K|_{F}$.</p>
+<p>接下来定义一些基于有限元网格的离散Sobolev空间(实际上被称为Broken Sobolev Space).定义$H(\mathrm{div};K)=\{v\in [L^2(K)]^d:\nabla\cdot v\in L^2(\Omega)\}$.</p>
 <div class="math-display">\[\begin{aligned}
 H^m(\mathcal{T}_h) &amp; =\{v\in L^2(\Omega):v|_K\in H^m(K),\forall K\in\mathcal{T}_h\}\\
 H(\mathrm{div};\mathcal{T}_h) &amp; =\{\vecb{v}\in [L^2(\Omega)]^d:\vecb{v}|_K\in H(\mathrm{div};K),\forall K\in\mathcal{T}_h\}\\
@@ -429,27 +716,84 @@ tial K):\exists \vecb{\sigma}\in H^1(\mathrm{div};\Omega),\text{ s.t. }\mu|_{
 tial K}=\vecb{\sigma}\cdot\vecb{n}|_{
 tial K},K\in \mathcal{T}_h\right\}
 \end{aligned}\]</div>
+<p>在这里,我们定义$H^{\frac{1}{2}}(</p>
+<p>tial K):=\{\mu\in L^2(</p>
+<p>tial K):\exists v\in H^1(K)\text{ s.t. }\mu=v|_{</p>
+<p>tial K},K\in \mathcal{T}_h\}$,$H^{-\frac{1}{2}}(</p>
+<p>tial K)$为其对偶空间.</p>
+<p>为了更好的理解$H^1(\mathcal{T}_h)$中函数在边界$\mathcal{E}_h$上的行为,我们引入跃度以及平均值的概念.给定函数$v\in H^m(\mathcal{T}_h)$,在内部面$F=</p>
+<p>tial K_1\cap</p>
+<p>tial K_2\in \mathcal{E}_0$上:</p>
 <div class="math-display">\[\llbracket v\rrbracket_F=v^{K_1}|_F\vecb{n}^K_F+v^{K_2}|_F\vecb{n}^K_F,  \{v\}_F=\frac{1}{2}(v^{K_1}|_{F}+v^{K_2}|_{F})\]</div>
+<p>在方程相关方程中,考虑一测试函数$v\in H^1(\mathcal{T}_h)$满足在$</p>
+<p>tial\Omega$上取任意值,而在所有内部面$\mathcal{E}_h^0$上为零,此时方程可以转化为</p>
 <div class="math-display">\[\sum_{K\in\mathcal{T}_h}\int_K \mathcal{K}\nabla u\cdot\nabla v \mathrm{d}x=\int_\Omega fv \mathrm{d}x\]</div>
+<p>对其进行分部积分得到</p>
 <div class="math-display">\[\sum_{K\in\mathcal{T}_h}\int_K (-\nabla\cdot(\mathcal{K}\nabla u)-f)v \mathrm{d}x+\int_{
 tial\Omega} (\mathcal{K}\nabla u\cdot\vecb{n})v \mathrm{d}S=0\]</div>
+<p>所以我们得到$\forall v,\int_{</p>
+<p>tial\Omega} (\mathcal{K}\nabla u\cdot\vecb{n})v \mathrm{d}S=0$,根据变分引理就得到了在$</p>
+<p>tial\Omega$上满足Neumann边界条件$\mathcal{K}\nabla u\cdot\vecb{n}=0$.</p>
+<p>注意到,利用相关方程,得到泛函</p>
 <div class="math-display">\[J(u)=\frac{1}{2}(\mathcal{K}\nabla u,\nabla u)_{\mathcal{T}_h}-(\langle f,u\rangle)_{\mathcal{T}_h}\]</div>
+<p>但是,为了使这个泛函极小问题的解是相关方程的解,我们需要两个约束条件:</p>
+<p>\item $u$在$</p>
+<p>tial\Omega_D$上满足Dirichlet边界条件; \item $u$在$\mathcal{E}_h^0$上满足跃度$\llbracket u\rrbracket=0$.</p>
+<p>因此,我们构造Lagrange量</p>
 <div class="math-display">\[\mathcal{L}(u,\lambda)=\frac{1}{2}(\mathcal{K}\nabla u,\nabla u)_{\mathcal{T}_h}-(f,u)_{\mathcal{T}_h}+\langle \lambda\vecb{n},\llbracket u\rrbracket\rangle_{\mathcal{E}_h}+(\lambda,g_D)_{\mathcal{E}_D}\]</div>
+<p>我们记$V=H^1(\mathcal{T}_h)$以及$\Lambda=\{\mu\in H^{-\frac{1}{2}}(\mathcal{E}_h):\mu|_F=0,\forall F\in\mathcal{E}_N\}$,那么我们就将原来的问题相关方程转化为如下的弱形式:寻找$(\lambda,u)\in \Lambda\times V$使得</p>
+<div class="math-display">\[\begin{aligned}
+(\mathcal{K}\nabla u,\nabla v)_{\mathcal{T}_h}+(\lambda\vecb{n},\llbracket v\rrbracket)_{\mathcal{E}_h}+(\lambda,g_D)_{\mathcal{E}_D}&amp;=(f,v)_{\mathcal{T}_h},  \forall v\in V\\
+\langle \mu\vecb{n},\llbracket u\rrbracket\rangle_{\mathcal{E}_h}+(\mu,g_D)_{\mathcal{E}_D}&amp;=0,  \forall \mu\in \Lambda
+\end{aligned}\]</div>
 <h2>Helmholtz Equation</h2>
 <h3>Introduction</h3>
+<p>我们将考虑下面的高波数Helmholtz问题:</p>
+<div class="math-display">\[\begin{aligned}
+-\Delta u-k^2u=f,  &amp;x\in\Omega\\
+\frac{
+tial u}{
+tial n}+\ii ku=g,  &amp;x\in
+tial\Omega
+\end{aligned}\]</div>
+<p>其中$\Omega\subset\R^d,d=2,3$是凸多边形或凸多面体区域,$k\gg 1$是波数.假设$f\in L^2(\Omega)$且$g\in H^{\frac{1}{2}}(</p>
+<p>tial\Omega)$.记$(\cdot,\cdot)$和$\langle\cdot,\cdot\rangle$分别为$L^2(\Omega)$和$H^{\frac{1}{2}}(</p>
+<p>tial\Omega)$上的内积.那么上述问题的变分问题为:求$u\in H^1(\Omega)$使得</p>
+<div class="math-display">\[a(u,v)=(f,v)+\langle g,v\rangle,  \forall v\in H^1(\Omega)\]</div>
+<p>其中</p>
 <div class="math-display">\[a(u,v)=(\nabla u,\nabla v)-k^2(u,v)+\ii k\langle u,v\rangle\]</div>
+<p>我们知道$\Omega$是严格星形区域,即存在$x_\Omega\in\Omega$及常数$C_{\Omega}&gt;0$使得</p>
 <div class="math-display">\[(x-x_\Omega)\cdot n\geqslant C_{\Omega},  \forall x\in
 tial\Omega\]</div>
+<p>记$\alpha(x)=x-x_{\Omega}$,则</p>
+<div class="math-display">\[d\|v\|^2_{L^2(\Omega)}+2\re (\alpha\cdot\nabla v,v)=\int_{
+tial\Omega}\alpha\cdot\vecb{n}|v|^2\mathrm{d}S,  \forall v\in H^1(\Omega)\]</div>
+<p>以及Rellich恒等式</p>
+<div class="math-display">\[(d-2)\|\nabla v\|^2_{L^2(\Omega)}+2\re (\nabla v,\nabla(\alpha\cdot\nabla v))=\int_{
+tial\Omega}\alpha\cdot\vecb{n}|\nabla v|^2\mathrm{d}S,  \forall v\in H^2(\Omega)\]</div>
+<aside class="wiki-note">散射问题相关方程-相关方程的解满足 \begin{equation} \|u\|_{H^j(\Omega)}\lesssim k^{j-1}(\|f\|_{L^2(\Omega)}+\|g\|_{L^2( tial\Omega)}),  j=0,1 \end{equation} \begin{equation} \|u\|_{H^2(\Omega)}\lesssim k(\|f\|_{L^2(\Omega)}+\|g\|_{H^{\frac{1}{2}}( tial\Omega)}) \end{equation}</aside>
+<p>由此看出变分问题相关方程存在唯一解.</p>
+<p>设$\mathcal{M}_h$是$\Omega$的一个三角剖分,设$V_h\subset H^1(\Omega)$是$\mathcal{M}_h$上的分片线性有限元空间.则相关方程的有限元离散为:求$u\in V_h$使得</p>
+<div class="math-display">\[a(u_h,v_h)=(f,v_h)+\langle g,v_h\rangle,  \forall v_h\in V_h\]</div>
+<p>记$\mathcal{I}_h:C(\overline{\Omega})\to V_h$为插值算子,则有下面的误差估计</p>
 <div class="math-display">\[\|v-\mathcal{I}_hv\|_{L^2(\Omega)}\lesssim h^2|v|_{H^2(\Omega)},  \|v-\mathcal{I}_h v\|_{H^1(\Omega)}\lesssim h|v|_{H^2(\Omega)}\]</div>
-<div class="math-display">\[|v-\mathcal{I}_K v|_{W^{s,p}(K)}\lesssim (\diam K)^{k-s}|v|_{W^{k,p}(K)}\]</div>
+<p>我们回顾下面的定理</p>
+<aside class="wiki-note">设$(K,\mathcal{P},\mathcal{N})$是一个有限元,满足 \begin{enumerate} \item $K$关于某个球是星形的 \item $\mathcal{P}_{k-1}\subset \mathcal{P}\subset W^{k,\infty}(K)$ \item $\mathcal{N}\subset (C^m(\overline{K}))&#x27;$ \end{enumerate} 假设$1\leqslant p\leqslant \infty$,并且当$p&gt;1$时有$k-m-\frac{d}{p}&gt;0$或者当$p=1$时有$k-m-d\geqslant 0$.那么对于$0\leqslant s\leqslant k$且$v\in W^{k,p}(K)$,有 $$ |v-\mathcal{I}_K v|_{W^{s,p}(K)}\lesssim (\diam K)^{k-s}|v|_{W^{k,p}(K)} $$</aside>
+<p>对于任意$K\in\mathcal{M}_h$,利用上述定理将得到局部的$L^2$估计</p>
 <div class="math-display">\[\|v-\mathcal{I}_K v\|_{W^{0,2}(K)}\lesssim (\diam K)^{2-0}|v|_{W^{2,2}(K)}\]</div>
+<p>也即是$\|v-\mathcal{I}_hv\|_{L^2(K)}\lesssim h_K^2|v|_{H^2(K)}$,如果我们记$h=\max_{K\in\mathcal{M}_h} h_K$,对所有单元$K\in\mathcal{M}_h$求和得到</p>
 <div class="math-display">\[\|v-\mathcal{I}_hv\|_{L^2(\Omega)}=\left(\sum_{K\in\mathcal{M}_h}\|v-\mathcal{I}_K v\|_{L^2(K)}^2\right)^{1/2}\lesssim h^2\left(\sum_{K\in\mathcal{M}_h}|v|_{H^2(K)}^2\right)^{1/2}=h^2|v|_{H^2(\Omega)}\]</div>
+<p>同理我们得到$|v-\mathcal{I}_K v|_{H^1(K)}\lesssim h_K|v|_{H^2(K)}$.注意到当$h_k\leqslant 1$时,我们有$h_K^2\leqslant h_K$,因此</p>
 <div class="math-display">\[\|v-\mathcal{I}_hv\|_{H^1(\Omega)}=\|v-\mathcal{I}_hv\|_{L^2(\Omega)}+|v-\mathcal{I}_K v|_{H^1(K)}\lesssim h_k|v|_{H^2(\Omega)}\]</div>
+<p>对所有单元$K\in\mathcal{M}_h$求和得到$\|v-\mathcal{I}_h v\|_{H^1(\Omega)}\lesssim h|v|_{H^2(\Omega)}$.</p>
+<p>定义能量范数</p>
 <div class="math-display">\[\tnorm{v}=\sqrt{\|\nabla v\|^2_{L^2(\Omega)}+k^2\|v\|^2_{L^2(\Omega)}}\]</div>
+<p>接下来我们需要说明$a(u,v)$的连续性以及强制性.注意到$a(u,v)$的表达式里含边界积分,因此我们需要用到下面的边界估计</p>
 <div class="math-display">\[\|v\|_{L^2(
 tial\Omega)}\lesssim \tnorm{v}^2,  \forall v\in H^1(\Omega)\]</div>
-<div class="math-display">\[\norm{v}_{L^p(
-tial\Omega)}\leqslant C\|v\|^{1-\frac{1}{p}}_{L^p(\Omega)}\|v\|^{\frac{1}{p}}_{W^{1,p}(\Omega)},  \forall v\in W^{1,p}(\Omega)\]</div>
+<p>为了证明这个估计,我们需要用到下面的迹不等式</p>
+<aside class="wiki-note">假设$\Omega$具有Lipschitz边界,且$p$是满足$1\leqslant p\leqslant \infty$的实数.那么存在常数$C$,使得 $$ \norm{v}_{L^p( tial\Omega)}\leqslant C\|v\|^{1-\frac{1}{p}}_{L^p(\Omega)}\|v\|^{\frac{1}{p}}_{W^{1,p}(\Omega)},  \forall v\in W^{1,p}(\Omega) $$</aside>
+<p>利用迹不等式得到</p>
 <div class="math-display">\[\begin{aligned}
 k\|v\|_{L^2(
 tial\Omega)}&amp;\lesssim k\|v\|_{L^2(\Omega)}\|v\|_{H^1(\Omega)}\\
@@ -457,9 +801,12 @@ tial\Omega)}&amp;\lesssim k\|v\|_{L^2(\Omega)}\|v\|_{H^1(\Omega)}\\
 &amp;\lesssim k^2\|v\|^2_{L^2(\Omega)}+\frac{1}{2}\|\nabla v\|^2_{L^2(\Omega)}+\frac{k^2}{2}\|v\|^2_{L^2(\Omega)}  \text{注意到}k\gg 1\\
 &amp;\lesssim \tnorm{v}^2
 \end{aligned}\]</div>
+<p>由此我们容易得到半双线性形式$a(u,v)$的连续性</p>
 <div class="math-display">\[|a(u,v)|\lesssim \tnorm{u}\tnorm{v}\]</div>
+<p>然而</p>
 <div class="math-display">\[\re a(v,v)=\tnorm{v}^2-2k^2\|v\|^2_{L^2(\Omega)},  \im a(v,v)=k\|v\|^2_{L^2(
-tial\Omega)}\]</div><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Numerical_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：62.2 KB</span><span>位置：数学基础/Section/Numerical_Analysis.tex</span></div></details></section></article></main>
+tial\Omega)}\]</div>
+<p>这就说明不满足强制性.下面我们用对偶论证的方式给出误差分析.</p><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Numerical_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：62.2 KB</span><span>位置：数学基础/Section/Numerical_Analysis.tex</span></div></details></section></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

@@ -8,9 +8,9 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="Lebesgue 测度、抽象测度和积分。" />
   <title>实分析 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-cn-fix" />
-  <script defer src="../assets/search-index.js?v=20260624-cn-fix"></script>
-  <script defer src="../assets/wiki.js?v=20260624-cn-fix"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-env-fix" />
+  <script defer src="../assets/search-index.js?v=20260624-latex-env-fix"></script>
+  <script defer src="../assets/wiki.js?v=20260624-latex-env-fix"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
@@ -215,85 +215,200 @@
 <aside class="wiki-note">
 <strong>Caratheodory条件</strong>
 <p>$E\subset\R ^n$可测的充要条件是对任一集$A$,有</p>
+<div class="math-display">\[\m(A)=\m(A\cap E)+\m(A-E).\]</div>
+<p>这时$A$称为试验集.</p>
 </aside>
+<p><strong>Proof</strong>:1.<strong>必要性</strong>:由之前重要的例子,对任给的集$A$,存在$G_\delta\supset A$,使得$m(G_\delta)=\m(A)$.因为$G_\delta=(G_\delta\cap E)\cup(G_\delta-E)$,而$G_\delta\cap E$与$G_\delta-E$是互不相交的可测集,所以</p>
 <div class="math-display">\[m(G_\delta)=m(G_\delta\cap E)+m(G_\delta-E),\]</div>
+<p>从而</p>
 <div class="math-display">\[\m(A)\geqslant\m(A\cap E)+\m(A-E).\]</div>
+<p>反向不等式由外测度的次可数可加性知成立.于是相关方程得证. 2.<strong>充分性</strong>:设相关方程成立.先设$\m(E)&lt;\infty$,再由之前重要的例子,存在$G_\delta$型集$G_\delta\supset E$,使得$m(G_\delta)=\m(E)$.另一方面,由$G_\delta=E\cup(G_\delta-E)$及相关方程,得到</p>
 <div class="math-display">\[m(G_\delta)=\m(E)+\m(G_\delta-E),\]</div>
+<p>于是从$\m(E)&lt;\infty$得$\m(G_\delta-E)=0$,故$E$可测.</p>
+<p>若$\m(E)=\infty$,设$B_k=B(0,k)$是中心在原点,半径为$k$的球.令$E_k=E\cap B_k$,则</p>
 <div class="math-display">\[E=\bigcup_{k=1}^{\infty}E_k\]</div>
+<p>且$\m(E_k)&lt;\infty$.还由之前重要的例子,对每个$E_k$,存在$G_\delta$型集$G_\delta^{(k)}\supset E_k$,使得$m(G_\delta^{(k)})=\m(E_k),$再由相关方程,</p>
 <div class="math-display">\[m(G_\delta^{(k)})\geqslant\m(G_\delta^{(k)}\cap E)+\m(G_\delta^{(k)}-E)\geqslant\m(E_k)+\m(G_\delta^{(k)}-E),\]</div>
+<p>于是</p>
 <div class="math-display">\[\m(G_\delta^{(k)}-E)\leqslant m(G_\delta^{(k)})-\m(E_k)=0,\]</div>
+<p>从而</p>
+<div class="math-display">\[\m(G_\delta^{(k)}-E)=0.\]</div>
+<p>需要注意的是,并不满足$G_k\supset E$,所以不能从相关方程推出$E$可测.令$G=\bigcup_{k=1}^{\infty}G_\delta^{(k)},$则$G$可测($G$是$G_\delta$型集).$G\supset E$,且</p>
 <div class="math-display">\[G-E=\bigcup_{k=1}^{\infty}(G_\delta^{(k)}-E).\]</div>
+<p>于是</p>
 <div class="math-display">\[\m(G-E)\leqslant\sum_{k=1}^{\infty}\m(G_\delta^{(k)}-E)=0,\]</div>
+<p>即$\m(G-E)=0.$所以$G-E$可测.再由$E=G-(G-E)$推出$E$可测.</p>
 <h3>抽象测度</h3>
+<p><strong>$\sigma$代数</strong>$^\clubsuit $:设$X$是一个集合,$\mathcal{M}\subset 2^{X}$($X$的幂集)非空,且满足:</p>
+<p>1.$X\in\mathcal{M}$;</p>
+<p>2.若$A\in\mathcal{M}$,那么$A^c\in\mathcal{M}$;</p>
+<p>3.若$A_i\in\mathcal{M}(i\in I)$,其中指标集$I$为有限集,那么$\bigcup_{i\in I}A_i\in\mathcal{M}$.</p>
+<p>则称$\mathcal{M}$为$X$上的一个代数.若允许指标集$I$为可数集,那么称$\mathcal{M}$为$X$上的一个$\sigma$代数.</p>
+<p>对于$\sigma$代数$\mathcal{M}$,很明显地有$\emptyset \in \mathcal{M}$以及</p>
 <div class="math-display">\[\text{若}A_i\in\mathcal{M}(i\in I),\text{其中指标集$I$为可数集,那么}\bigcap_{i\in I}A_i\in\mathcal{M}.\]</div>
+<p><strong>引理</strong>$^\clubsuit $:任意给定指标集合$J$,如果对每个$j\in J$,$\mathcal{M}_j$都是$X$上的一个$\sigma$代数,那么</p>
 <div class="math-display">\[\mathcal{M}:=\bigcap_{j\in J}\mathcal{M}_j\]</div>
+<p>也是$X$上的一个$\sigma$代数.</p>
+<p>这个的证明只需要验证定义(毕竟现在我们除了定义啥都不知道).基于这个引理我们可以引入如下重要的概念:</p>
+<p><strong>生成$\sigma$代数</strong>$^\clubsuit $:设$\mathcal{M}\subset 2^X$为任意给定的子集($\mathcal{M}$是$X$的某些子集构成的集合),令</p>
 <div class="math-display">\[\Sigma (\mathcal{M})=\{\mathcal{A}:\mathcal{A}\supset\mathcal{M},\mathcal{A}\text{为$\sigma$代数}\}\]</div>
+<p>也就是说$\Sigma (\mathcal{M})$就是所有包含$\mathcal{M}$的$\sigma$代数组成的集合.很明显$\Sigma (\mathcal{M})$不是空集,这是因为$2^X\in \Sigma (\mathcal{M})$,令</p>
 <div class="math-display">\[\sigma (\mathcal{M}):=\bigcap_{\mathcal{A}\in \Sigma}\mathcal{A}\]</div>
+<p>这是包含$\mathcal{M}$最小的$\sigma$代数,我们称它是由$\mathcal{M}$生成的$\sigma$代数.</p>
+<p>在由集族生成的$\sigma$代数中有一个特别重要的,即由一切开集所生成的$\sigma$代数.</p>
+<p><strong>Borel代数</strong>$^\clubsuit $:给定一个拓扑空间$X$,由$X$上一切开集所生成的$\sigma$代数被称作是$X$上的Borel代数,记作$\mathcal{B}(X)$.我们把Borel代数中的元素称作是$X$上的Borel集.</p>
+<p>对于指标$i=1,2$,设集合$X_i$上分别配备了$\sigma$代数$\mathcal{M}_i$,在乘积空间$X_1\times X_2$上,仿照平面矩形的定义,我们考虑如下集合</p>
 <div class="math-display">\[\mathcal{R}=\{A_1\times A_2:A_1\in\mathcal{M}_1,A_2\in\mathcal{M}_2\}\]</div>
+<p>我们把上述集合中的元素叫做<strong>矩形</strong>.并定义如下集合</p>
 <div class="math-display">\[\tilde{\mathcal{R}}=\{A\subset X_1\times X_2:A\text{为有限个两两不交的矩形的并}\}\]</div>
+<p>按照定义,每个$\tilde{\mathcal{R}}$中的元素$A$形如</p>
 <div class="math-display">\[A=\bigcup_{i\leqslant N}(A_{i}^{(1)}\times A_{i}^{(2)})\]</div>
+<p>其中,对任意的$i,j\leqslant N,i\neq j,(A_{i}^{(1)}\times A_{i}^{(2)})\cap (A_{j}^{(1)}\times A_{j}^{(2)})=\emptyset$.</p>
+<p>我们将证明:$\tilde{\mathcal{R}}$是$X_1\times X_2$上的一个代数(注意,不是$\sigma$代数).</p>
+<p><strong>Proof</strong>:记$X=X_1\times X_2$.选取$\tilde{\mathcal{R}}$中元素$A=\bigcup_{i\leq N}(A_i^{(1)}\times A_i^{(2)})$和$B=\bigcup_{j\leq M}(B_j^{(1)}\times B_j^{(2)})$. 为了书写简洁, 我们通常把它们写成</p>
 <div class="math-display">\[A=\bigcup(A_i^{(1)}\times A_i^{(2)}),   B=\bigcup(B_j^{(1)}\times B_j^{(2)}),\]</div>
+<p>其中$A_i^{(k)},B_j^{(k)}\in\mathcal{M}_k$($k=1,2$).<br> 证明分三步:<br> 1.$A \cup B \in \tR$.这因为</p>
 <div class="math-display">\[\begin{aligned}
 A \cup B &amp;= \bigcup_{i,j} \left( \left(A_i^{(1)} \times A_i^{(2)}\right) \cup \left(B_j^{(1)} \times B_j^{(2)}\right) \right) \\
 &amp;= \bigcup_{i,j} \left[ \left(A_i^{(1)} \cap B_j^{(1)}\right) \times \left(A_i^{(2)} \cap B_j^{(2)}\right) \cup \left(A_i^{(1)} \cap B_j^{(1)}\right) \times \left(A_i^{(2)} \setminus B_j^{(2)}\right) \right. \\
 &amp;  \left. \cup \left(A_i^{(1)} \setminus B_j^{(1)}\right) \times \left(A_i^{(2)} \cap B_j^{(2)}\right) \cup \left(A_i^{(1)} \setminus B_j^{(1)}\right) \times \left(A_i^{(2)} \setminus B_j^{(2)}\right) \right]
 \end{aligned}\]</div>
+<p>上述出现的每个括号里的集合都是矩形,它们两两不交,所以 $A \cup B \in \tR$.下面的图给出了上述分解的示意图:</p>
+<p>\def\side{1.8cm}</p>
+<p>\fill[cyan!30] (0,\side) rectangle (\side,2*\side);</p>
+<p>\fill[gray!50] (\side,\side) rectangle (3*\side,2*\side);</p>
+<p>\fill[pattern=north west lines, pattern color=gray!50] (0,0) rectangle (\side,\side);</p>
+<p>\draw (\side,0) rectangle (3*\side,\side);</p>
+<p>\fill[pattern=north west lines, pattern color=gray!50] (3*\side,0) rectangle (4*\side,\side);</p>
+<p>\fill[gray!50] (\side,-\side) rectangle (3*\side,0);</p>
+<p>\fill[cyan!30] (3*\side,-\side) rectangle (4*\side,0);</p>
+<p>\fill[gray!50] (4.7*\side,1.2*\side) rectangle (5.2*\side,1.6*\side); \fill[pattern=north west lines, pattern color=gray!50] (4.7*\side,0.5*\side) rectangle (5.2*\side,0.9*\side); \fill[cyan!30] (4.7*\side,-0.1*\side) rectangle (5.2*\side,0.2*\side);</p>
+<p>\draw[line width = 2pt] (0,0) -- (0,2*\side); \draw[line width = 2pt] (0,2*\side) -- (3*\side,2*\side); \draw[line width = 2pt] (\side,-\side) -- (4*\side,-\side); \draw[line width = 2pt] (4*\side,-\side) -- (4*\side,\side); \draw (0,\side) -- (4*\side,\side); \draw (0,0) -- (4*\side,0); \draw (\side,-\side) -- (\side,2*\side); \draw (3*\side,-\side) -- (3*\side,2*\side);</p>
+<p>\node at (1.5*\side,2.2*\side) {$A_1$}; \node at (-0.2*\side,\side) {$B_1$}; \node at (2.5*\side,-1.2*\side) {$A_2$}; \node at (4.2*\side,0) {$B_2$}; \node at (2*\side,0.5*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cap B_2)$}; \node at (6.5*\side,1.4*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$}; \node at (6.5*\side,0.7*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cap B_2)$}; \node at (6.9*\side,0.05*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$};</p>
+<p>2.$A \cap B \in \tR$.这也是显然的,因为</p>
 <div class="math-display">\[\begin{aligned}
 A \cap B &amp;= \bigcup_{i,j} \left( \left(A_i^{(1)} \times A_i^{(2)}\right) \cap \left(B_j^{(1)} \times B_j^{(2)}\right) \right) \\
 &amp;= \bigcup_{i,j} \left( \left(A_i^{(1)} \cap B_j^{(1)}\right) \times \left(A_i^{(2)} \cap B_j^{(2)}\right) \right)
 \end{aligned}\]</div>
+<p>上述矩形很明显两两不交.<br> 3.$A^c \in \tR$.这因为</p>
 <div class="math-display">\[\begin{aligned}
 A^c &amp;= \left( \bigcup_i \left(A_i^{(1)} \times A_i^{(2)}\right) \right)^c = \bigcap_i \left(A_i^{(1)} \times A_i^{(2)}\right)^c \\
 &amp;= \bigcap_i \left(\underbrace{\left(A_i^{(1)c} \times A_i^{(2)c}\right) \cup \left(A_i^{(1)c} \times A_i^{(2)}\right) \cup \left(A_i^{(1)} \times A_i^{(2)c}\right)}_{\text{在$\tR$}中}\right)
 \end{aligned}\]</div>
+<p>再利用刚得到的关于相交的性质即可.至此,我们证明了代数的定义中所要求的三个条件,命题得证.</p>
+<p><strong>定义</strong>$^\clubsuit $:我们用$\mathcal{M}_1\otimes \mathcal{M}_2$表示由$\tR$生成的$\sigma$代数,即$\mathcal{M}_1\otimes \mathcal{M}_2=\sigma (\tR)$.我们把它称作是$\mathcal{M}_1$与$\mathcal{M}_2$的张量积.</p>
+<p>$\mathcal{M}_1\otimes \mathcal{M}_2$是乘积空间$X_1\times X_2$上的$\sigma$代数.事实上,它也可以由所有的矩形生成,即$\mathcal{M}_1\otimes \mathcal{M}_2=\sigma (\mathcal{R})$.</p>
+<p><strong>注意</strong>:在大部分书上最常看到的记号是$\mathcal{M}_1\times \mathcal{M}_2$,而我们这里用的是$\mathcal{M}_1\otimes \mathcal{M}_2$,这是因为$\mathcal{M}_1$与$\mathcal{M}_2$都是集合,$\mathcal{M}_1\times \mathcal{M}_2$常被用来表示所有具有$(A,B)$形式的序对组成的集合,其中$A\in\mathcal{M}_1,B\in\mathcal{M}_2$.</p>
+<p><strong>可测空间</strong>$^\clubsuit $:给定一个集合$X$和它上面的一个$\sigma$代数$\mathcal{M}$,我们将二元组$(X,\mathcal{M})$称作是一个可测空间.$\mathcal{M}$中的元素就成为可测集.</p>
+<p>有了可测空间,我们就可以定义测度</p>
 <aside class="wiki-note">
 <strong>$\sigma$代数上的测度</strong>
+<p>给定一可测空间$(X,\mathcal{M})$,若集合函数$\mu:\mathcal{M}\to [0,+\infty]$满足:<br> 1.$\mu(\emptyset)=0$;<br> 2.对于任意可列个$E_n\in\mathcal{M}$,若$E_i\cap E_j=\empty (i\neq j)$,都有</p>
 <div class="math-display">\[\mu\Bigl(\bigcup_{n=1}^{\infty}E_n\Bigr)=\sum_{n=1}^{\infty}\mu(E_n)\]</div>
+<p>则称$\mu$为$\sigma$代数$\mathcal{M}$上的一个测度,$E\in\mathcal{M}$称为$\mu$可测集.三元组$(X,\mathcal{M},\mu)$称为测度空间.</p>
 </aside>
+<p><strong>定义</strong>$^\clubsuit $:给定测度空间$(X,\mathcal{M},\mu)$:</p>
+<p>若其中任一零测集($\mu$可测)的子集都是可测集,那么就称$(X,\mathcal{M},\mu)$是完备(完全)测度空间.</p>
+<p>若存在集合$E_n\in\mathcal{M},n=1,2\cdots,$满足$\forall n,\mu(E_n)&lt;\infty$且$X=\bigcup_{n=1}^{\infty}E_n$,此时称测度$\mu$为$\sigma$有限,测度空间$(X,\mathcal{M},\mu)$被称为$\sigma$有限测度空间.</p>
+<p><strong>可测映射</strong>$^\clubsuit $:设$(X_1,\mathcal{M}_1)$和$(X_2,\mathcal{M}_2)$为两个可测空间,映射$f:X_1\to X_2$称为可测映射是指其满足</p>
 <div class="math-display">\[\forall E\in\mathcal{M}_2,f^{-1}(E)\in\mathcal{M}_1.\]</div>
+<p>如果我们令$(X_2,\mathcal{M}_2)=(\R,\mathcal{B}(\R))$,此时$f$通常被称为可测函数.一般情况下,要验证$f$为可测函数,只要验证$\forall a\in\R,f^{-1}((-\infty,a))\in\mathcal{M}_1$.</p>
+<p><strong>简单函数</strong>$^\clubsuit $:给定一个测度空间$(X,\mathcal{M},\mu)$,以及可测函数$f:X\to \mathbb{C}$,如果$f$满足如下两个条件:</p>
+<p>1.$f$只取有限多个值,即$|f(X)|&lt;\infty$;</p>
+<p>2.$f$的非零值的逆像的测度有限,即对于任意的$\lambda \in \mathbb{C}$并且$\lambda\neq 0$(根据可测性,$f^{-1}(\lambda)\in\mathcal{M}$),那么$\mu (f^{-1}(\lambda))&lt;\infty$.</p>
+<p>那么我们就称$f$是一个简单函数.我们用$\mathcal{E} (X,\mathcal{M},\mu)$来表示$(X,\mathcal{M},\mu)$上简单函数的全体.</p>
+<p>任意给定$f\in \mathcal{E}(X,\mathcal{M},\mu)$,假设$\lambda _0,\lambda _1,\cdots,\lambda _m$是$f$所有可能的取值,其中,当$i\geqslant 1$时,$\lambda _i\neq 0$.所以,$f$可以写成下面的形式:</p>
 <div class="math-display">\[f(x)=\sum_{i=0}^{m}\lambda _i\mathbf{1} _{A_i}(x),\]</div>
+<p>其中$A_i=f^{-1}(\lambda _i)\in\mathcal{M},\mu(E_i)&lt;\infty$.</p>
+<p>反过来,对任意的$m+1$个(可能相同)值$\lambda _0,\lambda _1,\cdots,\lambda _m$(要求当$i\geqslant 1$时,$\lambda _i\neq 0$),对任意的$A_i\in\mathcal{M}(i=0,1,\cdots,m)$并且当$i\geqslant 1$时,$\mu (A_i)&lt;\infty$,我们考虑函数</p>
 <div class="math-display">\[f(x)=\sum_{i=0}^{m}\lambda _i\mathbf{1} _{A_i}(x),\]</div>
+<p>这显然是一个简单函数.</p>
+<p>综上所述,我们得到:一个简单函数$f\in \mathcal{E}(X,\mathcal{M},\mu)$总是可以表示成</p>
 <div class="math-display">\[f(x)=\sum_{i=0}^{m}\lambda _i\mathbf{1} _{A_i}(x)\]</div>
+<p>的形式,其中$\lambda _0,\lambda _1,\cdots,\lambda _m\in\mathbb{C}$,并且当$i\geqslant 1$时,$\lambda _i\neq 0$;对每个$i=0,1,\dots,m$,都有$A_i\in\mathcal{M}$,并且当$i\geqslant 1$时,$\mu (A_i)&lt;\infty$.</p>
 <aside class="wiki-note">
 <strong>简单函数逼近可测函数</strong>
+<p>设$E$是$\mathbb{R}^n$上的Lebesgue可测集,则<br> 1.若$f$是$E$上的非负可测函数,则一定存在递增的简单函数列</p>
 <div class="math-display">\[0\leqslant \varphi_1(x)\leqslant \varphi_2(x)\leqslant\cdots \varphi_n(x)\leqslant \varphi_{n+1}(x)\leqslant\cdots\]</div>
+<p>使得$\{\varphi_n(x)\}$在$E$上点点收敛到$f$.<br> 2.若$f$是$E$上的可测函数,则一定存在简单函数列$\{\varphi_n(x)\}$,使得$|\varphi_n(x)|\leqslant |\varphi_{n+1}(x)|$,并且$\{\varphi_n(x)\}$在$E$上点点收敛到$f$.<br> 如果$f(x)$是有界的,那么上述收敛均是一致收敛.</p>
 </aside>
 <aside class="wiki-note">
 <strong>Egorov定理</strong>
+<p>设$(X,\mathcal{M},\mu)$为测度空间且$\mu(X)&lt;\infty$,$\{f_n\}$是$X$上一列可测函数,如果$\{f_n\}$在$E$上几乎处处收敛于有限函数$f$,那么对于任一$\delta &gt;0$,必定存在$X$的可测子集$E_{\delta}$,使得$\mu(X-E_{\delta})&lt;\delta$,且在$E_{\delta}$上$\{f_n\}$一致收敛于$f$.</p>
 </aside>
+<p><strong>定义</strong>$^\clubsuit $:设$(X,\mathcal{M},\mu)$为测度空间,$f$和$f_n(n\in\mathbb{N})$是$X$上的可测函数,若</p>
 <div class="math-display">\[\forall \varepsilon&gt;0,\lim_{n\to\infty}\mu(\{x\in X:|f_n(x)-f(x)|\geqslant\varepsilon\})=0\]</div>
+<p>我们就称$f_n$依测度收敛于$f$,记作$f_n\xrightarrow{\; \;\mu \; \;}f$.</p>
 <aside class="wiki-note">
 <strong>Lusin定理</strong>
+<p>假定$f$是$\R ^n$上的可测函数,$A=\{x\in \R^n:f(x)\neq 0\}$且$m(A)&lt;\infty$.则对任意的$\varepsilon&gt;0$,存在$g_{\varepsilon}\in C(\R^n)$且$\supp g\subset\subset A$,使得</p>
 <div class="math-display">\[\sup_{x\in \R^n}|g_{\varepsilon}(x)|\leqslant \sup_{x\in \R^n}|f(x)| \text{并且} m(\{x\in\R^n:f(x)\neq g_{\varepsilon}(x)\})&lt;\varepsilon\]</div>
 </aside>
 <h3>积分</h3>
+<p>在之前,我们在测度空间$(X,\mathcal{M},\mu)$上定义了简单函数空间$\mathcal{E}(X,\mathcal{M},\mu)$,我们知道每一个简单函数都可以写成下面的形式</p>
 <div class="math-display">\[f(x)=\sum_{i=0}^{m}\lambda _i\mathbf{1} _{A_i}(x),\]</div>
+<p>在简单函数的定义中,我们要求逆像的测度有限,其目的是来定义积分的.</p>
+<p><strong>定义</strong>$^\clubsuit $:设$\X$为测度空间,对任意的$f\in\mathcal{E}\X$,我们定义$f$的积分为</p>
 <div class="math-display">\[\int_{X}f\mathrm{d}\mu=\sum_{\lambda\in\mathbb{C}}\lambda\cdot\mu(f^{-1}(\lambda))\]</div>
+<p>当然了,这乍一看是一种较为一般的定义方式,我们最常见的定义是如下这种直观的方式:</p>
 <div class="math-display">\[\int_{X}f\mathrm{d}\mu=\sum_{i=0}^{m}\lambda _i\cdot\mu(A_i)\]</div>
+<p>这两者没有什么区别.</p>
+<p>定义了简单函数的积分之后,对于一般可测函数的积分,我们采取简单函数$\to $非负可测函数$\to $一般可测函数的路径来定义.</p>
+<p><strong>定义</strong>$^\clubsuit $:对于非负可测函数$f:X\to [0,+\infty]$,我们把它的积分定义为不超过该函数的正简单函数的积分的上确界,即</p>
 <div class="math-display">\[\int_X f\mathrm{d}\mu=\sup\left\{\int_X \varphi\mathrm{d}\mu:\varphi\in\mathcal{E}(X,\mathcal{M},\mu),0\leqslant \varphi\leqslant f\right\}\]</div>
+<p>而对于一般的可测函数$f:X\to \mathbb{C}$,如果$\int_X |f|\mathrm{d}\mu&lt;\infty$,我们就称$f$是可积的($\mu$可积).</p>
+<p>当$f:X\to \R$是实值可积函数时,我们按照它的正负两部分来定义积分:</p>
 <div class="math-display">\[\int_X f\mathrm{d}\mu=\int_X f^+\mathrm{d}\mu-\int_X f^-\mathrm{d}\mu\]</div>
+<p>其中,$f=f^+-f^-$,它们的定义为</p>
 <div class="math-display">\[f^+{x}=f(x)\mathbf{1}_{x|\{f(x)\geqslant 0\}}(x),  f^-(x)=-f(x)\mathbf{1}_{x|\{f(x)\leqslant 0\}}(x)\]</div>
+<p>例如我们可以给出下面的示意图:</p>
+<p>\draw[-{Latex[length=4mm,width=1.5mm]}] (-0.5,0) -- (6.5,0) node[right] {$x$}; \draw[-{Latex[length=4mm,width=1.5mm]}] (0,-1.5) -- (0,2.5) node[above] {$y$};</p>
+<p>\draw[domain=0:6, smooth, samples=200, thick] plot (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)});</p>
+<p>\clip (0,0) rectangle (6.5,2.5); \fill[pattern=north west lines, pattern color=gray!50] plot[domain=0:6, smooth, samples=200] (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)}) -- (6,0) -- (0,0) -- cycle;</p>
+<p>\clip (0,-1.5) rectangle (6.5,0); \fill[gray!20] plot[domain=0:6, smooth, samples=200] (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)}) -- (6,0) -- (0,0) -- cycle;</p>
+<p>\node[blue] at (5,1.8) {$f^+(x)$}; \node[red] at (3,-1.2) {$f^-(x)$}; \node at (2,0.3) {$f(x)$};</p>
+<p>当$f:X\to \mathbb{C}$是复值可积函数时,我们按照它的实部和虚部来定义积分:</p>
 <div class="math-display">\[\int_X f\mathrm{d}\mu=\int_X \operatorname{Re}(f)\mathrm{d}\mu+\mathrm{i}\int_X \operatorname{Im}(f)\mathrm{d}\mu\]</div>
 <aside class="wiki-note">
 <strong>Beppo Levi定理</strong>
+<p>给定测度空间$\X$.假设$\{f_n\}_{n\geqslant 1}$是$\X$上定义的非减的非负可测函数列,即对任意的$x\in X$,对任意的$n\geqslant 1$,我们有</p>
 <div class="math-display">\[f_n(x)\leqslant f_{n+1}(x)\]</div>
+<p>对任意的$x\in X$,$f(x)=\lim_{n\to \infty}f_n(x)$(可以取$+\infty$).那么$f$为可测函数,并且</p>
 <div class="math-display">\[\lim_{n\to \infty}\int_X f_n\mathrm{d}\mu=\int_X f\mathrm{d}\mu\]</div>
 </aside>
+<p><strong>Proof</strong>:由于对任意的$n\geqslant 1$,我们有$f(x)\geqslant f_n(x)$,所以</p>
 <div class="math-display">\[\lim_{n\to \infty}\int_X f_n\mathrm{d}\mu\leqslant \int_X f\mathrm{d}\mu\]</div>
+<p>因此我们只需要证明反向不等式:</p>
 <div class="math-display">\[\lim_{n\to \infty}\int_X f_n\mathrm{d}\mu\geqslant \int_X f\mathrm{d}\mu\]</div>
+<p>令$\varphi$是$X$上任意满足$0\leqslant\varphi\leqslant f$的非负简单函数.任意给定$\alpha\in (0,1)$,在$X$上我们有$0\leqslant\alpha\varphi&lt;\varphi\leqslant f$.定义集合列</p>
 <div class="math-display">\[E_n=\{x\in X:f_n(x)\geqslant \alpha\varphi(x)\},  n\geqslant 1\]</div>
+<p>因为$f_n$和$\alpha\varphi$是可测的,当然$E_n$也可测.又因为$f_n\leqslant f_{n+1}$,这就表明$E_n\subset E_{n+1}$,即$\{E_n\}$为单调增的集合列.并且$\bigcup^{\infty}_{n=1}E_n\subset X$.</p>
+<p>另一方面,$\forall x\in X$.若$f(x)=0$,因为$0\leqslant\varphi(x)\leqslant f(x)$,所以$\varphi(x)=0$.此外,$0\leqslant f_n(x)\leqslant f(x)$,所以$f_n(x)=0=\alpha\varphi(x)$,这个时候当然对每个$n\geqslant 1$有$x\in E_n$.若$f(x)&gt;0$,此时有$f(x)&gt;\alpha\varphi(x)$. 又因为$f_n(x)$单增收敛于$f(x)$,故存在$N(x)&gt;0$使得$f_{N(x)}(x)&gt;\alpha\varphi(x)$,这表明$x\in E_{N(x)}$.所以$X\subset \bigcup^{\infty}_{n=1}E_n$.综上$\bigcup^{\infty}_{n=1}E_n= X$.</p>
+<p>由$\lim_{n\to\infty}\int_{E_n}\varphi\mathrm{d}\mu=\int_{X}\varphi\mathrm{d}\mu$,从而</p>
 <div class="math-display">\[\int_{X}f_n\mathrm{d}\mu\geqslant \int_{E_n}f_n\mathrm{d}\mu\geqslant \alpha\int_{E_n}\varphi\mathrm{d}\mu\]</div>
+<p>两边对$n$取极限得$\lim_{n\to\infty}\int_{X}f_n\mathrm{d}\mu\geqslant \lim_{n\to\infty}\alpha\int_{E_n}\varphi\mathrm{d}\mu=\alpha\int_{X}\varphi\mathrm{d}\mu$.令$\alpha\to 1^{-}$得$\lim_{n\to\infty}\int_{X}f_n\mathrm{d}\mu\geqslant \int_{X}\varphi\mathrm{d}\mu$.所以</p>
 <div class="math-display">\[\lim_{n\to\infty}\int_{X}f_n\mathrm{d}\mu\geqslant \sup_{0\leqslant \varphi\leqslant f}\left\{\int_X \varphi\mathrm{d}\mu\right\}=\int_X f\mathrm{d}\mu\]</div>
+<p>从而$\lim_{n\to \infty}\int_X f_n\mathrm{d}\mu=\int_X f\mathrm{d}\mu$.</p>
 <aside class="wiki-note">
 <strong>Fatou引理</strong>
+<p>给定测度空间$\X$.对任意非负可测函数列$\{f_n\}$,都有</p>
 <div class="math-display">\[\int_{X}\liminf_{n\to\infty}f_n\mathrm{d}\mu\leqslant \liminf_{n\to\infty}\int_{X}f_n\mathrm{d}\mu\]</div>
 </aside>
+<p><strong>Proof</strong>:根据定义,$\liminf_{n\to\infty}f_n=\lim_{n\to\infty}\inf_{k\geqslant n}f_k$.而$\{\inf_{k\geqslant n}f_k\}$是递增的非负可测函数列,利用Beppo Levi定理,得到</p>
 <div class="math-display">\[\begin{aligned}
 \int_{X}\liminf_{n\to\infty}f_n\mathrm{d}\mu &amp;= \int_{X}\lim_{n\to\infty}\inf_{k\geqslant n}f_k\mathrm{d}\mu=\lim_{n\to\infty}\int_{X}\inf_{k\geqslant n}f_k\mathrm{d}\mu\\
 &amp;= \liminf_{n\to\infty}\int_{X}\inf_{k\geqslant n}f_k\mathrm{d}\mu\leqslant\liminf_{n\to\infty}\int_{X}f_n\mathrm{d}\mu
 \end{aligned}\]</div>
 <h4>符号测度</h4>
-<div class="math-display">\[\nu (E)=\int_{E}f\mathrm{d}\mu,  \forall E\in\mathcal{M}\]</div><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Real_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：38.7 KB</span><span>位置：数学基础/Section/Real_Analysis.tex</span></div></details></section><nav class="prev-next"><a href="numerical-analysis.html">上一页：数值分析</a><a href="set-axiomatics.html">下一页：集合与公理化</a></nav></article></main>
+<p><strong>定义</strong>$^\clubsuit $:设$(X,\mathcal{M})$为一测度空间.定义函数$\mu:\mathcal{M}\to [-\infty,+\infty]$满足:</p>
+<p>1.$\mu(\emptyset)=0$;</p>
+<p>2.$\mu$至多满足$-\infty,+\infty$中的一个;</p>
+<p>3.$\mu$满足可数可加性.</p>
+<p>则称$\mu$为$\mathcal{M}$上的符号测度.三元组$\X$自然称为符号测度空间.</p>
+<p>关于符号测度一个重要的例子如下:</p>
+<p><strong>命题</strong>$^\clubsuit $:设$\X$为测度空间,$f$为其上的可积函数.定义$\mathcal{M}$上的函数:</p>
+<div class="math-display">\[\nu (E)=\int_{E}f\mathrm{d}\mu,  \forall E\in\mathcal{M}\]</div>
+<p>则$\nu$是$\mathcal{M}$上的一个符号测度.</p><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Real_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：38.7 KB</span><span>位置：数学基础/Section/Real_Analysis.tex</span></div></details></section><nav class="prev-next"><a href="numerical-analysis.html">上一页：数值分析</a><a href="set-axiomatics.html">下一页：集合与公理化</a></nav></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

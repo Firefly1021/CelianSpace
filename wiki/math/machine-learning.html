@@ -8,9 +8,9 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="线性代数、机器学习基本要素与线性模型。" />
   <title>机器学习基础 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-cn-fix" />
-  <script defer src="../assets/search-index.js?v=20260624-cn-fix"></script>
-  <script defer src="../assets/wiki.js?v=20260624-cn-fix"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-env-fix" />
+  <script defer src="../assets/search-index.js?v=20260624-latex-env-fix"></script>
+  <script defer src="../assets/wiki.js?v=20260624-latex-env-fix"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
@@ -101,19 +101,40 @@
 <div class="math-display">\[\theta^*=\arg\min_{\theta}\mathcal{R}^{emp}_{\mathcal{D}}(\theta)\]</div>
 <p>这就是经验风险最小化准则.值得提醒的是这里的$\arg\min$是argument of minimum.</p>
 <p>根据Kolmogorov强大数定律,独立同分布的随机变量序列满足强大数定律,也就是说当训练集的大小趋于无穷时,经验风险就趋近于期望风险.但我们无法获得无限的训练样本,并且训练样本也未必很好的反应全部数据的真实情况,经验风险最小化原则很容易导致模型在训练集上的效果很好,但预测未知数据的效果差,这就是过拟合.</p>
+<aside class="wiki-note">给定假设空间$\mathcal{F},f\in \mathcal{F}$,若存在$f&#x27;\in \mathcal{F}$且$f&#x27;\neq f$使得在训练集上$f$的损失比$f&#x27;$的损失小,但在整个样本空间上$f&#x27;$的损失比$f$的损失小,那么就说$f$过度拟合训练数据</aside>
+<p>需要提醒的是,样本空间包含了两部分:训练集和测试集.</p>
 <h4>优化算法</h4>
+<p>在我们确定了训练集$\mathcal{D}$,假设空间$\mathcal{F}$以及学习准则之后,如何找到最优模型$f(\vecb{x};\theta)$就成了一个最优化问题.</p>
+<p>在机器学习中,最简单常用的优化算法是梯度下降法.首先初始化参数$\theta_0$,然后按照下面的迭代公式来计算训练集$\mathcal{D}$上风险函数的最小值:</p>
 <div class="math-display">\[\begin{aligned}
 \theta_{t+1} &amp; = \theta_t-\alpha\nabla_{\theta}\mathcal{R}^{emp}_{\mathcal{D}}(\theta_t)\\
 &amp; = \theta_t-\frac{\alpha}{N}\sum_{n=1}^N\nabla_{\theta}\mathcal{L}(y^{(n)},f(\vecb{x}^{(n)};\theta))
 \end{aligned}\]</div>
+<p>其中$\theta_t$为第$t$次迭代时的参数值.$\alpha$为步长(或学习率).</p>
+<p>然而,在梯度下降训练过程中,由于过拟合的原因,在训练样本上表现好的参数未必在测试集上最优.因此,我们可以在训练集和测试集之外,使用验证集来进行模型选择.在每次迭代时,把新的到的模型$f(\vecb{x};\theta)$在验证集上进行测试,计算错误率.如果在验证集上的错误率不再下降,就停止迭代.这种策略叫提前停止.</p>
+<p>回到梯度下降中,在每次迭代时需要计算每个样本函数上损失函数的梯度并求和,如果样本数$N$很大时,每次迭代计算的开销很大.</p>
+<p>在机器学习中,我们假设每个样本都是独立同分布的,为了减少每次迭代的计算复杂度,我们可以在每次迭代时只抽取一个样本,计算这一个样本损失函数的梯度并更新参数.这种方法称为随机梯度下降法.</p>
+<p>随机梯度下降法的缺点是无法进行并行计算.因此我们考虑一种折中的想法,在每次迭代时,随机选取一小部分训练样本来计算梯度并更新参数.这种方法称为小批量随机梯度下降法.在第$t$次迭代时,我们随机选取一个包含$K(1&lt;K&lt;N)$个样本的子集$\mathcal{S}_t$,计算这个子集上每个样本损失函数的梯度并进行平均,然后再进行参数更新:</p>
 <div class="math-display">\[\theta_{t+1}\leftarrow \theta_t-\frac{\alpha}{K}\sum_{(\vecb{x},y)\in\mathcal{S}_t}\nabla_{\theta}\mathcal{L}(y^{(n)},f(\vecb{x}^{(n)};\theta))\]</div>
 <h4>PAC学习理论</h4>
+<p>当使用机器学习方法来解决某个特定问题时,通常靠经验或者多次试验来选择合适的模型,但这样做的成本往往很高.因此希望有一套理论能够分析问题难度和计算模型能力.计算学习理论是机器学习的理论基础,其中最基础的理论就是可能近似正确(PAC)学习理论.</p>
+<p>机器学习中一个很关键的问题是期望错误和经验错误之间的差异,称为泛化错误,它可以衡量一个机器学习模型$f$是否可以很好地泛化到未知数据:</p>
 <div class="math-display">\[\mathcal{G}_{\mathcal{D}}(f)=\mathcal{R}(f)-\mathcal{R}^{emp}_{\mathcal{D}}(f)\]</div>
+<p>当训练集大小$|\mathcal{D}|$趋向于无穷大时,繁华误差趋向于零,即经验风险趋近于期望风险</p>
 <div class="math-display">\[\lim\limits_{|\mathcal{D}|\rightarrow\infty}\mathcal{G}_{\mathcal{D}}(f)=0\]</div>
+<p>然而我们并不知道真实的数据分布,也不知道真实的目标函数,那么从有限的训练样本上学习到一个期望错误为零的函数$f$是不切实际的.因此我们需要一个更弱的学习目标,只要求学习算法可以以一定的概率学习到一个近似正确的假设,这就是PAC学习的基本思想.PAC可学习的算法是指该学习算法能够在多项式时间内从合理数量的训练数据中学习到一个近似正确的假设.</p>
+<p>PAC学习可以分为两部分:</p>
+<p>1.近似正确:一个假设$f\in\mathcal{F}$是&quot;近似正确的&quot;,是指其在泛化错误$\mathcal{G}_{\mathcal{D}}(f)$小于一个界限$\varepsilon$.一般而言会要求$\varepsilon\in (0,1/2)$.如果$\mathcal{G}_{\mathcal{D}}(f)$比较大,说明模型不能用来做正确的&quot;预测&quot;.</p>
+<p>2.可能:一个学习算法有&quot;可能&quot;以$1-\delta$的概率学习到这样一个&quot;近似正确&quot;的假设.通常会取$\delta\in (0,1/2)$.</p>
+<p>PAC学习可以用下面的公式描述:</p>
 <div class="math-display">\[\mathbb{P}\left([\mathcal{R}(f)-\mathcal{R}^{emp}_{\mathcal{D}}(f)\leqslant\varepsilon]\right)\geqslant 1-\delta\]</div>
 <h3>线性模型</h3>
+<p>给定一个$D$维样本$\vecb{x}=[x_1,x_2,\cdots,x_D]^T$,其线性组合函数为</p>
 <div class="math-display">\[f(\vecb{x};\vecb{w})=w_1x_1+w_2x_2+\cdots+w_Dx_D+b=\vecb{w}^T\vecb{x}+b\]</div>
+<p>其中$\vecb{w}=[w_1,w_2,\cdots,w_D]^T$为权重向量,$b$为偏置.</p>
+<p>对于分类问题,需要引入一个非线性的决策函数$g$来预测输出目标</p>
 <div class="math-display">\[y=g(f(\vecb{x};\vecb{w}))\]</div>
+<p>这时候我们称$f(\vecb{x};\vecb{w})$为判别函数.对于二分类问题,$g$可以是符号函数,定义为</p>
 <div class="math-display">\[\begin{aligned}
 g(f(\vecb{x};\vecb{w})) &amp;= \sgn (f(\vecb{x};\vecb{w}))\\
 &amp;=
@@ -122,11 +143,22 @@ g(f(\vecb{x};\vecb{w})) &amp;= \sgn (f(\vecb{x};\vecb{w}))\\
 -1,&amp; \text{若}\; f(\vecb{x};\vecb{w})&lt;0
 \end{cases}
 \end{aligned}\]</div>
+<p>当$f(\vecb{x};\vecb{w})=0$时不进行预测.在二分类问题中,我们只需要一个线性判别函数$f(\vecb{x};\vecb{w})=\vecb{w}^T\vecb{x}+b$.特征空间$\mathbb{R}^D$中$\{\vecb{x}:f(\vecb{x};\vecb{w})=0\}$称为决策边界或决策平面.所谓的线性分类模型就是指其决策边界是线性超平面.</p>
+<aside class="wiki-note">对于训练集$\mathcal{D}=\{(\vecb{x}^{(n)},y^{(n)})\}_{n=1}^N$,如果存在权重向量$\vecb{w}^*$,对所有样本都满足$yf(\vecb{x};\vecb{w}^*)&gt;0$,那么训练集$\mathcal{D}$是线性可分的.</aside>
+<p>对于多分类问题一般需要多个线性判别函数.假设一个多分类问题的类别为$\{1,2,\cdots,C\}$,常见的设计判别函数的方式有三种:</p>
+<p>1.&quot;一对其余&quot;方式:将多分类问题转化为$C$个二分类问题,因此需要$C$个判别函数,其中第$i$个判别函数是将类别$i$和不属于类别$i$的样本分开;</p>
+<p>2.&quot;一对一&quot;方式:在$C$个类别里面任选两个$(i,j)$构造判别函数$f_{ij}$,完全忽略其他类别的样本;</p>
+<p>3.&quot;联合&quot;方式:定义一组判别函数$\{f_1,f_2,\cdots,f_C\}$,对于线性分类器,其形式为</p>
 <div class="math-display">\[f_i(\vecb{x};\vecb{w}_i)=\vecb{w}^T_i\vecb{x}+b_i\]</div>
+<p>其决策规则为</p>
 <div class="math-display">\[y=\arg\max_{i\in \{1,\cdots,C\}}f_i(\vecb{x};\vecb{w}_i)\]</div>
+<p>决策规则的意思如下:我们得到了$C$个判别函数,将$\vecb{x}$同时输入到这$C$个函数中,得到$C$个标量值,比较这$C$个标量值,选取数值最大的那个值所对应的索引作为类别.</p>
 <h4>Logistic回归</h4>
+<p>Logistic回归是一种处理二分类的线性模型,我们引入非线性函数$g:\mathbb{R}^D\to (0,1)$来预测类别标签的后验概率$\mathbb{P}(y=1|\vecb{x})$.</p>
 <div class="math-display">\[\mathbb{P}(y=1|\vecb{x})=g(f(\vecb{x};\vecb{w}))\]</div>
+<p>其中的$g$称为激活函数,在Logistic回归中我们使用Logistic函数作为激活函数.Logistic函数定义为</p>
 <div class="math-display">\[\text{Logistic}(x)=\frac{L}{1+\exp\{-K(x-x_0)\}}\]</div>
+<p>其中$x_0$表示中心点,$L$是最大值,$K$是曲线的倾斜度.当$K=1,x_0=0,L=1$时,Logistic函数称为标准Logistic函数,记为$\sigma (x)$.它的导数为</p>
 <div class="math-display">\[\sigma &#x27;(x)=\sigma (x)(1-\sigma (x))\]</div><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Machine_Learning.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：13.2 KB</span><span>位置：数学基础/Section/Machine_Learning.tex</span></div></details></section><nav class="prev-next"><a href="functional-analysis.html">上一页：泛函分析</a><a href="numerical-analysis.html">下一页：数值分析</a></nav></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>

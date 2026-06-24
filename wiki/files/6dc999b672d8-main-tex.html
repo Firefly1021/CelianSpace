@@ -8,9 +8,9 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="各种模板/湘潭大学课程报告模板/main.tex" />
   <title>main.tex | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-cn-fix" />
-  <script defer src="../assets/search-index.js?v=20260624-cn-fix"></script>
-  <script defer src="../assets/wiki.js?v=20260624-cn-fix"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-env-fix" />
+  <script defer src="../assets/search-index.js?v=20260624-latex-env-fix"></script>
+  <script defer src="../assets/wiki.js?v=20260624-latex-env-fix"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
@@ -109,40 +109,33 @@ Z_0=\sqrt{\frac{\mu_0}{\varepsilon_0}},\]</div>
 \varepsilon_r(\bm{x})\ge \alpha_\varepsilon&gt;0\]</div>
 <p>几乎处处成立.该条件保证材料参数有界且不退化.</p>
 <p>二维频域 Maxwell 双旋方程的强形式写为</p>
+<div class="math-display">\[\begin{cases}
+\curl\left(\mu_r^{-1}\curl \E\right)
+-
+k_0^2\varepsilon_r \E
+=
+-jk_0Z_0\J,
+&amp; \text{在 } \Omega \text{ 中},\\[4pt]
+\tvec\cdot\E=0,
+&amp; \text{在 } \Gamma \text{ 上}.
+\end{cases}\]</div>
+<p>其中 $\J=(J_1,J_2)^T$ 为外加电流密度,$\tvec$ 为边界 $\Gamma$ 上的单位切向量.边界条件</p>
 <div class="math-display">\[\tvec\cdot\E=0\]</div>
+<p>表示理想电导体(Perfect Electric Conductor, PEC)边界条件,即电场沿导体表面的切向分量为零.在二维情形中,这一条件是三维 PEC 条件 $\n\times\E=\mathbf{0}$ 的平面化表达.</p>
+<p>方程 相关方程 中,第一项</p>
 <div class="math-display">\[\curl(\mu_r^{-1}\curl \E)\]</div>
+<p>反映了磁响应和旋度传播效应；第二项</p>
 <div class="math-display">\[k_0^2\varepsilon_r\E\]</div>
+<p>反映介质极化和波数对电场分布的影响；右端项</p>
 <div class="math-display">\[-jk_0Z_0\J\]</div>
+<p>表示外加电流源对电磁场的激励.当 $\J=\mathbf{0}$ 时,该模型可用于讨论封闭腔体的本征振荡；当 $\J\ne\mathbf{0}$ 时,则对应受迫频域响应问题.</p>
+<p>需要指出的是,强形式要求 $\E$ 具有足够高的经典可微性,使得双旋算子能够逐点定义.然而,在非光滑区域、凹角区域或材料参数分片不连续的情况下,电场往往不具备这样的正则性.因此,强形式主要用于描述物理模型,而数值离散前应将其转化为定义在 $H(\text{curl};\Omega)$ 空间上的弱形式.</p>
 <h2>弱形式与空间分析</h2>
-<div class="math-display">\[H(\text{curl};\Omega)
-=
-\left\{
-\bm{v}\in [L^2(\Omega)]^2
-\mid
-\curl\bm{v}\in L^2(\Omega)
-\right\}.\]</div>
-<div class="math-display">\[\|\bm{v}\|_{H(\text{curl};\Omega)}
-=
-\left(
-\|\bm{v}\|_{[L^2(\Omega)]^2}^2
-+
-\|\curl\bm{v}\|_{L^2(\Omega)}^2
-\right)^{1/2},\]</div>
-<div class="math-display">\[(\bm{u},\bm{v})_{H(\text{curl})}
-=
-\int_\Omega
-\bm{u}\cdot\overline{\bm{v}} d\Omega
-+
-\int_\Omega
-(\curl\bm{u}) \overline{\curl\bm{v}} d\Omega.\]</div>
-<div class="math-display">\[H_0(\text{curl};\Omega)
-=
-\left\{
-\bm{v}\in H(\text{curl};\Omega)
-\mid
-\tvec\cdot\bm{v}=0 \text{ on } \Gamma
-\right\}.\]</div>
+<p>为了建立严谨的变分形式,不能只在普通的平方可积空间中讨论电场.若仅要求 $\E\in [L^2(\Omega)]^2$,则 $\curl\E$ 未必有平方可积意义；若要求 $\E\in [H^1(\Omega)]^2$,又会对电场施加过强的连续性条件.二维 Maxwell 方程的自然能量空间是 $H(\text{curl};\Omega)$.</p>
+<aside class="wiki-note">定义 \[ H(\text{curl};\Omega) = \left\{ \bm{v}\in [L^2(\Omega)]^2 \mid \curl\bm{v}\in L^2(\Omega) \right\}. \] 其范数为 \[ \|\bm{v}\|_{H(\text{curl};\Omega)} = \left( \|\bm{v}\|_{[L^2(\Omega)]^2}^2 + \|\curl\bm{v}\|_{L^2(\Omega)}^2 \right)^{1/2}, \] 内积为 \[ (\bm{u},\bm{v})_{H(\text{curl})} = \int_\Omega \bm{u}\cdot\overline{\bm{v}} d\Omega + \int_\Omega (\curl\bm{u}) \overline{\curl\bm{v}} d\Omega. \] 满足零切向边界条件的子空间定义为 \[ H_0(\text{curl};\Omega) = \left\{ \bm{v}\in H(\text{curl};\Omega) \mid \tvec\cdot\bm{v}=0 \text{ on } \Gamma \right\}. \] 这里的边界条件应理解为切向迹意义下的边界条件,而不是必须逐点成立的经典条件.</aside>
+<p>令</p>
 <div class="math-display">\[V=H_0(\text{curl};\Omega).\]</div>
+<p>对强形式 相关方程 乘以测试函数 $\bm{v}\in V$ 的共轭并在 $\Omega$ 上积分,得到</p>
 <div class="math-display">\[\int_\Omega
 \curl(\mu_r^{-1}\curl\E)\cdot\overline{\bm{v}} d\Omega
 -
@@ -152,6 +145,7 @@ k_0^2
 =
 \int_\Omega
 -jk_0Z_0\J\cdot\overline{\bm{v}} d\Omega.\]</div>
+<p>二维旋度 Green 公式给出</p>
 <div class="math-display">\[\int_\Omega
 \curl\phi\cdot\overline{\bm{v}} d\Omega
 =
@@ -160,6 +154,10 @@ k_0^2
 +
 \int_\Gamma
 \phi \overline{\bm{v}\cdot\tvec} dS.\]</div>
+<p>令 $\phi=\mu_r^{-1}\curl\E$,并利用 $\bm{v}\in H_0(\text{curl};\Omega)$,即 $\bm{v}\cdot\tvec=0$,边界项消失.因此得到弱形式:</p>
+<div class="math-display">\[a(\E,\bm{v})=f(\bm{v}),
+  \forall \bm{v}\in V,\]</div>
+<p>其中</p>
 <div class="math-display">\[a(\E,\bm{v})
 =
 \int_\Omega
@@ -175,6 +173,8 @@ k_0^2
 \int_\Omega
 -jk_0Z_0
 \J\cdot\overline{\bm{v}} d\Omega.\]</div>
+<aside class="wiki-note">若 $\mu_r^{-1},\varepsilon_r\in L^\infty(\Omega)$ 且 $\J\in [L^2(\Omega)]^2$,则 $a(\cdot,\cdot)$ 是 $V$ 上连续的 sesquilinear form,$f$ 是 $V$ 上连续的线性泛函.</aside>
+<p>由 Cauchy--Schwarz 不等式及 $\mu_r^{-1},\varepsilon_r$ 的有界性可得</p>
 <div class="math-display">\[|a(\bm{u},\bm{v})|
 \le
 C_\mu
@@ -184,11 +184,13 @@ C_\mu
 k_0^2C_\varepsilon
 \|\bm{u}\|_{[L^2(\Omega)]^2}
 \|\bm{v}\|_{[L^2(\Omega)]^2}.\]</div>
+<p>因此存在常数 $C&gt;0$,使得</p>
 <div class="math-display">\[|a(\bm{u},\bm{v})|
 \le
 C
 \|\bm{u}\|_{H(\text{curl};\Omega)}
 \|\bm{v}\|_{H(\text{curl};\Omega)}.\]</div>
+<p>同理,</p>
 <div class="math-display">\[|f(\bm{v})|
 \le
 k_0Z_0
@@ -197,13 +199,30 @@ k_0Z_0
 \le
 C
 \|\bm{v}\|_{H(\text{curl};\Omega)}.\]</div>
+<p>故 $a$ 与 $f$ 均连续.</p>
+<p>需要注意的是,由于双线性型中含有负的零阶项</p>
 <div class="math-display">\[-k_0^2\int_\Omega\varepsilon_r|\E|^2 d\Omega,\]</div>
+<p>问题一般不满足标准 Lax--Milgram 引理中的强制性条件.因此,频域 Maxwell 问题通常应从 Fredholm 理论角度分析.若工作波数 $k_0$ 不对应腔体的谐振频率,则齐次问题只有零解,非齐次问题存在唯一解；若 $k_0$ 恰好落在谱点上,则解可能不唯一,或需要额外相容性条件.</p>
 <h2>有限元离散化:Nédélec 边缘元</h2>
+<p>弱形式 相关方程 的解空间为 $H_0(\text{curl};\Omega)$,因此离散空间也必须保持 $H(\text{curl})$ 协调性.本文采用二维三角剖分上的最低阶第一类 Nédélec 边缘元.设</p>
 <div class="math-display">\[\mathcal{T}_h=\{K\}\]</div>
+<p>为区域 $\Omega$ 的三角剖分,$h$ 为最大单元直径.每个三角形 $K$ 有三条边,因此最低阶边缘元在每个单元上有三个局部自由度.</p>
+<p>为了说明边自由度的几何意义,图 相关式 给出一个二维三角剖分示意图.箭头表示每条边的局部方向,边上的切向积分即为 Nédélec 元的自由度.</p>
+<p>\centering</p>
+<p>\coordinate (A) at (0,0); \coordinate (B) at (2,0); \coordinate (C) at (4,0); \coordinate (D) at (0.8,1.5); \coordinate (E) at (2.8,1.6); \coordinate (F) at (1.8,3.0);</p>
+<p>\draw[thick] (A)--(B)--(D)--cycle; \draw[thick] (B)--(E)--(D)--cycle; \draw[thick] (B)--(C)--(E)--cycle; \draw[thick] (D)--(E)--(F)--cycle; \draw[very thick] (A)--(B)--(C)--(E)--(F)--(D)--cycle;</p>
+<p>\draw[-&gt;, thick] ($(A)!0.25!(B)$) -- ($(A)!0.75!(B)$); \draw[-&gt;, thick] ($(B)!0.25!(C)$) -- ($(B)!0.75!(C)$); \draw[-&gt;, thick] ($(A)!0.25!(D)$) -- ($(A)!0.75!(D)$); \draw[-&gt;, thick] ($(B)!0.25!(D)$) -- ($(B)!0.75!(D)$); \draw[-&gt;, thick] ($(B)!0.25!(E)$) -- ($(B)!0.75!(E)$); \draw[-&gt;, thick] ($(C)!0.25!(E)$) -- ($(C)!0.75!(E)$); \draw[-&gt;, thick] ($(D)!0.25!(E)$) -- ($(D)!0.75!(E)$); \draw[-&gt;, thick] ($(D)!0.25!(F)$) -- ($(D)!0.75!(F)$); \draw[-&gt;, thick] ($(E)!0.25!(F)$) -- ($(E)!0.75!(F)$);</p>
+<p>\node[below left] at (A) {$P_1$}; \node[below] at (B) {$P_2$}; \node[below right] at (C) {$P_3$}; \node[left] at (D) {$P_4$}; \node[right] at (E) {$P_5$}; \node[above] at (F) {$P_6$};</p>
+<p>\node at (1.0,0.55) {$K_1$}; \node at (2.1,1.0) {$K_2$}; \node at (3.0,0.55) {$K_3$}; \node at (1.8,2.05) {$K_4$};</p>
+<p>\node[align=center] at (2,-0.8) {箭头表示边自由度的正方向};</p>
 <p class="caption">二维三角剖分及 Nédélec 边缘元自由度示意图</p>
+<p></p>
+<p>对于一条有向边 $e$,其自由度定义为</p>
 <div class="math-display">\[\ell_e(\bm{v})
 =
 \int_e \bm{v}\cdot\tvec_e ds,\]</div>
+<p>其中 $\tvec_e$ 是边 $e$ 的单位切向量.相邻三角形共享同一条边时,该边的切向积分自由度在全局组装中被识别为同一个未知量,因此离散函数在单元之间保持切向连续.这正是 $H(\text{curl})$ 协调性的离散体现.</p>
+<p>在二维三角形单元 $K$ 上,最低阶第一类 Nédélec 局部空间可写为</p>
 <div class="math-display">\[\mathcal{N}_0(K)
 =
 \left\{
@@ -220,16 +239,20 @@ y\\ -x
 \ \middle|\
 a,b,c\in\R
 \right\}.\]</div>
+<p>若 $\lambda_1,\lambda_2,\lambda_3$ 为三角形 $K$ 的重心坐标,则三条边对应的局部基函数可表示为</p>
 <div class="math-display">\[\bm{N}_{ij}
 =
 \lambda_i\nabla\lambda_j
 -
 \lambda_j\nabla\lambda_i,
   1\le i&lt;j\le 3.\]</div>
+<p>它们满足边自由度插值关系</p>
 <div class="math-display">\[\int_{e_{kl}}
 \bm{N}_{ij}\cdot\tvec_{kl} ds
 =
 \delta_{(ij),(kl)}.\]</div>
+<p>因此,每个基函数与一条边对应,而不是与一个节点对应.</p>
+<p>全局有限元空间定义为</p>
 <div class="math-display">\[V_h=
 \left\{
 \bm{v}_h\in H_0(\text{curl};\Omega)
@@ -238,14 +261,20 @@ a,b,c\in\R
  
 \forall K\in\mathcal{T}_h
 \right\}.\]</div>
+<p>令全局基函数为</p>
 <div class="math-display">\[\{\bm{N}_1,\bm{N}_2,\ldots,\bm{N}_N\},\]</div>
+<p>其中 $N$ 为全局边自由度总数.有限元近似写为</p>
 <div class="math-display">\[\E_h=\sum_{j=1}^{N}x_j\bm{N}_j.\]</div>
+<p>将其代入弱形式,并取测试函数 $\bm{v}_h=\bm{N}_i$,得到</p>
 <div class="math-display">\[\sum_{j=1}^{N}x_j a(\bm{N}_j,\bm{N}_i)=f(\bm{N}_i),
   i=1,2,\ldots,N.\]</div>
+<p>因此得到线性代数系统</p>
 <div class="math-display">\[\bm{A}\bm{x}=\bm{b},\]</div>
+<p>其中</p>
 <div class="math-display">\[A_{ij}=a(\bm{N}_j,\bm{N}_i),
  
 b_i=f(\bm{N}_i).\]</div>
+<p>具体地,</p>
 <div class="math-display">\[A_{ij}
 =
 \int_\Omega
@@ -261,7 +290,9 @@ k_0^2
 \int_\Omega
 -jk_0Z_0
 \J\cdot\overline{\bm{N}_i} d\Omega.\]</div>
+<p>从矩阵结构上看,</p>
 <div class="math-display">\[\bm{A}=\bm{K}-k_0^2\bm{M},\]</div>
+<p>其中</p>
 <div class="math-display">\[K_{ij}
 =
 \int_\Omega
@@ -273,8 +304,12 @@ M_{ij}
 \int_\Omega
 \varepsilon_r
 \bm{N}_j\cdot\overline{\bm{N}_i} d\Omega.\]</div>
+<p>矩阵 $\bm{K}$ 对应旋度刚度项,矩阵 $\bm{M}$ 对应质量项.PEC 边界条件 $\tvec\cdot\E_h=0$ 在离散层面上等价于将边界边上的自由度设为零,或在组装后对相应行列进行消元处理.</p>
 <h2>数值计算与高性能实现</h2>
+<p>在实际计算中,二维 Maxwell 方程经过 Nédélec 边缘元离散后,会得到复线性代数系统</p>
 <div class="math-display">\[\bm{A}\bm{x}=\bm{b}.\]</div>
+<p>虽然每个三角形单元只有三个局部自由度,但网格细化后全局边自由度数量仍可能达到数万甚至数十万级.因此,稀疏矩阵存储、矩阵组装方式和线性求解器选择都会显著影响程序性能.</p>
+<p>由于 Nédélec 基函数只在有限个相邻单元上非零,全局矩阵 $\bm{A}$ 是高度稀疏的.若使用稠密矩阵存储,内存开销会随自由度数 $N$ 按 $O(N^2)$ 增长,无法处理大规模问题.实际实现中应采用 CSR、CSC 等压缩稀疏格式.有限元组装时,也不应逐项向稀疏矩阵中动态插入元素.更高效的做法是遍历所有三角形单元,先收集局部矩阵贡献对应的行号、列号和数值,存入三元组列表,最后一次性构造稀疏矩阵.</p>
 <div class="code-block"><div class="code-title"><span>LaTeX 代码</span><em>tex</em></div><pre><code class="language-tex">#include &lt;Eigen/Sparse&gt;
 #include &lt;Eigen/Dense&gt;
 #include &lt;complex&gt;
@@ -307,6 +342,7 @@ SparseMatrixC A(N, N);
 // Eigen 会自动把相同位置的三元组贡献累加
 A.setFromTriplets(tripletList.begin(), tripletList.end());
 A.makeCompressed();</code></pre></div>
+<p>在上述代码中,函数 \texttt{compute\_local\_matrix\_2d} 用于计算单个三角形单元上的局部矩阵.对于单元 $K$,有</p>
 <div class="math-display">\[A_{ij}^{(K)}
 =
 \int_K
@@ -318,6 +354,7 @@ k_0^2
 \varepsilon_r
 \bm{N}_j\cdot\overline{\bm{N}_i} dK,
   i,j=1,2,3.\]</div>
+<p>最低阶二维 Nédélec 元在单元上的旋度为常数,因此旋度刚度项计算较简单；质量矩阵项通常可通过高斯积分计算.若材料参数在单元内为常数,则</p>
 <div class="math-display">\[A_{ij}^{(K)}
 =
 \mu_r^{-1}
@@ -327,6 +364,7 @@ k_0^2
 k_0^2\varepsilon_r
 \int_K
 \bm{N}_j\cdot\overline{\bm{N}_i} dK.\]</div>
+<p>线性系统求解方面,若自由度规模较小,可以使用 SparseLU、Pardiso 或 SuperLU 等稀疏直接求解器；若问题规模较大,则更适合使用 Krylov 子空间迭代法,如 GMRES 或 BiCGSTAB.由于频域 Maxwell 矩阵通常不是正定矩阵,不能简单使用共轭梯度法.实际计算中常配合 ILU、代数多重网格或 Maxwell 专用预处理技术来提高迭代收敛速度.</p>
 <div class="code-block"><div class="code-title"><span>LaTeX 代码</span><em>tex</em></div><pre><code class="language-tex">#include &lt;Eigen/SparseLU&gt;
 Eigen::Matrix&lt;Complex, Eigen::Dynamic, 1&gt; b(N);
 Eigen::Matrix&lt;Complex, Eigen::Dynamic, 1&gt; x(N);
@@ -351,23 +389,31 @@ if (solver.info() != Eigen::Success) {
 x = solver.solve(b);
 std::cout &lt;&lt; &quot;Iterations: &quot; &lt;&lt; solver.iterations() &lt;&lt; std::endl;
 std::cout &lt;&lt; &quot;Estimated error: &quot; &lt;&lt; solver.error() &lt;&lt; std::endl;</code></pre></div>
+<p>综上,二维 Nédélec 边缘元的高效实现主要包括三个环节:首先,在三角形单元上计算局部刚度矩阵和质量矩阵；其次,通过三元组列表批量构造全局稀疏矩阵；最后,根据问题规模选择稀疏直接求解器或带预处理的迭代求解器.这样的实现方式既保持了 Maxwell 方程的离散结构,也满足大规模数值计算的效率要求.</p>
 <h2>数值实验与结果分析</h2>
+<p>为了验证前述二维 Nédélec 边缘元离散格式的正确性,本文在单位正方形区域</p>
 <div class="math-display">\[\Omega=(0,1)^2\]</div>
+<p>上进行数值实验.区域被均匀划分为三角形网格,并在每个三角形单元上采用最低阶第一类 Nédélec 边缘元.为了便于误差计算,本文采用制造解方法,取精确电场为</p>
 <div class="math-display">\[\E(x,y)
 =
 \begin{pmatrix}
 \sin(\pi x)\sin(\pi y)\\
 \sin(\pi x)\sin(\pi y)
 \end{pmatrix}.\]</div>
+<p>该精确解在边界上满足二维 PEC 条件.具体而言,在 $y=0$ 和 $y=1$ 上有 $E_x=0$,在 $x=0$ 和 $x=1$ 上有 $E_y=0$,因此边界切向分量满足</p>
 <div class="math-display">\[\tvec\cdot\E=0,
   \text{on }
 tial\Omega.\]</div>
+<p>随后由方程</p>
 <div class="math-display">\[\curl\curl\E-k_0^2\E=\bm{f}\]</div>
+<p>反推出右端项 $\bm{f}$,从而保证数值解可以与已知精确解进行比较.</p>
+<p>误差计算采用如下三个指标:</p>
 <div class="math-display">\[\|\E-\E_h\|_{L^2(\Omega)},
  
 \|\curl(\E-\E_h)\|_{L^2(\Omega)},
  
 \|\E-\E_h\|_{H(\curl;\Omega)}.\]</div>
+<p>其中</p>
 <div class="math-display">\[\|\E-\E_h\|_{H(\curl;\Omega)}
 =
 \left(
@@ -375,21 +421,42 @@ tial\Omega.\]</div>
 +
 \|\curl(\E-\E_h)\|_{L^2(\Omega)}^2
 \right)^{1/2}.\]</div>
+<p>在相邻两层网格之间,观测收敛阶定义为</p>
 <div class="math-display">\[\text{rate}
 =
 \frac{\log(e_h/e_{h/2})}{\log 2},\]</div>
+<p>其中 $e_h$ 表示网格尺寸为 $h$ 时的误差.</p>
+<p>\centering</p>
 <figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/figures/convergence.png" alt="convergence.png" loading="lazy" /><figcaption>各种模板/湘潭大学课程报告模板/figures/convergence.png</figcaption></figure>
 <p class="caption">最低阶 Nédélec 边缘元的误差收敛曲线</p>
+<p></p>
+<p>图 相关式 给出了 $L^2$ 误差、旋度误差以及 $H(\curl)$ 误差随网格尺寸 $h$ 变化的双对数曲线.从图中可以看到,随着网格逐步加密,三类误差均稳定下降,并且在双对数坐标下基本呈直线分布.这说明数值解确实随着网格细化收敛到精确解.由于本文使用的是最低阶 Nédélec 边缘元,理论上在 $H(\curl)$ 范数下通常期望得到接近一阶的收敛速度；图中的误差曲线与这一理论预期一致.</p>
+<p>同时可以观察到,$H(\curl)$ 误差曲线与旋度误差曲线较为接近.这是因为在本算例中旋度误差相对 $L^2$ 误差更大,对 $H(\curl)$ 范数的贡献占主导.因此,$H(\curl)$ 误差主要反映了旋度项的逼近精度.这也符合 Maxwell 问题的特点:旋度算子是方程中的主导微分算子,数值格式必须优先保证旋度结构的正确离散.</p>
+<p>\centering</p>
 <figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/figures/rates.png" alt="rates.png" loading="lazy" /><figcaption>各种模板/湘潭大学课程报告模板/figures/rates.png</figcaption></figure>
 <p class="caption">不同网格尺寸下的观测收敛阶</p>
+<p></p>
+<p>图 相关式 给出了由相邻网格误差计算得到的观测收敛阶.第一层网格由于没有更粗网格作为比较对象,程序中将其收敛阶记为 $0$,该点不参与实际收敛性判断.从后续网格可以看到,$L^2$ 误差、旋度误差和 $H(\curl)$ 误差的观测收敛阶均逐渐接近 $1$.这说明在当前光滑制造解和规则三角网格条件下,最低阶 Nédélec 元表现出稳定的一阶收敛行为.</p>
+<p>需要指出的是,这里的 $L^2$ 误差并未表现出明显高于一阶的超收敛现象.这是可以接受的,因为本文程序采用最低阶边缘元,并且电场自由度定义在边上而非节点上,数值场的重构方式与传统节点元不同.因此,更应关注 $H(\curl)$ 范数和旋度误差的收敛表现.从结果看,二者均接近一阶,说明离散格式与理论分析相吻合.</p>
+<p>\centering</p>
 <figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/figures/solution_Ex.png" alt="solution_Ex.png" loading="lazy" /><figcaption>各种模板/湘潭大学课程报告模板/figures/solution_Ex.png</figcaption></figure>
 <p class="caption">单元重心处计算得到的电场 $E_x$ 分量</p>
+<p></p>
+<p>图 相关式 展示了最细网格上单元重心处计算得到的 $E_x$ 分量.由于制造解中</p>
 <div class="math-display">\[E_x=\sin(\pi x)\sin(\pi y),\]</div>
+<p>其在边界处为零,在区域中心附近达到最大值.数值结果呈现出与精确解一致的空间分布:边界附近数值接近零,中心区域数值较大,并且整体关于区域中心具有对称性.这说明数值解不仅在误差范数意义下收敛,而且在场分布形态上也正确再现了精确解的主要特征.</p>
+<p>\centering</p>
 <figure class="asset-figure"><img src="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/figures/solution_quiver.png" alt="solution_quiver.png" loading="lazy" /><figcaption>各种模板/湘潭大学课程报告模板/figures/solution_quiver.png</figcaption></figure>
 <p class="caption">计算得到的二维电场矢量分布</p>
+<p></p>
+<p>图 相关式 给出了二维电场的矢量分布.由于制造解满足 $E_x=E_y$,因此区域内部的电场方向主要沿 $(1,1)$ 方向分布.靠近边界时,$\sin(\pi x)\sin(\pi y)$ 逐渐趋近于零,因此箭头长度明显变小；在区域中心附近,电场幅值最大,箭头也最明显.这与图 相关式 中的标量云图相互印证.图中箭头数量较多是由于可视化时使用了较密的单元重心采样点,并不表示数值解存在振荡或不稳定.</p>
+<p>综合上述数值结果可以看出,本文实现的二维最低阶 Nédélec 边缘元程序能够正确处理 PEC 边界条件,能够稳定逼近制造解,并在 $L^2$、旋度以及 $H(\curl)$ 范数下表现出接近一阶的收敛速度.这验证了前文弱形式推导、边缘元离散以及稀疏矩阵装配方法的正确性,也说明该实现可以作为进一步研究复杂二维电磁问题的基础.</p>
 <h2>先验误差分析</h2>
+<p>为了分析有限元近似解 $\E_h$ 与精确解 $\E$ 的误差,需要借助 Nédélec 边缘元的插值理论.设连续解满足</p>
 <div class="math-display">\[\E\in V=H_0(\text{curl};\Omega),\]</div>
+<p>离散解满足</p>
 <div class="math-display">\[\E_h\in V_h\subset V.\]</div>
+<p>设 $\Pi_h$ 为 Nédélec 插值算子.对于足够光滑的向量场 $\E$,插值函数 $\Pi_h\E$ 满足边自由度保持性质:</p>
 <div class="math-display">\[\int_e
 (\Pi_h\E)\cdot\tvec_e ds
 =
@@ -397,6 +464,8 @@ tial\Omega.\]</div>
 \E\cdot\tvec_e ds,
  
 \forall e\in\mathcal{E}_h,\]</div>
+<p>其中 $\mathcal{E}_h$ 表示网格边集合.该性质说明,Nédélec 插值匹配的是边上的切向积分,而不是节点函数值.</p>
+<p>在适当正则性假设下,最低阶 Nédélec 插值具有如下估计:</p>
 <div class="math-display">\[\|\E-\Pi_h\E\|_{[L^2(\Omega)]^2}
 +
 h\|\curl(\E-\Pi_h\E)\|_{L^2(\Omega)}
@@ -407,14 +476,18 @@ C h^r
 +
 \|\curl\E\|_{H^r(\Omega)}
 \right),\]</div>
+<p>其中 $C$ 与网格尺寸 $h$ 无关,$r&gt;0$ 取决于区域几何、材料系数和解的正则性.对于光滑区域和光滑系数,最低阶边缘元通常可以观察到接近一阶的收敛；而在凹角、尖角或材料跳跃界面附近,解可能出现奇异性,此时实际收敛阶往往低于一阶.</p>
+<p>由 Galerkin 正交性可得</p>
 <div class="math-display">\[a(\E-\E_h,\bm{v}_h)=0,
  
 \forall \bm{v}_h\in V_h.\]</div>
+<p>若问题在所考虑频率下满足稳定性条件,则由 Céa 型估计可得</p>
 <div class="math-display">\[\|\E-\E_h\|_{H(\text{curl};\Omega)}
 \le
 C
 \inf_{\bm{v}_h\in V_h}
 \|\E-\bm{v}_h\|_{H(\text{curl};\Omega)}.\]</div>
+<p>取 $\bm{v}_h=\Pi_h\E$,可进一步得到</p>
 <div class="math-display">\[\|\E-\E_h\|_{H(\text{curl};\Omega)}
 \le
 C h^r
@@ -423,6 +496,8 @@ C h^r
 +
 \|\curl\E\|_{H^r(\Omega)}
 \right).\]</div>
+<p>该估计说明,误差不仅依赖于网格尺寸 $h$,还依赖于精确解的光滑性.在实际电磁计算中,场量常在几何奇点、材料界面或边界角点附近变化剧烈.若采用均匀网格细化,为了降低局部奇异区域的误差,往往需要在整个区域上增加大量自由度,计算成本较高.因此,后验误差估计驱动的自适应网格细化具有重要意义.</p>
+<p>自适应网格细化的基本流程可概括为</p>
 <div class="math-display">\[\text{求解}
 \longrightarrow
 \text{误差估计}
@@ -432,7 +507,13 @@ C h^r
 \text{局部加密}
 \longrightarrow
 \text{重新求解}.\]</div>
-<h2>结论</h2><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/main.tex">打开原始文件</a><span>分类：各种模板</span><span>类型：TeX</span><span>大小：30.8 KB</span><span>位置：各种模板/湘潭大学课程报告模板/main.tex</span></div></details></section></article></main>
+<p>对于 Maxwell 问题,误差指示子通常与单元残差、边界残差以及相邻单元之间的跳跃项有关.通过局部加密,可以在自由度增长较小的情况下提高整体计算精度.</p>
+<h2>结论</h2>
+<p>本文围绕二维频域 Maxwell 方程的有限元离散展开讨论,从数学模型、函数空间、弱形式、边缘元离散、稀疏矩阵实现以及误差估计等方面说明了 Nédélec 边缘元的必要性和优势.通过将问题限制在二维有界区域 $\Omega\subset\R^2$ 上,本文降低了模型复杂度,同时保留了 Maxwell 方程中最核心的旋度结构和切向连续性要求.</p>
+<p>在理论方面,本文首先建立了带 PEC 边界条件的二维双旋强形式模型,并给出了二维旋度算子的定义.随后引入 $H(\text{curl};\Omega)$ 与 $H_0(\text{curl};\Omega)$ 空间,通过二维旋度 Green 公式推导了弱形式.该弱形式降低了对电场经典可微性的要求,使问题能够在更自然的能量空间中进行分析.</p>
+<p>在离散方面,本文采用三角剖分上的最低阶第一类 Nédélec 边缘元.该方法以边上的切向积分作为自由度,能够保持跨单元边界的切向连续性,并避免传统节点元在 Maxwell 问题中可能产生的非物理伪模态.离散后得到的矩阵系统具有高度稀疏性,可通过三元组批量装配和稀疏求解器高效求解.</p>
+<p>最后,本文结合制造解算例展示了误差收敛曲线、电场分量云图和矢量场分布.数值结果表明,在光滑解和规则三角网格条件下,最低阶 Nédélec 边缘元在 $L^2$、旋度以及 $H(\curl)$ 范数下均表现出接近一阶的收敛速度.进一步地,本文给出了基于 Nédélec 插值和 Céa 型估计的先验误差分析,说明数值解的收敛速度不仅取决于网格尺寸,也受到区域几何奇点和材料不连续性的影响.在更复杂的计算电磁问题中,结合后验误差估计的自适应网格细化将是进一步提高精度和效率的重要方向.</p>
+<p>总体而言,二维 Maxwell 模型虽然是对完整三维电磁问题的简化,但它完整保留了 $H(\text{curl})$ 空间、PEC 边界条件、Nédélec 边自由度和稀疏矩阵求解等关键结构.通过该模型,可以较系统地理解边缘元方法在计算电磁学中的数学基础与实现路径.</p><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/%E6%B9%98%E6%BD%AD%E5%A4%A7%E5%AD%A6%E8%AF%BE%E7%A8%8B%E6%8A%A5%E5%91%8A%E6%A8%A1%E6%9D%BF/main.tex">打开原始文件</a><span>分类：各种模板</span><span>类型：TeX</span><span>大小：30.8 KB</span><span>位置：各种模板/湘潭大学课程报告模板/main.tex</span></div></details></section></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>

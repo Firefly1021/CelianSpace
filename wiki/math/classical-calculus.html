@@ -8,9 +8,9 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="微分、积分与经典分析结果。" />
   <title>经典微积分 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-cn-fix" />
-  <script defer src="../assets/search-index.js?v=20260624-cn-fix"></script>
-  <script defer src="../assets/wiki.js?v=20260624-cn-fix"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-env-fix" />
+  <script defer src="../assets/search-index.js?v=20260624-latex-env-fix"></script>
+  <script defer src="../assets/wiki.js?v=20260624-latex-env-fix"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
@@ -101,26 +101,55 @@ tial x_n}(a)\\
 <p>由拟微分中值定理可知</p>
 <div class="math-display">\[\|g(x_{1})-g(x_{2})\|\leqslant\frac{1}{2}\|x_{1}-x_{2}\|,\forall x_{1},x_{2}\in\overline{{B_{\delta}(0)}}.\]</div>
 <p>给定 $y\in B_{\frac{\delta}{2}}(0)$ ,我们在 $B_{\delta}(0)$ 中解方程</p>
+<div class="math-display">\[f(x)=y,\mathrm{\mathrm{ }}\mathrm{\mathrm{H }}x=y-g(x).\]</div>
+<p>记 $\varphi(x)=y-g(x)$ 当 $x\in\overline{{B_{\delta}(0)}}$ 时，</p>
+<div class="math-display">\[\|\varphi(x)\|\leqslant\|y\|+\|g(x)\|&lt;\frac{\delta}{2}+\frac{1}{2}\|x\|\leqslant\delta.\]</div>
+<p>这说明 $\varphi\big(\overline{{B_{\delta}(0)}}\big)\subset B_{\delta}(0)$ 当 $x_{1},x_{2}\in\overline{{B_{\delta}(0)}}$ 时,</p>
 <div class="math-display">\[\|\varphi(x_{1})-\varphi(x_{2})\|=\|g(x_{2})-g(x_{1})\|\leqslant{\frac{1}{2}}\|x_{1}-x_{2}\|.\]</div>
+<p>根据压缩映射原理,方程相关方程在 $\overline{{B_{\delta}(0)}}$ 中有唯一解,记为$x_{y}$:由相关方程式可知 $x_{y}\in B_{\delta}(0)$ 令</p>
 <div class="math-display">\[U=f^{-1}\Big(B_{\frac{\delta}{2}}(0)\Big)\cap B_{\delta}(0),V=B_{\frac{\delta}{2}}(0),\]</div>
+<p>则我们已经证明了 $f|_{U}:U\to V$ 是一一映射,其逆映射 $h(y)=x_{y}$ 满足</p>
 <div class="math-display">\[y-g(h(y))=h(y).\]</div>
+<p>(1) $h:V\to U$ 是连续映射:当 $y_{1}$ $y_{2}\in V$ 时,</p>
 <div class="math-display">\[h(y_{1})-h(y_{2})\|\leqslant\|y_{1}-y_{2}\|+\|g(h(y_{1}))-g(h(y_{2}))\|\leqslant\|y_{1}-y_{2}\|+\frac{1}{2}\|h(y_{1})-h(y_{2})\|\]</div>
+<p>这说明 $\|h(y_{1})-h(y_{2})\|\leqslant2\|y_{1}-y_{2}\|,\forall y_{1},y_{2}\in V.$<br> (2) $h:V\to U$ 是可微映射:设 $y_{0}\in V$ ,则对 $y\in V$ 有</p>
 <div class="math-display">\[\begin{aligned}
 h(y)-h(y_{0})&amp;=(y-y_{0})-\big[g(h(y))-g(h(y_{0}))\big]\\
 &amp;=(y-y_{0})-D g(h(y_{0}))\cdot(h(y)-h(y_{0}))+o\big(\|h(y)-h(y_{0})\|\big).
 \end{aligned}\]</div>
+<p>利用$D f=I_{n}+D g$和(1),上式可改写为</p>
 <div class="math-display">\[D f(h(y_{0}))\cdot(h(y)-h(y_{0}))=(y-y_{0})+o\big(\|y-y_{0})\|\big),\]</div>
+<p>因而</p>
 <div class="math-display">\[h(y)-h(y_{0})=\left[D f(h(y_{0}))\right]^{-1}\cdot(y-y_{0})+o\big(\|y-y_{0}\|\big).\]</div>
+<p>这说明 $h$ 在 $y_{0}$ 处可微.<br> (3) $h:V\to U$ 为 $C^{k}$ 映射:由(2)可知</p>
+<div class="math-display">\[D h(y)=\left[D f(h(y))\right]^{-1}, \forall y\in V.\]</div>
+<p>由 $f\in C^{k}$ 知 $D f\in C^{k-1}$.由(2)及相关方程式可推出 $D h$ 连续,即 $h\in C^{1}$ ,再由 $D f\in C^{k-1}$ $h\in C^{1}$ 及相关方程式可推出 $D h\in C^{1}$ 即 $h\in C^{2}$ .依此类推,最后我们就得到 $h\in C^{k}$.</p>
+<p><strong>命题</strong>$^\clubsuit $:设函数$f$在凸域$D$中处处可微,那么<br> (i)$f$为凸函数$\Longleftrightarrow$</p>
+<div class="math-display">\[f(y)\geqslant f(x)+\nabla f(x)\cdot(y-x),\forall x,y\in D.\]</div>
+<p>(ii)当$f\in C^{2}(D)$时,$f$为凸函数$\Longleftrightarrow\nabla^{2}f$(半正定).</p>
+<p><strong>Proof</strong>: (i)$&quot;\Longrightarrow&quot;$任给$x,y\in D,t\in(0,1)$ ,有</p>
 <div class="math-display">\[t\big[f(y)-f(x)\big]\geqslant f(x+t(y-x))-f(x)=\nabla f(x)\cdot t(y-x)+o\big(t\|y-x\|\big),\]</div>
+<p>上式两边除以 $t$ ，然后令 $t\to0^{+}$ 即得相关方程式 $\Longleftarrow^{\mathfrak{N}}$ 任给 $x,y\in D$ $t\in(0,1)$ ，记 $z=t x+(1-t)y,$ 则</p>
 <div class="math-display">\[f(x)\geqslant f(z)+\nabla f(z)\cdot(x-z),f(y)\geqslant f(z)+\nabla f(z)\cdot(y-z).\]</div>
+<p>这说明</p>
 <div class="math-display">\[t f(x)+(1-t)f(y)\geqslant f(z)+\nabla f(z)\cdot\left[t(x-z)+(1-t)(y-z)\right]=f(z).\]</div>
+<p>(ii) $&quot;\Longleftarrow&quot;$设 $f\in C^{2}(D)$ ,根据之前的讨论,任给 $x,y\in D$ ,存在 $\xi\in D_{\mathrm{i}}$ 使得</p>
 <div class="math-display">\[f(\boldsymbol{y})=f(\boldsymbol{x})+\nabla f(\boldsymbol{x})\cdot(\boldsymbol{y}-\boldsymbol{x})+\frac{1}{2}(\boldsymbol{y}-\boldsymbol{x})\nabla^{2}f(\boldsymbol{\xi})(\boldsymbol{y}-\boldsymbol{x})^{\mathrm{T}}.\]</div>
+<p>由 $\nabla^{2}f\geqslant0$ 知相关方程式成立,再由(i)知 $f$ 为凸函数</p>
+<p>$&quot;\Longrightarrow&quot;$(反证法):如果$\nabla^{2}f(x)$不是半正定的,则存在 $\mathbb{R}^{n}$ 中的单位向量 $h$, 使得 $h\nabla^{2}f(x)h^{\mathrm{T}}$ $&lt;0$ 对一元函数 $\varphi(t)=f(x+t h)$ 应用Taylor公式可得</p>
 <div class="math-display">\[f(x+t h)=f(x)+t\nabla f(x)\cdot h+{\frac{1}{2}}t^{2}h\nabla^{2}f(x)h^{\mathrm{T}}+o(t^{2}) (t\to0).\]</div>
+<p>当 $t\neq0$ 充分小时,上式右端第三项小于零,这与相关方程式相矛盾.</p>
 <aside class="wiki-note">
 <strong>Taylor公式</strong>
+<p>设 $D\subset\mathbb{R}^{n}$为凸域, $f\in C^{m+1}(D)$ ,$a\in D$ ,则任给 $x\in D,$ 存在 $\theta\in(0,1)$ 使得</p>
 <div class="math-display">\[f(x)=\sum_{|\alpha|\leqslant m}{\frac{\mathrm{D}^{\alpha}f(a)}{\alpha!}}(x-a)^{\alpha}+\sum_{|\alpha|=m+1}{\frac{\mathrm{D}^{\alpha}f(a+\theta(x-a))}{\alpha!}}(x-a)^{\alpha}.\]</div>
 </aside>
+<p><strong>例</strong>$^\spadesuit$ :设$f:\mathbb{R}^2\to\mathbb{R}$为$ C^k(k\geqslant 1)$函数,$\frac{</p>
+<p>tial f}{</p>
+<p>tial x}(x^0,y^0)\neq 0$,在$(x^0,y^0)$附近解方程 $f(x,y)=f(x_{0},y_{0})$.</p>
+<p>显然,$(x_{0},y_{0})$ 是方程的解,利用反函数定理,我们可以在 $(x_{0},y_{0})$ 附近找到别的解.为此,令</p>
 <div class="math-display">\[F:\mathbb{R}^{2}\to\mathbb{R}^{2},F(x,y)=(x,f(x,y)).\]</div>
+<p>在 $(x_{0},y_{0})$ 处，有</p>
 <div class="math-display">\[\operatorname*{det}D F(x^{0},y^{0})=\left|{\begin{array}{c c}{1}&amp;{0}\\ {{\cfrac{
 tial f}{
 tial x}}(x^{0},y^{0})}&amp;{{\cfrac{
@@ -128,38 +157,57 @@ tial f}{
 tial y}}(x^{0},y^{0})}\end{array}}\right|={\cfrac{
 tial f}{
 tial y}}(x^{0},y^{0})\neq0.\]</div>
+<p>由反函数定理,在 $(x^{0},y^{0})$ 附近 $F$ 为可逆映射.于是当 $x$ 在 $x^{0}$ 附近时,记</p>
 <div class="math-display">\[F^{-1}\bigl(x,f(x^{0},y^{0})\bigr)=\bigl(\varphi(x),\psi(x)\bigr),\]</div>
+<p>$\varphi(x),\psi(x)$ 均为 $C^{k}$ 函数.根据 $F$ 的定义可得</p>
 <div class="math-display">\[\bigl(\varphi(x),f(\varphi(x),\psi(x))\bigr)=\bigl(x,f(x^{0},y^{0})\bigr),\]</div>
+<p>这说明 $\varphi(x)=x,f(x,\psi(x))=f(x^{0},y^{0})$ 对 $x$ 求导还可得到</p>
 <div class="math-display">\[{\frac{
 tial f}{
 tial x}}(x,\psi(x))+{\frac{
 tial f}{
 tial y}}\big(x,\psi(x)\big)\cdot\psi^{\prime}(x)=0,\]</div>
+<p>从而有</p>
 <div class="math-display">\[\psi^{\prime}(x)=-\Big[\frac{
 tial f}{
 tial y}(x,\psi(x))\Big]^{-1}\frac{
 tial f}{
 tial x}(x,\psi(x)).\]</div>
+<p>$y=\psi(x)$ 称为由 $f(x,y)=f(x_{0},y_{0})$ 所决定的隐函数.</p>
 <aside class="wiki-note">
 <strong>隐映射定理</strong>
+<p>设 $W\subset\mathbb{R}^{n+m}$ 为开集, $W$ 中的点用 $(x,y)$ 表示,其中 $x=$ $\left(x_{1},x_{2},\cdots,x_{n}\right)$ ,$y=(y_{1},y_{2},\cdots,y_{m}).f:W\to\mathbb{R}^{m}$ 为 $C^{k}$ 映射,用分量表示为</p>
 <div class="math-display">\[f(x,y)=(f_{1}(x,y),f_{2}(x,y),\cdots,f_{m}(x,y)).\]</div>
+<p>设 $(x^{0},y^{0})\in W$ ,且$\operatorname*{det}D_{y}f(x^{0},y^{0})\neq0$ ,其中 $\begin{array}{r}{D_{y}f(x,y)=\left(\frac{</p>
+<p>tial f_{i}}{</p>
+<p>tial y_{j}}(x,y)\right)_{m\times m}}\end{array}$ 则存在 $x^{0}$ 的开邻域 $V\subset\mathbb{R}^{n}$ 以及唯一的 $C^{k}$ 映射 $\psi:V\to{\mathbb{R}}^{m}$ 使得</p>
+<p>(1)$y^{0}=\psi(x^{0}),f(x,\psi(x))=f(x_{0},y_{0}),\forall x\in V;$</p>
+<p>(2)$J\psi(x)=-\big[J_{y}f(x,\psi(x))\big]^{-1}D_{x}f(x,\psi(x))$,其中$D_{x}f(x,y)=\Big(\frac{</p>
+<p>tial f_{i}}{</p>
+<p>tial x_{j}}(x,y)\Big)_{m\times n}.$</p>
 </aside>
 <h3>积分</h3>
+<p><strong>散度定理</strong>$^\clubsuit $:设$\Omega\subset\mathbb{R}^n$是一个具有$C^1$边界的有界区域,并设$\mathbf{\nu} $表示$</p>
+<p>tial\Omega$的单位外法向量.于是对$C^1(\overline{\Omega})$中的任一向量场$\mathbf{F}$有</p>
 <div class="math-display">\[\int_{\Omega}\nabla\cdot\mathbf{F}dx=\int_{
 tial\Omega}\mathbf{F}\cdot\mathbf{\nu}dS.\]</div>
+<p>如果$u$是$C^2(\overline{\Omega})$函数,那么取$\mathbf{F}=Du$,则有</p>
 <div class="math-display">\[\int_{\Omega}\Delta u dx=\int_{
 tial\Omega}Du\cdot\mathbf{\nu}dS=\int_{
 tial\Omega}\frac{
 tial u}{
 tial\mathbf{\nu}}dS.\]</div>
+<p>由散度定理,很容易得到所谓的分部积分公式:设$u,v\in C^1(\overline{\Omega})$,则</p>
 <div class="math-display">\[\int_{\Omega}vDu\mathrm{d}x=-\int_{\Omega}uDv\mathrm{d}x+\int_{
 tial\Omega}uv\mathbf{\nu}\mathrm{d}S.\]</div>
 <aside class="wiki-note">
 <strong>Green恒等式</strong>
+<p>设$u,v\in C^2(\overline{\Omega})$,则<br> 1.Green第一恒等式</p>
 <div class="math-display">\[\int_{\Omega}v\Delta u dx+\int_{\Omega}Du\cdot Dvdx=\int_{
 tial\Omega}v\frac{
 tial u}{
 tial \mathbf{\nu}}dS.\]</div>
+<p>2.Greend第二恒等式</p>
 <div class="math-display">\[\int_{\Omega}\left(v\Delta u-u\Delta v\right)dx=\int_{
 tial\Omega}\left(v\frac{
 tial u}{

@@ -8,9 +8,9 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="数学基础/Section/Complex_Analysis.tex" />
   <title>Complex_Analysis.tex | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-cn-fix" />
-  <script defer src="../assets/search-index.js?v=20260624-cn-fix"></script>
-  <script defer src="../assets/wiki.js?v=20260624-cn-fix"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-env-fix" />
+  <script defer src="../assets/search-index.js?v=20260624-latex-env-fix"></script>
+  <script defer src="../assets/wiki.js?v=20260624-latex-env-fix"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
@@ -363,162 +363,348 @@ Q(z)&amp;= B(z-b_1)^{\beta_1}(z-b_2)^{\beta_2}\cdots(z-b_l)^{\beta_l},\beta_1+\c
 <aside class="wiki-note">
 <strong>全纯函数的Taylor展开</strong>
 <p>若$f\in H(B(z_0,R))$,则$f$可以在$B(z_0,R)$中展开成幂级数:</p>
+<div class="math-display">\[f(z)=\sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n, z\in B(z_0,R)\]</div>
+<p>右端的级数称为$f$的Taylor级数.</p>
 </aside>
+<p><strong>Proof</strong>:任意取定$z\in B(z_0,R)$,再取$\rho &lt;R$,使得$|z-z_0|&lt;\rho$.记$\gamma_\rho =\{\zeta:|\zeta-z_0|=\rho\}$,根据Cauchy积分分式,得</p>
 <div class="math-display">\[f(z)=\frac{1}{2\pi i}\int_{\gamma_\rho} \frac{f(\zeta)}{\zeta - z}d\zeta\]</div>
+<p>把$\frac{1}{\zeta - z}$展开成级数,为</p>
 <div class="math-display">\[\begin{aligned}
 \frac{1}{\zeta - z} &amp;= \frac{1}{(\zeta - z_0) - (z - z_0)} \\
 &amp;= \frac{1}{\zeta - z_0}\left(1 - \frac{z - z_0}{\zeta - z_0} \right)^{-1} = \frac{1}{\zeta - z_0} \sum_{n=0}^{\infty} \left( \frac{z - z_0}{\zeta - z_0} \right)^n
 \end{aligned}\]</div>
+<p>最后一个等式成立是因为$\left|\frac{z - z_0}{\zeta - z_0}\right|=\frac{|z - z_0|}{\rho} &lt; 1$ 的缘故.现在可得</p>
+<div class="math-display">\[\frac{f(\zeta)}{\zeta - z} = \sum_{n=0}^{\infty} f(\zeta)\frac{(z - z_0)^n}{(\zeta - z_0)^{n+1}}\]</div>
+<p>因为$f$在$\gamma_\rho$上连续,记$M=\sup\{|f(\zeta)|:\zeta\in \gamma_\rho\}$,于是当$\zeta \in \gamma_\rho$时,有</p>
 <div class="math-display">\[\left|\frac{f(\zeta)(z - z_0)^n}{(\zeta - z_0)^{n+1}}\right| \leqslant \frac{M}{\rho}\left(\frac{|z - z_0|}{\rho}\right)^n\]</div>
+<p>右端是一收敛级数,故由Weierstrass判别法,级数相关方程在$\gamma_\rho$上一致收敛,故可逐项积分:</p>
 <div class="math-display">\[\begin{aligned}
 f(z) &amp;= \frac{1}{2\pi i}\int_{\gamma_\rho} \sum_{n=0}^{\infty} f(\xi)\frac{(z - z_0)^n}{(\zeta - z_0)^{n+1}}d\zeta\\
 &amp;= \sum_{n=0}^{\infty} \left( \frac{1}{2\pi i}\int_{\gamma_\rho} \frac{f(\zeta)}{(\zeta - z_0)^{n+1}}d\zeta\right)(z - z_0)^n\\
 &amp;= \sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n
 \end{aligned}\]</div>
+<p>由于$z$是$B(z_0,R)$中的任意点,所以上式在$B(z_0,R)$中成立.并且可以得到$f$的展开式相关方程是唯一的(求导证明系数唯一确定).</p>
+<p>又根据$f$的Taylor级数在其收敛圆内确定一个全纯函数,我们可以得到下面的结论:</p>
 <aside class="wiki-note">
 <strong>全纯函数的Taylor展开</strong>
+<p>$f$在点$z_0$处全纯的充分必要条件是$f$在$z_0$的邻域内可以展开成幂级数:</p>
 <div class="math-display">\[f(z)=\sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n, z\in B(z_0,R)\]</div>
 </aside>
+<p>现在我们考察函数的零点:</p>
+<p><strong>定义</strong>$^\clubsuit$:设$f$在$z_0$点全纯且不恒为零,如果</p>
 <div class="math-display">\[f(z_0)=f&#x27;(z_0)=\cdots=f^{(m-1)}(z_0)=0,f^{(m)}(z_0)\neq 0\]</div>
+<p>则称$z_0$是$f$的$m$阶零点.</p>
+<p><strong>命题</strong>$^\clubsuit$:$z_0$为$f$的$m$阶零点的充分必要条件是$f$在$z_0$的邻域内可以表示为</p>
+<div class="math-display">\[f(z)=(z-z_0)^mg(z)\]</div>
+<p>这里,$g$在$z_0$点全纯,且$g(z_0)\neq 0$.</p>
+<p><strong>Proof</strong>:如果$z_0$是$f$的$m$阶零点,则从$f$的Taylor展开可得</p>
 <div class="math-display">\[\begin{aligned}
 f(z)&amp;=\sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n\\
 &amp;=\sum_{n=m}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n\\
 &amp;=(z-z_0)^mg(z)\Bigl\{\frac{f^{(m)}(z_0)}{m!}+\frac{f^{(m+1)}(z_0)}{(m+1)!}(z-z_0)+\cdots \Bigr\}
 \end{aligned}\]</div>
+<p>这里,$g(z)$就是花括弧中的幂级数，它当然在$z_0$处全纯,而且</p>
 <div class="math-display">\[g(z_0)=\frac{f^{(m)}(z_0)}{m!}\neq 0\]</div>
+<p>反之,如果相关方程式成立,$f$当然在$z_0$处全纯,通过直接计算即知$z_0$是$f$的$m$阶零点.</p>
+<p><strong>命题</strong>$^\clubsuit$:设$D$是$\mathbb{C}$中的域,$f\in H(D)$.如果$f$在$D$中的小圆盘$B(z_0,\varepsilon)$上恒等于零,那么$f$在$D$上恒等于零.</p>
+<p><strong>Proof</strong>: 在$D$中任取一点$a$,我们证明$f(a)=0.$用$D$ 中的曲线$\gamma$连接$z_{0}$和$a$,且$\rho=d(\gamma,</p>
+<p>tial D)&gt;0.$在$\gamma$上依次取点 $z_0,z_1,z_2,\cdots,z_n=a$, 使得 $z_1\in B(z_0,\varepsilon)$,其他各点之间的距离都小于 $\rho$,作圆盘$B( z_j, \rho ) , j$ = $1, \cdots , n$.由于$f$在$B( z_0, \varepsilon )$中恒为零，所以$f^(n)(z_1)=0,n=0,1,\cdots$. 于是,$f$ 在$B(z_1,\rho)$中的 Taylor 展开式的系数全为零,所以$f$在$B(z_1,\rho)$中恒为零.由于$z_2\in B(z_1,\rho)$,所以$f^(n)(z_2)=$ $0, n$ = $0,1,\cdots$, 用同样的方法推理,$f$在$B(z_2,\rho)$中恒为零. 再往下推,即知$f$在$B(a,\rho)$中恒为零,所以$f(a)=0$.</p>
+<p><strong>命题(全纯函数只有孤立零点)</strong>$^\clubsuit$:设$D$是$\mathbb{C}$中的域,$f\in H(D),f(z)\not\equiv 0$.那么$f$在$D$中的零点是孤立的.即若$z_0$为$f$的零点,必存在$z_0$的邻域$B(z_0,\varepsilon)$,使得$f$在$B(z_0,\varepsilon)$中除了$z_0$外不再有其他的零点.</p>
+<p><strong>Proof</strong>:由上述命题知,$f$在$z_0$的邻域中不能恒等于零,故不妨设$z_0$为$f$的$m$阶零点.所以$f$在$z_0$的邻域中可表示为$f(z)=(z-z_0)^mg(z)$,因$g$在$z_0$处连续,且$g(z_0)\neq0$,故存在$z_0$的邻域$B(z_0,\varepsilon)$,使得$g$在$B(z_0,\varepsilon)$中处处不为零, 因而$f$ 在$B(z_0,\varepsilon)$中除了$z_0$外不再有其他的零点 由此可以证明下面的重要结果:</p>
 <aside class="wiki-note">
 <strong>唯一性定理</strong>
+<p>设$D$是$\mathbb{C}$中的域,$f_1,f_2\in H(D)$.如果存在$D$中的点列$\{z_n\}$,使得$f_1(z_n)=f_2(z_n),n=1,2,\cdots$,且$\lim_{n\to \infty}z_n=a\in D$,那么在$D$中有$f_1(z)\equiv f_2(z)$.</p>
 </aside>
+<p><strong>平均值公式</strong>$^\clubsuit$:设函数$f\in H(B(a,R))$,则</p>
 <div class="math-display">\[f(a)=\frac{1}{2\pi}\int_0^{2\pi}f(a+re^{\mathrm{t}\theta})\mathrm{d}\theta  (0&lt;r&lt;R)\]</div>
+<p><strong>Proof</strong>:设$\gamma:z=a+re^{\mathrm{t}\theta}(0\leqslant \theta\leqslant 2\pi)$.由柯西积分公式得</p>
 <div class="math-display">\[\begin{aligned}
 f(a) &amp;=\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-a}\mathrm{d}\zeta=\frac{1}{2\pi\mathrm{i}}\int_0^{2\pi}\frac{f(a+re^{\mathrm{t}\theta})}{re^{\mathrm{t}\theta}}re^{\mathrm{t}\theta}\mathrm{d}\theta\\
 &amp;= \frac{1}{2\pi}\int_0^{2\pi}f(a+re^{\mathrm{t}\theta})\mathrm{d}\theta
 \end{aligned}\]</div>
+<p>由平均值公式可以证明最大值模原理</p>
 <aside class="wiki-note">
 <strong>最大模原理</strong>
+<p>若函数$f(z)$在区域$D$内解析,且不为常数,则$|f(z)|$在$D$内取不到它的最大值</p>
 </aside>
+<p><strong>Proof</strong>:令$M=\sup\limits_{z\in D}|f(z)|$.若$M=+\infty$,定理显然成立.设$M&lt;+\infty$.因$f(z)$不是常数,所以$0&lt;M&lt;+\infty$.我们令</p>
 <div class="math-display">\[\begin{aligned}
 \Omega_1 &amp;= \{z\in D:|f(z)|=M\};\\
 \Omega_2 &amp;= \{z\in D:|f(z)|&lt;M\}.
 \end{aligned}\]</div>
+<p>显然$\Omega_2$为开集.现证$\Omega_1$为开集.设$a\in \Omega_1$,即$|f(a)|=M$.因为$a\in D,\exists B(a,\delta)\subset D$,由平均值公式,当$0&lt;r&lt;\delta$时</p>
 <div class="math-display">\[f(a)=\frac{1}{2\pi}\int_0^{2\pi}f(a+re^{\mathrm{t}\theta})\mathrm{d}\theta\]</div>
+<p>从而得</p>
 <div class="math-display">\[M=|f(a)|\leqslant \frac{1}{2\pi}\int_0^{2\pi}|f(a+re^{\mathrm{t}\theta})|\mathrm{d}\theta\]</div>
+<p>即</p>
 <div class="math-display">\[0\leqslant \frac{1}{2\pi}\int_0^{2\pi}[M-|f(a+re^{\mathrm{t}\theta})|]\mathrm{d}\theta\leqslant 0\]</div>
-<div class="math-display">\[|f(z)|\leqslant |z|,|f&#x27;(0)|\leqslant 1\]</div>
-<div class="math-display">\[f(z)=e^{\mathrm{i}\theta}z\]</div>
+<p>因此$M-|f(a+re^{\mathrm{t}\theta})|\equiv 0$,这表明$B(a,\delta)\subset \Omega_1$,所以$\Omega_1$是开集.</p>
+<p>易知$\Omega_1\cup \Omega_2=D,\Omega_1\cap\Omega_2=\emptyset$,由于$D$是连通集,不能写成两个不交开集之并,故其中一个必为空集.由假设$f(z)$不是常数只能有$\Omega_1=\emptyset,\Omega_2=D$. 即$|f(z)|$在$D$内取不到它的最大值.</p>
+<p>最大模原理一个重要的应用是下面的Schwarz引理</p>
+<aside class="wiki-note">设$f\in H(B(0,1))$,且满足条件$f(0)=0$,当$z\in B(0,1)$时,$|f(z)|\leqslant 1$.那么在圆盘$B(0,1)$内必有 $$ |f(z)|\leqslant |z|,|f&#x27;(0)|\leqslant 1 $$ 如果存在某一点$z_0\in B(0,1),z_0\neq 0$,使得$|f(z_0)|=|z_0|$,或者$|f&#x27;(0)|=1$成立.那么存在实数$\theta$,使得对任意的$z\in B(0,1)$都有 $$ f(z)=e^{\mathrm{i}\theta}z $$</aside>
+<p>因为$f\in H(B(0,1))$,且$f(0)=0$,且$f$在$B(0,1)$中可展开为</p>
 <div class="math-display">\[f(z)=a_1 z+a_2z^2+\cdots=z(a_1+a_2z+\cdots)=zg(z)\]</div>
+<p>这里,$g(0)=a_1=f&#x27;(0)$.取$0&lt;r&lt;1$,当$|z|=r$时,有</p>
 <div class="math-display">\[|g(z)|=\left|\frac{f(z)}{z}\right|\leqslant\frac{1}{r}\]</div>
+<p>故由最大模原理,在圆盘$B(0,r)$中也有</p>
 <div class="math-display">\[|g(z)|\leqslant\frac{1}{r}  (\text{当}|z|&lt; r\text{时})\]</div>
-<div class="math-display">\[\sum^{\infty}_{n=1}a_{-n}\zeta ^n\]</div>
+<p>让$r\rightarrow 1$,即得$|g(z)|\leqslant 1  (z\in B(0,1))$,即$|f(z)|\leqslant|z|$.</p>
+<p>从$|g(0)|\leqslant 1$即得$|f&#x27;(0)|\leqslant 1$.</p>
+<p>现若有$z_0 \in B(0,1), z_0 \neq 0$,使得$|f(z_0)|=|z_0|$ 即$|g(z_0)|=1$.这说明全纯函数$g$在内点$z_0$处取到了最大模1,根据最大模原理,$g$ 必须是常数. 设$g(z)\equiv c$,由$|g(z_0)| = 1$,得$|c|=1$,所以$c=e^{i\theta}$,因此$f(z)=e^{i\theta}z$.如果$|f&#x27;(0)|=1$,即$|g(0)|=1$,与上面一样讨论,即得$f(z)=e^{i\theta}z$.</p>
+<p>引理表明:若$f(z)$是单位圆盘到单位圆盘的解析映射,$z_0$为映射的不动点,则$z$的像$f(z)$到原点的距离比到$z$点到原点的距离近,如果有一点使得两者相等,那么$f(z)$就是一个旋转映射.</p>
+<p>前面已经证明,圆盘中的全纯函数一定可在该圆盘中展开成幂级数. 现在问,圆环中的全纯函数是否也可以展开成幂级数?答案当然是否定的.但是,圆环中的全纯函数一定可以展开成Laurent级数.</p>
+<p><strong>定义</strong>$^\clubsuit$:称级数</p>
 <div class="math-display">\[\sum^{\infty}_{-\infty}a_n (z-z_0)^n=\sum^{\infty}_{n=0}a_n (z-z_0)^n+\sum^{\infty}_{n=1}a_{-n} (z-z_0)^{-n}\]</div>
+<p>为Laurent级数.我们首先关心它的收敛域的形状.</p>
+<p>不妨设幂级数的收敛半径为$R$.对第二个级数作变换$\zeta=\frac{1}{z-z_0}$,于是变成了$\zeta$的幂级数</p>
+<div class="math-display">\[\sum^{\infty}_{n=1}a_{-n}\zeta ^n\]</div>
+<p>设其收敛半径为$\rho$,则当$|z|&lt;\rho$,或者$|z-z_0|&gt;\frac{1}{\rho}$时,上述级数收敛.记$r = \frac{1}{\rho}$,则当$r &lt; |z-z_0| &lt; \infty$时,负幂项级数收敛. 很容易想到如果$r&lt;R$,则当$r&lt;|z-z_0|&lt;R$时,级数相关方程的两个级数都收敛,而且在圆环中内闭一致收敛,于是整个级数相关方程在上述圆环内闭一致收敛.</p>
+<p><strong>定理</strong>$^\clubsuit$:如果Laurent级数</p>
+<div class="math-display">\[\sum^{\infty}_{-\infty}a_n (z-z_0)^n=\sum^{\infty}_{n=0}a_n (z-z_0)^n+\sum^{\infty}_{n=1}a_{-n} (z-z_0)^{-n}\]</div>
+<p>的收敛域为圆环$D=\{z:r&lt;|z-z_0|&lt;R\}$,那么它在$D$中绝对收敛且内闭一致收敛.它的和函数在$D$中全纯.</p>
+<p>Laurent级数的幂级数部分称为全纯部分,负幂项级数部分称为主要部分.事实上,Laurent级数的一些重要性质取决于它的主要部分.</p>
+<p><strong>定理</strong>$^\clubsuit$:设$D=\{z:r&lt;|z-z_0|&lt;R\}$,如果$f\in H(D)$,那么$f$可以在$D$上展开为Laurent级数:</p>
 <div class="math-display">\[f(z)=\sum^{\infty}_{-\infty}a_n (z-z_0)^n,z\in D\]</div>
+<p>其中,$a_n=\frac{1}{2\pi\mathrm{i}}\int\limits_{\gamma _\rho}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\mathrm{d}\zeta$,而$\gamma _\rho=\{\zeta:|\zeta-z_0|=\rho\}(r&lt;\rho&lt;R)$,并且展开式是唯一的.</p>
+<p><strong>例</strong>$^\spadesuit$ :设$f(z)=\frac{1}{(z-1)(z-2)}$,试分别给出这个函数在$D_{1}=\{z:1&lt;|z|&lt;2\}$和$D_{2}=\{z:2&lt;|z|&lt;\infty\}$上的 Laurent 展开式.</p>
+<p><strong>Solution</strong>:当$z\in D_{1}$时,由于$1&lt;|z|&lt;2$,所以</p>
 <div class="math-display">\[\begin{aligned}
 \frac{1}{(z-1)(z-2)}&amp;=\frac{1}{z-2}-\frac{1}{z-1} \\
 &amp;=-\frac{1}{2}\frac{1}{1-\frac{z}{2}}-\frac{1}{z}\frac{1}{1-\frac{1}{z}} \\
 &amp;=-\sum_{n=0}^{\infty}\frac{1}{2^{n+1}}z^{n}-\sum_{n=1}^{\infty}\frac{1}{z^{n}}.
 \end{aligned}\]</div>
+<p>当$z\in D_{2}$时,由于$2&lt;|z|&lt;\infty$,所以</p>
 <div class="math-display">\[\begin{aligned}
 \frac{1}{(z-1)(z-2)}&amp;=\frac{1}{z-2}-\frac{1}{z-1}=\frac{1}{z}\frac{1}{1-\frac{2}{z}}-\frac{1}{z}\frac{1}{1-\frac{1}{z}} \\
 &amp;=\sum_{n=0}^{\infty}\frac{2^{n}}{z^{n+1}}-\sum_{n=0}^{\infty}\frac{1}{z^{n+1}}=\sum_{n=0}^{\infty}\frac{2^{n}-1}{z^{n+1}}.
 \end{aligned}\]</div>
+<p>下面通过Laurent级数来研究全纯函数的性质.</p>
+<p><strong>定义</strong>$^\clubsuit$:如果$f$在无心圆盘$\{z:0&lt;|z-z_0|&lt;R\}$中全纯,就称$z_0$是$f$的孤立奇点.</p>
+<p>$f$在孤立奇点$z_0$附近有三种情形:</p>
+<p>(1).$\lim_{z\to z_0}f(z)=a,a$是一有限数,这时称$z_0$是$f$的可去奇点;</p>
+<p>(2).$\lim_{z\to z_0}f(z)=\infty$(不是不存在),这时称$z_0$是$f$的极点;</p>
+<p>(3).$\lim_{z\to z_0}f(z)$不存在(不要和上一条弄混了),这时称$z_0$是$f$的本性奇点;</p>
+<p><strong>定理(Riemann)</strong>$^\clubsuit$:$z_0$是$f$的可去奇点的充分必要条件是$f$在$z_0$附近有界.</p>
+<p><strong>Proof</strong>:必要性是显然的,因为如果$z_0$是$f$的可去奇点,那么$\lim_{z \to z_0} f(z) = a$,$f$在$z_0$附近当然有界.现在设$f$在$z_0$附近有界,即存在$\varepsilon&gt;0$,使得当$|z - z_0| &lt; \varepsilon$时,$|f(z)| &lt; M$.因为$f$在无心圆盘$D = \{z : 0 &lt; |z - z_0| &lt; R\}$中全纯,因此$f$在$D$中有Laurent展开式:</p>
 <div class="math-display">\[f(z)=\sum_{n=-\infty}^{\infty}a_n(z-z_0)^n,z\in D.\]</div>
+<p>其中,$a_n=\frac{1}{2\pi \mathrm{i}}\int\limits_{\gamma_\rho}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\mathrm{d}\zeta,0&lt;p&lt;R,\gamma_\rho=\{\zeta:\vert\zeta-z_0\vert=\rho\}$.今取$0&lt;\rho&lt;\varepsilon$，故当$\zeta\in\gamma_\rho$时,$|f(\zeta)|&lt;M$.于是</p>
 <div class="math-display">\[|a_n|=\left|\frac{1}{2\pi \mathrm{i}}\int\limits_{\gamma_0}\frac{f(\zeta)}{(\zeta-z_0)^{n+1}}\mathrm{d}\zeta\right|\leqslant\frac{M}{2\pi\rho^{n+1}}\cdot2\pi\rho=M\rho ^n.\]</div>
+<p>让$\rho→0$,即得$a_{-n}=0,n=1,2,\cdots$.这说明在$f$的Laurent展式中,所有负次幂的系数都是零,因而$f$的Laurent展开式是一个幂级数.所以$\lim_{z \to z_0} f(z) = a_0$,即$z_0$是一个可去奇点.</p>
+<p>从上面的证明可以看出,在$z_0$是$f$的可去奇点的情形下,$f$在${z:0&lt;|z-z_0|&lt;R}$中的展开为</p>
 <div class="math-display">\[f(z)=\sum_{n=0}^{\infty}a_n(z-z_0)^n.\]</div>
+<p>只要令$f(z_0)=a_0$,上式便在圆盘$B(z_0,R)$中成立了,因而$f$在$z_0$处全纯.换句话说,在这种情形下,只要适当定义$f$在$z_0$处的值,便能使$f$在$z_0$处全纯.这就是称$z_0$为$f$的可去奇点的原因.</p>
+<p>上面讨论的是孤立奇点为有限点的情况，现在讨论无穷远点为孤立奇点的情况:</p>
+<p>如果$f$在无穷远点的邻域(不包括无穷远点)$(z : 0 \leqslant R &lt; |z| &lt; +\infty)$ 中全纯,就称$\infty$是$f$的孤立奇点.</p>
+<p>在这种情形下,作变换 $z = \frac{1}{\zeta}$,记</p>
 <div class="math-display">\[g(\zeta) = f\left( \frac{1}{\zeta} \right).\]</div>
+<p>则$g$在$0&lt; |\zeta| &lt; \frac{1}{R}$中全纯,即 $\zeta = 0$是$g$的孤立奇点.很自然地,我们有下面</p>
+<p><strong>定义</strong>$^\clubsuit$:如果 $\zeta = 0$是$g$的可去奇点,$m$阶极点或本性奇点,那么我们相应地称 $z = \infty$ 是 $f$ 的可去奇点,$m$阶极点或本性奇点. 因为 $g$ 在原点的邻域中有Laurent展开:</p>
 <div class="math-display">\[g(\zeta) = \sum_{n=-\infty}^{\infty} a_n \zeta^n, 0 &lt; |\zeta| &lt; \frac{1}{R}.\]</div>
+<p>所以$f$在 $R &lt; |z| &lt; +\infty$ 中有下面的Laurent展开:</p>
 <div class="math-display">\[f(z) = \sum_{n=-\infty}^{\infty} b_n z^n.\]</div>
+<p>其中,$b_n = a_{-n}, n = 0, \pm 1, \cdots$</p>
+<p>特别地,如果 $\zeta = \infty$ 是 $f$ 的可去奇点,即 $\zeta = 0$ 是 $g$ 的可去奇点,因而 $a_n = 0$ ($n = -1, -2, \cdots$),所以 $f$ 的Laurent展开为</p>
 <div class="math-display">\[f(z) = \sum_{n=0}^{\infty} b_{-n} z^{-n}.\]</div>
+<p>同样道理,如果 $z=\infty$ 分别是 $f$ 的 $m$ 阶极点或本性奇点,那么 $f$ 在 $R&lt;|z|&lt;\infty$ 中分别有下面的 Laurent 展开式:</p>
 <div class="math-display">\[f(z)=b_{m}z^{m}+\cdots+b_{1}+b_{0}+b_{-1}z^{-1}+\cdots,\]</div>
+<p>或</p>
 <div class="math-display">\[f(z)=\cdots+b_{m}z^{m}+\cdots+b_{1}z+b_{0}+b_{-1}z^{-1}+\cdots.\]</div>
+<p>这时,我们称 $\sum_{n=1}^{\infty}b_n z^n$ 为$f$的主要部分,$\sum_{n=0}^{\infty}b_{-n}z^{-n}$ 为$f$的全纯部分.</p>
+<p>如果$f$在整个复平面上全纯,就称$f$为整函数,$f$在$\mathbb{C}$上有Taylor展开式:</p>
 <div class="math-display">\[f(z)=\sum_{n=0}^{\infty}a_n z^n\]</div>
+<p>它当然在$R&lt;|z|&lt;\infty$中也成立,因此也可以把它看成是无穷远点邻域中的Laurent展开式.</p>
+<p>如果整函数$f$在$\infty$处全纯,那么它在$\infty$处邻域中的Lauent展开式除去常数项外只有负幂次项,因此在上面的Taylor展开式中必须有</p>
 <div class="math-display">\[a_1=a_2=\cdots=0\]</div>
+<p>所以$f$是一常数,于是我们得到了下面的结果:</p>
+<p><strong>命题</strong>$^\clubsuit$:在无穷远处全纯的整函数一定是常数.</p>
+<p>如果无穷远点是整函数$f$的一个$m$阶极点,那么它在无穷远点邻域中的Laurent展开式除去一个$m$次多项式外只有负幂次的项,因此在上面的Taylor展开式中必须有</p>
 <div class="math-display">\[a_{m+1}=a_{m+2}=\cdots=0\]</div>
+<p>所以$f$是一个$m$次多项式,即</p>
+<p><strong>命题</strong>$^\clubsuit$:如果无穷远点是整函数$f$的一个$m$阶极点,那么所以$f$是一个$m$次多项式.</p>
 <h4>留数定理</h4>
+<p>如果$f$在$a$点全纯,那么对于$a$点;邻域中的任意可求长闭曲线$\gamma$,都有$\int\limits_{\gamma}f(z)\mathrm{d}z=0$.如果$a$是$f$的孤立奇点,那么上述积分不一定为零,且积分值只与$f$和$a$有关,而与$\gamma$无关.现在来计算这个积分.设$f$在$a$点邻域中的Laurent展开式为</p>
 <div class="math-display">\[f(z)=\sum^{\infty}_{-\infty}c_n (z-a)^n\]</div>
+<p>这里</p>
 <div class="math-display">\[c_n=\frac{1}{2\pi\mathrm{i}}\int\limits_{\gamma }\frac{f(\zeta)}{(\zeta-a)^{n+1}}\mathrm{d}\zeta,n=0,\pm 1,\cdots\]</div>
+<p>特别地,当$n=-1$时,我们有</p>
 <div class="math-display">\[c_{-1}=\frac{1}{2\pi\mathrm{i}}\int\limits_{\gamma}f(\zeta)\mathrm{d}\zeta\]</div>
+<p>由此我们给出下面的定义</p>
+<p><strong>定义</strong>$^\clubsuit$:设$a$是$f$的一个孤立奇点,$f$在$a$点的邻域$B(a,r)$中的Laurent展开为$f(z)=\sum_{n=-\infty}^{\infty}c_n(z-a)^n$,称$c_{-1}$为$f$在$a$点的留数,记为</p>
 <div class="math-display">\[\operatorname{Res}(f,a)=c_{-1}\]</div>
+<p>我们有</p>
 <div class="math-display">\[\int\limits_\gamma f(z)\mathrm{d}z=2\pi \mathrm{i} \operatorname{Res}(f,a).\]</div>
+<p>这里,$\gamma=\{z:|z-a|=\rho\},0&lt;\rho&lt;r.$</p>
+<p>若$z=\infty$是$f$的孤立奇点,且$f$在$R&lt;|z|&lt;\infty$中全纯,我们定义$f$在$z=\infty$处的留数为</p>
 <div class="math-display">\[\operatorname{Res}(f,\infty)=-\frac{1}{2\pi \mathrm{i}}\int\limits_\gamma f(z)\mathrm{d}z\]</div>
+<p>这里,$\gamma=\{z:|z|=\rho,R&lt;\rho&lt;\infty\}$.</p>
+<p>然而在很多情况下,函数在孤立奇点处的Laurent展开式是不易得到的,因此有必要考虑在不知道Laurent展式的情况下计算留数的方法.</p>
+<p><strong>命题</strong>$^\clubsuit$:若$a$是$f$的$m$阶极点,则</p>
 <div class="math-display">\[\operatorname{Res}(f,a)=\frac{1}{(m-1)!}\lim_{z\to a}\frac{\mathrm{d}^{m-1}}{\mathrm{d}z^{m-1}}((z-a)^mf(z)).\]</div>
+<p><strong>Proof</strong>:因为$a$是$f$的$m$阶极点,故在$a$点的邻域中有</p>
 <div class="math-display">\[f(z)=\frac{1}{(z-a)^mg(z)},\]</div>
+<p>这里,$g$在$a$点全纯,且$g(a)\neq0$.于是</p>
 <div class="math-display">\[f(z)=\frac{1}{(z-a)^m}\sum_{n=0}^\infty\frac{g^{(n)}(a)}{n!}(z-a)^n=\sum_{n=0}^\infty\frac{g^{(n)}(a)}{n!}(z-a)^{n-m}.\]</div>
+<p>这是一个Laurent展开式,$(z-a)^{-1}$的系数为$\frac{g^{(m-1)}(a)}{(m-1)!}$.又$g(z)=(z-a)^mf(z)$,因而得</p>
 <div class="math-display">\[\operatorname{Res}(f,a)=\frac{g^{(m-1)}(a)}{(m-1)!}=\frac{1}{(m-1)!}\lim_{z\to a}\frac{\mathrm{d}^{m-1}}{\mathrm{d}z^{m-1}}((z-a)^mf(z)).\]</div>
+<p>特别地,当$m=1$时:若$a$是$f$的1阶极点,则</p>
 <div class="math-display">\[\operatorname{Res}(f,a)=\lim_{z\to a}(z-a)f(z)\]</div>
+<p>如果$f=\frac{g}{h}$,$g$和$h$都在$a$处全纯,且$g&#x27;(a)\neq 0,h(a)=0,h&#x27;(a)\neq 0$,注意到此时$a$是$f$的1阶极点,那么</p>
 <div class="math-display">\[\operatorname{Res}(f,a)=\lim_{z\to a}(z-a)\frac{g(z)}{h(z)}=\lim_{z\to a}\frac{g(z)}{\frac{h(z)-h(z)}{z-a}}=\frac{g(a)}{h&#x27;(a)}\]</div>
+<p>如果$a$是$f$的本性奇点,就没有像上面那种简单的计算留数的公式了，这时只能通过$f$的Laurent展开来得到$f$在$a$点的留数.</p>
 <aside class="wiki-note">
 <strong>留数定理</strong>
+<p>设$D$是复平面上的一个有界区域,它的边界$\gamma$由一条或若干条简单闭曲线组成,如果$f$在$D$中除去孤立奇点$z_1,z_2,\cdots,z_n$外是全纯的,在闭域$\overline{D}$上除去$z_1,z_2,\cdots,z_n$外是连续的,那么</p>
 <div class="math-display">\[\int\limits_{\gamma}f(z)\mathrm{d}z=2\pi\mathrm{i}\sum^n_{k=1}\operatorname{Res}(f,z_k)\]</div>
 </aside>
+<p>留数定理还可以写成:若$f$在$\mathbb{C}$中除去$z_1,z_2,\cdots,z_n$外是全纯的,则$f$在$z_1,z_2,\cdots,z_n$及$z=\infty$处的留数之和为零.</p>
+<p>留数定理的一个重要应用就是计算实积分.</p>
+<p><strong>定理</strong>$^\clubsuit$:设$f$在上半平面$\{z:\operatorname{Im}z&gt;0\}$中除去$a_1,\cdots,a_n$外是全纯的,在$\{z:\operatorname{Im}z\geqslant 0\}$中除去$a_1,\cdots,a_n$外是连续的.如果$\lim_{z\to \infty}zf(z)=0$,那么</p>
 <div class="math-display">\[\int_{-\infty}^{+\infty}f(x)\mathrm{d}x=2\pi\mathrm{i}\sum^n_{k=1}\operatorname{Res}(f,a_k)\]</div>
+<p><strong>Proof</strong>:取充分大的$R$使得$a_1,\cdots,a_n$包含在半圆盘$\{z:|z|&lt;R,\operatorname{Im}z&gt;0\}$中,记$\gamma_R=\{z:z=Re^{\mathrm{i}\theta},0\leqslant \theta\leqslant \pi\}$,由留数定理知</p>
 <div class="math-display">\[\int^R_{-R}f(x)\mathrm{d}x+\int\limits_{\gamma_R}f(z)\mathrm{d}z=2\pi\mathrm{i}\sum^n_{k=1}\operatorname{Res}(f,a_k)\]</div>
+<p>记$M(R)=\max\{|f(z)|:z\in\gamma_R\}$,由假定,$\lim_{R\to \infty}RM(R)=0$,因而</p>
 <div class="math-display">\[\left|\int\limits_{\gamma_R}f(z)\mathrm{d}z\right|=\left|\int^\pi_0f(Re^{\mathrm{i}\theta})R\mathrm{i}e^{\mathrm{i}\theta}\right|\leqslant\pi RM(R)\ 0(R\to\infty)\]</div>
+<p>于是令$R\to\infty$即可.</p>
+<p><strong>推论</strong>$^\clubsuit$:设$P$和$Q$是两个既约多项式,$Q$没有实的零点,且$\deg Q-\deg P\geqslant 2$,那么</p>
 <div class="math-display">\[\int_{-\infty}^{+\infty}\frac{P(x)}{Q(x)}\mathrm{d}x=2\pi\mathrm{i}\sum^n_{k=1}\operatorname{Res}(\frac{P(z)}{Q(z)},a_k)\]</div>
+<p>这里,$a_k(k=1,\cdots,)$为$Q$在上半平面中的全部零点.</p>
+<p><strong>例</strong>$^\spadesuit$ :计算积分</p>
 <div class="math-display">\[\int_{-\infty}^{+\infty}\frac{x^2-x+2}{x^4+10x^2+9}\mathrm{d}x\]</div>
+<p><strong>Solution</strong>:令$f(z)=\frac{z^2-z+2}{z^4+10z^2+9}$.容易看出,分母$Q(z)$在上半平面中的全部零点只有$a_1=\mathrm{i}$和$a_2=3\mathrm{i}$两个,容易计算得</p>
 <div class="math-display">\[\operatorname{Res}(f,\mathrm{i})=\frac{-1-\mathrm{i}}{16},  \operatorname{Res}(f,3\mathrm{i})=\frac{3-7\mathrm{i}}{48}\]</div>
+<p>于是</p>
 <div class="math-display">\[\int_{-\infty}^{+\infty}\frac{x^2-x+2}{x^4+10x^2+9}\mathrm{d}x=2\pi\mathrm{i}(\operatorname{Res}(f,\mathrm{i})+\operatorname{Res}(f,3\mathrm{i}))=\frac{5}{12}\pi\]</div>
+<p><strong>例</strong>$^\spadesuit$ :计算积分</p>
 <div class="math-display">\[\int_{-\infty}^{+\infty}\frac{\mathrm{d}x}{(1+x^2)^{n+1}}\]</div>
+<p><strong>Solution</strong>:令$f(z)=\frac{1}{(1+z^2)^{n+1}}$,分母$Q(z)$在上半平面有$n+1$阶零点$z=\mathrm{i}$.于是</p>
 <div class="math-display">\[\operatorname{Res}(f,\mathrm{i})=\frac{1}{2\mathrm{i}}\frac{(2n)!}{2^{2n}(n!)^2}\]</div>
+<p>于是得到</p>
 <div class="math-display">\[\int_{-\infty}^{+\infty}\frac{\mathrm{d}x}{(1+x^2)^{n+1}}=\frac{(2n)!}{2^{2n}(n!)^2}\pi\]</div>
+<p><strong>引理(Jordan)</strong>$^\clubsuit$:设$f$在$\{z:R_0\leqslant|z|&lt;\infty,\operatorname{Im}z\geqslant 0\}$上连续,且$\lim_{z\to\infty<br>\operatorname{Im z\geqslant 0}}f(z)=0$.则对任意的$\alpha&gt;0$,有</p>
 <div class="math-display">\[\lim_{R\to\infty}\int\limits_{\gamma_R}e^{\mathrm{i}\alpha z}f(z)\mathrm{d}z=0\]</div>
+<p>这里,$\gamma_R=\{z:z=Re^{\mathrm{i}\theta},0\leqslant\theta\leqslant \pi,R\geqslant R_0\}$.</p>
+<p><strong>Proof</strong>:记$M(R) = \max\{|f(z)|: z \in \gamma_R\}$,则由假设,$M(R) \to 0 (R \to \infty)$.因为</p>
 <div class="math-display">\[\int\limits_{\gamma_R} e^{\mathrm{i}\alpha z} f(z) \mathrm{d}z = \int_0^\pi e^{\mathrm{i}\alpha R \cos\theta} e^{-\alpha R \sin\theta} f(R e^{\mathrm{i}\theta}) R e^{\mathrm{i}\theta} \mathrm{d}\theta\]</div>
+<p>所以</p>
 <div class="math-display">\[\begin{aligned}
 \left|\int\limits_{\gamma_R} e^{\mathrm{i}\alpha z} f(z) \mathrm{d}z\right| &amp;\leqslant R M(R) \int_0^\pi e^{-\alpha R \sin\theta} \mathrm{d}\theta = 2 R M(R) \int_0^{\frac{\pi}{2}} e^{-\alpha R \sin\theta} \mathrm{d}\theta\\
 &amp;\leqslant 2 R M(R) \int_0^{\frac{\pi}{2}} e^{-\frac{\alpha}{2} R \theta} = \frac{\pi}{2} M(R) (1 - e^{-\alpha R}) \to 0 (R \to \infty).
 \end{aligned}\]</div>
+<p>这里,我们利用了不等式</p>
 <div class="math-display">\[\sin\theta \geqslant \frac{2}{\pi} \theta \left(0 \leqslant \theta \leqslant \frac{\pi}{2}\right).\]</div>
+<p>有Jordan引理,我们可以证明下面的定理</p>
+<p><strong>定理</strong>$^\clubsuit$:设$f$在上半平面$\{z:\operatorname{Im}z&gt;0\}$中除去$a_1,\cdots,a_n$外是全纯的,在$\{z:\operatorname{Im}z\geqslant 0\}$中除去$a_1,\cdots,a_n$外是连续的.如果$\lim_{z\to \infty}f(z)=0$,那么对于任意$\alpha&gt;0$有</p>
 <div class="math-display">\[\int_{-\infty}^{+\infty}e^{\mathrm{i}\alpha x}f(x)\mathrm{d}x=2\pi\mathrm{i}\sum^n_{k=1}\operatorname{Res}(e^{\mathrm{i}\alpha z}f(z),a_k)\]</div>
+<p><strong>Proof</strong>:取充分大的$R$使得$a_1,\cdots,a_n$包含在半圆盘$\{z:|z|&lt;R,\operatorname{Im}z&gt;0\}$中,对函数</p>
 <div class="math-display">\[F(z)=e^{\mathrm{i}\alpha z}f(z)\]</div>
+<p>用留数定理,得到</p>
 <div class="math-display">\[\int^R_{-R}e^{\mathrm{i}\alpha x}f(x)\mathrm{d}x+\int\limits_{\gamma_R}e^{\mathrm{i}\alpha z}f(z)\mathrm{d}z=2\pi\mathrm{i}\sum^n_{k=1}\operatorname{Res}(e^{\mathrm{i}\alpha z}f(z),a_k)\]</div>
+<p>根据Jordan引理有</p>
 <div class="math-display">\[\lim_{R\to\infty}\int\limits_{\gamma_R}e^{\mathrm{i}\alpha z}f(z)\mathrm{d}z=0\]</div>
+<p>令$R\to\infty$即可.</p>
+<p><strong>例</strong>$^\spadesuit$ :计算积分</p>
 <div class="math-display">\[\int_{-\infty}^{+\infty}\frac{\cos ax}{b^2+x^2}\mathrm{d}x(a&gt;0,b&gt;0)\]</div>
+<p><strong>Solution</strong>:令$f(z)=\frac{1}{b^2+z^2}$,因为$\frac{e^{1\alpha z}}{b^2+z^2}$在上半平面只有一个一阶极点$z=b\mathrm{i}$,且</p>
 <div class="math-display">\[\operatorname{Res}\left(\frac{e^{1\alpha z}}{b^2+z^2},b\mathrm{i}\right)=\frac{e^{-ab}}{2b\mathrm{i}}\]</div>
+<p>再利用Euler公式即得</p>
 <div class="math-display">\[\int_{-\infty}^{+\infty}\frac{\cos ax}{b^2+x^2}\mathrm{d}x=\frac{\pi}{b}e^{-ab}\]</div>
+<p>下面两个引理一般被称为大圆弧引理和小圆弧引理,其中小圆弧引理被用来处理实轴上有奇点的情况.</p>
 <aside class="wiki-note">
 <strong>大圆弧引理和小圆弧引理</strong>
+<p><strong>大圆弧引理</strong>:设$f$在</p>
 <div class="math-display">\[G=\{z=a+\rho e^{\mathrm{i}\theta}:\rho\leqslant R_0,\theta_1\leqslant \theta\leqslant \theta_2\}\]</div>
+<p>中连续,如果$\lim_{z\to\infty}(z-a)f(z)=A$,那么</p>
 <div class="math-display">\[\lim_{\rho\to\infty}\int\limits_{\gamma_\rho}f(z)\mathrm{d}z=\mathrm{i}A(\theta_2-\theta_1)\]</div>
+<p>这里,$\gamma_\rho=\{z=a+\rho e^{\mathrm{i}\theta}:\theta_1\leqslant \theta\leqslant \theta_2\}$,它的方向是辐角增加的方向.<br> <strong>小圆弧引理</strong>:设$f$在</p>
 <div class="math-display">\[G=\{z=a+\rho e^{\mathrm{i}\theta}:0&lt;\rho\leqslant\rho_0,\theta_1\leqslant \theta\leqslant \theta_2\}\]</div>
+<p>中连续,如果$\lim_{z\to a}(z-a)f(z)=B$,那么</p>
 <div class="math-display">\[\lim_{\rho\to 0}\int\limits_{\gamma_\rho}f(z)\mathrm{d}z=\mathrm{i}B(\theta_2-\theta_1)\]</div>
+<p>这里,$\gamma_\rho=\{z=a+\rho e^{\mathrm{i}\theta}:\theta_1\leqslant \theta\leqslant \theta_2\}$,它的方向是辐角增加的方向.</p>
 </aside>
+<p><strong>Proof</strong>:这里只证小圆弧引理.令$g(z)=(z-a)f(z)-A$,则$\lim_{z\to a}g(z)=0$.若记$M_{\rho}=\sup\{|g(z)|:z=a+\rho e^{\mathrm{i}\theta}:\theta_1\leqslant \theta\leqslant \theta_2\}$,则$\lim_{\rho\to 0}M_{\rho}=0$.于是</p>
 <div class="math-display">\[\left|\int\limits_{\gamma_\rho}\frac{g(z)}{z-a}\mathrm{d}z\right|=\left|\int^{\theta_2}_{\theta_1}\frac{g(a+\rho e^{\mathrm{i}\theta})}{\rho e^{\mathrm{i}\theta}}\rho \mathrm{i}e^{\mathrm{i}\theta}\mathrm{d}\theta\right|\leqslant M_{\rho}(\theta_2-\theta_1)\to 0(\rho\to 0)\]</div>
+<p>由此即得</p>
 <div class="math-display">\[\int\limits_{\gamma_\rho}f(z)\mathrm{d}z=\mathrm{i}B(\theta_2-\theta_1)+\int\limits_{\gamma_\rho}\frac{g(z)}{z-a}\mathrm{d}z\to \mathrm{i}B(\theta_2-\theta_1)(\rho \to 0)\]</div>
+<p><strong>例</strong>$^\spadesuit$ :计算积分</p>
 <div class="math-display">\[\int_0^{\infty}\frac{\sin x}{x}\mathrm{d}x\]</div>
+<p>decoration={markings, mark= at position .17 with {\arrow{&gt;}}, mark= at position .4 with {\arrow{&gt;}}, mark= at position 0.7 with {\arrow{&gt;}}, mark= at position 0.93 with {\arrow{&gt;}}, }] \def\bigradius{4} \def\littleradius{0.5}</p>
+<p>\filldraw[postaction = {decorate}, thick ,fill=gray!40] (0:\bigradius) node[yshift=-8pt]{$R$}   arc (0:180:\bigradius) node[yshift=-8pt]{$-R$}-- (-\littleradius,0) node[yshift=-8pt]{$-\rho$} arc (180:0:\littleradius) node[yshift=-8pt]{$\rho$} -- cycle;</p>
+<p>\draw[thick,-&gt;] (180:\littleradius) arc(180:30:\littleradius) node [yshift=12pt]{$\gamma_{\rho}$}; \node at (60:\bigradius+0.4){$\gamma_{R}$};</p>
+<p>\draw[-Latex] (-1.5*\bigradius,0) -- (1.5*\bigradius,0) node[below]{$\operatorname{Re}$} ; \draw[-Latex] (0,-0.2*\bigradius) -- (0,1.2*\bigradius) node[right]{$\operatorname{Im}$};</p>
+<p><strong>Solution</strong>:取函数$f(z)=\frac{e^{\mathrm{i}z}}{z}$,取围道如上图,它由线段$[-R,-\rho],[\rho,R]$和半圆周$\gamma_\rho,\gamma_R$组成.在这个围道围成的域中,$f$是全纯的,因而由Cauchy积分定理得</p>
+<div class="math-display">\[\int^{-\rho}_{-R}\frac{e^{\mathrm{i}x}}{x}\mathrm{d}x+\int\limits_{\gamma^-_\rho}\frac{e^{\mathrm{i}z}}{z}\mathrm{d}z+\int^{R}_{\rho}\frac{e^{\mathrm{i}x}}{x}\mathrm{d}x+\int\limits_{\gamma_R}\frac{e^{\mathrm{i}z}}{z}\mathrm{d}z=0\]</div>
+<p>由Jordan引理知道</p>
 <div class="math-display">\[\lim_{R\to\infty}\int\limits_{\gamma_R}\frac{e^{\mathrm{i}z}}{z}\mathrm{d}z=0\]</div>
+<p>再根据小圆弧引理可知</p>
 <div class="math-display">\[\lim_{\rho\to 0}\int\limits_{\gamma^-_\rho}\frac{e^{\mathrm{i}z}}{z}\mathrm{d}z=-\mathrm{i}\pi\]</div>
+<p>在相关方程中令$\rho\to 0,R\to \infty$.于是得</p>
 <div class="math-display">\[\int^{0}_{-\infty}\frac{e^{\mathrm{i}x}}{x}\mathrm{d}x+\int^{\infty}_{0}\frac{e^{\mathrm{i}x}}{x}\mathrm{d}x=\mathrm{i}\pi\]</div>
+<p>即</p>
 <div class="math-display">\[\int_{-\infty}^{\infty}\frac{e^{\mathrm{i}x}}{x}\mathrm{d}x=\mathrm{i}\pi\]</div>
+<p>两边取虚部得</p>
 <div class="math-display">\[\int_0^{\infty}\frac{\sin x}{x}\mathrm{d}x=\frac{1}{2}\int_{-\infty}^{\infty}\frac{\sin x}{x}\mathrm{d}x=\frac{\pi}{2}\]</div>
+<p>现在讨论下面类型的积分</p>
 <div class="math-display">\[\int_0^{2\pi}R(\sin\theta,\cos\theta)\mathrm{d}\theta\]</div>
+<p>共有两种方法.第一种方法是作变换$t=\tan\frac{\theta}{2}$,那么</p>
 <div class="math-display">\[\sin\theta=\frac{2t}{1+t^2},\cos\theta=\frac{1-t^2}{1+t^2},\mathrm{d}\theta=\frac{2\mathrm{d}t}{1+t^2}\]</div>
+<p>于是</p>
 <div class="math-display">\[\int_0^{2\pi}R(\sin\theta,\cos\theta)\mathrm{d}\theta=2\int_{-\infty}^{\infty}R(\frac{2t}{1+t^2},\frac{1-t^2}{1+t^2})\frac{1}{1+t^2}\mathrm{d}t\]</div>
+<p>另一种方法是把它转化为=单位圆周上的积分.设$z=e^{\mathrm{i}\theta}$,那么</p>
 <div class="math-display">\[\cos\theta=\frac{1}{2}\left(z+\frac{1}{z}\right),\sin\theta=\frac{1}{2\mathrm{i}}\left(z-\frac{1}{z}\right),\mathrm{d}\theta=\frac{1}{\mathrm{i}z}\mathrm{d}z\]</div>
+<p>于是</p>
 <div class="math-display">\[\int_0^{2\pi}R(\sin\theta,\cos\theta)\mathrm{d}\theta=\int\limits_{|z|=1}R(\frac{1}{2\mathrm{i}}\left(z-\frac{1}{z}\right),\frac{1}{2}\left(z+\frac{1}{z}\right))\frac{1}{\mathrm{i}z}\mathrm{d}z\]</div>
+<p><strong>引理</strong>$^\clubsuit$:若函数$f(z)$是区域$D$内的亚纯函数,$\gamma$是$D$内可求长Jordan曲线,其内部$\Omega$属于$D$.$a_k(k=1,2,\cdots,n)$和$b_j(j=1,2,\cdots,m)$分别是$f(z)$在$\gamma$内部的零点和极点, $f(z)$在$\gamma$上无零点和极点,函数$\varphi (z)$在$D$内解析.则</p>
 <div class="math-display">\[\frac{1}{2\pi \mathrm{i} }\int_{\gamma}\varphi (z)\frac{f&#x27;(z)}{f(z)}\mathrm{d}z=\sum^n_{k=1}\alpha _k\varphi (a_k)-\sum^m_{j=1}\beta _j\varphi (b_j)\]</div>
+<p>其中$\alpha_k $是$f(z)$在零点$a_k$的阶,$\beta_j $是$f(z)$在极点$b_j$的阶.</p>
+<p>这是关于零点和极点的一般性定理.若我们取$\varphi (z)\equiv 1$,就可以得到下面的辐角原理:</p>
 <aside class="wiki-note">
 <strong>辐角原理</strong>
+<p>若函数$f(z)$是区域$D$内的亚纯函数,$\gamma$是$D$内可求长Jordan曲线,其内部$\Omega$属于$D$.$f(z)$在$\gamma$上无零点和极点,则</p>
 <div class="math-display">\[N-P=\frac{1}{2\pi \mathrm{i} }\int_{\gamma}\frac{f&#x27;(z)}{f(z)}\mathrm{d}z\]</div>
+<p>其中$N,P$分别表示$f(z)$在$\gamma$内部零点个数和极点个数(几阶算几个).</p>
 </aside>
+<p>这个定理有个特殊情况:如果$f\in H(D)$,那么有</p>
+<div class="math-display">\[N=\frac{1}{2\pi \mathrm{i} }\int_{\gamma}\frac{f&#x27;(z)}{f(z)}\mathrm{d}z\]</div>
+<p>我们可以通过这个公式计算$f$在$\gamma$内部的零点个数.</p>
+<p>公式相关方程有明确的几何意义.设$\Gamma$是$w$平面上一段不通过原点的连续曲线,它的方程记为$w=\lambda(t),a\leq t\leq b.$对于每个$t$,选取$\lambda(t)$的一个辐角$\theta(t)$,使得$\theta(t)$是$t$的连续函数,我们称$\theta(b)-\theta(a)$为$w$沿曲线$\Gamma$的辐角的变化,记为</p>
 <div class="math-display">\[\Delta_\Gamma \text{Arg } w = \theta(b)-\theta(a).\]</div>
+<p>今设$\Gamma$是一条不通过原点的可求长简单闭曲线,显然有</p>
 <div class="math-display">\[\frac{1}{2\pi}\Delta_\Gamma \text{Arg } w =
 \begin{cases}
 1,&amp;\text{如果原点在}\Gamma\text{内部};\\
 0,&amp;\text{如果原点不在}\Gamma\text{内部}.
 \end{cases}\]</div>
+<p>另一方面,我们知道</p>
 <div class="math-display">\[\frac{1}{2\pi \mathrm{i}}\int_{\Gamma}\frac{1}{w}\mathrm{d}w =
 \begin{cases}
 1,&amp;\text{如果原点在}\Gamma\text{内部};\\
 0,&amp;\text{如果原点不在}\Gamma\text{内部}.
 \end{cases}\]</div>
+<p>于是得到</p>
 <div class="math-display">\[\frac{1}{2\pi \mathrm{i}}\int_{\Gamma}\frac{1}{w}\mathrm{d}w = \frac{1}{2\pi}\Delta_\Gamma \text{Arg } w\]</div>
+<p>从这个式子可以看出,当$\Gamma$是一条不通过原点的任意可求长闭曲线时,$\frac{1}{2\pi \mathrm{i}}\int_{\Gamma}\frac{1}{w}\mathrm{d}w $等于$\Gamma$绕原点的圈数.</p>
+<p>若令$w=f(z)$,则$\frac{1}{w}\mathrm{d}w =\frac{f&#x27;(z)}{f(z)}\mathrm{d}z$.现在让$z$在$z$平面上沿可求长闭曲线$\gamma$的正方向走一圈,相应的函数$w=f(z)$的值在$w$平面画出一条相应的闭曲线,从而</p>
 <div class="math-display">\[\frac{1}{2\pi \mathrm{i}}\int_{\Gamma}\frac{f&#x27;(z)}{f(z)}\mathrm{d}z=\frac{1}{2\pi}\Delta_\Gamma \text{Arg }f(z)\]</div>
+<p>由此可知,积分$\frac{1}{2\pi \mathrm{i}}\int_{\Gamma}\frac{f&#x27;(z)}{f(z)}\mathrm{d}z$就表示当$z$沿着$\gamma$的正方向走一圈时,函数$f(z)$在$\Gamma$上的辐角变化再除以$2\pi$,从而</p>
 <div class="math-display">\[\frac{1}{2\pi}\Delta_\Gamma \text{Arg }f(z)=N\]</div>
+<p>由此我们可以得到下面形式的辐角原理:</p>
+<p><strong>辐角原理</strong>$^\clubsuit$:设$f\in H(D)$,$\gamma$是$D$中的可求长简单闭曲线,$\gamma$的内部位于$D$中.如果$f$在$\gamma$上没有零点,那么当 $z$沿着$\gamma$的正方向转动一圈时,函数$f(z)$在相应的曲线$\Gamma$上<strong>绕原点转动</strong>的总圈数恰好等于$f$在$\gamma$内部的零点的个数.</p>
+<p>从辐角原理可以证明下面的Rouch$\acute{e}$定理.</p>
 <aside class="wiki-note">
 <strong>Rouch$\acute{e</strong>
+<p>设$f,g\in H(D)$,$\gamma$是$D$中的可求长简单闭曲线,$\gamma$的内部位于$D$中.如果当$z\in\gamma$时,有不等式</p>
+<div class="math-display">\[|f(z)-g(z)|&lt; |f(z)|\]</div>
+<p>那么$f$和$g$在$\gamma$内部的零点个数相同.</p>
 </aside>
+<p><strong>Proof</strong>:由相关方程可知,$f$和$g$在$\gamma$上都没有零点.故而</p>
 <div class="math-display">\[\left|1-\frac{g(z)}{f(z)}\right|&lt;1\]</div>
+<p>若记$w=\frac{g}{f}$,则有$|w-1|&lt;1$.这说明当$z$在$\gamma$上变动时,$w$落在以1为中心,半径为1的圆内(不包含边界),那么$w$的曲线不可能绕原点,因此$\Delta_{\gamma}\operatorname{Arg}w=0$,即</p>
 <div class="math-display">\[\Delta_{\gamma}\operatorname{Arg}f(z)=\Delta_{\gamma}\operatorname{Arg}g(z)\]</div>
-<div class="math-display">\[|f(z)-g(z)|=|z^8+z^2-1|\leqslant 3&lt;4=|f(z)|\]</div><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Complex_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：60.0 KB</span><span>位置：数学基础/Section/Complex_Analysis.tex</span></div></details></section></article></main>
+<p>由辐角原理可知$f$和$g$在$\gamma$内部的零点个数相同.</p>
+<p><strong>例</strong>$^\spadesuit$ :求方程$z^8-4z^5+z^2-1=0$在单位圆内零点的个数.</p>
+<p><strong>Solution</strong>:令$f(z)=-4z^5,g(z)=z^8-4z^5+z^2-1$.于是在单位圆周上,$|f(z)|=4$,于是</p>
+<div class="math-display">\[|f(z)-g(z)|=|z^8+z^2-1|\leqslant 3&lt;4=|f(z)|\]</div>
+<p>根据Rouch$\acute{e}$定理,$g$和$f$在$|z|&lt;1$中的零点个数相同.而$f(z)$在$z=0$处有1个5阶零点,因而原方程在$|z|&lt;1$中有5个零点.</p><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Section/Complex_Analysis.tex">打开原始文件</a><span>分类：数学基础</span><span>类型：TeX</span><span>大小：60.0 KB</span><span>位置：数学基础/Section/Complex_Analysis.tex</span></div></details></section></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>
