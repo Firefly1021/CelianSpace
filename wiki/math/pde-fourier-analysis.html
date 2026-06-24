@@ -8,10 +8,11 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="古典 PDE、广义函数、Sobolev 空间与椭圆方程。" />
   <title>偏微分方程与傅里叶分析 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-hide-source" />
-  <script defer src="../assets/search-index.js?v=20260624-hide-source"></script>
-  <script defer src="../assets/wiki.js?v=20260624-hide-source"></script>
-  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-structure" />
+  <script defer src="../assets/search-index.js?v=20260624-latex-structure"></script>
+  <script defer src="../assets/wiki.js?v=20260624-latex-structure"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', re: '\\operatorname{Re}', im: '\\operatorname{Im}', supp: '\\operatorname{supp}', diam: '\\operatorname{diam}', dist: '\\operatorname{dist}', induct: ['\\left\\langle #1,#2\\right\\rangle', 2], norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   
   <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css" />
@@ -399,8 +400,7 @@ x^{\alpha}\pa^{\beta}\varphi (x) &amp;=\frac{1}{|x|^2}\sum_{j=1}^{n}x^2_jx^{\alp
 <div class="math-display">\[\int_{\Omega}u\paa \varphi\dd x=\lim_{m\to\infty}\int_{\Omega}u_m\paa \varphi\dd x=\lim_{m\to\infty}(-1)^{|\alpha|}\int_{\Omega}\paa u_m\varphi\dd x=(-1)^{|\alpha|}\int_{\Omega}\paa u_{\alpha}\varphi\dd x\]</div>
 <p>这就证明了$u\in\sbev,\paa u=u_{\alpha}$.接下来说明$u_m$是在Sobolev空间的范数下收敛到$u$即可.对于所有的$|\alpha|\leqslant k$,在$\Lp$上有$\paa u_m\to \paa u$,由此知在$\sbev$上有$u_m\to u$.</p>
 <h4>逼近定理</h4>
-<p>先证明第一个逼近定理:设$\Omega_{\varepsilon}=\{x\in\Omega:\operatorname{dist}(x,</p>
-<p>tial \Omega)&gt;\varepsilon\}$.</p>
+<p>先证明第一个逼近定理:设$\Omega_{\varepsilon}=\{x\in\Omega:\operatorname{dist}(x,\partial \Omega)&gt;\varepsilon\}$.</p>
 <aside class="wiki-note">
 <strong>光滑函数的局部逼近</strong>
 <p>设$1\leqslant p&lt;\infty$,若$u\in\sbev$,令</p>
@@ -621,7 +621,7 @@ u(x&#x27;,x_n),&amp;x\in B^+\\
 <p>令$W=\boldsymbol{\Psi}(B^0_y)$,变回$x$坐标系,我们得到$u$到$W$上的延拓$\overline{u}$,并且</p>
 <div class="math-display">\[\|\overline{u}\|_{W^{1,p}(W)}\leqslant C\|u\|_{W^{1,p}(\boldsymbol{\Psi}(B^+_y))}\leqslant C\|u\|_{W^{1,p}(\Omega)}\]</div>
 <p>因为$\pa\Omega$是紧的,利用有限覆盖,存在有限多个$x_0^i\in\pa\Omega$和开集$W_i$使得$\pa\Omega\subset\bigcup^{N}_{i=1}W_i$,并且$u$有到$W_i$的延拓$\overline{u}_i(i=1,\cdots,N)$.取$W_0\subset\subset \Omega$使得$\Omega\subset\bigcup^{N}_{i=0}W_i$,自然考虑$u$在$W_0$上的延拓就是自己$\overline{u}_0=u$.</p>
-<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{shapes.geometric,intersections,positioning,arrows.meta,bending,calc,decorations.markings,patterns}
     \begin{tikzpicture}
 \def\Rmain{2.5}
 \def\Rsmall{1}
@@ -728,9 +728,11 @@ p\left|\int_{B^+}\zeta |u|^{p-1}u_{x_n}\mathrm{d}x\right| &amp;\leqslant p\left(
 <p>我们就称$X$嵌入$Y$,记作$X\hookrightarrow Y$.如果$X$中的每个有界序列在$Y$中都是相对紧的,那么我们称$X$<strong>紧嵌入</strong>$Y$,记作$X\hookrightarrow \hookrightarrow Y$.这里需要解释一下相对紧的定义.</p>
 <p>一个集合相对紧的原始定义就是他的闭包是紧的.如果用序列的语言描述就是:$X$中的任意有界序列都包含一个在$Y$中收敛的子列,值得注意的是,未必在$X$中收敛.</p>
 <p>上面嵌入的定义要求了$X\subset Y$,其实这是不必要的,嵌入意味着等同而不是严格相同,因此我们有下面的定义:</p>
-<aside class="wiki-note">给定两个赋范线性空间$(X,\|\cdot\|_{X})$和$(Y,\|\cdot\|_Y)$,如果存在一个映射$\iota :X\to Y$,满足下面三条性质,我们就称$X$可以嵌入到$Y$: \begin{enumerate}[nosep,label = (\roman*)] \item $\iota $是一个线性映射; \item 存在常数$C&gt;0$使得$\|\iota (x)\|_Y\leqslant \|x\|_X$对所有的$x\in X$成立; \item 如果$\iota(x)=\iota(x&#x27;)$,那么$x=x&#x27;$. \end{enumerate} 如果要求这个映射$\iota $ 是紧算子(就是把$X$中的有界集映为$Y$中的相对紧集),我们就称$X$紧嵌入到$Y$中.</aside>
+<ol class="doc-list"><li>$\iota $是一个线性映射;</li><li>存在常数$C&gt;0$使得$\|\iota (x)\|_Y\leqslant \|x\|_X$对所有的$x\in X$成立;</li><li>如果$\iota(x)=\iota(x&#x27;)$,那么$x=x&#x27;$.</li></ol>
+<aside class="wiki-note">给定两个赋范线性空间$(X,\|\cdot\|_{X})$和$(Y,\|\cdot\|_Y)$,如果存在一个映射$\iota :X\to Y$,满足下面三条性质,我们就称$X$可以嵌入到$Y$: 如果要求这个映射$\iota $ 是紧算子(就是把$X$中的有界集映为$Y$中的相对紧集),我们就称$X$紧嵌入到$Y$中.</aside>
 <p>当$X,Y,Z$是三个赋范线性空间,且$X\hookrightarrow Y,Y\hookrightarrow Z$,那么必有$X\hookrightarrow Z$.另外,如果其中一个是紧嵌入,那么$X\hookrightarrow\hookrightarrow Z$.当$X,Y$都是Banach空间时,为证明$X\hookrightarrow Y$,只需要对$X$的一个稠密线性子集中的$u$证明所需要的不等式即可,这是因为稠密子集上的连续线性算子可以唯一地延拓到全空间.</p>
-<aside class="wiki-note">设$X,Y,Z$是三个Banach空间,$X\hookrightarrow Y\hookrightarrow Z$,则$X\hookrightarrow\hookrightarrow Y$的充要条件是: \begin{enumerate}[nosep,label = (\roman*)] \item $X\hookrightarrow\hookrightarrow Z$; \item 对任意$\eta\in (0,1)$,存在常数$C_{\eta}&gt;0$使得 $$ \|u\|_Y\leqslant \eta\|u\|_{X}+C_{\eta}\|u\|_Z,  \forall u\in X $$ \end{enumerate}</aside>
+<ol class="doc-list"><li>$X\hookrightarrow\hookrightarrow Z$;</li><li>对任意$\eta\in (0,1)$,存在常数$C_{\eta}&gt;0$使得 $$ \|u\|_Y\leqslant \eta\|u\|_{X}+C_{\eta}\|u\|_Z,  \forall u\in X $$</li></ol>
+<aside class="wiki-note">设$X,Y,Z$是三个Banach空间,$X\hookrightarrow Y\hookrightarrow Z$,则$X\hookrightarrow\hookrightarrow Y$的充要条件是:</aside>
 <p>首先考虑必要性.因为$X\hookrightarrow\hookrightarrow Y$,所以$X\hookrightarrow\hookrightarrow Z$.接下来利用反证法,若条件(ii)不成立,则存在$\eta_0\in (0,1)$,对每个自然数$k$,存在$u_k\in X$且$\|u_k\|_X=1$使得</p>
 <div class="math-display">\[\|u_k\|_Y&gt;\eta_0+k\|u_k\|_Z\]</div>
 <p>另一方面,由于$X\hookrightarrow Y$,故$\|u_k\|_Y\leqslant C\|u_k\|_X=C$.因此</p>
@@ -786,32 +788,24 @@ p\left|\int_{B^+}\zeta |u|^{p-1}u_{x_n}\mathrm{d}x\right| &amp;\leqslant p\left(
 <p>对于$A\leqslant C_1B+C_2D$,那么我们只需要取$C=\max\{C_1,C_2\},$自然就有$A\lesssim B+D$.</p>
 <p>我们断言对于任意的球$B(x,r)\subset\mathbb{R}^n$,都有</p>
 <div class="math-display">\[\fint_{B(x,r)}|u(y)-u(x)|\mathrm{d}y\lesssim\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y\]</div>
-<p>如何将$|u(y)-u(x)|$和梯度扯上关系呢?利用微积分的知识,固定任意$w\in</p>
-<p>tial B(0,1)$.若$0&lt;s&lt;r$,那么</p>
+<p>如何将$|u(y)-u(x)|$和梯度扯上关系呢?利用微积分的知识,固定任意$w\in\partial B(0,1)$.若$0&lt;s&lt;r$,那么</p>
 <div class="math-display">\[\begin{aligned}
 |u(x+sw)-u(x)| &amp;=\left|\int_0^s\frac{\mathrm{d}}{\mathrm{d}t}u(x+tw)\mathrm{d}t\right|\\
 &amp;=\left|\int_0^s Du(x+tw)\cdot w\mathrm{d}t\right|\\
 &amp;\leqslant \int_0^s|Du(x+tw)|\mathrm{d}t
 \end{aligned}\]</div>
 <p>因此</p>
-<div class="math-display">\[\int_{
-tial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w\leqslant \int_0^s\int_{
-tial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t\]</div>
+<div class="math-display">\[\int_{\partial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w\leqslant \int_0^s\int_{\partial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t\]</div>
 <p>令$y=x+tw,t=|x-y|$,那么上式右边</p>
 <div class="math-display">\[\begin{aligned}
-\int_0^s\int_{
-tial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t &amp;= \int_0^s\int_{
-tial B(x,t)}\frac{Du(y)}{t^{n-1}}\mathrm{d}S_y\mathrm{d}t \\
+\int_0^s\int_{\partial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t &amp;= \int_0^s\int_{\partial B(x,t)}\frac{Du(y)}{t^{n-1}}\mathrm{d}S_y\mathrm{d}t \\
 &amp;= \int_{B(x,s)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y \\
 &amp;\leqslant \int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y
 \end{aligned}\]</div>
 <p>又因为</p>
-<div class="math-display">\[\int_{
-tial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w=\frac{1}{s^{n-1}}\int_{
-tial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\]</div>
+<div class="math-display">\[\int_{\partial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w=\frac{1}{s^{n-1}}\int_{\partial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\]</div>
 <p>所以</p>
-<div class="math-display">\[\int_{
-tial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\leqslant s^{n-1}\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y\]</div>
+<div class="math-display">\[\int_{\partial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\leqslant s^{n-1}\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y\]</div>
 <p>两边关于$s$从$0$到$r$积分,得到</p>
 <div class="math-display">\[\fint_{B(x,r)}|u(y)-u(x)|\mathrm{d}y\leqslant \frac{1}{n\alpha(n)}\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y\]</div>
 <p><strong>Part1.估计</strong>$\sup_{x\in\mathbb{R}^n}|u(x)|$.</p>

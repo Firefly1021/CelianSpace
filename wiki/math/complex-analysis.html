@@ -8,10 +8,11 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="复数、全纯函数、积分表示与级数展开。" />
   <title>复变函数 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-hide-source" />
-  <script defer src="../assets/search-index.js?v=20260624-hide-source"></script>
-  <script defer src="../assets/wiki.js?v=20260624-hide-source"></script>
-  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-structure" />
+  <script defer src="../assets/search-index.js?v=20260624-latex-structure"></script>
+  <script defer src="../assets/wiki.js?v=20260624-latex-structure"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', re: '\\operatorname{Re}', im: '\\operatorname{Im}', supp: '\\operatorname{supp}', diam: '\\operatorname{diam}', dist: '\\operatorname{dist}', induct: ['\\left\\langle #1,#2\\right\\rangle', 2], norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   
   <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css" />
@@ -68,123 +69,44 @@
 <p><strong>定义</strong>$^\clubsuit $:设$f(z)=u(x,y)+\mathrm{i}v(x,y)$是定义在域$D$上的函数,$z_0=x_0+\mathrm{i}y_0\in D$.我们说$f$在$z_0$处实可微,是指$u$和$v$作为$x,y$的二元函数在$(x_0,y_0)$处可微.</p>
 <p>引入算子</p>
 <div class="math-display">\[\begin{aligned}
-\frac{
-tial}{
-tial z}&amp;=\frac{1}{2}\left(\frac{
-tial}{
-tial x}-\mathrm{i}\frac{
-tial}{
-tial y}\right),\\
-\frac{
-tial}{
-tial \overline{z}}&amp;=\frac{1}{2}\left(\frac{
-tial}{
-tial x}+\mathrm{i}\frac{
-tial}{
-tial y}\right).
+\frac{\partial}{\partial z}&amp;=\frac{1}{2}\left(\frac{\partial}{\partial x}-\mathrm{i}\frac{\partial}{\partial y}\right),\\
+\frac{\partial}{\partial \overline{z}}&amp;=\frac{1}{2}\left(\frac{\partial}{\partial x}+\mathrm{i}\frac{\partial}{\partial y}\right).
 \end{aligned}\]</div>
 <p>因此有</p>
-<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=\frac{
-tial}{
-tial z}(z_0)\Delta z+\frac{
-tial}{
-tial \overline{z}}(z_0)\overline{\Delta z}+o(|\Delta z|)\]</div>
+<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=\frac{\partial}{\partial z}(z_0)\Delta z+\frac{\partial}{\partial \overline{z}}(z_0)\overline{\Delta z}+o(|\Delta z|)\]</div>
 <p>则可以得到下面的定理.</p>
 <p><strong>定理</strong>$^\clubsuit $:设$f:D\to \mathbb{C}$是定义在域$D$上的函数,$z_0\in D$,那么$f$在$z_0$处实可微的充分必要条件是</p>
-<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=\frac{
-tial}{
-tial z}(z_0)\Delta z+\frac{
-tial}{
-tial \overline{z}}(z_0)\overline{\Delta z}+o(|\Delta z|)\]</div>
+<div class="math-display">\[f(z_0+\Delta z)-f(z_0)=\frac{\partial}{\partial z}(z_0)\Delta z+\frac{\partial}{\partial \overline{z}}(z_0)\overline{\Delta z}+o(|\Delta z|)\]</div>
 <p>成立.</p>
 <p>注意一点,我们目前说的都是$f$在$z_0$处实可微,并不是$f$在$z_0$处可微.对于$f$在$z_0$处可微有下面的定理</p>
 <aside class="wiki-note">
 <strong>Cauchy-Riemann方程</strong>
-<p>设$f$是定义在域$D$上的函数,$z_0\in D$,那么$f$在$z_0$处可微的充分必要条件是$f$在$z_0$处实可微且$\frac{</p>
-<p>tial f}{</p>
-<p>tial \overline{z}}(z_0)=0$.在可微的情况下,$f&#x27;(z_0)=\frac{</p>
-<p>tial f}{</p>
-<p>tial z}(z_0)$.</p>
+<p>设$f$是定义在域$D$上的函数,$z_0\in D$,那么$f$在$z_0$处可微的充分必要条件是$f$在$z_0$处实可微且$\frac{\partial f}{\partial \overline{z}}(z_0)=0$.在可微的情况下,$f&#x27;(z_0)=\frac{\partial f}{\partial z}(z_0)$.</p>
 </aside>
-<p><strong>注</strong>:$\frac{</p>
-<p>tial f}{</p>
-<p>tial \overline{z}}(z_0)=0$称为Cauchy-Riemann方程.从这个方程就可以得到$f$的实部和虚部应满足的条件.</p>
+<p><strong>注</strong>:$\frac{\partial f}{\partial \overline{z}}(z_0)=0$称为Cauchy-Riemann方程.从这个方程就可以得到$f$的实部和虚部应满足的条件.</p>
 <p><strong>Proof</strong>:如果$f$在$z_0$处可微,则</p>
 <div class="math-display">\[f(z_0+\Delta z)-f(z_0)=f&#x27;(z_0)\Delta z+o(|\Delta z|)\]</div>
-<p>则由上一个定理知$f$在$z_0$处是实可微,且$\frac{</p>
-<p>tial f}{</p>
-<p>tial \overline{z}}(z_0)=0$,$f&#x27;(z_0)=\frac{</p>
-<p>tial f}{</p>
-<p>tial z}(z_0)$.</p>
-<p>反之,若$f$在$z_0$处是实可微,且$\frac{</p>
-<p>tial f}{</p>
-<p>tial \overline{z}}(z_0)=0$,再由上一个定理知</p>
+<p>则由上一个定理知$f$在$z_0$处是实可微,且$\frac{\partial f}{\partial \overline{z}}(z_0)=0$,$f&#x27;(z_0)=\frac{\partial f}{\partial z}(z_0)$.</p>
+<p>反之,若$f$在$z_0$处是实可微,且$\frac{\partial f}{\partial \overline{z}}(z_0)=0$,再由上一个定理知</p>
 <div class="math-display">\[f(z_0+\Delta z)-f(z_0)=f&#x27;(z_0)\Delta z+o(|\Delta z|)\]</div>
-<p>由此知$f$在$z_0$处可微,而且$f&#x27;(z_0)=\frac{</p>
-<p>tial f}{</p>
-<p>tial z}(z_0)$.</p>
+<p>由此知$f$在$z_0$处可微,而且$f&#x27;(z_0)=\frac{\partial f}{\partial z}(z_0)$.</p>
 <p>我们可以得到下面的函数类包含关系</p>
 <div class="math-display">\[H(D)\subset C^\infty(D)\subset C^k(D)\subset C^1(D)\subset C(D)\]</div>
 <p>我们已经知道,如果$f$是域$D$上的全纯函数,那么$f$在$D$上有任意阶导数.若记$f=u+\mathrm{i}v\in H(D)$,则$u,v\in C^{\infty}(D)$,不仅如此,我们还可以得到$u$和$v$都是调和函数.</p>
 <p>由</p>
-<div class="math-display">\[\frac{
-tial u}{
-tial \overline{z}}=\frac{1}{2}\left(\frac{
-tial u}{
-tial x}+\mathrm{i}\frac{
-tial u}{
-tial y}\right).\]</div>
+<div class="math-display">\[\frac{\partial u}{\partial \overline{z}}=\frac{1}{2}\left(\frac{\partial u}{\partial x}+\mathrm{i}\frac{\partial u}{\partial y}\right).\]</div>
 <p>所以</p>
 <div class="math-display">\[\begin{aligned}
-\frac{
-tial^2 u}{
-tial z
-tial \overline{z}}&amp;= \frac{
-tial }{
-tial z}\left(\frac{
-tial u}{
-tial \overline{z}}\right)\\
-&amp;= \frac{1}{4}\left[\frac{
-tial}{
-tial x}\left(\frac{
-tial}{
-tial x}-\mathrm{i}\frac{
-tial}{
-tial y}\right)+\mathrm{i}\frac{
-tial}{
-tial y}\left(\frac{
-tial}{
-tial x}-\mathrm{i}\frac{
-tial}{
-tial y}\right).\right]\\
-&amp;= \frac{1}{4}\left(\frac{
-tial ^2u}{
-tial x^2}+\frac{
-tial ^2u}{
-tial y^2}\right)=\frac{1}{4}\Delta u
+\frac{\partial^2 u}{\partial z\partial \overline{z}}&amp;= \frac{\partial }{\partial z}\left(\frac{\partial u}{\partial \overline{z}}\right)\\
+&amp;= \frac{1}{4}\left[\frac{\partial}{\partial x}\left(\frac{\partial}{\partial x}-\mathrm{i}\frac{\partial}{\partial y}\right)+\mathrm{i}\frac{\partial}{\partial y}\left(\frac{\partial}{\partial x}-\mathrm{i}\frac{\partial}{\partial y}\right).\right]\\
+&amp;= \frac{1}{4}\left(\frac{\partial ^2u}{\partial x^2}+\frac{\partial ^2u}{\partial y^2}\right)=\frac{1}{4}\Delta u
 \end{aligned}\]</div>
-<p>即$\Delta u=4\frac{</p>
-<p>tial^2 u}{</p>
-<p>tial z</p>
-<p>tial \overline{z}}$.由$f\in H(D)$,从而</p>
-<div class="math-display">\[\frac{
-tial f}{
-tial \overline{z}}=0,\frac{
-tial\overline{f}}{
-tial z}=0\]</div>
+<p>即$\Delta u=4\frac{\partial^2 u}{\partial z\partial \overline{z}}$.由$f\in H(D)$,从而</p>
+<div class="math-display">\[\frac{\partial f}{\partial \overline{z}}=0,\frac{\partial\overline{f}}{\partial z}=0\]</div>
 <p>所以</p>
-<div class="math-display">\[\frac{
-tial^2 f}{
-tial z
-tial \overline{z}}=\frac{
-tial^2 \overline{f}}{
-tial z
-tial \overline{z}}=0\]</div>
+<div class="math-display">\[\frac{\partial^2 f}{\partial z\partial \overline{z}}=\frac{\partial^2 \overline{f}}{\partial z\partial \overline{z}}=0\]</div>
 <p>由$u=\frac{1}{2}(f+\overline{f})$即得</p>
-<div class="math-display">\[\Delta u=4\frac{
-tial^2 u}{
-tial z
-tial \overline{z}}=0\]</div>
+<div class="math-display">\[\Delta u=4\frac{\partial^2 u}{\partial z\partial \overline{z}}=0\]</div>
 <p>同理知$\Delta v=0$.</p>
 <p><strong>分式线性变换</strong>$^\clubsuit $:我们称函数</p>
 <div class="math-display">\[w=f(z)=\frac{az+b}{cz+d},(ad-bc\neq 0)\]</div>
@@ -403,8 +325,7 @@ f(z)&amp;=\sum_{n=0}^{\infty}\frac{f^{(n)}(z_0)}{n!}(z-z_0)^n\\
 <div class="math-display">\[g(z_0)=\frac{f^{(m)}(z_0)}{m!}\neq 0\]</div>
 <p>反之,如果相关方程式成立,$f$当然在$z_0$处全纯,通过直接计算即知$z_0$是$f$的$m$阶零点.</p>
 <p><strong>命题</strong>$^\clubsuit$:设$D$是$\mathbb{C}$中的域,$f\in H(D)$.如果$f$在$D$中的小圆盘$B(z_0,\varepsilon)$上恒等于零,那么$f$在$D$上恒等于零.</p>
-<p><strong>Proof</strong>: 在$D$中任取一点$a$,我们证明$f(a)=0.$用$D$ 中的曲线$\gamma$连接$z_{0}$和$a$,且$\rho=d(\gamma,</p>
-<p>tial D)&gt;0.$在$\gamma$上依次取点 $z_0,z_1,z_2,\cdots,z_n=a$, 使得 $z_1\in B(z_0,\varepsilon)$,其他各点之间的距离都小于 $\rho$,作圆盘$B( z_j, \rho ) , j$ = $1, \cdots , n$.由于$f$在$B( z_0, \varepsilon )$中恒为零，所以$f^(n)(z_1)=0,n=0,1,\cdots$. 于是,$f$ 在$B(z_1,\rho)$中的 Taylor 展开式的系数全为零,所以$f$在$B(z_1,\rho)$中恒为零.由于$z_2\in B(z_1,\rho)$,所以$f^(n)(z_2)=$ $0, n$ = $0,1,\cdots$, 用同样的方法推理,$f$在$B(z_2,\rho)$中恒为零. 再往下推,即知$f$在$B(a,\rho)$中恒为零,所以$f(a)=0$.</p>
+<p><strong>Proof</strong>: 在$D$中任取一点$a$,我们证明$f(a)=0.$用$D$ 中的曲线$\gamma$连接$z_{0}$和$a$,且$\rho=d(\gamma,\partial D)&gt;0.$在$\gamma$上依次取点 $z_0,z_1,z_2,\cdots,z_n=a$, 使得 $z_1\in B(z_0,\varepsilon)$,其他各点之间的距离都小于 $\rho$,作圆盘$B( z_j, \rho ) , j$ = $1, \cdots , n$.由于$f$在$B( z_0, \varepsilon )$中恒为零，所以$f^(n)(z_1)=0,n=0,1,\cdots$. 于是,$f$ 在$B(z_1,\rho)$中的 Taylor 展开式的系数全为零,所以$f$在$B(z_1,\rho)$中恒为零.由于$z_2\in B(z_1,\rho)$,所以$f^(n)(z_2)=$ $0, n$ = $0,1,\cdots$, 用同样的方法推理,$f$在$B(z_2,\rho)$中恒为零. 再往下推,即知$f$在$B(a,\rho)$中恒为零,所以$f(a)=0$.</p>
 <p><strong>命题(全纯函数只有孤立零点)</strong>$^\clubsuit$:设$D$是$\mathbb{C}$中的域,$f\in H(D),f(z)\not\equiv 0$.那么$f$在$D$中的零点是孤立的.即若$z_0$为$f$的零点,必存在$z_0$的邻域$B(z_0,\varepsilon)$,使得$f$在$B(z_0,\varepsilon)$中除了$z_0$外不再有其他的零点.</p>
 <p><strong>Proof</strong>:由上述命题知,$f$在$z_0$的邻域中不能恒等于零,故不妨设$z_0$为$f$的$m$阶零点.所以$f$在$z_0$的邻域中可表示为$f(z)=(z-z_0)^mg(z)$,因$g$在$z_0$处连续,且$g(z_0)\neq0$,故存在$z_0$的邻域$B(z_0,\varepsilon)$,使得$g$在$B(z_0,\varepsilon)$中处处不为零, 因而$f$ 在$B(z_0,\varepsilon)$中除了$z_0$外不再有其他的零点 由此可以证明下面的重要结果:</p>
 <aside class="wiki-note">
@@ -623,8 +544,8 @@ f(a) &amp;=\frac{1}{2\pi\mathrm{i}}\int_{\gamma}\frac{f(\zeta)}{\zeta-a}\mathrm{
 <div class="math-display">\[\int\limits_{\gamma_\rho}f(z)\mathrm{d}z=\mathrm{i}B(\theta_2-\theta_1)+\int\limits_{\gamma_\rho}\frac{g(z)}{z-a}\mathrm{d}z\to \mathrm{i}B(\theta_2-\theta_1)(\rho \to 0)\]</div>
 <p><strong>例</strong>$^\spadesuit$ :计算积分</p>
 <div class="math-display">\[\int_0^{\infty}\frac{\sin x}{x}\mathrm{d}x\]</div>
-<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
-\begin{tikzpicture}[>={Kite[inset=0pt,length=0.3cm,bend]},
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{shapes.geometric,intersections,positioning,arrows.meta,bending,calc,decorations.markings,patterns}
+\begin{tikzpicture}[>={Kite[inset=0pt,length=0.3cm]},
     decoration={markings,
     mark= at position .17 with {\arrow{>}},
     mark= at position .4 with {\arrow{>}},

@@ -8,10 +8,11 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="拓扑学基本知识和微分几何。" />
   <title>拓扑与几何 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-hide-source" />
-  <script defer src="../assets/search-index.js?v=20260624-hide-source"></script>
-  <script defer src="../assets/wiki.js?v=20260624-hide-source"></script>
-  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-structure" />
+  <script defer src="../assets/search-index.js?v=20260624-latex-structure"></script>
+  <script defer src="../assets/wiki.js?v=20260624-latex-structure"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', re: '\\operatorname{Re}', im: '\\operatorname{Im}', supp: '\\operatorname{supp}', diam: '\\operatorname{diam}', dist: '\\operatorname{dist}', induct: ['\\left\\langle #1,#2\\right\\rangle', 2], norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   
   <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css" />
@@ -76,7 +77,7 @@
 <p>(ii) 当$U_{\alpha}\cap U_{\beta}\neq \emptyset$时,如下的转换映射</p>
 <div class="math-display">\[\varphi_{\beta}\circ \varphi_{\alpha}^{-1}:\varphi_{\alpha}(U_{\alpha}\cap U_{\beta})\to \varphi_{\beta}(U_{\alpha}\cap U_{\beta})\]</div>
 <p>为$C^r(r\geqslant 1)$映射,则称$M$为$C^r$流形.</p>
-<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{shapes.geometric,intersections,positioning,arrows.meta,bending,calc,decorations.markings,patterns}
 \tikzset{
     manifold/.style={line width=0.8pt},
     chart/.style={line width=0.6pt, fill=gray!10, fill opacity=0.5},
@@ -121,7 +122,7 @@
 <p>我们称$\{(U_{\alpha},\varphi_{\alpha})\}$为$M$的局部坐标覆盖,$(U_{\alpha},\varphi_{\alpha})$为一个局部坐标系,$U_{\alpha}$为局部坐标邻域,$\varphi_{\alpha}$为局部坐标映射.设$p\in U_{\alpha}$,记$x^i(p)$为$\varphi_{\alpha}(p)$的第$i$个欧式坐标分量,则称$x^i:U_{\alpha}\to \mathbb{R}$为局部坐标系$(U_{\alpha},\varphi_{\alpha})$的第$i$个坐标函数,有时也称$\{x^i\}=\{x^1,x^2,\cdots,x^n\}$为$p$附近的局部坐标.</p>
 <p>下面我们定义两个流形之间的映射.</p>
 <aside class="wiki-note">设$f:M\to N$为两个$C^r$微分流形之间的连续映射.如果任给$p\in M$和$q=f(p)\in N$附近的局部坐标系$(V,\psi )$,均存在$p$附近的局部坐标系$(U,\varphi)$,使得$f(U)\subset V$,且$f$在这两个局部坐标系下的局部表示 $$ \psi\circ f\circ \varphi^{-1}:\varphi(U)\to \psi(V) $$ 为$C^{k}(k\leqslant r)$映射,则称$f$为流形$M,N$之间的$C^{k}$映射.$C^{k}$映射的全体记为$C^{k}(M,N)$.</aside>
-<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{shapes.geometric,intersections,positioning,arrows.meta,bending,calc,decorations.markings,patterns}
     \tikzset{
     manifold/.style={line width=0.65pt},
     chart/.style={line width=0.65pt, fill=blue!5, fill opacity=0.4},
@@ -152,13 +153,9 @@
 <p>我们知道.流形其实就是局部看起来像欧氏空间的拓扑空间.设$\{(U_{\alpha},\varphi_{\alpha})\}$为微分流形$M$的局部坐标覆盖.转换映射可以用分量表示如下</p>
 <div class="math-display">\[\varphi_{\beta}\circ\varphi^{-1}_{\alpha}(x)=(y^1,y^2,\cdots,y^n)\]</div>
 <p>其中$x=(x^1,x^2,\cdots,x^n)\in \varphi_{\alpha}(U_{\alpha}\cap U_{\beta}),y^i(1\leqslant i\leqslant n)$是$x^j(1\leqslant j\leqslant n)$的函数.于是转换映射$\varphi_{\beta}\circ\varphi^{-1}_{\alpha}$的Jacobi矩阵记为</p>
-<div class="math-display">\[J(\varphi_{\beta}\circ\varphi^{-1}_{\alpha})=\left(\frac{
-tial y^i}{
-tial x^j}\right)_{n\times n}\]</div>
+<div class="math-display">\[J(\varphi_{\beta}\circ\varphi^{-1}_{\alpha})=\left(\frac{\partial y^i}{\partial x^j}\right)_{n\times n}\]</div>
 <p>相应的Jaocbi行列式为</p>
-<div class="math-display">\[\det J(\varphi_{\beta}\circ\varphi^{-1}_{\alpha})(p)=\frac{
-tial (y^1,y^2,\cdots,y^n)}{
-tial (x^1,x^2,\cdots,x^n)}(\varphi_{\alpha}(p)),  p\in U_{\alpha}\cap U_{\beta}\]</div>
+<div class="math-display">\[\det J(\varphi_{\beta}\circ\varphi^{-1}_{\alpha})(p)=\frac{\partial (y^1,y^2,\cdots,y^n)}{\partial (x^1,x^2,\cdots,x^n)}(\varphi_{\alpha}(p)),  p\in U_{\alpha}\cap U_{\beta}\]</div>
 <p>为了后面在流形上定义积分,我们需要定向的概念.</p>
 <aside class="wiki-note">设$M$为</aside>
 <p>考虑单位圆周</p>

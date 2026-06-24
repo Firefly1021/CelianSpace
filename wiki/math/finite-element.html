@@ -8,10 +8,11 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="变分问题、有限元空间、混合有限元与计算流程。" />
   <title>有限元方法初步 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-hide-source" />
-  <script defer src="../assets/search-index.js?v=20260624-hide-source"></script>
-  <script defer src="../assets/wiki.js?v=20260624-hide-source"></script>
-  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-structure" />
+  <script defer src="../assets/search-index.js?v=20260624-latex-structure"></script>
+  <script defer src="../assets/wiki.js?v=20260624-latex-structure"></script>
+  <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', re: '\\operatorname{Re}', im: '\\operatorname{Im}', supp: '\\operatorname{supp}', diam: '\\operatorname{diam}', dist: '\\operatorname{dist}', induct: ['\\left\\langle #1,#2\\right\\rangle', 2], norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   
   <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css" />
@@ -125,7 +126,7 @@ U_1a(\phi_1,\phi_n)+U_2a(\phi_2,\phi_n)+\cdots+U_na(\phi_n,\phi_n)=\langle F,\ph
 0,&amp;i\neq j
 \end{cases}\]</div>
 <p>这两个定义是十分抽象且让人摸不着头脑的.我们以一维的例子来理解.</p>
-<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{shapes.geometric,intersections,positioning,arrows.meta,bending,calc,decorations.markings,patterns}
 \begin{tikzpicture}[scale=10, >=stealth]
   \draw[thick] (0,0) -- (1,0);
   \foreach \i in {0,...,10} {
@@ -174,7 +175,7 @@ N_2(\psi) &amp;=\psi(1)=a+b=0
 <p>我们经常用到超平面$\{x:L(x)=0\}$,这里$L$是非退化线性函数.</p>
 <p><strong>引理</strong>$^\clubsuit $:设$P$是次数大于等于1的多项式且在超平面$L$上为$0$.那么我们可以作如下分解$P=LQ$,这里$Q$是$(d-1)$次多项式.</p>
 <p>因为后面我们是要在计算机上求解,因此,我们必须要有一套机械的方法求解节点基函数.我们考虑下面的三角单元$K$:</p>
-<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{shapes.geometric,intersections,positioning,arrows.meta,bending,calc,decorations.markings,patterns}
 \begin{tikzpicture}[scale=3]
 \coordinate (A) at (0,0);
 \coordinate (B) at (1,0);
@@ -203,11 +204,11 @@ N_2(\psi) &amp;=\psi(1)=a+b=0
 <div class="math-display">\[\mathcal{I}_K f=\sum_{i=1}^{k}N_i(f)\phi_i\]</div>
 <p>这是一个单元上的插值函数,我们在实际问题中,通常是将一块区域划分为若干个单元,然后求每个单元上的插值函数,再组合起来.接下来定义全局插值函数,不过在此之前需要定义区域的划分.</p>
 <p><strong>定义</strong>$^\clubsuit $:区域$\Omega$的一个划分,是有限个满足如下条件的单元域全体$\{K_i\}$:</p>
-<p>\item $\operatorname{int} K_i\cap\operatorname{int}K_j=\emptyset,i\neq j$; \item $\cup K_i=\overline{\Omega}$.</p>
+<ol class="doc-list"><li>$\operatorname{int} K_i\cap\operatorname{int}K_j=\emptyset,i\neq j$;</li><li>$\cup K_i=\overline{\Omega}$.</li></ol>
 <p><strong>定义</strong>$^\clubsuit $:设$\Omega$是一个有划分$\mathcal{T}$的区域.设划分中的每个单元$K$都定义了某种类型的形函数空间$\mathcal{P}$与节点变量集$\mathcal{N}$,使得$(K,\mathcal{P},\mathcal{N})$成为一个有限元.设$m$为节点变量所涉及的偏导数最高阶数.对于$f\in C^m(\overline{\Omega})$,其全局插值函数定义为</p>
 <div class="math-display">\[\mathcal{I}_{\mathcal{T}}f|_{K_i}=\mathcal{I}_{K_i} f\]</div>
 <p>对所有的$K_i\in\mathcal{T}$.</p>
-<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{shapes.geometric,intersections,positioning,arrows.meta,bending,calc,decorations.markings,patterns}
     \begin{tikzpicture}[scale=3]
 \coordinate (A) at (0,0);
 \coordinate (B) at (1,0);
@@ -234,7 +235,7 @@ x+y,&amp; (x,y)\in K_1\\
 \end{cases}\]</div>
 <p>插值的效果如下,因为划分单元太少,以及形函数是用线性函数,效果不怎么好.</p>
 <p>\centering</p>
-<figure class="asset-figure"><img src="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Figure/sin%28pi%28x%2By%292%29.png" alt="sin(pi(x+y)2).png" loading="lazy" /><figcaption>数学基础/Figure/sin(pi(x+y)2).png</figcaption></figure>
+<figure class="asset-figure"><img src="../../materials/%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80/Figure/sin%28pi%28x%2By%292%29.png" alt="sin(pi(x+y)2).png" loading="lazy" /></figure>
 <h3>混合有限元</h3>
 <h4>混合变分公式示例</h4>
 <p>稳态(极)粘性流体流动的Stokes方程为:</p>
@@ -243,8 +244,7 @@ x+y,&amp; (x,y)\in K_1\\
 \operatorname{div}{u} &amp;= 0
 \end{aligned}\]</div>
 <p>在 $\Omega  \subset  {\mathbb{R}}^{n}$ 中, 其中 $y$ 表示流体速度, $p$ 表示压力.为了在所有情况下使维度清晰, 我们使用符号 ${H}^{s}{\left( \Omega \right) }^{n}$ 代替 ${H}^{s}\left( \Omega \right)$ , ${L}^{2}{\left( \Omega \right) }^{n}$ 代替 $L^{2}\left( \Omega \right)$ , 等等.</p>
-<p>方程 相关方程 代表了随后将要讨论的Navier-Stokes方程中雷诺数为零的极限情况. 拥有非零的强迫项 $f$ 是不寻常的, 但这些方程的线性性质允许我们将更有可能出现的非齐次边界数据情况转换为齐次情况. 因此, 我们假设, 例如, 我们在 $</p>
-<p>tial \Omega$ 上有狄利克雷(Dirichlet)边界条件 $u = 0$ .</p>
+<p>方程 相关方程 代表了随后将要讨论的Navier-Stokes方程中雷诺数为零的极限情况. 拥有非零的强迫项 $f$ 是不寻常的, 但这些方程的线性性质允许我们将更有可能出现的非齐次边界数据情况转换为齐次情况. 因此, 我们假设, 例如, 我们在 $\partial \Omega$ 上有狄利克雷(Dirichlet)边界条件 $u = 0$ .</p>
 <p>通过分部积分, 我们可以为合适的 $u$ 和 $q$ 推导出一个变分恒等式：</p>
 <div class="math-display">\[\begin{aligned}
 a\left( {u,v}\right)  + b\left( {v,p}\right)  &amp;= \int_{\Omega }fv\mathrm{d}x,\\
@@ -263,15 +263,9 @@ b\left( {u,q}\right)  &amp;= 0 \forall q \in  \varPi .
 \end{aligned}\]</div>
 <p>该问题的适定性部分源于 $a\left( {\cdot , \cdot  }\right)$ 在 ${H}^{1}{\left( \Omega \right) }^{n}$ 上的强制性.</p>
 <p>占据区域 $\Omega$ 的多孔介质中流体流动的模型采取如下形式:</p>
-<div class="math-display">\[- \sum\limits_{{i,j = 1}}^{n}\frac{
-tial }{
-tial {x}_{i}}\left( {{a}_{ij}\left( x\right) \frac{
-tial p}{
-tial {x}_{j}}\left( x\right) }\right)  = f\left( x\right) \text{ in }\Omega ,\]</div>
+<div class="math-display">\[- \sum\limits_{{i,j = 1}}^{n}\frac{\partial }{\partial {x}_{i}}\left( {{a}_{ij}\left( x\right) \frac{\partial p}{\partial {x}_{j}}\left( x\right) }\right)  = f\left( x\right) \text{ in }\Omega ,\]</div>
 <p>其中 $p$ 是压力 (同样为了简单起见, 我们采用非齐次的右手边) . Darcy定律假设流体速度 $u$ 与 $p$ 的梯度相关, 即</p>
-<div class="math-display">\[\sum\limits_{{j = 1}}^{n}{a}_{ij}\left( x\right) \frac{
-tial p}{
-tial {x}_{j}}\left( x\right)  = {u}_{i}\left( x\right) \;\forall i = 1,\ldots ,n.\]</div>
+<div class="math-display">\[\sum\limits_{{j = 1}}^{n}{a}_{ij}\left( x\right) \frac{\partial p}{\partial {x}_{j}}\left( x\right)  = {u}_{i}\left( x\right) \;\forall i = 1,\ldots ,n.\]</div>
 <p>我们假设系数 ${a}_{ij}$ 构成一个对称正定系统 (几乎处处) , 它们与介质的孔隙率有关. 当然, 许多其他的物理模型也采取 相关方程 的形式.</p>
 <p>通过令 $A\left( x\right)$ 表示系数矩阵 $\left( {a}_{ij}\right)$ 的 (几乎处处定义的) 逆, 并写作 $\operatorname{grad}p = Au$ , 可以推导出 相关方程 具有 相关方程 形式的变分公式. 定义</p>
 <div class="math-display">\[a\left( {u,v}\right) :=\int_{\Omega }\sum\limits_{{i,j = 1}}^{n}{A}_{ij}{u}_{i}{v}_{j}\mathrm{d}x\]</div>
@@ -395,8 +389,7 @@ a(u - u_{h}, w) &amp;= a(u,w) - F(w)   &amp;\text{(由 相关方程 得出)} \\
 <h4>速度近似的收敛性结果</h4>
 <p>作为上述理论的第一个应用, 我们考虑用于近似二维斯托克斯(Stokes)方程 相关方程 的空间族. 条件 相关方程 对于所有的 $z \in V$ 关于形式 相关方程 均成立, 因此我们只需证明其逼近性即可.</p>
 <p>令 $V_{h}^{k}$ 表示在最大三角形直径为 $h$ 的多边形区域 $\Omega \subset \mathbb{R}^{2}$ 的非退化三角剖分上的 $k$ 次 $C^{0}$ 分段多项式. 令</p>
-<div class="math-display">\[v_{h} = \left\{ v \in V_{h}^{k} \times V_{h}^{k} : \underset{\sim}{v} = 0 \text{ 在 }
-tial \Omega \text{ 上} \right\}\]</div>
+<div class="math-display">\[v_{h} = \left\{ v \in V_{h}^{k} \times V_{h}^{k} : \underset{\sim}{v} = 0 \text{ 在 } \partial \Omega \text{ 上} \right\}\]</div>
 <p>并且令 $\varPi_{h}$ 为 $\varPi = \left\{ q \in L^{2}(\Omega) : \int_{\Omega} q(x) dx = 0 \right\}$ 的任意子集, 且满足</p>
 <div class="math-display">\[\inf_{q \in \varPi_{h}} \|p - q\|_{L^{2}(\Omega)} \leq C h^{s} \|p\|_{H^{s}(\Omega)},   \forall p \in \varPi \cap H^{s}(\Omega)\]</div>
 <p>对所有的 $0 \leq s \leq k$ 成立. 这样的一族空间是用于压力的 Taylor-Hood 空间族 (Brezzi \&amp; Falk 1991) , 如以下结果所述.</p>
@@ -447,14 +440,10 @@ b_{h}(\underset{\sim}{u}_{h}, q) &amp;= 0 \;\forall q \in \varPi_{h}.
 <div class="math-display">\[\begin{aligned}
 a_{h}(\underset{\sim}{u} - \underset{\sim}{u}_{h}, \underset{\sim}{w}) &amp;= a_{h}(\underset{\sim}{u}, \underset{\sim}{w}) - \int_{\Omega} \underset{\sim}{f} \cdot \underset{\sim}{w} dx \\
 &amp;= a_{h}(\underset{\sim}{u}, \underset{\sim}{w}) - \int_{\Omega} \left( -\Delta \underset{\sim}{u} + \operatorname{grad}p \right) \cdot \underset{\sim}{w} dx   &amp;\text{(由 相关方程)} \\
-&amp;= \sum_{e} \int_{e} \sum_{i = 1,2} \frac{
-tial u_{i}}{
-tial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds - b_{h}(\underset{\sim}{w}, p)
+&amp;= \sum_{e} \int_{e} \sum_{i = 1,2} \frac{\partial u_{i}}{\partial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds - b_{h}(\underset{\sim}{w}, p)
 \end{aligned}\]</div>
 <p>为了记号的简单起见, 我们约定在 $\Omega$ 外 $w$ 被定义为零, 因此在边界边上“跳跃” $[w]$ 等同于 $w$ 本身. 由引理 10.3.7 和 10.3.9, 我们发现</p>
-<div class="math-display">\[\left| \sum_{e} \int_{e} \sum_{i = 1,2} \frac{
-tial u_{i}}{
-tial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds \right| \leq C h \left( \|u\|_{H^{2}(\Omega)^{2}} + \|p\|_{H^{1}(\Omega)} \right) \|\underline{w}\|_{h}.\]</div>
+<div class="math-display">\[\left| \sum_{e} \int_{e} \sum_{i = 1,2} \frac{\partial u_{i}}{\partial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds \right| \leq C h \left( \|u\|_{H^{2}(\Omega)^{2}} + \|p\|_{H^{1}(\Omega)} \right) \|\underline{w}\|_{h}.\]</div>
 <p>遵循定理 12.3.7 的推导, 我们发现</p>
 <div class="math-display">\[\begin{aligned}
 \left| b_{h}(w, p) \right| &amp;\leq \sqrt{2} \|w\|_{h} \inf_{q \in \varPi_{h}} \|p - q\|_{L^{2}(\Omega)} \\
@@ -597,9 +586,7 @@ b\left( {{u}_{h},q}\right)  &amp;= b\left( {u,q}\right) \;\forall q \in  {\varPi
 \underset{\sim}{v}(m_{e}) \cdot \tau_{e} &amp;= (|T_{e,1}| + |T_{e,2}|) [\tau_{e} \cdot \operatorname{grad}p(m_{e})], \\
 \underset{\sim}{v}(m_{e}) \cdot \nu_{e} &amp;= 0,
 \end{aligned}\]</div>
-<p>其中 $T_{e,1}$ 和 $T_{e,2}$ 是 $\mathcal{T}^{h}$ 中以 $e$ 为公共边的两个三角形. 注意 $\tau_{e} \cdot \operatorname{grad}p(m_{e})$ 是无歧义的, 因为 $\operatorname{grad}p$ 的切向分量跨边是连续的. 我们在所有顶点和所有边界边中点处设置 $v = 0$ . 令 $r_{T}$ 表示 $T \in \mathcal{T}^{h}$ 的内部边数量, 也就是说, 如果 $T$ 在内部则 $r_{T} = 3$ , 如果有一条边在 $</p>
-<p>tial \Omega$ 上则 $r_{T} = 2$ . 我们假设 $\mathcal{T}^{h}$ 中没有任何三角形有两条边在 $</p>
-<p>tial \Omega$ 上. 对于给定的 $T \in \mathcal{T}^{h}$ , 令 $e^{i} (1 \leq i \leq r_{T})$ 表示内部边. 那么我们有</p>
+<p>其中 $T_{e,1}$ 和 $T_{e,2}$ 是 $\mathcal{T}^{h}$ 中以 $e$ 为公共边的两个三角形. 注意 $\tau_{e} \cdot \operatorname{grad}p(m_{e})$ 是无歧义的, 因为 $\operatorname{grad}p$ 的切向分量跨边是连续的. 我们在所有顶点和所有边界边中点处设置 $v = 0$ . 令 $r_{T}$ 表示 $T \in \mathcal{T}^{h}$ 的内部边数量, 也就是说, 如果 $T$ 在内部则 $r_{T} = 3$ , 如果有一条边在 $\partial \Omega$ 上则 $r_{T} = 2$ . 我们假设 $\mathcal{T}^{h}$ 中没有任何三角形有两条边在 $\partial \Omega$ 上. 对于给定的 $T \in \mathcal{T}^{h}$ , 令 $e^{i} (1 \leq i \leq r_{T})$ 表示内部边. 那么我们有</p>
 <div class="math-display">\[\begin{aligned}
 \int_{T} \underset{\sim}{v} \cdot \operatorname{grad}p dx &amp;= \frac{|T|}{3} \sum_{i = 1}^{r_{T}} (\underset{\sim}{v} \cdot \operatorname{grad}p)(m_{e^{i}}) \\
 &amp;= \frac{|T|}{3} \sum_{i = 1}^{r_{T}} \left( \sum_{j = 1}^{2} |T_{e^{i},j}| \tau_{e^{i}} \cdot \operatorname{grad}p(m_{e^{i}})^{2} \right) \\
@@ -635,13 +622,11 @@ b(u_{h},p) &amp;= \|p\|_{L^{2}(\Omega)}^{2} - b(u - u_{h},p)   (\text{因为 } -
 \end{aligned}\]</div>
 <p>因此, 对于足够大的 $K$ , 我们证明了针对 $p \notin \varPi_{h}^{K}$ 的 (12.5.3) .</p>
 <p>结合这两种情况, 我们证明了以下结果.</p>
-<p><strong>(12.6.6) 定理.</strong> 假设 $\mathcal{T}^{h}$ 是非退化的, 并且没有在 $</p>
-<p>tial \Omega$ 上有两条边的三角形. 令 $v_{h}$ 如 (12.4.1) 所示, 且令 $\varPi_{h}$ 如 (12.4.4) 所示. 那么对于 $k = 2$ 的情况, 条件 (12.5.3) , 即</p>
+<p><strong>(12.6.6) 定理.</strong> 假设 $\mathcal{T}^{h}$ 是非退化的, 并且没有在 $\partial \Omega$ 上有两条边的三角形. 令 $v_{h}$ 如 (12.4.1) 所示, 且令 $\varPi_{h}$ 如 (12.4.4) 所示. 那么对于 $k = 2$ 的情况, 条件 (12.5.3) , 即</p>
 <div class="math-display">\[\beta \|q\|_{L^{2}(\Omega)} \leq \sup_{\underset{\sim}{v} \in v_{h}} \frac{|b(\underset{\sim}{v},q)|}{\|\underset{\sim}{v}\|_{H^{1}(\Omega)^{2}}} \;\forall q \in \varPi_{h},\]</div>
 <p>(或等价形式 (12.5.2) ) 成立, 且 $\beta &gt; 0$ 独立于 $h$ .</p>
 <p>作为该定理和推论 12.5.18 的推论, 我们有以下结果.</p>
-<p><strong>(12.6.7) 定理.</strong> 假设 $\mathcal{T}^{h}$ 是非退化的, 并且没有在 $</p>
-<p>tial \Omega$ 上有两条边的三角形. 令 $k = 2$ 时的 $v_{h}$ 如 (12.4.1) 所示, $\varPi_{h}$ 如 (12.4.4) 所示. 令 $(u,p)$ 为 (12.1.6) 的解. 令 $(u_{h},p_{h})$ 是利用 (12.1.4) 和 (12.1.5) 给出的形式求解 (12.3.1) 得到的解. 那么对于 $0 \leq s \leq 2$</p>
+<p><strong>(12.6.7) 定理.</strong> 假设 $\mathcal{T}^{h}$ 是非退化的, 并且没有在 $\partial \Omega$ 上有两条边的三角形. 令 $k = 2$ 时的 $v_{h}$ 如 (12.4.1) 所示, $\varPi_{h}$ 如 (12.4.4) 所示. 令 $(u,p)$ 为 (12.1.6) 的解. 令 $(u_{h},p_{h})$ 是利用 (12.1.4) 和 (12.1.5) 给出的形式求解 (12.3.1) 得到的解. 那么对于 $0 \leq s \leq 2$</p>
 <div class="math-display">\[\|u - u_{h}\|_{H^{1}(\Omega)^{2}} + \|p - p_{h}\|_{L^{2}(\Omega)} \leq C h^{s} \left( \|u\|_{H^{s + 1}(\Omega)^{2}} + \|p\|_{H^{s}(\Omega)} \right)\]</div>
 <p>前提是 $(u,p) \in H^{s + 1}(\Omega)^{2} \times H^{s}(\Omega)$ .</p>
 <p>定理 12.6.6 和 12.6.7 对所有 $k \geq 2$ 成立 (参见 Brezzi \&amp; Falk 1991) . 在网格满足一些温和限制的情况下, $k \geq 4$ 的情况是下面定理 12.6.10 的推论. 类似的技术适用于其他空间 $v_{h}$ 和 $\varPi_{h}$ 的选择. 其基本理念是选取 $\operatorname{div}v$ 来匹配“局部”的 $p \in \varPi_{h}^{K}$ , 然后针对 $p \notin \varPi_{h}^{K}$ 使用一般论证 (12.6.5) (Scott \&amp; Vogelius 1985a) .</p>
@@ -662,8 +647,7 @@ b(u_{h},p) &amp;= \|p\|_{L^{2}(\Omega)}^{2} - b(u - u_{h},p)   (\text{因为 } -
 <p><strong>(12.6.11) 引理.</strong> 条件 (12.4.2) 对 $\varPi_{h} \mathrel{\text{:=}} \operatorname{div}(V_{h}^{k})^{n}$ 成立.</p>
 <p><em>证明.</em> 令 $B$ 为包含 $\Omega$ 的球, 并令 $Ep$ 为 $p$ 在 $B$ 上的延拓 (即 $Ep|_{\Omega} = p$ ) , 从而 (见定理 1.4.5)</p>
 <div class="math-display">\[\|Ep\|_{H^{s}(B)} \leq C \|p\|_{H^{s}(\Omega)}.\]</div>
-<p>通过在 $B$ 内求解 $\Delta \phi = Ep$ 并附带狄利克雷边界条件 $\phi = 0$ 在 $</p>
-<p>tial B$ 上来定义 $\phi$ . 由椭圆正则性 (5.5 节) ,</p>
+<p>通过在 $B$ 内求解 $\Delta \phi = Ep$ 并附带狄利克雷边界条件 $\phi = 0$ 在 $\partial B$ 上来定义 $\phi$ . 由椭圆正则性 (5.5 节) ,</p>
 <div class="math-display">\[\|\phi\|_{H^{s + 2}(B)} \leq C \|Ep\|_{H^{s}(B)} \leq C^{\prime} \|p\|_{H^{s}(\Omega)}.\]</div>
 <p>记 $\underline{w} = \operatorname{grad}\phi$ 并注意 $\|\underline{w}\|_{H^{s + 1}(\Omega)^{n}} \leq C \|p\|_{H^{s}(\Omega)}$ . 那么在 $\Omega$ 中 $p = \operatorname{div}\underline{w}$ 并且</p>
 <div class="math-display">\[\begin{aligned}
@@ -696,7 +680,7 @@ b(u_{h},p) &amp;= \|p\|_{L^{2}(\Omega)}^{2} - b(u - u_{h},p)   (\text{因为 } -
 u(0)=0,&amp; 
 \end{cases}\]</div>
 <p>我们将区间$[0,1]$等分为5个单元,即</p>
-<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{shapes.geometric,intersections,positioning,arrows.meta,bending,calc,decorations.markings,patterns}
     \begin{tikzpicture}[scale=1.5]
     \def\dx{1}
     \def\normalH{0.1}
@@ -720,27 +704,7 @@ u(0)=0,&amp;
     \node[right] at (5+\normalH,0) {$x=1$};
 \end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption></figure>
 <p>接下来我们需要将节点以及单元储存到计算机.通常包括下面几个数据.</p>
-<p>\item 单元信息数据:储存单元所包含的节点序号,行数就是总的单元数,列数与单元内的节点数相同.以我们这个例子来看,每个单元内有两个节点,因此可以储存为</p>
-<div class="math-display">\[\begin{bmatrix}
-1 &amp; 2\\
-2 &amp; 3\\
-3 &amp; 4\\
-4 &amp; 5\\
-5 &amp; 6
-\end{bmatrix}\]</div>
-<p>\item 节点坐标数据:存储节点的坐标,行数表示节点总数,列数表示问题的维度,因为我们的例子考虑的是一维,因此只需要一列即可</p>
-<div class="math-display">\[\begin{bmatrix}
-0\\
-0.2\\
-0.4\\
-0.6\\
-0.8\\
-1
-\end{bmatrix}\]</div>
-<p>\item 边界条件数据:我们考虑的问题一般涉及两个边界条件,不过现在的例子只有Dirichlet边界条件.行数等于处于边界条件的节点总数,对于列数和边界条件的分类与研究问题的维数有关,在现在的例子中,第一列为处于Dirichlet边界条件的节点序号,第二列是相应的值</p>
-<div class="math-display">\[\begin{bmatrix}
-1 &amp; 0
-\end{bmatrix}\]</div>
+<ol class="doc-list"><li>单元信息数据:储存单元所包含的节点序号,行数就是总的单元数,列数与单元内的节点数相同.以我们这个例子来看,每个单元内有两个节点,因此可以储存为 $$ \begin{bmatrix} 1 &amp; 2<br> 2 &amp; 3<br> 3 &amp; 4<br> 4 &amp; 5<br> 5 &amp; 6 \end{bmatrix} $$</li><li>节点坐标数据:存储节点的坐标,行数表示节点总数,列数表示问题的维度,因为我们的例子考虑的是一维,因此只需要一列即可 $$ \begin{bmatrix} 0<br> 0.2<br> 0.4<br> 0.6<br> 0.8<br> 1 \end{bmatrix} $$</li><li>边界条件数据:我们考虑的问题一般涉及两个边界条件,不过现在的例子只有Dirichlet边界条件.行数等于处于边界条件的节点总数,对于列数和边界条件的分类与研究问题的维数有关,在现在的例子中,第一列为处于Dirichlet边界条件的节点序号,第二列是相应的值 $$ \begin{bmatrix} 1 &amp; 0 \end{bmatrix} $$</li></ol>
 <p>当网格离散完成,单元的节点基函数也就确定了.我们以$[0,1]$为参考单元,相应的基函数为</p>
 <div class="math-display">\[\Phi_1 = 1-\xi,\Phi_2 = \xi,  \xi\in [0,1]\]</div>
 <p>对于第$e$个单元有$\xi=\frac{x-x_1^e}{x_2^e-x_1^e}=\frac{x-x_1^e}{h_e}$,设单元节点处的函数值为$u_1^e,u_2^e$,值得注意的是,这两个待求的值是不随坐标的改变而改变,因此我们考虑在参考单元上插值为</p>
