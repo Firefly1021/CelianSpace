@@ -8,11 +8,14 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="守恒律、PDE 数值解、离散极值原理与 Helmholtz 方程。" />
   <title>数值分析 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-math-flow" />
-  <script defer src="../assets/search-index.js?v=20260624-math-flow"></script>
-  <script defer src="../assets/wiki.js?v=20260624-math-flow"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-tikzjax" />
+  <script defer src="../assets/search-index.js?v=20260624-tikzjax"></script>
+  <script defer src="../assets/wiki.js?v=20260624-tikzjax"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css" />
+  <script src="https://tikzjax.com/v1/tikzjax.js"></script>
 </head>
 <body data-depth="1">
   <header class="wiki-topbar">
@@ -131,14 +134,42 @@ x_0+(1-x_0)t,&amp; \text{若}x_0\in [0,1]\\
 x_0,&amp; \text{若}x_0\geqslant 1
 \end{cases}\]</div>
 <p>我们很容易就可以将图像画出来,不过需要注意的是,我们将$x$作为横轴.$x_0$就是从$x$轴上出发的点.</p>
-<p>\draw[-&gt;] (-1.5,0) -- (4,0) node[right] {$x$}; \draw[-&gt;] (0,0) -- (0,3) node[above] {$t$};</p>
-<p>\node[below] at (0,0) {$0$}; \node[below] at (1,0) {$1$};</p>
-<p>\foreach \xzero in {-1, -0.8, ..., 0} { \draw[blue, opacity=0.3] (\xzero, 0) -- (\xzero + 2.5, 2.5); }</p>
-<p>\foreach \xzero in {0.05, 0.1, ..., 0.95} {</p>
-<p>\draw[red, opacity=0.5] (\xzero, 0) -- (1, 1); }</p>
-<p>\foreach \xzero in {1.2, 1.4, ..., 3.5} { \draw[green!60!black, opacity=0.3] (\xzero, 0) -- (\xzero, 2.5); }</p>
-<p>\draw[black, ultra thick, dashed] (1,1) -- (1.75, 2.5) node[right, font=\small] {Shock Path};</p>
-<p>\filldraw[red] (1,1) circle (1.5pt) node[left, black, xshift=-2pt] {$t_b=1$};</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+    \begin{tikzpicture}[>=stealth, scale=2]
+    \draw[->] (-1.5,0) -- (4,0) node[right] {$x$};
+    \draw[->] (0,0) -- (0,3) node[above] {$t$};
+    \node[below] at (0,0) {$0$};
+    \node[below] at (1,0) {$1$};
+    \foreach \xzero in {-1, -0.8, ..., 0} {
+        \draw[blue, opacity=0.3] (\xzero, 0) -- (\xzero + 2.5, 2.5);
+    }
+    \foreach \xzero in {0.05, 0.1, ..., 0.95} {
+        \draw[red, opacity=0.5] (\xzero, 0) -- (1, 1);
+    }
+    \foreach \xzero in {1.2, 1.4, ..., 3.5} {
+        \draw[green!60!black, opacity=0.3] (\xzero, 0) -- (\xzero, 2.5);
+    }
+    \draw[black, ultra thick, dashed] (1,1) -- (1.75, 2.5)
+        node[right, font=\small] {Shock Path};
+    \filldraw[red] (1,1) circle (1.5pt) node[left, black, xshift=-2pt] {$t_b=1$};
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">    \begin{tikzpicture}[&gt;=stealth, scale=2]
+    \draw[-&gt;] (-1.5,0) -- (4,0) node[right] {$x$};
+    \draw[-&gt;] (0,0) -- (0,3) node[above] {$t$};
+    \node[below] at (0,0) {$0$};
+    \node[below] at (1,0) {$1$};
+    \foreach \xzero in {-1, -0.8, ..., 0} {
+        \draw[blue, opacity=0.3] (\xzero, 0) -- (\xzero + 2.5, 2.5);
+    }
+    \foreach \xzero in {0.05, 0.1, ..., 0.95} {
+        \draw[red, opacity=0.5] (\xzero, 0) -- (1, 1);
+    }
+    \foreach \xzero in {1.2, 1.4, ..., 3.5} {
+        \draw[green!60!black, opacity=0.3] (\xzero, 0) -- (\xzero, 2.5);
+    }
+    \draw[black, ultra thick, dashed] (1,1) -- (1.75, 2.5)
+        node[right, font=\small] {Shock Path};
+    \filldraw[red] (1,1) circle (1.5pt) node[left, black, xshift=-2pt] {$t_b=1$};
+\end{tikzpicture}</code></pre></div></details></figure>
 <p>从图上我们看到了特征线相交.</p>
 <p>如果我们考虑下面的初值问题</p>
 <div class="math-display">\[\left\{  \begin{array}{ll} {
@@ -160,15 +191,51 @@ tial t} = -\frac{u\cos(x-tu)}{1+t\cos(x-tu)}\]</div>
 <div class="math-display">\[t_b=\min\left(-\frac{1}{\cos(x-tu)}\right)=1\]</div>
 <p>当$t=1$时,$\cos(x-tu)=-1$,解得$x-u=(2k+1)\pi$,根据方程$u-\sin(x-u)=0$以及$x\in [0,2\pi]$得到$x=\pi$,这说明$t=1$时在$x=\pi$处产生间断,激波形成.</p>
 <p>事实上,通过特征线的表达式我们可以看出,当$x\in [0,\pi)$时,特征线的斜率$\sin(x(0))$为正,因此特征线向右传播;当$x\in (\pi,2\pi]$时,特征线的斜率$\sin(x(0))$为负,因此特征线向左传播;当$x=\pi$时,特征线的斜率$\sin(x(0))$为零,因此特征线垂直于时间轴.并且根据$\sin x$关于$x=\pi$中心对称,那么在$x-t$平面上特征线关于$x=\pi$对称地相交于射线$x=\pi$上.</p>
-<p>axis lines = middle, xmin = 0, xmax = 6.8, ymin = 0, ymax = 3.5, xlabel = {$x$}, ylabel = {$t$}, ylabel style={ at={(axis description cs:0,0.9)},</p>
-<p>\def\xpi{3.14159265} \def\tshock{1.0}</p>
-<p>\foreach \delta in {0.2, 0.4, 0.7, 1.0, 1.4, 1.8, 2.2, 2.6, 3.1} {</p>
-<p>\foreach \direction in {-1, 1} { \pgfmathsetmacro{\xzero}{\xpi + \direction * \delta} \pgfmathsetmacro{\u}{sin(\xzero r)}</p>
-<p>\ifdim \delta pt &lt; 0.01pt \def\tend{3.5} \else \pgfmathsetmacro{\tcalc}{(\xpi - \xzero) / \u} \ifdim \tcalc pt &gt; 1.0pt \pgfmathsetmacro{\tend}{min(3.5, \tcalc)} \else \def\tend{3.5} \fi \fi</p>
-<p>\addplot[domain=0:\tend, samples=2, thin] ({\xzero + x*sin(\xzero r)}, {x}); } }</p>
-<p>\draw[thick, red, dashed] (axis cs: \xpi, 0) -- (axis cs: \xpi, 1);</p>
-<p>\draw[thin, red] (axis cs: \xpi, 1) -- (axis cs: \xpi, 3.5) node[right, pos=0.8] {$x=\pi$};</p>
-<p>\draw[fill=white, draw=red, thick] (axis cs: \xpi, 1) circle (1.5pt);</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><div class="tikz-fallback">该图使用 pgfplots/axis，当前浏览器渲染器暂不支持，已保留 TikZ 源码。</div></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = middle,
+        xmin = 0, xmax = 6.8,
+        ymin = 0, ymax = 3.5,
+        xlabel = {$x$},
+        ylabel = {$t$},
+        ylabel style={
+        at={(axis description cs:0,0.9)}, % 定位到左上角 (0,1)
+        anchor=south east,              % 确保标签在轴的左上方
+    },
+        xtick = {0, 1.5708, 3.14159, 4.71239, 6.28318},
+        xticklabels = {0, $\pi/2$, $\pi$, $3\pi/2$, $2\pi$},
+        ytick = {0, 1, 2, 3},
+        unit vector ratio*=1 1,
+        grid = major,
+        grid style = {dashed, gray!15},
+        title = {Burgers&#x27; Equation: $x=\pi$ as the focus and shock path}
+    ]
+        \def\xpi{3.14159265}
+        \def\tshock{1.0}
+        \foreach \delta in {0.2, 0.4, 0.7, 1.0, 1.4, 1.8, 2.2, 2.6, 3.1} {
+            \foreach \direction in {-1, 1} {
+                \pgfmathsetmacro{\xzero}{\xpi + \direction * \delta}
+                \pgfmathsetmacro{\u}{sin(\xzero r)}
+                \ifdim \delta pt &lt; 0.01pt
+                    \def\tend{3.5}
+                \else
+                    \pgfmathsetmacro{\tcalc}{(\xpi - \xzero) / \u}
+                    \ifdim \tcalc pt &gt; 1.0pt
+                        \pgfmathsetmacro{\tend}{min(3.5, \tcalc)}
+                    \else
+                        \def\tend{3.5}
+                    \fi
+                \fi
+                \addplot[domain=0:\tend, samples=2, thin]
+                ({\xzero + x*sin(\xzero r)}, {x});
+            }
+        }
+        \draw[thick, red, dashed] (axis cs: \xpi, 0) -- (axis cs: \xpi, 1);
+        \draw[thin, red] (axis cs: \xpi, 1) -- (axis cs: \xpi, 3.5)
+            node[right, pos=0.8] {$x=\pi$};
+        \draw[fill=white, draw=red, thick] (axis cs: \xpi, 1) circle (1.5pt);
+    \end{axis}
+\end{tikzpicture}</code></pre></div></details></figure>
 <p>记$f(u)=u-\sin(x-tu)$.给定$(x,t)$求$u$的值,此时就等价于求解$f(u)=0$.因此我们可以在$t\in [0,1)$的时间区间内求解上述非线性方程.</p>
 <p>利用Newton迭代法,首先我们需要求出$f&#x27;(u)$,有$f&#x27;(u)=1+t\cos(x-tu)$,于是现在得到迭代公式</p>
 <div class="math-display">\[u_{n+1}=u_n-\frac{f(u_n)}{f&#x27;(u_n)}=u_n-\frac{u_n-\sin(x-tu_n)}{1+t\cos(x-tu_n)}\]</div>
@@ -211,10 +278,30 @@ u(x, 0) &amp;= g(x),   &amp;&amp; x \in \mathbb{R}
 <p>再根据边界条件$u(x,0)=g(x)$得到下面的恒等式</p>
 <div class="math-display">\[\int_0^\infty\int_{-\infty}^\infty (u v_t+F(u)v_x)\mathrm{d}x\mathrm{d}t + \int_{-\infty}^\infty g(x)v(x,0)\mathrm{d}x = 0\]</div>
 <p>如果上式对每一个检验函数$v$都成立,则称$u\in L^{\infty}(\mathbb{R}\times (0,\infty))$是相关方程的弱解.</p>
-<p>\tikzset{every picture/.style={line width=0.5pt}}</p>
-<p>\draw [fill={rgb, 255:red, 220; green, 220; blue, 220}, fill opacity=0.5] (239,93) .. controls (257,71) and (389,47) .. (399,81) .. controls (409,115) and (445,135) .. (409,164) .. controls (373,193) and (300,180) .. (280,150) .. controls (260,120) and (221,115) .. (239,93) -- cycle;</p>
-<p>\draw [thick] (265,252) .. controls (341,221) and (275,82) .. (421,29) node [anchor=south west, xshift=-2pt, yshift=-2pt] {$C$};</p>
-<p>\draw (285,115) node [font=\normalsize] {$V_l$}; \draw (365,125) node [font=\normalsize] {$V_r$};</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+\tikzset{every picture/.style={line width=0.5pt}}
+\begin{tikzpicture}[x=0.5pt,y=0.5pt,yscale=-1,xscale=1]
+\draw [fill={rgb, 255:red, 220; green, 220; blue, 220}, fill opacity=0.5]
+    (239,93) .. controls (257,71) and (389,47) .. (399,81) ..
+    controls (409,115) and (445,135) .. (409,164) ..
+    controls (373,193) and (300,180) .. (280,150) ..
+    controls (260,120) and (221,115) .. (239,93) -- cycle;
+\draw [thick] (265,252) .. controls (341,221) and (275,82) .. (421,29)
+    node [anchor=south west, xshift=-2pt, yshift=-2pt] {$C$};
+\draw (285,115) node [font=\normalsize] {$V_l$};
+\draw (365,125) node [font=\normalsize] {$V_r$};
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">\tikzset{every picture/.style={line width=0.5pt}}
+\begin{tikzpicture}[x=0.5pt,y=0.5pt,yscale=-1,xscale=1]
+\draw [fill={rgb, 255:red, 220; green, 220; blue, 220}, fill opacity=0.5]
+    (239,93) .. controls (257,71) and (389,47) .. (399,81) ..
+    controls (409,115) and (445,135) .. (409,164) ..
+    controls (373,193) and (300,180) .. (280,150) ..
+    controls (260,120) and (221,115) .. (239,93) -- cycle;
+\draw [thick] (265,252) .. controls (341,221) and (275,82) .. (421,29)
+    node [anchor=south west, xshift=-2pt, yshift=-2pt] {$C$};
+\draw (285,115) node [font=\normalsize] {$V_l$};
+\draw (365,125) node [font=\normalsize] {$V_r$};
+\end{tikzpicture}</code></pre></div></details></figure>
 <p>我们知道,特征线的交叉形成了间断点.下面我们获得间断点的传播速率.假设在某一开区域$V\subset \mathbb{R}\times (0,\infty)$内,$u$在光滑曲线$C$的每一侧是光滑的.现在假设$u$是相关方程的弱解,且$u$及其一阶导数在$V_l,V_r$内是一致连续的.选择一个紧支集包含在$V_l$内的检验函数$v$,那么</p>
 <div class="math-display">\[0=\int_0^\infty\int_{-\infty}^\infty (u v_t+F(u)v_x)\mathrm{d}x\mathrm{d}t=-\int_0^\infty\int_{-\infty}^\infty (u_t+F(u)_x)v\mathrm{d}x\mathrm{d}t\]</div>
 <p>上式对所有紧支集包含在$V_l$内的检验函数$v$都成立.因此$u_t+F(u)_x=0,(x,t)\in V_l$.同理,$u_t+F(u)_x=0,(x,t)\in V_r$.</p>
@@ -255,11 +342,38 @@ x(0)+t,&amp; \text{if}\; x&gt;0
 \end{cases}\]</div>
 <p>根据Rankine-Hugoniot条件,激波传播速率为$\dot{s}=\frac{1}{2}$,因此激波线为$x=\frac{1}{2}t$.</p>
 <p>为了直观,我们画出特征线示意图如下</p>
-<p>\draw[-&gt;] (-2.5,0) -- (4,0) node[right] {$x$}; \draw[-&gt;] (0,0) -- (0,3) node[above] {$t$}; \node at (0,0) [below left] {$O$};</p>
-<p>\foreach \x in {-2.0, -1.5, -1.0, -0.5} { \draw[-&gt;,blue, thick] (\x, 0) -- (\x, 2.5); } \node[blue] at (-1.25, 2.7) {\small $x(t) = x(0)$};</p>
-<p>\foreach \x in {0.5, 1.0, 1.5, 2.0} { \draw[-&gt;,red, thick] (\x, 0) -- (\x+2.5, 2.5); } \node[red] at (3, 2.7) {\small $x(t) = x(0) + t$};</p>
-<p>\fill[gray, opacity=0.1] (0,0) -- (0,2.5) -- (2.5,2.5) -- cycle; \node[text width=3cm, align=center] at (0.8, 1.8) {\footnotesize <strong>特征真空区</strong>};</p>
-<p>\draw[dashed, line width=1.5pt, black] (0,0) -- (2.5,2.5) ;</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+    \begin{tikzpicture}[>=stealth, scale=1.5]
+    \draw[->] (-2.5,0) -- (4,0) node[right] {$x$};
+    \draw[->] (0,0) -- (0,3) node[above] {$t$};
+    \node at (0,0) [below left] {$O$};
+    \foreach \x in {-2.0, -1.5, -1.0, -0.5} {
+        \draw[->,blue, thick] (\x, 0) -- (\x, 2.5);
+    }
+    \node[blue] at (-1.25, 2.7) {\small $x(t) = x(0)$};
+    \foreach \x in {0.5, 1.0, 1.5, 2.0} {
+        \draw[->,red, thick] (\x, 0) -- (\x+2.5, 2.5);
+    }
+    \node[red] at (3, 2.7) {\small $x(t) = x(0) + t$};
+    \fill[gray, opacity=0.1] (0,0) -- (0,2.5) -- (2.5,2.5) -- cycle;
+    \node[text width=3cm, align=center] at (0.8, 1.8) {\footnotesize \textbf{}};
+    \draw[dashed, line width=1.5pt, black] (0,0) -- (2.5,2.5) ;
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">    \begin{tikzpicture}[&gt;=stealth, scale=1.5]
+    \draw[-&gt;] (-2.5,0) -- (4,0) node[right] {$x$};
+    \draw[-&gt;] (0,0) -- (0,3) node[above] {$t$};
+    \node at (0,0) [below left] {$O$};
+    \foreach \x in {-2.0, -1.5, -1.0, -0.5} {
+        \draw[-&gt;,blue, thick] (\x, 0) -- (\x, 2.5);
+    }
+    \node[blue] at (-1.25, 2.7) {\small $x(t) = x(0)$};
+    \foreach \x in {0.5, 1.0, 1.5, 2.0} {
+        \draw[-&gt;,red, thick] (\x, 0) -- (\x+2.5, 2.5);
+    }
+    \node[red] at (3, 2.7) {\small $x(t) = x(0) + t$};
+    \fill[gray, opacity=0.1] (0,0) -- (0,2.5) -- (2.5,2.5) -- cycle;
+    \node[text width=3cm, align=center] at (0.8, 1.8) {\footnotesize \textbf{特征真空区}};
+    \draw[dashed, line width=1.5pt, black] (0,0) -- (2.5,2.5) ;
+\end{tikzpicture}</code></pre></div></details></figure>
 <p>我们发现在特征真空区$\{0&lt;x&lt;t\}$,特征线方法并不能为我们提供任何关于解的信息.如果取</p>
 <div class="math-display">\[u_1(x,t)=
 \begin{cases}
@@ -437,7 +551,40 @@ tial\Omega
 tial\Omega_h&amp;=\{(x_i,y_j)|i=0\text{或}I+1,j=0\text{或}J+1\}
 \end{aligned}\]</div>
 <p>五点差分的所需节点如下图</p>
-<p>\foreach \x / \y in {-1/-1,0/0,1/1} { \draw[black] (\x, -1.5) -- (\x, 1.5); \draw[black] (-1.5, \y) -- (1.5, \y); } \foreach \pose / \lab in {-1/-1,0/,1/+1} { \node[below] at (\pose, -1.5) {$i\lab$}; \node[left] at (-1.5, \pose) {$j\lab$}; } \fill (-1,0) circle (1pt); \fill (0,0) circle (1pt); \fill (1,0) circle (1pt); \fill (0,1) circle (1pt); \fill (0,-1) circle (1pt);</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+    \begin{tikzpicture}[scale=1.5]
+        \foreach \x / \y in {-1/-1,0/0,1/1}
+        {
+            \draw[black] (\x, -1.5) -- (\x, 1.5);
+            \draw[black] (-1.5, \y) -- (1.5, \y);
+        }
+        \foreach \pose / \lab in {-1/-1,0/,1/+1}
+        {
+            \node[below] at (\pose, -1.5) {$i\lab$};
+            \node[left] at (-1.5, \pose) {$j\lab$};
+        }
+        \fill (-1,0) circle (1pt);
+        \fill (0,0) circle (1pt);
+        \fill (1,0) circle (1pt);
+        \fill (0,1) circle (1pt);
+        \fill (0,-1) circle (1pt);
+    \end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">    \begin{tikzpicture}[scale=1.5]
+        \foreach \x / \y in {-1/-1,0/0,1/1}
+        {
+            \draw[black] (\x, -1.5) -- (\x, 1.5);
+            \draw[black] (-1.5, \y) -- (1.5, \y);
+        }
+        \foreach \pose / \lab in {-1/-1,0/,1/+1}
+        {
+            \node[below] at (\pose, -1.5) {$i\lab$};
+            \node[left] at (-1.5, \pose) {$j\lab$};
+        }
+        \fill (-1,0) circle (1pt);
+        \fill (0,0) circle (1pt);
+        \fill (1,0) circle (1pt);
+        \fill (0,1) circle (1pt);
+        \fill (0,-1) circle (1pt);
+    \end{tikzpicture}</code></pre></div></details></figure>
 <p>当$(x_i,y_j)\in\Omega_h$时,对二阶偏导均使用中心差分,于是</p>
 <div class="math-display">\[\begin{aligned}
 \Delta_h &amp;= \frac{u_{i+1,j}-2u_{i,j}+u_{i-1,j}}{h^2} + \frac{u_{i,j+1}-2u_{i,j}+u_{i,j-1}}{h^2}\\

@@ -8,11 +8,14 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="数学基础/Section/Finite_Element.tex" />
   <title>Finite_Element.tex | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-math-flow" />
-  <script defer src="../assets/search-index.js?v=20260624-math-flow"></script>
-  <script defer src="../assets/wiki.js?v=20260624-math-flow"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-tikzjax" />
+  <script defer src="../assets/search-index.js?v=20260624-tikzjax"></script>
+  <script defer src="../assets/wiki.js?v=20260624-tikzjax"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css" />
+  <script src="https://tikzjax.com/v1/tikzjax.js"></script>
 </head>
 <body data-depth="1">
   <header class="wiki-topbar">
@@ -129,15 +132,44 @@ U_1a(\phi_1,\phi_n)+U_2a(\phi_2,\phi_n)+\cdots+U_na(\phi_n,\phi_n)=\langle F,\ph
 0,&amp;i\neq j
 \end{cases}\]</div>
 <p>这两个定义是十分抽象且让人摸不着头脑的.我们以一维的例子来理解.</p>
-<p>\draw[thick] (0,0) -- (1,0);</p>
-<p>\foreach \i in {0,...,10} { \fill (\i/10,0) circle (0.15pt); }</p>
-<p>\node[above] at (0,0) {$0$}; \node[above] at (1,0) {$1$};</p>
-<p>\node[below] at (0,0) {$x_0$}; \node[below] at (1,0) {$x_n$};</p>
-<p>\def\xA{0.4}</p>
-<p>\node[below] at (\xA,0) {$x_{i-1}$}; \node[below] at (\xB,0) {$x_i$}; \node[below] at (\xC,0) {$x_{i+1}$};</p>
-<p>\draw[red, thick] (\xA,0) -- (\xB,0.1) -- (\xC,0);</p>
-<p>\draw[blue, thick] (\xA,0.1) -- (\xB,0);</p>
-<p>\draw[green!70!black, thick] (\xB,0) -- (\xC,0.1);</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+\begin{tikzpicture}[scale=10, >=stealth]
+  \draw[thick] (0,0) -- (1,0);
+  \foreach \i in {0,...,10} {
+    \fill (\i/10,0) circle (0.15pt);
+  }
+  \node[above] at (0,0) {$0$};
+  \node[above] at (1,0) {$1$};
+  \node[below] at (0,0) {$x_0$};
+  \node[below] at (1,0) {$x_n$};
+  \def\xA{0.4}
+  \def\xB{0.5}
+  \def\xC{0.6}
+  \node[below] at (\xA,0) {$x_{i-1}$};
+  \node[below] at (\xB,0) {$x_i$};
+  \node[below] at (\xC,0) {$x_{i+1}$};
+  \draw[red, thick] (\xA,0) -- (\xB,0.1) -- (\xC,0);
+  \draw[blue, thick] (\xA,0.1) -- (\xB,0);
+  \draw[green!70!black, thick] (\xB,0) -- (\xC,0.1);
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">\begin{tikzpicture}[scale=10, &gt;=stealth]
+  \draw[thick] (0,0) -- (1,0);
+  \foreach \i in {0,...,10} {
+    \fill (\i/10,0) circle (0.15pt);
+  }
+  \node[above] at (0,0) {$0$};
+  \node[above] at (1,0) {$1$};
+  \node[below] at (0,0) {$x_0$};
+  \node[below] at (1,0) {$x_n$};
+  \def\xA{0.4}  % x_{i-1}
+  \def\xB{0.5}  % x_i
+  \def\xC{0.6}  % x_{i+1}
+  \node[below] at (\xA,0) {$x_{i-1}$};
+  \node[below] at (\xB,0) {$x_i$};
+  \node[below] at (\xC,0) {$x_{i+1}$};
+  \draw[red, thick] (\xA,0) -- (\xB,0.1) -- (\xC,0);
+  \draw[blue, thick] (\xA,0.1) -- (\xB,0);
+  \draw[green!70!black, thick] (\xB,0) -- (\xC,0.1);
+\end{tikzpicture}</code></pre></div></details></figure>
 <p>如上图所示,我们考虑区间$[0,1]$的划分如下</p>
 <div class="math-display">\[0=x_0&lt;x_1&lt;\cdots&lt;x_{n-1}&lt;x_n=1\]</div>
 <p>其中$K=[x_{i-1},x_i]$.一维例子我们最常见的是以线性函数空间,也就是说</p>
@@ -167,12 +199,42 @@ N_2(\psi) &amp;=\psi(1)=a+b=0
 <p>我们经常用到超平面$\{x:L(x)=0\}$,这里$L$是非退化线性函数.</p>
 <p><strong>引理</strong>$^\clubsuit $:设$P$是次数大于等于1的多项式且在超平面$L$上为$0$.那么我们可以作如下分解$P=LQ$,这里$Q$是$(d-1)$次多项式.</p>
 <p>因为后面我们是要在计算机上求解,因此,我们必须要有一套机械的方法求解节点基函数.我们考虑下面的三角单元$K$:</p>
-<p>\coordinate (A) at (0,0); \coordinate (B) at (1,0); \coordinate (C) at (0,1);</p>
-<p>\draw[thick] (A) -- (B) -- (C) -- cycle;</p>
-<p>\node[below left] at (A) {$z_1$}; \node[below right] at (B) {$z_2$}; \node[above right] at (C) {$z_3$};</p>
-<p>\fill (A) circle[radius=0.5mm]; \fill (B) circle[radius=0.5mm]; \fill (C) circle[radius=0.5mm];</p>
-<p>\coordinate (ABmid) at ($(A)!0.5!(B)$); \coordinate (BCmid) at ($(B)!0.5!(C)$); \coordinate (CAmid) at ($(C)!0.5!(A)$);</p>
-<p>\node[below] at (ABmid) {$L_1$}; \node[right] at (BCmid) {$L_2$}; \node[left] at (CAmid) {$L_3$};</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+\begin{tikzpicture}[scale=3]
+\coordinate (A) at (0,0);
+\coordinate (B) at (1,0);
+\coordinate (C) at (0,1);
+\draw[thick] (A) -- (B) -- (C) -- cycle;
+\node[below left] at (A) {$z_1$};
+\node[below right] at (B) {$z_2$};
+\node[above right] at (C) {$z_3$};
+\fill (A) circle[radius=0.5mm];
+\fill (B) circle[radius=0.5mm];
+\fill (C) circle[radius=0.5mm];
+\coordinate (ABmid) at ($(A)!0.5!(B)$);
+\coordinate (BCmid) at ($(B)!0.5!(C)$);
+\coordinate (CAmid) at ($(C)!0.5!(A)$);
+\node[below] at (ABmid) {$L_1$};
+\node[right] at (BCmid) {$L_2$};
+\node[left] at (CAmid) {$L_3$};
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">\begin{tikzpicture}[scale=3]
+\coordinate (A) at (0,0);
+\coordinate (B) at (1,0);
+\coordinate (C) at (0,1);
+\draw[thick] (A) -- (B) -- (C) -- cycle;
+\node[below left] at (A) {$z_1$};
+\node[below right] at (B) {$z_2$};
+\node[above right] at (C) {$z_3$};
+\fill (A) circle[radius=0.5mm];
+\fill (B) circle[radius=0.5mm];
+\fill (C) circle[radius=0.5mm];
+\coordinate (ABmid) at ($(A)!0.5!(B)$);
+\coordinate (BCmid) at ($(B)!0.5!(C)$);
+\coordinate (CAmid) at ($(C)!0.5!(A)$);
+\node[below] at (ABmid) {$L_1$};
+\node[right] at (BCmid) {$L_2$};
+\node[left] at (CAmid) {$L_3$};
+\end{tikzpicture}</code></pre></div></details></figure>
 <p>其中$z_1=(0,0),z_2=(1,0),z_3=(0,1)$.我们考虑用线性函数,即$\mathcal{P}=\operatorname{span}\{1,x,y\}$,同时定义节点变量$\mathcal{N}=\{N_1,N_2,N_3\}$为$N_i(v)=v(z_i)$.设节点基函数为$\{\phi_1,\phi_2,\phi_3\}$.每个节点基函数都可以写成$\phi=a+bx+cy$的形式,再利用对偶关系$N_i(\phi_j)=\delta_{ij}$,那么对每个基函数都有一个线性方程组.对于上图中的单元,很容易计算出</p>
 <div class="math-display">\[\phi_1=1-x-y,\phi_2=x,\phi_3=y\]</div>
 <p>对于其他的单元类似,只要确定形函数空间与泛函定义的方式,基函数的求解就变得简单了.</p>
@@ -187,11 +249,42 @@ N_2(\psi) &amp;=\psi(1)=a+b=0
 <p><strong>定义</strong>$^\clubsuit $:设$\Omega$是一个有划分$\mathcal{T}$的区域.设划分中的每个单元$K$都定义了某种类型的形函数空间$\mathcal{P}$与节点变量集$\mathcal{N}$,使得$(K,\mathcal{P},\mathcal{N})$成为一个有限元.设$m$为节点变量所涉及的偏导数最高阶数.对于$f\in C^m(\overline{\Omega})$,其全局插值函数定义为</p>
 <div class="math-display">\[\mathcal{I}_{\mathcal{T}}f|_{K_i}=\mathcal{I}_{K_i} f\]</div>
 <p>对所有的$K_i\in\mathcal{T}$.</p>
-<p>\coordinate (A) at (0,0); \coordinate (B) at (1,0); \coordinate (C) at (0,1); \coordinate (D) at (1,1);</p>
-<p>\draw[thick] (A) -- (B) -- (D) -- (C) -- cycle; \draw[thick] (C) -- (B);</p>
-<p>\node[below] at (A) {$(0,0)$}; \node[below] at (B) {$(1,0)$}; \node[above] at (C) {$(0,1)$}; \node[above] at (D) {$(1,1)$};</p>
-<p>\fill (A) circle[radius=0.5mm]; \fill (B) circle[radius=0.5mm]; \fill (C) circle[radius=0.5mm]; \fill (D) circle[radius=0.5mm];</p>
-<p>\node at (0.25,0.25) {$K_1$}; \node at (0.75,0.75) {$K_2$};</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+    \begin{tikzpicture}[scale=3]
+\coordinate (A) at (0,0);
+\coordinate (B) at (1,0);
+\coordinate (C) at (0,1);
+\coordinate (D) at (1,1);
+\draw[thick] (A) -- (B) -- (D) -- (C) -- cycle;
+\draw[thick] (C) -- (B);
+\node[below] at (A) {$(0,0)$};
+\node[below] at (B) {$(1,0)$};
+\node[above] at (C) {$(0,1)$};
+\node[above] at (D) {$(1,1)$};
+\fill (A) circle[radius=0.5mm];
+\fill (B) circle[radius=0.5mm];
+\fill (C) circle[radius=0.5mm];
+\fill (D) circle[radius=0.5mm];
+\node at (0.25,0.25) {$K_1$};
+\node at (0.75,0.75) {$K_2$};
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">    \begin{tikzpicture}[scale=3]
+\coordinate (A) at (0,0);
+\coordinate (B) at (1,0);
+\coordinate (C) at (0,1);
+\coordinate (D) at (1,1);
+\draw[thick] (A) -- (B) -- (D) -- (C) -- cycle;
+\draw[thick] (C) -- (B);
+\node[below] at (A) {$(0,0)$};
+\node[below] at (B) {$(1,0)$};
+\node[above] at (C) {$(0,1)$};
+\node[above] at (D) {$(1,1)$};
+\fill (A) circle[radius=0.5mm];
+\fill (B) circle[radius=0.5mm];
+\fill (C) circle[radius=0.5mm];
+\fill (D) circle[radius=0.5mm];
+\node at (0.25,0.25) {$K_1$};
+\node at (0.75,0.75) {$K_2$};
+\end{tikzpicture}</code></pre></div></details></figure>
 <p>如图所示,我们依然用线性函数作为形函数空间,很容易计算出$K_1$的节点基函数为$\{1-x-y,x,y\}$,$K_2$的节点基函数为$\{1-x,1-y,x+y-1\}$.我们令$f=\sin(\varPi(x+y)/2)$,那么</p>
 <div class="math-display">\[\mathcal{I}_{\mathcal{T}}f=
 \begin{cases}
@@ -662,12 +755,50 @@ b(u_{h},p) &amp;= \|p\|_{L^{2}(\Omega)}^{2} - b(u - u_{h},p)   (\text{因为 } -
 u(0)=0,&amp; 
 \end{cases}\]</div>
 <p>我们将区间$[0,1]$等分为5个单元,即</p>
-<p>\def\dx{1} \def\normalH{0.1} \def\specialH{0.25}</p>
-<p>\draw[thick] (0, 0) -- (5, 0);</p>
-<p>\foreach \i in {0,1,2,3,4,5} { \draw[thick] (\i, -\normalH) -- (\i, \normalH); }</p>
-<p>\node[above=0.15cm] at (0, \normalH) {$n=1$}; \node[above=0.15cm] at (1, \normalH) {$n=2$}; \node[above=0.15cm] at (2, \normalH) {$n=3$}; \node[above=0.15cm] at (3, \normalH) {$n=4$}; \node[above=0.15cm] at (4, \normalH) {$n=5$}; \node[above=0.15cm] at (5, \normalH) {$n=6$};</p>
-<p>\node[below=0.15cm] at (0.5, -\normalH) {$e=1$}; \node[below=0.15cm] at (1.5, -\normalH) {$e=2$}; \node[below=0.15cm] at (2.5, -\normalH) {$e=3$}; \node[below=0.15cm] at (3.5, -\normalH) {$e=4$}; \node[below=0.15cm] at (4.5, -\normalH) {$e=5$};</p>
-<p>\node[left] at (-\normalH,0) {$x=0$}; \node[right] at (5+\normalH,0) {$x=1$};</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+    \begin{tikzpicture}[scale=1.5]
+    \def\dx{1}
+    \def\normalH{0.1}
+    \def\specialH{0.25}
+    \draw[thick] (0, 0) -- (5, 0);
+    \foreach \i in {0,1,2,3,4,5} {
+        \draw[thick] (\i, -\normalH) -- (\i, \normalH);
+    }
+    \node[above=0.15cm] at (0, \normalH) {$n=1$};
+    \node[above=0.15cm] at (1, \normalH) {$n=2$};
+    \node[above=0.15cm] at (2, \normalH) {$n=3$};
+    \node[above=0.15cm] at (3, \normalH) {$n=4$};
+    \node[above=0.15cm] at (4, \normalH) {$n=5$};
+    \node[above=0.15cm] at (5, \normalH) {$n=6$};
+    \node[below=0.15cm] at (0.5, -\normalH) {$e=1$};
+    \node[below=0.15cm] at (1.5, -\normalH) {$e=2$};
+    \node[below=0.15cm] at (2.5, -\normalH) {$e=3$};
+    \node[below=0.15cm] at (3.5, -\normalH) {$e=4$};
+    \node[below=0.15cm] at (4.5, -\normalH) {$e=5$};
+    \node[left] at (-\normalH,0) {$x=0$};
+    \node[right] at (5+\normalH,0) {$x=1$};
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">    \begin{tikzpicture}[scale=1.5]
+    \def\dx{1}
+    \def\normalH{0.1}
+    \def\specialH{0.25}
+    \draw[thick] (0, 0) -- (5, 0);
+    \foreach \i in {0,1,2,3,4,5} {
+        \draw[thick] (\i, -\normalH) -- (\i, \normalH);
+    }
+    \node[above=0.15cm] at (0, \normalH) {$n=1$};
+    \node[above=0.15cm] at (1, \normalH) {$n=2$};
+    \node[above=0.15cm] at (2, \normalH) {$n=3$};
+    \node[above=0.15cm] at (3, \normalH) {$n=4$};
+    \node[above=0.15cm] at (4, \normalH) {$n=5$};
+    \node[above=0.15cm] at (5, \normalH) {$n=6$};
+    \node[below=0.15cm] at (0.5, -\normalH) {$e=1$};
+    \node[below=0.15cm] at (1.5, -\normalH) {$e=2$};
+    \node[below=0.15cm] at (2.5, -\normalH) {$e=3$};
+    \node[below=0.15cm] at (3.5, -\normalH) {$e=4$};
+    \node[below=0.15cm] at (4.5, -\normalH) {$e=5$};
+    \node[left] at (-\normalH,0) {$x=0$};
+    \node[right] at (5+\normalH,0) {$x=1$};
+\end{tikzpicture}</code></pre></div></details></figure>
 <p>接下来我们需要将节点以及单元储存到计算机.通常包括下面几个数据.</p>
 <p>\item 单元信息数据:储存单元所包含的节点序号,行数就是总的单元数,列数与单元内的节点数相同.以我们这个例子来看,每个单元内有两个节点,因此可以储存为</p>
 <div class="math-display">\[\begin{bmatrix}

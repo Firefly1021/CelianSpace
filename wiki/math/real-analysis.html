@@ -8,11 +8,14 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="Lebesgue 测度、抽象测度和积分。" />
   <title>实分析 | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-math-flow" />
-  <script defer src="../assets/search-index.js?v=20260624-math-flow"></script>
-  <script defer src="../assets/wiki.js?v=20260624-math-flow"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-tikzjax" />
+  <script defer src="../assets/search-index.js?v=20260624-tikzjax"></script>
+  <script defer src="../assets/wiki.js?v=20260624-tikzjax"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css" />
+  <script src="https://tikzjax.com/v1/tikzjax.js"></script>
 </head>
 <body data-depth="1">
   <header class="wiki-topbar">
@@ -274,17 +277,64 @@ A \cup B &amp;= \bigcup_{i,j} \left( \left(A_i^{(1)} \times A_i^{(2)}\right) \cu
 &amp;  \left. \cup \left(A_i^{(1)} \setminus B_j^{(1)}\right) \times \left(A_i^{(2)} \cap B_j^{(2)}\right) \cup \left(A_i^{(1)} \setminus B_j^{(1)}\right) \times \left(A_i^{(2)} \setminus B_j^{(2)}\right) \right]
 \end{aligned}\]</div>
 <p>上述出现的每个括号里的集合都是矩形,它们两两不交,所以 $A \cup B \in \tR$.下面的图给出了上述分解的示意图:</p>
-<p>\def\side{1.8cm}</p>
-<p>\fill[cyan!30] (0,\side) rectangle (\side,2*\side);</p>
-<p>\fill[gray!50] (\side,\side) rectangle (3*\side,2*\side);</p>
-<p>\fill[pattern=north west lines, pattern color=gray!50] (0,0) rectangle (\side,\side);</p>
-<p>\draw (\side,0) rectangle (3*\side,\side);</p>
-<p>\fill[pattern=north west lines, pattern color=gray!50] (3*\side,0) rectangle (4*\side,\side);</p>
-<p>\fill[gray!50] (\side,-\side) rectangle (3*\side,0);</p>
-<p>\fill[cyan!30] (3*\side,-\side) rectangle (4*\side,0);</p>
-<p>\fill[gray!50] (4.7*\side,1.2*\side) rectangle (5.2*\side,1.6*\side); \fill[pattern=north west lines, pattern color=gray!50] (4.7*\side,0.5*\side) rectangle (5.2*\side,0.9*\side); \fill[cyan!30] (4.7*\side,-0.1*\side) rectangle (5.2*\side,0.2*\side);</p>
-<p>\draw[line width = 2pt] (0,0) -- (0,2*\side); \draw[line width = 2pt] (0,2*\side) -- (3*\side,2*\side); \draw[line width = 2pt] (\side,-\side) -- (4*\side,-\side); \draw[line width = 2pt] (4*\side,-\side) -- (4*\side,\side); \draw (0,\side) -- (4*\side,\side); \draw (0,0) -- (4*\side,0); \draw (\side,-\side) -- (\side,2*\side); \draw (3*\side,-\side) -- (3*\side,2*\side);</p>
-<p>\node at (1.5*\side,2.2*\side) {$A_1$}; \node at (-0.2*\side,\side) {$B_1$}; \node at (2.5*\side,-1.2*\side) {$A_2$}; \node at (4.2*\side,0) {$B_2$}; \node at (2*\side,0.5*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cap B_2)$}; \node at (6.5*\side,1.4*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$}; \node at (6.5*\side,0.7*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cap B_2)$}; \node at (6.9*\side,0.05*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$};</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+    \begin{tikzpicture}[scale=1]
+        \def\side{1.8cm}
+        \fill[cyan!30] (0,\side) rectangle (\side,2*\side);
+        \fill[gray!50] (\side,\side) rectangle (3*\side,2*\side);
+        \fill[pattern=north west lines, pattern color=gray!50] (0,0) rectangle (\side,\side);
+        \draw (\side,0) rectangle (3*\side,\side);
+        \fill[pattern=north west lines, pattern color=gray!50] (3*\side,0) rectangle (4*\side,\side);
+        \fill[gray!50] (\side,-\side) rectangle (3*\side,0);
+        \fill[cyan!30] (3*\side,-\side) rectangle (4*\side,0);
+        \fill[gray!50] (4.7*\side,1.2*\side) rectangle (5.2*\side,1.6*\side);
+        \fill[pattern=north west lines, pattern color=gray!50] (4.7*\side,0.5*\side) rectangle (5.2*\side,0.9*\side);
+        \fill[cyan!30] (4.7*\side,-0.1*\side) rectangle (5.2*\side,0.2*\side);
+        \draw[line width = 2pt] (0,0) -- (0,2*\side);
+        \draw[line width = 2pt] (0,2*\side) -- (3*\side,2*\side);
+        \draw[line width = 2pt] (\side,-\side) -- (4*\side,-\side);
+        \draw[line width = 2pt] (4*\side,-\side) -- (4*\side,\side);
+        \draw (0,\side) -- (4*\side,\side);
+        \draw (0,0) -- (4*\side,0);
+        \draw (\side,-\side) -- (\side,2*\side);
+        \draw (3*\side,-\side) -- (3*\side,2*\side);
+        \node at (1.5*\side,2.2*\side) {$A_1$};
+        \node at (-0.2*\side,\side) {$B_1$};
+        \node at (2.5*\side,-1.2*\side) {$A_2$};
+        \node at (4.2*\side,0) {$B_2$};
+        \node at (2*\side,0.5*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cap B_2)$};
+        \node at (6.5*\side,1.4*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$};
+        \node at (6.5*\side,0.7*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cap B_2)$};
+        \node at (6.9*\side,0.05*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$};
+    \end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">    \begin{tikzpicture}[scale=1]
+        \def\side{1.8cm}
+        \fill[cyan!30] (0,\side) rectangle (\side,2*\side);
+        \fill[gray!50] (\side,\side) rectangle (3*\side,2*\side);
+        \fill[pattern=north west lines, pattern color=gray!50] (0,0) rectangle (\side,\side);
+        \draw (\side,0) rectangle (3*\side,\side);
+        \fill[pattern=north west lines, pattern color=gray!50] (3*\side,0) rectangle (4*\side,\side);
+        \fill[gray!50] (\side,-\side) rectangle (3*\side,0);
+        \fill[cyan!30] (3*\side,-\side) rectangle (4*\side,0);
+        \fill[gray!50] (4.7*\side,1.2*\side) rectangle (5.2*\side,1.6*\side);
+        \fill[pattern=north west lines, pattern color=gray!50] (4.7*\side,0.5*\side) rectangle (5.2*\side,0.9*\side);
+        \fill[cyan!30] (4.7*\side,-0.1*\side) rectangle (5.2*\side,0.2*\side);
+        \draw[line width = 2pt] (0,0) -- (0,2*\side);
+        \draw[line width = 2pt] (0,2*\side) -- (3*\side,2*\side);
+        \draw[line width = 2pt] (\side,-\side) -- (4*\side,-\side);
+        \draw[line width = 2pt] (4*\side,-\side) -- (4*\side,\side);
+        \draw (0,\side) -- (4*\side,\side);
+        \draw (0,0) -- (4*\side,0);
+        \draw (\side,-\side) -- (\side,2*\side);
+        \draw (3*\side,-\side) -- (3*\side,2*\side);
+        \node at (1.5*\side,2.2*\side) {$A_1$};
+        \node at (-0.2*\side,\side) {$B_1$};
+        \node at (2.5*\side,-1.2*\side) {$A_2$};
+        \node at (4.2*\side,0) {$B_2$};
+        \node at (2*\side,0.5*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cap B_2)$};
+        \node at (6.5*\side,1.4*\side) {\scriptsize$(A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$};
+        \node at (6.5*\side,0.7*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cap B_2)$};
+        \node at (6.9*\side,0.05*\side) {\scriptsize$(A_1\cup A_2-A_1\cap A_2)\times (B_1\cup B_2-B_1\cap B_2)$};
+    \end{tikzpicture}</code></pre></div></details></figure>
 <p>2.$A \cap B \in \tR$.这也是显然的,因为</p>
 <div class="math-display">\[\begin{aligned}
 A \cap B &amp;= \bigcup_{i,j} \left( \left(A_i^{(1)} \times A_i^{(2)}\right) \cap \left(B_j^{(1)} \times B_j^{(2)}\right) \right) \\
@@ -362,11 +412,52 @@ A^c &amp;= \left( \bigcup_i \left(A_i^{(1)} \times A_i^{(2)}\right) \right)^c = 
 <p>其中,$f=f^+-f^-$,它们的定义为</p>
 <div class="math-display">\[f^+{x}=f(x)\mathbf{1}_{x|\{f(x)\geqslant 0\}}(x),  f^-(x)=-f(x)\mathbf{1}_{x|\{f(x)\leqslant 0\}}(x)\]</div>
 <p>例如我们可以给出下面的示意图:</p>
-<p>\draw[-{Latex[length=4mm,width=1.5mm]}] (-0.5,0) -- (6.5,0) node[right] {$x$}; \draw[-{Latex[length=4mm,width=1.5mm]}] (0,-1.5) -- (0,2.5) node[above] {$y$};</p>
-<p>\draw[domain=0:6, smooth, samples=200, thick] plot (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)});</p>
-<p>\clip (0,0) rectangle (6.5,2.5); \fill[pattern=north west lines, pattern color=gray!50] plot[domain=0:6, smooth, samples=200] (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)}) -- (6,0) -- (0,0) -- cycle;</p>
-<p>\clip (0,-1.5) rectangle (6.5,0); \fill[gray!20] plot[domain=0:6, smooth, samples=200] (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)}) -- (6,0) -- (0,0) -- cycle;</p>
-<p>\node[blue] at (5,1.8) {$f^+(x)$}; \node[red] at (3,-1.2) {$f^-(x)$}; \node at (2,0.3) {$f(x)$};</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+    \begin{tikzpicture}[scale=1.5]
+        \draw[-{Latex[length=4mm,width=1.5mm]}] (-0.5,0) -- (6.5,0) node[right] {$x$};
+        \draw[-{Latex[length=4mm,width=1.5mm]}] (0,-1.5) -- (0,2.5) node[above] {$y$};
+        \draw[domain=0:6, smooth, samples=200, thick]
+          plot (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)});
+        \begin{scope}
+          \clip (0,0) rectangle (6.5,2.5);
+          \fill[pattern=north west lines, pattern color=gray!50]
+            plot[domain=0:6, smooth, samples=200]
+              (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)})
+            -- (6,0) -- (0,0) -- cycle;
+        \end{scope}
+        \begin{scope}
+          \clip (0,-1.5) rectangle (6.5,0);
+          \fill[gray!20]
+            plot[domain=0:6, smooth, samples=200]
+              (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)})
+            -- (6,0) -- (0,0) -- cycle;
+        \end{scope}
+        \node[blue] at (5,1.8) {$f^+(x)$};
+        \node[red] at (3,-1.2) {$f^-(x)$};
+        \node at (2,0.3) {$f(x)$};
+      \end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">    \begin{tikzpicture}[scale=1.5]
+        \draw[-{Latex[length=4mm,width=1.5mm]}] (-0.5,0) -- (6.5,0) node[right] {$x$};
+        \draw[-{Latex[length=4mm,width=1.5mm]}] (0,-1.5) -- (0,2.5) node[above] {$y$};
+        \draw[domain=0:6, smooth, samples=200, thick]
+          plot (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)});
+        \begin{scope}
+          \clip (0,0) rectangle (6.5,2.5);
+          \fill[pattern=north west lines, pattern color=gray!50]
+            plot[domain=0:6, smooth, samples=200]
+              (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)})
+            -- (6,0) -- (0,0) -- cycle;
+        \end{scope}
+        \begin{scope}
+          \clip (0,-1.5) rectangle (6.5,0);
+          \fill[gray!20]
+            plot[domain=0:6, smooth, samples=200]
+              (\x, {1.2*cos((\x/4)*360) + 0.2*(\x-2)})
+            -- (6,0) -- (0,0) -- cycle;
+        \end{scope}
+        \node[blue] at (5,1.8) {$f^+(x)$};
+        \node[red] at (3,-1.2) {$f^-(x)$};
+        \node at (2,0.3) {$f(x)$};
+      \end{tikzpicture}</code></pre></div></details></figure>
 <p>当$f:X\to \mathbb{C}$是复值可积函数时,我们按照它的实部和虚部来定义积分:</p>
 <div class="math-display">\[\int_X f\mathrm{d}\mu=\int_X \operatorname{Re}(f)\mathrm{d}\mu+\mathrm{i}\int_X \operatorname{Im}(f)\mathrm{d}\mu\]</div>
 <aside class="wiki-note">

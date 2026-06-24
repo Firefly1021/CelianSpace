@@ -8,11 +8,14 @@
   <meta http-equiv="Expires" content="0" />
   <meta name="description" content="各种模板/XTUBeamer模板/XTUBeamer模板.tex" />
   <title>XTUBeamer模板.tex | CelianSpace Wiki</title>
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-math-flow" />
-  <script defer src="../assets/search-index.js?v=20260624-math-flow"></script>
-  <script defer src="../assets/wiki.js?v=20260624-math-flow"></script>
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-tikzjax" />
+  <script defer src="../assets/search-index.js?v=20260624-tikzjax"></script>
+  <script defer src="../assets/wiki.js?v=20260624-tikzjax"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  
+  <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css" />
+  <script src="https://tikzjax.com/v1/tikzjax.js"></script>
 </head>
 <body data-depth="1">
   <header class="wiki-topbar">
@@ -80,14 +83,54 @@ u(0) = u(1) = 0.
 \frac{x_{i+1}-x}{h_{i+1}},&amp;x\in [x_i,x_{i+1}]\\
 0,&amp;\text{其他}
 \end{cases}\]</div>
-<p>\draw[-&gt;] (0,0) -- (1.1,0); \draw[-&gt;] (0,0) -- (0,0.19);</p>
-<p>\foreach \i in {0,...,10} { \fill (\i/10,0) circle (0.15pt); } \fill (0,0.15) circle (0.15pt);</p>
-<p>\node[below] at (0,0) {$x_0$}; \node[below] at (1,0) {$x_n$}; \node[below] at (0.1,0) {$x_1$}; \node[below] at (0.9,0) {$x_{n-1}$}; \node[left] at (0,0.15) {$1$};</p>
-<p>\def\xA{0.4}</p>
-<p>\node[below] at (\xA,0) {$x_{i-1}$}; \node[below] at (\xB,0) {$x_i$}; \node[below] at (\xC,0) {$x_{i+1}$};</p>
-<p>\draw[red, thick] (\xA,0) -- (\xB,0.15) -- (\xC,0);</p>
-<p>\draw[blue, thick] (0,0.15) -- (0.1,0);</p>
-<p>\draw[green!70!black, thick] (0.9,0) -- (1,0.15); \draw[dashed] (0.5,0) -- (0.5,0.15); \draw[dashed] (1,0) -- (1,0.15);</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+\begin{tikzpicture}[scale=10, >=stealth]
+  \draw[->] (0,0) -- (1.1,0);
+  \draw[->] (0,0) -- (0,0.19);
+  \foreach \i in {0,...,10} {
+    \fill (\i/10,0) circle (0.15pt);
+  }
+  \fill (0,0.15) circle (0.15pt);
+  \node[below] at (0,0) {$x_0$};
+  \node[below] at (1,0) {$x_n$};
+  \node[below] at (0.1,0) {$x_1$};
+  \node[below] at (0.9,0) {$x_{n-1}$};
+  \node[left] at (0,0.15) {$1$};
+  \def\xA{0.4}
+  \def\xB{0.5}
+  \def\xC{0.6}
+  \node[below] at (\xA,0) {$x_{i-1}$};
+  \node[below] at (\xB,0) {$x_i$};
+  \node[below] at (\xC,0) {$x_{i+1}$};
+  \draw[red, thick] (\xA,0) -- (\xB,0.15) -- (\xC,0);
+  \draw[blue, thick] (0,0.15) -- (0.1,0);
+  \draw[green!70!black, thick] (0.9,0) -- (1,0.15);
+  \draw[dashed] (0.5,0) -- (0.5,0.15);
+  \draw[dashed] (1,0) -- (1,0.15);
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">\begin{tikzpicture}[scale=10, &gt;=stealth]
+  \draw[-&gt;] (0,0) -- (1.1,0);
+  \draw[-&gt;] (0,0) -- (0,0.19);
+  \foreach \i in {0,...,10} {
+    \fill (\i/10,0) circle (0.15pt);
+  }
+  \fill (0,0.15) circle (0.15pt);
+  \node[below] at (0,0) {$x_0$};
+  \node[below] at (1,0) {$x_n$};
+  \node[below] at (0.1,0) {$x_1$};
+  \node[below] at (0.9,0) {$x_{n-1}$};
+  \node[left] at (0,0.15) {$1$};
+  \def\xA{0.4}  % x_{i-1}
+  \def\xB{0.5}  % x_i
+  \def\xC{0.6}  % x_{i+1}
+  \node[below] at (\xA,0) {$x_{i-1}$};
+  \node[below] at (\xB,0) {$x_i$};
+  \node[below] at (\xC,0) {$x_{i+1}$};
+  \draw[red, thick] (\xA,0) -- (\xB,0.15) -- (\xC,0);
+  \draw[blue, thick] (0,0.15) -- (0.1,0);
+  \draw[green!70!black, thick] (0.9,0) -- (1,0.15);
+  \draw[dashed] (0.5,0) -- (0.5,0.15);
+  \draw[dashed] (1,0) -- (1,0.15);
+\end{tikzpicture}</code></pre></div></details></figure>
 <p>\small 在计算机上可以利用如下算法</p>
 <p class="caption">刚度矩阵的组装</p>
 <p>\State 初始化$n+1$阶零矩阵$K$ \For {$i=1,2,\cdots n$} \State 计算$2$阶局部刚度矩阵单元</p>
@@ -157,14 +200,79 @@ u(0) = u(1) = 0.
 &amp;\frac{1}{2}(k-1)(k-2)\text{个单元内部节点}.
 \end{aligned}\]</div>
 <p>\centering</p>
-<p>\def\Ax{0}     \def\Ay{0} \def\Bx{1.3}     \def\By{0} \def\Cx{0.65}   \def\Cy{0.86602540378}</p>
-<p>\draw[thick] (\Ax,\Ay) -- (\Bx,\By) -- (\Cx,\Cy) -- cycle;</p>
-<p>\def\K{4} \foreach \i in {0,...,4}{ \foreach \j in {0,...,4}{ \pgfmathtruncatemacro{\t}{\K-\i-\j}</p>
-<p>\pgfmathsetmacro{\x}{(\t*\Ax + \i*\Bx + \j*\Cx)/\K} \pgfmathsetmacro{\y}{(\t*\Ay + \i*\By + \j*\Cy)/\K} \fill (\x,\y) circle (0.6pt); \fi } } \node at (0.65,-0.15) {$k=4$};</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+\begin{tikzpicture}[scale=3]
+  \def\Ax{0}     \def\Ay{0}
+  \def\Bx{1.3}     \def\By{0}
+  \def\Cx{0.65}   \def\Cy{0.86602540378}
+  \draw[thick] (\Ax,\Ay) -- (\Bx,\By) -- (\Cx,\Cy) -- cycle;
+  \def\K{4}
+  \foreach \i in {0,...,4}{
+    \foreach \j in {0,...,4}{
+      \pgfmathtruncatemacro{\t}{\K-\i-\j}
+      \ifnum\t>-1
+        \pgfmathsetmacro{\x}{(\t*\Ax + \i*\Bx + \j*\Cx)/\K}
+        \pgfmathsetmacro{\y}{(\t*\Ay + \i*\By + \j*\Cy)/\K}
+        \fill (\x,\y) circle (0.6pt);
+      \fi
+    }
+  }
+  \node at (0.65,-0.15) {$k=4$};
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">\begin{tikzpicture}[scale=3]
+  \def\Ax{0}     \def\Ay{0}
+  \def\Bx{1.3}     \def\By{0}
+  \def\Cx{0.65}   \def\Cy{0.86602540378} % sqrt(3)/2
+  \draw[thick] (\Ax,\Ay) -- (\Bx,\By) -- (\Cx,\Cy) -- cycle;
+  \def\K{4}
+  \foreach \i in {0,...,4}{
+    \foreach \j in {0,...,4}{
+      \pgfmathtruncatemacro{\t}{\K-\i-\j} % t = K - i - j
+      \ifnum\t&gt;-1 % 等价于 t &gt;= 0
+        \pgfmathsetmacro{\x}{(\t*\Ax + \i*\Bx + \j*\Cx)/\K}
+        \pgfmathsetmacro{\y}{(\t*\Ay + \i*\By + \j*\Cy)/\K}
+        \fill (\x,\y) circle (0.6pt);
+      \fi
+    }
+  }
+  \node at (0.65,-0.15) {$k=4$};
+\end{tikzpicture}</code></pre></div></details></figure>
 <p>\hspace{1.8cm}</p>
-<p>\def\Ax{0}     \def\Ay{0} \def\Bx{1.3}     \def\By{0} \def\Cx{0.65}   \def\Cy{0.86602540378}</p>
-<p>\draw[thick] (\Ax,\Ay) -- (\Bx,\By) -- (\Cx,\Cy) -- cycle;</p>
-<p>\def\K{5} \foreach \i in {0,...,5}{ \foreach \j in {0,...,5}{ \pgfmathtruncatemacro{\t}{\K-\i-\j} \ifnum\t&gt;-1 \pgfmathsetmacro{\x}{(\t*\Ax + \i*\Bx + \j*\Cx)/\K} \pgfmathsetmacro{\y}{(\t*\Ay + \i*\By + \j*\Cy)/\K} \fill (\x,\y) circle (0.6pt); \fi } } \node at (0.65,-0.15) {$k=5$};</p>
+<figure class="tikz-figure"><div class="tikz-canvas"><script type="text/tikz">\usetikzlibrary{arrows.meta,patterns,calc,positioning}
+\begin{tikzpicture}[scale=3]
+  \def\Ax{0}     \def\Ay{0}
+  \def\Bx{1.3}     \def\By{0}
+  \def\Cx{0.65}   \def\Cy{0.86602540378}
+  \draw[thick] (\Ax,\Ay) -- (\Bx,\By) -- (\Cx,\Cy) -- cycle;
+  \def\K{5}
+  \foreach \i in {0,...,5}{
+    \foreach \j in {0,...,5}{
+      \pgfmathtruncatemacro{\t}{\K-\i-\j}
+      \ifnum\t>-1
+        \pgfmathsetmacro{\x}{(\t*\Ax + \i*\Bx + \j*\Cx)/\K}
+        \pgfmathsetmacro{\y}{(\t*\Ay + \i*\By + \j*\Cy)/\K}
+        \fill (\x,\y) circle (0.6pt);
+      \fi
+    }
+  }
+  \node at (0.65,-0.15) {$k=5$};
+\end{tikzpicture}</script></div><figcaption>TikZ 图形</figcaption><details class="tikz-source"><summary>查看 TikZ 源码</summary><div class="code-block"><div class="code-title"><span>TikZ 图形源码</span><em>tex</em></div><pre><code class="language-tex">\begin{tikzpicture}[scale=3]
+  \def\Ax{0}     \def\Ay{0}
+  \def\Bx{1.3}     \def\By{0}
+  \def\Cx{0.65}   \def\Cy{0.86602540378}
+  \draw[thick] (\Ax,\Ay) -- (\Bx,\By) -- (\Cx,\Cy) -- cycle;
+  \def\K{5}
+  \foreach \i in {0,...,5}{
+    \foreach \j in {0,...,5}{
+      \pgfmathtruncatemacro{\t}{\K-\i-\j}
+      \ifnum\t&gt;-1
+        \pgfmathsetmacro{\x}{(\t*\Ax + \i*\Bx + \j*\Cx)/\K}
+        \pgfmathsetmacro{\y}{(\t*\Ay + \i*\By + \j*\Cy)/\K}
+        \fill (\x,\y) circle (0.6pt);
+      \fi
+    }
+  }
+  \node at (0.65,-0.15) {$k=5$};
+\end{tikzpicture}</code></pre></div></details></figure>
 <h2>stokes方程</h2>
 <p>感谢各位聆听！<br>[8pt]</p><details class="file-info"><summary>文件入口</summary><div class="file-info-body"><a class="button-link" href="../../materials/%E5%90%84%E7%A7%8D%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF/XTUBeamer%E6%A8%A1%E6%9D%BF.tex">打开原始文件</a><span>分类：各种模板</span><span>类型：TeX</span><span>大小：10.8 KB</span><span>位置：各种模板/XTUBeamer模板/XTUBeamer模板.tex</span></div></details></section></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>

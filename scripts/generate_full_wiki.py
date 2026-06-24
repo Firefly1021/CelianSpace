@@ -9,7 +9,7 @@ SITE = Path(__file__).resolve().parents[1]
 MATERIALS = SITE / "materials"
 WIKI = SITE / "wiki"
 ASSETS = WIKI / "assets"
-ASSET_VERSION = "20260624-math-flow"
+ASSET_VERSION = "20260624-tikzjax"
 
 TEXT_EXTS = {".tex", ".sty", ".bib", ".md", ".cpp", ".c", ".h", ".hpp", ".py", ".txt", ".cmake"}
 CODE_EXTS = {".cpp", ".c", ".h", ".hpp", ".py", ".cmake"}
@@ -152,6 +152,47 @@ def code_panel(code: str, title: str = "代码片段", lang: str = "text") -> st
     )
 
 
+def strip_latex_comment(line: str) -> str:
+    for index, char in enumerate(line):
+        if char == "%" and (index == 0 or line[index - 1] != "\\"):
+            return line[:index]
+    return line
+
+
+def tikz_render_source(code: str) -> str:
+    lines = []
+    for raw in code.splitlines():
+        line = strip_latex_comment(raw).rstrip()
+        if not line.strip():
+            continue
+        line = "".join(char for char in line if ord(char) < 128)
+        lines.append(line)
+    return "\n".join(lines)
+
+
+def tikz_panel(code: str) -> str:
+    renderable = "\\begin{axis}" not in code and "\\end{axis}" not in code
+    tikz_code = "\\usetikzlibrary{arrows.meta,patterns,calc,positioning}\n" + tikz_render_source(code)
+    tikz_code = tikz_code.replace("</script", "<\\/script")
+    canvas = (
+        f'<script type="text/tikz">{tikz_code}</script>'
+        if renderable
+        else '<div class="tikz-fallback">该图使用 pgfplots/axis，当前浏览器渲染器暂不支持，已保留 TikZ 源码。</div>'
+    )
+    return (
+        '<figure class="tikz-figure">'
+        '<div class="tikz-canvas">'
+        f'{canvas}'
+        '</div>'
+        '<figcaption>TikZ 图形</figcaption>'
+        '<details class="tikz-source">'
+        '<summary>查看 TikZ 源码</summary>'
+        f'{code_panel(code, "TikZ 图形源码", "tex")}'
+        '</details>'
+        '</figure>'
+    )
+
+
 def inline_html(text: str) -> str:
     text = clean_latex(text)
     text = re.sub(r"\\(textbf|emph|textit)\{([^{}]*)\}", lambda m: f"@@{m.group(1)}:{m.group(2)}@@", text)
@@ -176,6 +217,9 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
     out, para = [], []
     env, env_lines = None, []
     in_code, code_lines = False, []
+    in_tikz, tikz_lines = False, []
+    in_tikz_setup, tikz_setup_lines, tikz_setup_depth = False, [], 0
+    pending_tikz_lines = []
     in_display, display_lines = False, []
     note_envs = {"Definition", "Theorem", "Lemma", "Proposition", "Corollary", "Example", "Remark", "definition", "theorem", "lemma", "proposition", "corollary", "example", "remark"}
     math_envs = {"equation", "equation*", "align", "align*", "gather", "gather*", "cases", "matrix", "pmatrix", "bmatrix"}
@@ -200,8 +244,21 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
 
     for raw in text.splitlines():
         line = raw.strip()
+        if in_tikz_setup:
+            tikz_setup_lines.append(raw.rstrip())
+            tikz_setup_depth += raw.count("{") - raw.count("}")
+            if tikz_setup_depth <= 0:
+                pending_tikz_lines.extend(tikz_setup_lines)
+                in_tikz_setup, tikz_setup_lines, tikz_setup_depth = False, [], 0
+            continue
         if not line or line.startswith("%"):
             flush_para()
+            continue
+        if in_tikz:
+            tikz_lines.append(raw.rstrip())
+            if re.match(r"\\end\{tikzpicture\}", line):
+                out.append(tikz_panel(chr(10).join(tikz_lines)))
+                in_tikz, tikz_lines = False, []
             continue
         if in_code:
             if re.match(r"\\end\{(lstlisting|minted|verbatim)\}", line):
@@ -225,6 +282,22 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
             flush_para()
             in_code = True
             code_lines = []
+            continue
+        if line.startswith("\\tikzset"):
+            flush_para()
+            tikz_setup_lines = [raw.rstrip()]
+            tikz_setup_depth = raw.count("{") - raw.count("}")
+            if tikz_setup_depth <= 0:
+                pending_tikz_lines.extend(tikz_setup_lines)
+                tikz_setup_lines, tikz_setup_depth = [], 0
+            else:
+                in_tikz_setup = True
+            continue
+        if re.match(r"\\begin\{tikzpicture\}", line):
+            flush_para()
+            in_tikz = True
+            tikz_lines = pending_tikz_lines + [raw.rstrip()]
+            pending_tikz_lines = []
             continue
         if env:
             if re.match(r"\\end\{" + re.escape(env) + r"\}", line):
@@ -306,6 +379,8 @@ def render_latex(text: str, current_file: Path, depth: int) -> str:
     flush_para()
     if in_code and code_lines:
         out.append(code_panel(chr(10).join(code_lines), "LaTeX 代码", "tex"))
+    if in_tikz and tikz_lines:
+        out.append(tikz_panel(chr(10).join(tikz_lines)))
     if env and env_lines:
         if env in note_envs:
             out.append(f'<aside class="wiki-note">{inline_html(" ".join(env_lines))}</aside>')
@@ -456,6 +531,9 @@ MATHJAX = r"""<script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(',
 
 def page(title: str, body: str, current: str, depth: int, math_pages, description="") -> str:
     pre = "../" * depth
+    tikz_assets = ""
+    if 'type="text/tikz"' in body:
+        tikz_assets = '\n  <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css" />\n  <script src="https://tikzjax.com/v1/tikzjax.js"></script>'
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -471,6 +549,7 @@ def page(title: str, body: str, current: str, depth: int, math_pages, descriptio
   <script defer src="{pre}assets/wiki.js?v={ASSET_VERSION}"></script>
   {MATHJAX}
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  {tikz_assets}
 </head>
 <body data-depth="{depth}">
   <header class="wiki-topbar">
@@ -646,7 +725,8 @@ def main():
     write(ASSETS / "search-index.json", json.dumps(search_items, ensure_ascii=False, indent=2))
     write(ASSETS / "search-index.js", "window.WIKI_SEARCH_INDEX = " + json.dumps(search_items, ensure_ascii=False, indent=2) + ";\n")
 
-    css = r''':root{--bg:#f6f8fb;--surface:#fff;--line:#d9e0e8;--text:#1f2937;--muted:#64748b;--brand:#128276;--brand-soft:#e0f4f0;--code:#172724;--shadow:0 18px 55px rgba(30,45,70,.08);--radius:8px;--mono:"Cascadia Code",Consolas,monospace;--sans:Inter,"Segoe UI",system-ui,sans-serif;--serif:Georgia,"Noto Serif SC","Songti SC",serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75}.wiki-topbar{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:auto auto minmax(260px,560px) auto;gap:16px;align-items:center;height:58px;padding:0 24px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(16px)}.top-brand{font-weight:800;color:var(--brand);text-decoration:none}.top-link{justify-self:end;color:var(--muted);font-size:.9rem;text-decoration:none}.menu-toggle{display:none;border:1px solid var(--line);border-radius:6px;background:#fff;padding:7px 10px}.wiki-search{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;color:var(--muted);font-size:.82rem}.wiki-search input,.material-tools input{height:36px;border:1px solid var(--line);border-radius:999px;padding:0 14px;font:inherit;background:#fff}.search-results{position:fixed;top:60px;left:50%;z-index:40;width:min(680px,calc(100% - 32px));max-height:420px;overflow:auto;transform:translateX(-50%);border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}.search-results a{display:block;padding:12px 14px;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}.search-results small{display:block;color:var(--brand);font-family:var(--mono)}.wiki-shell{display:grid;grid-template-columns:280px minmax(0,1fr) 220px;gap:28px;max-width:1500px;margin:0 auto;padding:28px 26px}.wiki-sidebar{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:14px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}.sidebar-home{display:block;margin-bottom:12px;color:var(--brand);font-weight:800;text-decoration:none}.wiki-sidebar details{border-top:1px solid var(--line);padding:10px 0}.wiki-sidebar summary{cursor:pointer;font-weight:700}.wiki-sidebar nav{display:grid;gap:2px;margin-top:8px}.wiki-sidebar a{display:block;padding:7px 9px;border-radius:6px;color:var(--muted);font-size:.92rem;text-decoration:none}.wiki-sidebar a:hover,.wiki-sidebar a.active{background:var(--brand-soft);color:var(--brand)}.wiki-main{min-width:0}.doc-article{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}.doc-header{padding:42px 48px 28px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#fff,#eefaf7)}.breadcrumb,.inline-source{margin:0;color:var(--muted);font-family:var(--mono);font-size:.78rem}.doc-header h1{margin:12px 0 0;font-family:var(--serif);font-size:clamp(2.2rem,5vw,4.6rem);line-height:1.05;font-weight:500;overflow-wrap:anywhere}.doc-subtitle{max-width:840px;color:var(--muted);font-size:1.08rem;overflow-wrap:anywhere}.doc-chips,.kind-summary{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.doc-chips span,.kind-summary span{padding:5px 10px;border:1px solid rgba(18,130,118,.2);border-radius:999px;background:#fff;color:var(--brand);font-family:var(--mono);font-size:.74rem}.doc-section{padding:34px 48px}.doc-section h2{margin:36px 0 12px;padding-top:4px;font-family:var(--serif);font-size:2rem;line-height:1.18}.doc-section h3{margin:30px 0 10px;font-size:1.35rem}.doc-section h4{margin:24px 0 8px}.doc-section p{margin:12px 0}.doc-section p code{padding:2px 5px;border-radius:4px;background:#eef3f6}.caption{color:var(--muted);font-size:.9rem}.math-display{overflow-x:auto;margin:12px 0;padding:2px 0;text-align:center}.wiki-note .math-display{margin:10px 0;padding:0}.wiki-note,blockquote{margin:18px 0;padding:14px 16px;border-left:4px solid var(--brand);background:var(--brand-soft);color:#22413d}.wiki-note strong{display:block;margin-bottom:6px}.doc-list{padding-left:22px}.code-block{overflow:hidden;margin:18px 0;border:1px solid #203c36;border-radius:var(--radius);background:var(--code)}.code-title{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.08);color:#c8eee6;font:0.78rem/1.4 var(--mono)}.code-title span{overflow-wrap:anywhere}.code-title em{font-style:normal;color:#8ccfc3}.doc-section pre{overflow:auto;max-height:78vh;margin:0;padding:18px;background:transparent;color:#effaf6;font:0.86rem/1.7 var(--mono)}.wiki-hero-grid,.category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.wiki-hero-grid a,.category-card{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;text-decoration:none;color:var(--text)}.wiki-hero-grid strong,.category-card strong{display:block;font-family:var(--serif);font-size:1.35rem;font-weight:500}.wiki-hero-grid span,.category-card span{display:block;color:var(--muted)}.category-card a{display:block;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);text-decoration:none;color:var(--text)}.fold-list{display:grid;gap:12px}.fold-panel{border:1px solid var(--line);border-radius:var(--radius);background:#fff}.fold-panel summary{display:flex;justify-content:space-between;gap:16px;align-items:center;cursor:pointer;padding:15px 18px;color:var(--text)}.fold-panel summary strong{font-family:var(--serif);font-size:1.2rem;font-weight:500}.fold-panel summary span{color:var(--muted);font-size:.9rem}.fold-panel[open] summary{border-bottom:1px solid var(--line);background:#fbfdfc}.file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:18px}.file-card{display:grid;gap:6px;min-height:116px;padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;color:var(--text);text-decoration:none}.file-card:hover{border-color:rgba(18,130,118,.45);box-shadow:0 12px 35px rgba(30,45,70,.08)}.file-card strong{overflow-wrap:anywhere}.file-card small{color:var(--muted);font-family:var(--mono);font-size:.74rem;overflow-wrap:anywhere}.file-kind{width:max-content;padding:2px 8px;border-radius:999px;background:var(--brand-soft);color:var(--brand);font-family:var(--mono);font-size:.72rem}.material-tools{display:grid;gap:10px;margin:4px 0 18px}.file-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}.button-link{display:inline-block;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--brand);text-decoration:none}.file-info{margin-top:28px;border:1px solid var(--line);border-radius:var(--radius);background:#fbfdfc}.file-info summary{cursor:pointer;padding:11px 14px;color:var(--brand);font-weight:700}.file-info-body{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;padding:0 14px 14px;color:var(--muted);font-size:.88rem}.file-info-body span{overflow-wrap:anywhere}.asset-figure{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}.asset-figure img{display:block;max-width:100%;height:auto;margin:auto}.asset-figure.large img{max-height:78vh}.asset-figure figcaption{margin-top:8px;color:var(--muted);font-family:var(--mono);font-size:.75rem;overflow-wrap:anywhere}.pdf-frame{height:72vh;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}.pdf-frame iframe{width:100%;height:100%;border:0}.wiki-toc{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;color:var(--muted);font-size:.88rem}.wiki-toc p{margin:0 0 10px;color:var(--text);font-weight:700}.wiki-toc a{display:block;padding:5px 0;color:var(--muted);text-decoration:none}.wiki-toc a:hover{color:var(--brand)}.prev-next{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.prev-next a,.prev-next span{padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;color:var(--brand);text-decoration:none}mjx-container[display="true"]{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden}mjx-container[display="true"] svg{max-width:100%;height:auto}@media(max-width:1100px){.wiki-shell{grid-template-columns:240px minmax(0,1fr)}.wiki-toc{display:none}}@media(max-width:760px){.wiki-topbar{grid-template-columns:auto 1fr auto;height:auto;min-height:58px;padding:10px 14px}.menu-toggle{display:inline-block}.wiki-search{grid-column:1/-1;grid-template-columns:1fr}.wiki-search span{display:none}.top-link{display:none}.wiki-shell{display:block;padding:14px}.wiki-sidebar{position:fixed;top:0;bottom:0;left:0;z-index:60;width:min(86vw,320px);max-height:none;transform:translateX(-105%);transition:transform .2s ease;border-radius:0}.wiki-sidebar.open{transform:translateX(0)}.doc-header{padding:30px 22px 22px}.doc-section{padding:24px 22px}.wiki-hero-grid,.category-grid,.prev-next{grid-template-columns:1fr}.doc-header h1{font-size:2.35rem}.doc-section p{overflow-x:auto}.file-grid{grid-template-columns:1fr;margin:14px}.fold-panel summary{align-items:flex-start;flex-direction:column;gap:2px}}'''
+    css = r''':root{--bg:#f6f8fb;--surface:#fff;--line:#d9e0e8;--text:#1f2937;--muted:#64748b;--brand:#128276;--brand-soft:#e0f4f0;--code:#172724;--shadow:0 18px 55px rgba(30,45,70,.08);--radius:8px;--mono:"Cascadia Code",Consolas,monospace;--sans:Inter,"Segoe UI",system-ui,sans-serif;--serif:Georgia,"Noto Serif SC","Songti SC",serif}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;overflow-x:hidden;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75}.wiki-topbar{position:sticky;top:0;z-index:30;display:grid;grid-template-columns:auto auto minmax(260px,560px) auto;gap:16px;align-items:center;height:58px;padding:0 24px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.94);backdrop-filter:blur(16px)}.top-brand{font-weight:800;color:var(--brand);text-decoration:none}.top-link{justify-self:end;color:var(--muted);font-size:.9rem;text-decoration:none}.menu-toggle{display:none;border:1px solid var(--line);border-radius:6px;background:#fff;padding:7px 10px}.wiki-search{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;color:var(--muted);font-size:.82rem}.wiki-search input,.material-tools input{height:36px;border:1px solid var(--line);border-radius:999px;padding:0 14px;font:inherit;background:#fff}.search-results{position:fixed;top:60px;left:50%;z-index:40;width:min(680px,calc(100% - 32px));max-height:420px;overflow:auto;transform:translateX(-50%);border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}.search-results a{display:block;padding:12px 14px;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}.search-results small{display:block;color:var(--brand);font-family:var(--mono)}.wiki-shell{display:grid;grid-template-columns:280px minmax(0,1fr) 220px;gap:28px;max-width:1500px;margin:0 auto;padding:28px 26px}.wiki-sidebar{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding:14px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}.sidebar-home{display:block;margin-bottom:12px;color:var(--brand);font-weight:800;text-decoration:none}.wiki-sidebar details{border-top:1px solid var(--line);padding:10px 0}.wiki-sidebar summary{cursor:pointer;font-weight:700}.wiki-sidebar nav{display:grid;gap:2px;margin-top:8px}.wiki-sidebar a{display:block;padding:7px 9px;border-radius:6px;color:var(--muted);font-size:.92rem;text-decoration:none}.wiki-sidebar a:hover,.wiki-sidebar a.active{background:var(--brand-soft);color:var(--brand)}.wiki-main{min-width:0}.doc-article{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}.doc-header{padding:42px 48px 28px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#fff,#eefaf7)}.breadcrumb,.inline-source{margin:0;color:var(--muted);font-family:var(--mono);font-size:.78rem}.doc-header h1{margin:12px 0 0;font-family:var(--serif);font-size:clamp(2.2rem,5vw,4.6rem);line-height:1.05;font-weight:500;overflow-wrap:anywhere}.doc-subtitle{max-width:840px;color:var(--muted);font-size:1.08rem;overflow-wrap:anywhere}.doc-chips,.kind-summary{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.doc-chips span,.kind-summary span{padding:5px 10px;border:1px solid rgba(18,130,118,.2);border-radius:999px;background:#fff;color:var(--brand);font-family:var(--mono);font-size:.74rem}.doc-section{padding:34px 48px}.doc-section h2{margin:36px 0 12px;padding-top:4px;font-family:var(--serif);font-size:2rem;line-height:1.18}.doc-section h3{margin:30px 0 10px;font-size:1.35rem}.doc-section h4{margin:24px 0 8px}.doc-section p{margin:12px 0}.doc-section p code{padding:2px 5px;border-radius:4px;background:#eef3f6}.caption{color:var(--muted);font-size:.9rem}.math-display{overflow-x:auto;margin:12px 0;padding:2px 0;text-align:center}.wiki-note .math-display{margin:10px 0;padding:0}.wiki-note,blockquote{margin:18px 0;padding:14px 16px;border-left:4px solid var(--brand);background:var(--brand-soft);color:#22413d}.wiki-note strong{display:block;margin-bottom:6px}.doc-list{padding-left:22px}.tikz-source{margin:18px 0;border:1px solid var(--line);border-radius:var(--radius);background:#fbfdfc}.tikz-source>summary{cursor:pointer;padding:10px 14px;color:var(--brand);font-weight:700}.tikz-source .code-block{margin:0;border:0;border-top:1px solid #203c36;border-radius:0 0 var(--radius) var(--radius)}.code-block{overflow:hidden;margin:18px 0;border:1px solid #203c36;border-radius:var(--radius);background:var(--code)}.code-title{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.08);color:#c8eee6;font:0.78rem/1.4 var(--mono)}.code-title span{overflow-wrap:anywhere}.code-title em{font-style:normal;color:#8ccfc3}.doc-section pre{overflow:auto;max-height:78vh;margin:0;padding:18px;background:transparent;color:#effaf6;font:0.86rem/1.7 var(--mono)}.wiki-hero-grid,.category-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.wiki-hero-grid a,.category-card{padding:20px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;text-decoration:none;color:var(--text)}.wiki-hero-grid strong,.category-card strong{display:block;font-family:var(--serif);font-size:1.35rem;font-weight:500}.wiki-hero-grid span,.category-card span{display:block;color:var(--muted)}.category-card a{display:block;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);text-decoration:none;color:var(--text)}.fold-list{display:grid;gap:12px}.fold-panel{border:1px solid var(--line);border-radius:var(--radius);background:#fff}.fold-panel summary{display:flex;justify-content:space-between;gap:16px;align-items:center;cursor:pointer;padding:15px 18px;color:var(--text)}.fold-panel summary strong{font-family:var(--serif);font-size:1.2rem;font-weight:500}.fold-panel summary span{color:var(--muted);font-size:.9rem}.fold-panel[open] summary{border-bottom:1px solid var(--line);background:#fbfdfc}.file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:18px}.file-card{display:grid;gap:6px;min-height:116px;padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;color:var(--text);text-decoration:none}.file-card:hover{border-color:rgba(18,130,118,.45);box-shadow:0 12px 35px rgba(30,45,70,.08)}.file-card strong{overflow-wrap:anywhere}.file-card small{color:var(--muted);font-family:var(--mono);font-size:.74rem;overflow-wrap:anywhere}.file-kind{width:max-content;padding:2px 8px;border-radius:999px;background:var(--brand-soft);color:var(--brand);font-family:var(--mono);font-size:.72rem}.material-tools{display:grid;gap:10px;margin:4px 0 18px}.file-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}.button-link{display:inline-block;padding:8px 12px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--brand);text-decoration:none}.file-info{margin-top:28px;border:1px solid var(--line);border-radius:var(--radius);background:#fbfdfc}.file-info summary{cursor:pointer;padding:11px 14px;color:var(--brand);font-weight:700}.file-info-body{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;padding:0 14px 14px;color:var(--muted);font-size:.88rem}.file-info-body span{overflow-wrap:anywhere}.asset-figure{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:var(--radius);background:#fff}.asset-figure img{display:block;max-width:100%;height:auto;margin:auto}.asset-figure.large img{max-height:78vh}.asset-figure figcaption{margin-top:8px;color:var(--muted);font-family:var(--mono);font-size:.75rem;overflow-wrap:anywhere}.pdf-frame{height:72vh;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:#fff}.pdf-frame iframe{width:100%;height:100%;border:0}.wiki-toc{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;color:var(--muted);font-size:.88rem}.wiki-toc p{margin:0 0 10px;color:var(--text);font-weight:700}.wiki-toc a{display:block;padding:5px 0;color:var(--muted);text-decoration:none}.wiki-toc a:hover{color:var(--brand)}.prev-next{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.prev-next a,.prev-next span{padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;color:var(--brand);text-decoration:none}mjx-container[display="true"]{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden}mjx-container[display="true"] svg{max-width:100%;height:auto}@media(max-width:1100px){.wiki-shell{grid-template-columns:240px minmax(0,1fr)}.wiki-toc{display:none}}@media(max-width:760px){.wiki-topbar{grid-template-columns:auto 1fr auto;height:auto;min-height:58px;padding:10px 14px}.menu-toggle{display:inline-block}.wiki-search{grid-column:1/-1;grid-template-columns:1fr}.wiki-search span{display:none}.top-link{display:none}.wiki-shell{display:block;padding:14px}.wiki-sidebar{position:fixed;top:0;bottom:0;left:0;z-index:60;width:min(86vw,320px);max-height:none;transform:translateX(-105%);transition:transform .2s ease;border-radius:0}.wiki-sidebar.open{transform:translateX(0)}.doc-header{padding:30px 22px 22px}.doc-section{padding:24px 22px}.wiki-hero-grid,.category-grid,.prev-next{grid-template-columns:1fr}.doc-header h1{font-size:2.35rem}.doc-section p{overflow-x:auto}.file-grid{grid-template-columns:1fr;margin:14px}.fold-panel summary{align-items:flex-start;flex-direction:column;gap:2px}}'''
+    css += ".tikz-figure{margin:20px 0;text-align:center}.tikz-canvas{min-height:70px;overflow-x:auto;padding:10px 0}.tikz-canvas svg{max-width:100%;height:auto}.tikz-figure figcaption{color:var(--muted);font-size:.82rem}.tikz-fallback{display:inline-block;max-width:680px;padding:14px 16px;border:1px dashed var(--line);border-radius:var(--radius);background:#fbfdfc;color:var(--muted);font-size:.9rem}.tikz-source{margin:12px 0 0;text-align:left}"
     write(ASSETS / "wiki.css", css + "\n")
     js = r'''const depth=Number(document.body.dataset.depth||0);const prefix='../'.repeat(depth);const sidebar=document.querySelector('#wiki-sidebar');document.querySelector('.menu-toggle')?.addEventListener('click',()=>sidebar.classList.toggle('open'));document.addEventListener('click',event=>{if(innerWidth<760&&sidebar?.classList.contains('open')&&!sidebar.contains(event.target)&&!event.target.closest('.menu-toggle'))sidebar.classList.remove('open')});const toc=document.querySelector('#page-toc');[...document.querySelectorAll('.doc-section h2, .doc-section h3')].forEach((heading,index)=>{if(!heading.id)heading.id=`section-${index+1}`;const a=document.createElement('a');a.href=`#${heading.id}`;a.textContent=heading.textContent;if(heading.tagName==='H3')a.style.paddingLeft='12px';toc?.appendChild(a)});const input=document.querySelector('#wiki-search');const box=document.querySelector('#search-results');let searchIndex=window.WIKI_SEARCH_INDEX||[];if(!searchIndex.length)fetch(`${prefix}assets/search-index.json`).then(r=>r.json()).then(data=>{searchIndex=data}).catch(()=>{});input?.addEventListener('input',()=>{const q=input.value.trim().toLowerCase();if(!q){box.hidden=true;box.innerHTML='';return}const hits=searchIndex.filter(item=>`${item.title} ${item.category} ${item.text}`.toLowerCase().includes(q)).slice(0,12);box.innerHTML=hits.length?hits.map(item=>`<a href="${prefix}${item.url}"><small>${item.category}</small>${item.title}</a>`).join(''):'<a>没有找到匹配内容</a>';box.hidden=false});input?.addEventListener('blur',()=>setTimeout(()=>{box.hidden=true},180));const materialFilter=document.querySelector('#materialFilter');materialFilter?.addEventListener('input',()=>{const q=materialFilter.value.trim().toLowerCase();document.querySelectorAll('.file-card').forEach(card=>{card.hidden=!!q&&!card.textContent.toLowerCase().includes(q)&&!(card.dataset.kind||'').toLowerCase().includes(q)&&!(card.dataset.group||'').toLowerCase().includes(q)});document.querySelectorAll('.fold-panel').forEach(panel=>{const cards=[...panel.querySelectorAll('.file-card')];const hasVisible=cards.some(card=>!card.hidden);panel.hidden=q&&!hasVisible;if(q&&hasVisible)panel.open=true})});window.addEventListener('load',()=>setTimeout(()=>document.querySelectorAll('mjx-assistive-mml').forEach(node=>node.remove()),600));'''
     write(ASSETS / "wiki.js", js + "\n")
