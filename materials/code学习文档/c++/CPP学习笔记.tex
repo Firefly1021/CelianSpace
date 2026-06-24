@@ -1,0 +1,121 @@
+\documentclass[12pt, a4paper]{ctexart}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{minted}
+\usepackage[most]{tcolorbox}
+
+% --- 激活 tcolorbox 的 minted 库 ---
+\tcbuselibrary{minted}
+
+% --- 定义 macOS 窗口按钮颜色 ---
+\definecolor{onedarkback}{RGB}{40, 44, 52}    % 主背景色
+\definecolor{onedarkframe}{RGB}{24, 26, 31}   % 边框深色
+\definecolor{onedarktitle}{RGB}{171, 178, 191} % 标题文字颜色
+\definecolor{macred}{RGB}{255, 95, 86}
+\definecolor{macyellow}{RGB}{255, 189, 46}
+\definecolor{macgreen}{RGB}{39, 201, 63}
+
+% --- 定义 macOS 风格代码块 ---
+\tcbset{
+    macosstyle/.style={
+        listing engine=minted,
+        minted language=cpp,
+        % 默认配置放这里
+        minted options={
+            fontsize=\small,
+            breaklines,
+            linenos,
+            numbersep=10pt,
+            tabsize=4,
+            style=one-dark,
+            autogobble
+        },
+        enhanced,
+        colback=onedarkback,
+        colupper=white,
+        colframe=onedarkframe,
+        left=12mm,
+        top=5mm,
+        arc=3mm,
+        boxrule=0.5pt,
+        overlay={
+            \fill[macred] ([xshift=10mm, yshift=-4mm]frame.north west) circle (1.5mm);
+            \fill[macyellow] ([xshift=15mm, yshift=-4mm]frame.north west) circle (1.5mm);
+            \fill[macgreen] ([xshift=20mm, yshift=-4mm]frame.north west) circle (1.5mm);
+        },
+        fonttitle=\bfseries\sffamily\footnotesize,
+        coltitle=gray!30,
+        attach boxed title to top center={yshift=-3.5mm},
+        boxed title style={empty, size=minimal, top=0pt, bottom=0pt},
+        title={#1} % 接收参数作为标题
+    }
+}
+
+% --- 命令封装 ---
+% 1. 引入外部文件：\includeclist{路径}{标题}
+\newtcbinputlisting{\includeclist}[2]{
+    macosstyle={#2},
+    listing file={#1},
+    listing only
+}
+
+% 2. 手写代码环境：\begin{cppcode}{标题} ... \end{cppcode}
+\newtcblisting{cppcode}{
+    macosstyle,
+    listing only
+}
+
+% 定义截取代码段的宏
+\newcommand{\includeclistpart}[3]{%
+    \tcbinputlisting{
+        macosstyle={#3},      % 1. 先加载你的完美样式（包含所有 UI 装饰）
+        listing file={#2},    % 2. 指定文件
+        listing only,
+        % 3. 关键：重新声明 minted options 注入行号
+        % 注意：必须把样式里那些核心配置（如 style, fontsize）带上
+        % 因为这里的声明会“顶替”掉样式里的旧设置
+        minted options={
+            fontsize=\small,
+            style=one-dark,
+            breaklines,
+            linenos,
+            autogobble,
+            #1                % 注入你的 firstline=2, lastline=6
+        }
+    }
+}
+
+
+\newcommand{\cppin}[1]{\mintinline[style=xcode]{cpp}{#1}}
+
+% ---------------------------------------------------------
+\begin{document}
+
+\section{函数模版}
+
+
+\subsection{1. 直接引入本地源文件}
+这里直接引入了当前目录下的 \texttt{main.cpp}。
+% 请确保你当前目录下有一个 test.cpp 文件，否则请修改路径
+\includeclist{./codeexamples/main.cpp}{快速排序主程序}
+
+\subsection{2. 只引入特定的函数片段}
+通过参数，只展示文件中的核心逻辑（例如第 5 到 15 行）。
+\includeclistpart{firstline=2, lastline=6}{./codeexamples/main.cpp}{核心算法逻辑}
+
+\subsection{3. 手动插入简短代码}
+如果你不想创建文件，也可以直接在 LaTeX 中写：
+
+\begin{cppcode}
+#include <memory>
+#include <iostream>
+
+void demo() {
+    auto ptr = std::make_shared<int>(100);
+    std::cout << "Value: " << *ptr << std::endl;
+}
+\end{cppcode}
+
+在行内讨论变量 \cppin{std::vector<int> v;} 时也非常方便。
+
+\end{document}

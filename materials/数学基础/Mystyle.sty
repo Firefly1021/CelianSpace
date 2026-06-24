@@ -1,0 +1,153 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{Mystyle}[2026/01/26 My Math Analysis Package]
+
+\RequirePackage{amsmath, cases, esint,amssymb, mathrsfs, mathtools,physics2,url,stmaryrd,xparse}
+\RequirePackage[scr=boondoxo]{mathalpha}
+\RequirePackage{geometry,fontspec}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{fancyhdr, flowchart, array, multirow, tikz, xparse, bm, graphicx, float, subfigure, titlesec,tabularx,caption,pgfplots,enumitem}
+\RequirePackage{algorithm,algpseudocode}
+\RequirePackage{xcolor}
+\RequirePackage[backend=biber,style=numeric]{biblatex}
+\definecolor{light yellow}{RGB}{245,222,179}
+\definecolor{sublight yellow}{RGB}{252,251,242}
+\definecolor{BiaoTi}{RGB}{37,125,80}
+\definecolor{KuangNei}{RGB}{242,242,242}
+\definecolor{BianKuang}{RGB}{71,93,79}
+\definecolor{ZhengWen}{RGB}{32,100,100}
+
+\geometry{left=2.0cm,right=2.0cm,top=1.66cm,bottom=1.27cm}
+\pagecolor{sublight yellow}
+\everymath{\displaystyle} % 全局行内公式不压缩
+\pagestyle{plain}
+\DeclareFieldFormat{url}{\url{#1}}
+\addbibresource{ref.bib}
+
+\titleformat*{\section}{\centering\Huge\bfseries\color{BiaoTi}}
+\titleformat*{\subsection}{\Large\bfseries\color{BiaoTi}}
+\titleformat*{\subsubsection}{\large\bfseries\color{BiaoTi}}
+
+\usetikzlibrary{shapes.geometric, intersections, positioning, arrows.meta, bending, calc, decorations.markings, patterns}
+
+\RequirePackage{listings}
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{red},
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1,
+  numbersep=5pt,
+  frame=single,
+  breaklines=true,
+  showstringspaces=false
+}
+
+\RequirePackage[colorlinks=true]{hyperref}
+\hypersetup{linkcolor=black, citecolor=blue}
+
+
+
+\newcommand{\ttt}{\mathcal{T}}
+\newcommand{\A}{\boldsymbol{A}}
+\newcommand{\R}{\mathbb{R}} 
+\newcommand{\tR}{\tilde{\mathcal{R}}}
+\newcommand{\m}{m^*} 
+\newcommand{\X}{(X,\mathcal{M},\mu)}
+\newcommand{\ii}{\mathrm{i}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\pa}{\partial}
+\newcommand{\paa}{\partial ^{\alpha}}
+\newcommand{\Lp}{L^p(\Omega)}
+\newcommand{\sbev}{W^{k,p}(\Omega)}
+\newcommand{\sch}{\mathcal{S}(\R^n)}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\vecb}[1]{\bm{#1}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\re}{\operatorname{Re}}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\norm}[1]{\| #1 \|}
+\newcommand{\tnorm}[1]{|\!|\!| #1 |\!|\!|}
+\DeclarePairedDelimiterX{\induct}[2]{\langle}{\rangle}{#1, #2}
+\numberwithin{equation}{subsection}
+
+\NewDocumentCommand{\Wkp}{ O{\Omega} m m }{W^{#2,#3}(#1)}
+
+\def\Xint#1{\mathchoice
+  {\XXint\displaystyle\textstyle{#1}}%
+  {\XXint\textstyle\scriptstyle{#1}}%
+  {\XXint\scriptstyle\scriptscriptstyle{#1}}%
+  {\XXint\scriptscriptstyle\scriptscriptstyle{#1}}%
+  \!\int}
+\def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$}
+  \vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
+\def\ddashint{\Xint=}
+\def\fint{\Xint-}
+
+\newcounter{thmcount}[section]
+\renewcommand{\thethmcount}{\thesection.\arabic{thmcount}}
+
+\NewDocumentEnvironment{Theorem}{o}
+{
+    \vspace{0.1cm}
+    \refstepcounter{thmcount}
+    \begin{tcolorbox}[
+        colback=KuangNei,
+        colframe=BianKuang,
+        title=\textbf{定理}\IfValueT{#1}{(\textbf{#1})} \thethmcount :,
+        sharpish corners,
+        fonttitle=\bfseries,
+        before skip=10pt,
+        after skip=10pt
+    ]\kaishu
+}
+{
+    \end{tcolorbox}
+    \vspace{0.1cm}
+}
+
+
+\newcounter{defcount}[section]
+\renewcommand{\thedefcount}{\thesection.\arabic{defcount}}
+
+\NewDocumentEnvironment{Definition}{o}
+{
+    \vspace{0.1cm}
+    \par
+    \refstepcounter{defcount}
+    \textbf{定义}\IfValueT{#1}{(\textbf{#1})}\thedefcount :\kaishu
+}
+{
+    \par
+    \vspace{0.1cm}
+}
+
+\NewDocumentEnvironment{Lemma}{o}
+{
+    \vspace{0.1cm}
+    \par
+    \refstepcounter{defcount}
+    \textbf{引理} \IfValueT{#1}{(\textbf{#1})}\thedefcount :\kaishu
+}
+{
+    \par
+    \vspace{0.1cm}
+}
+
+\newenvironment{Proof}{
+    \vspace{0.1cm}
+    \par
+    \textbf{Proof}:
+}
+{
+    \par
+    \hfill$\blacksquare$\par
+    \vspace{0.1cm}
+}
+
+
+\pgfplotsset{compat=newest}

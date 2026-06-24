@@ -1,0 +1,433 @@
+\section{代数与数论}
+\subsection{群}
+一个很简单的例子是:整数集$\mathbb{Z}$关于整数的加法构成群,我们称之为整数加群.\par
+设$m$为大于1的整数,考虑$\mathbb{Z}_m=\{\overline{0},\overline{1},\overline{2},\cdots,\overline{m-1}\}$.在其上定义加法和乘法:对$\overline{a},\overline{b}\in\mathbb{Z}_m$
+$$
+\overline{a}+\overline{b}=\overline{a+b},\quad \overline{a}\cdot\overline{b}=\overline{ab}
+$$
+则$(\mathbb{Z}_m,+)$构成群,称之为$\mathbb{Z}$的模$m$剩余类群.值得注意的是$\mathbb{Z}_m$关于它的乘法不构成群.但是$\mathbb{Z}_m$的部分元素关于剩余类的乘法是可以构成群的.\par
+设$m$为大于1的整数,定义集合
+$$
+U(m)=\{\overline{a}\in\mathbb{Z}_m:(a,m)=1\}
+$$
+关于剩余类的乘法构成群.不仅如此,这还是一个交换群.当$m=p$是素数的时候,我们常记$U(p)=\mathbb{Z}_{p}^{*}$.\par
+由数论的知识可以知道,$U(m)$的阶为$\varphi (m)$,这里$\varphi (m)$是欧拉函数,表示所有不大于$m$且和$m$互素的正整数的个数.利用算术基本定理:
+$$
+m=p_{1}^{r_1}p_{2}^{r_2}\cdots p_{s}^{r_s}
+$$
+其中$p_1,p_2,\cdots,p_s$为$m$的不同素因子,那么
+$$
+\varphi (m)=m\prod_{i=1}^{s}\left(1-\frac{1}{p_i}\right)
+$$
+\qquad 设$m$是一个整数,记
+$$
+H=\{mz:z\in\mathbb{Z}\}
+$$
+则$H$为整数加群$\mathbb{Z}$的子群.我们常记作$m\mathbb{Z}$.\par
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{Lagrange定理},sharpish corners]
+    设$G$为有限群,$H$是$G$的一个子群,则
+    $$
+    |G|=|H|[G:H]
+    $$
+\end{tcolorbox}
+\textbf{Proof}:我们先证明两个事实.\par
+\textbf{Part1.$H$的任意两个左(右)陪集或者相等,或者不相交}\par
+设$aH,bH$是两个左陪集.假如它们有公共元素,即有$h_1,h_2\in H$使得
+$$
+ah_1=bh_2
+$$
+于是$a=bh_2h_1^{-1}=bh_3$,由$ah=bh_3h\in bH$可知$aH\subset bH$.同理有$bH\subset aH$.这样就证明了
+$$
+aH=bH
+$$
+\qquad \textbf{Part2.群$G$可以表示成若干个不相交的左(右)陪集之并}\par
+因为$a\in aH$,所以$G=\bigcup_{a\in G}aH$.把其中重复的陪集去掉,即得
+$$
+G=\bigcup_{\alpha}a_{\alpha}H
+$$
+其中当$\alpha\neq \beta$时,有$a_{\alpha}H\neq a_{\beta}H$.\par
+因为$G$是有限群,由上面可以知道
+$$
+G=a_1H\cup a_2H\cup\cdots \cup a_rH
+$$
+所以$|G|=\sum_{i=1}^r|a_iH|=\sum_{i=1}^r|H|=|H|[G:H]$.\par
+
+\textbf{定义}$^\clubsuit $:设$H$是群$G$的子群,如果对每个$a\in G$都有$aH=Ha$,则称$H$是群$G$的一个正规子群,记作$H\lhd G$.\par
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{群同态基本定理},sharpish corners]
+    设$\varphi :G\to G'$为同态映射,则
+    $$
+    G/\ker \varphi\cong \operatorname{Im}\varphi
+    $$
+\end{tcolorbox}
+\textbf{Proof}:定义映射
+$$
+\begin{aligned}
+    \psi :G/\ker \varphi&\to \operatorname{Im}\varphi\\
+          a\ker \varphi&\mapsto \varphi (a)
+\end{aligned}
+$$
+先证明这个映射是良定义的,即证明若$x_1=x_2$,则$\psi(x_1)=\psi(x_2)$(与单射反过来了)
+$$
+\begin{aligned}
+    a\ker \varphi=b\ker \varphi &\Rightarrow a^{-1}b\in \ker \varphi\Rightarrow \varphi(a^{-1}b)=e'\\
+                                &\Rightarrow \varphi(b^{-1})\varphi(a)=e'\Rightarrow \varphi(a)=\varphi(b)\\
+\end{aligned}
+$$
+这就证明了$\psi$是良定义的,并且是单射.根据$\psi$的定义可以得到它是满射.\par
+因为
+$$
+\begin{aligned}
+    \psi[(a\ker \varphi)(b\ker \varphi)] &= \psi(ab\ker \varphi)=\varphi(ab)\\
+                                        &=\varphi(a)\varphi(b)=\psi(a\ker \varphi)\psi(b\ker \varphi)
+\end{aligned}
+$$
+综上表明$\psi$是一个$G/\ker\varphi$到$\operatorname{Im}\varphi$的同构映射.从而
+$$
+G/\ker \varphi\cong \operatorname{Im}\varphi
+$$
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{第一群同构定理},sharpish corners]
+    设$G$是一个群,$H<G,N\triangleright G$,则
+    $$
+    H/(H\cap N)\cong HN/N
+    $$
+\end{tcolorbox}
+\textbf{Proof}:思路是构造一个同构映射$\varphi$使得$\operatorname{Im}\varphi=HN/N$且$\ker\varphi =H\cap N$.\par
+首先容易得到$HN<G$,又因为$N\triangleright G$,所以$N\triangleright HN$.令
+$$
+\begin{aligned}
+    \varphi:H &\to HN/N\\
+            h &\mapsto hN
+\end{aligned}
+$$
+容易验证(真的容易)$\varphi$是同态且单射.任取$HN/N$中的元素$(hn)N$,那么
+$$
+(hn)N=h(nN)=hN=\varphi(h)
+$$
+这就说明了$\varphi$还是满射,即$\operatorname{Im}\varphi =HN/N$.根据群同态基本定理得到
+$$
+H/\ker\varphi\cong HN/N
+$$
+事实上
+$$
+\begin{aligned}
+    h\in\ker \varphi &\Leftrightarrow h\in H,\varphi(h)=N \Leftrightarrow h\in H,hN=N\\
+                    &\Leftrightarrow h\in H,h\in N\Leftrightarrow h\in H\cap N
+\end{aligned}
+$$
+因此$\ker\varphi=H\cap N$,从而$H\cap N\triangleright H$,且
+$$
+H/(H\cap N)\cong HN/N
+$$
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{第二群同构定理},sharpish corners]
+    设$G$是一个群,$N\triangleright G$,$H$是$G$的包含$N$的正规子群,则$(H/N)\triangleright (G/N)$且
+    $$
+    (G/N)/(H/N)\cong G/H
+    $$
+\end{tcolorbox}
+\textbf{Proof}:\quad \par
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+设$G$是群,如果存在$a\in G$,使得$G=\langle a\rangle$,则称$G$为一个循环群,此时称$a$为$G$的一个生成元.\par
+根据群的定义可以看出,如果$G$是有限群时,则$G=\langle a \rangle\Leftrightarrow |G|=\operatorname{ord}a$,根据这个结论我们就可以发现,素数阶群一定是循环群.\par
+现在有一个问题,如果$G$是$n$阶循环群,那么它有多少生成元,以及生成元具体是什么样的呢?\par
+我们知道对于任意的$a\in G$,那么$\operatorname{ord}a=n$,对于任意$r\in\mathbb{Z}$,则$\operatorname{ord}a^r=\frac{n}{(n,r)}$,从而
+$$
+\begin{aligned}
+    a^r\text{为$G$的生成元} &\Longleftrightarrow \operatorname{ord} a^r=n\\
+                           &\Longleftrightarrow \frac{n}{(n,r)}=n\\
+                           &\Longleftrightarrow (n,r)=1
+\end{aligned}
+$$
+根据Euler函数的定义就知道,$G$的生成元的个数就是$\phi(n)$.\par
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{循环群的结构定理},sharpish corners]
+    设$G$为循环群.\\
+    (1)如果$G=\langle a\rangle$是无限阶循环群,则$G\cong (\mathbb{Z},+)$;\\
+    (2)如果$G=\langle a\rangle$是$n$阶循环群,则$G\cong (\mathbb{Z}_n,+)$.
+\end{tcolorbox}
+\textbf{Proof}:这两个结论的证明是类似的,容易的.\par
+从这个定理可以看出,在同构的意义下,循环群只有两类.\par
+\textbf{例}$^\spadesuit$ :任一偶数阶群必含有阶为2的元素.\par
+\textbf{Proof}:设$G$是偶数阶群,定义集合
+$$
+\begin{aligned}
+    S &= \{a\in G:\operatorname{ord}a>2\}\\
+    H &= \{a\in G:\operatorname{ord}a\leqslant 2\}
+\end{aligned}
+$$
+则$G=S\cup H$且$S\cap H=\varnothing$.任意$x\in S$,我们知道$\operatorname{ord}x^{-1}=\operatorname{ord}x>2$,所以$x^{-1}\in S$且$x^{-1}\neq x$,所以$S$中的元素一定有偶数个,这表明$H$中也有偶数个元素.
+又群$G$只有单位元$e$的阶是1,所以$|H|\neq 0$,故$|H|\geqslant 2$,这就说明$G$必有阶为2的元素.\par
+一个群到它自身的同构映射成为自同构映射,事实上,一个群的全部自同构在变换的乘法下成一个群,我们称之为自同构群,记为$\operatorname{Aut}(G)$.\par
+设$G$为任意一个群,$a\in G$为一固定元素.我们定义映射
+$$
+\begin{aligned}
+    \sigma_a:G &\to G\\
+             x &\mapsto axa^{-1}
+\end{aligned}
+$$
+显然,对于所有的$a\in G$,$\sigma_a$是群$G$的自同构.这样由$G$中元素引起的自同构称为内自同构.容易验证
+$$
+\sigma_a\sigma_b = \sigma_{ab}
+$$
+这就是说,$a\mapsto \sigma_a$给出了群$G$到$\operatorname{Aut}(G)$的一个同态,这个映射的像集就是$G$的全体内自同构,它们是$\operatorname{Aut}(G)$的一个子群,记为$\operatorname{Inn}(G)$,称为$G$的内自同构群.\par
+我们用$f:G\to \operatorname{Inn}(G)$表示同态$a\mapsto \sigma_a$.对于任意的$a\in\operatorname{ker}(f)$,那么
+$$
+\sigma_a(x)=axa^{-1}=x
+$$
+这就是说$a$与$G$中所有元素可交换.在任意一个群$G$中,所有与$G$的全体元素可交换的元素的集合称为$G$的中心,记为$Z(G)$:
+$$
+Z(G)=\{g\in G:gx=xg,\forall x\in G\}
+$$
+上面的讨论就是说$Z(G)=\operatorname{ker}(f)$,$Z(G)$是$G$的正规子群.根据同态基本定理可以知道
+$$
+G/Z(G)\cong \operatorname{Inn}(G)
+$$
+\qquad \textbf{例}$^\spadesuit$ :设$G$是任意一个群,我们有
+$$
+\operatorname{Inn}(G)\triangleleft \operatorname{Aut}(G)
+$$
+\qquad \textbf{Proof}:设$\sigma_a\in\operatorname{Inn}(G),\tau\in\operatorname{Aut}(G)$.于是
+$$
+\begin{aligned}
+    \tau\sigma_a\tau^{-1}(x) &= \tau\sigma_a(\tau^{-1}(x))\\
+                             &= \tau(a\tau^{-1}(x)a^{-1})\\
+                             &= \tau(a)x\tau(a)^{-1}\\
+                             &= \sigma_{\tau(a)}(x)
+\end{aligned}
+$$
+即
+$$
+\tau\sigma_a\tau^{-1}(x)=\sigma_{\tau(a)}(x)\in\operatorname{Inn}(G)
+$$
+这就证明了结论.\par
+\textbf{群作用}$^\clubsuit $:设$G$是一个群,$X$是一个非空集合,若有映射
+$$
+\begin{aligned}
+    f :G\times X&\to X\\
+          (g,x)&\mapsto f (g,x)
+\end{aligned}
+$$
+满足对任意的$x\in X$和任意的$g_1,g_2\in G$,都有\par
+(1)$f(e,x)=x$,这里$e$是$G$的单位元;\par
+(2)$f(g_1g_2,x)=f(g_1,f(g_2,x))$.\\
+那么我们就说,$f$决定了群$G$在集合$X$上的作用.一般来讲我们常常把$f(g,x)$简写成$g(x)$.\par
+\textbf{左平移}$^\spadesuit$ :设$G$是一个群,取$X=G$,定义映射
+$$
+g(x)=gx,\quad \forall g,x\in G
+$$
+这就给出了一个群在集合$G$上的作用,称之为左平移.\par
+\textbf{共轭变换}$^\spadesuit$ :设$G$是一个群,取$X=G$,定义映射
+$$
+g(x)=gxg^{-1},\quad \forall g,x\in G
+$$
+这就是通常所谓的群上的共轭变换.在共轭变换下,元素$gxg^{-1}$称为元素$x$的共轭元素.同样,子群$gHg^{-1}$称为与子群$H$共轭.\par
+设群$G$作用在集合$X$上,$x\in X$,称$X$的子集
+$$
+O_x=\{g(x):g\in G\}
+$$
+为$x$在$G$下的轨道.如果$X$本身是一个轨道,则称群$G$在集合$X$上的作用是传递的.\par
+事实上,我们可以证明$X$是一些不同轨道的并
+$$
+X=\bigcup_{x}O_x
+$$
+其中$x$取遍不同的轨道代表元素.这一结论依赖于:对于任意的$x,y\in X$,$O_x$与$O_y$要么完全相同,要么没有公共给元素.\par
+若设$O_x\cap O_y\neq \varnothing$,任取$z\in O_x\cap O_y$,则存在$g_1,g_2\in G$,使得$g_1(x)=z=g_2(y)$.于是$y=g_2^{-1}g_1x\in O_x$,这就得到了$O_y\subset O_x$.同理可得$O_x\subset O_y$.所以$O_x=O_y$.\par
+因为对于任意的$x\in X$,都有$x\in O_x$,所以$X=\bigcup_{x}O_x$.接着去掉重复的轨道即可.\par
+如果再设$X$是一个有限集,那么可以得到
+$$
+X=\bigsqcup_{i=1}^t O_{x_i}
+$$
+因为$O_{x_{i}}\cap O_{x_j}=\varnothing,i\neq j$,所以
+$$
+|X|=\sum_{i=1}^t|O_{x_i}|
+$$
+\qquad 设群$G$作用在集合$X$上,$x\in X$,称
+$$
+S_x=\{g\in G:g(x)=x\}
+$$
+为$x$在$G$中的稳定子.事实上$S_x$是$G$的子群,所以我们也称$S_x$为$x$的稳定子群.\par
+\textbf{例}$^\spadesuit$ :设群$G$作用在集合$X$上,$x\in X$,则
+$$
+\begin{aligned}
+    \phi :O_x &\to G/S_x\\
+          g(x) &\mapsto gS_x
+\end{aligned}
+$$
+为$O_x$到$G/S_x$的双射.\par
+\textbf{Proof}:显然这个映射是良定义的.对任意的$gS_x\in G/S_x$,有$g(x)\in O_x$使得
+$$
+\phi(g(x))=gS_x
+$$
+所以$\phi$是$O_x$到$G/S_x$的满射.\par
+再设$g_1x,g_2x\in O_x$.如果$\phi(g_1x)=\phi(g_2x)$,即$g_1S_x=g_2S_x$,于是$g_1^{-1}g_2x=x$,由此得$g_1x=g_2x$.所以$phi$是$O_x$到$G/S_x$的单射.\par
+综上所述,我们得到下面的结论
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{轨道公式},sharpish corners]
+    设有限群$G$作用在有限集$X$上,则\\
+    (1).$|G|=|O_x||S_x|$;\\
+    (2).$|X|=\sum_{x}[G:S_{x}]$,其中$x$取遍不同的轨道代表元素.
+\end{tcolorbox}
+设群$G$\textbf{共轭作用}于自身,$x\in G$,容易知道
+$$
+O_x=\{g(x):g\in G\}=\{gxg^{-1}:g\in G\}
+$$
+所以$O_x$由所有与$x$共轭的元素组成,称为$x$的共轭类.而
+$$
+\begin{aligned}
+    S_x=\{g\in G:g(x)=x\} &= \{g\in G:gxg^{-1}=x\}\\
+                          &= \{g\in G:gx=xg\}
+\end{aligned}
+$$
+所以$S_x$由$G$中所有与$x$可交换的元素组成,称为$x$的中心化子,记为$C(x)$.因此对于共轭作用来讲,由轨道公式可知
+\begin{equation}
+    |G|=\sum_x[G:C(x)]
+    \label{eq:2.5.1}
+\end{equation}
+其中$x$取遍不同的轨道代表元素.如果$[G:C(x)]=1$,那么意味着$G$只有一个陪集,也就是$G=C(x)$,这也就是说,对于任意$g\in G$,都有$gx=xg$.这就说明了$x$与群$G$中所有元素可交换,也就是说$x\in Z(G)$.这一大段论述其实就是
+$$
+\begin{aligned}
+    [G:C(x)]=1 &\Longleftrightarrow G=C(x)\\
+               &\Longleftrightarrow x\in Z(G)
+\end{aligned}
+$$
+因此如果将\eqref{eq:2.5.1}中,把所有值为1的项加到求和号外面来,就得到下面的群方程.\
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{群方程},sharpish corners]
+    设$G$是有限群,则
+    $$
+    |G|=|Z(G)|+\sum_{x}[G:C(x)]
+    $$
+    其中$x$取遍非中心的元素的共轭类的代表元.
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{Sylow定理},sharpish corners]
+    \textbf{Sylow第一定理}:设群$G$的阶为$n=p^km$,其中$p$为素数且$(p,m)=1,k>0$,那么对于满足$1\leqslant r\leqslant k$的任意整数$r$,$G$一定有$p^r$阶子群;\\
+    \textbf{Sylow第二定理}:设群$G$的阶为$n=p^km$,其中$p$为素数且$(p,m)=1,k>0$,则:\\
+    \qquad (1)\,对于$1\leqslant r\leqslant k$,$G$的任意$p^r$阶子群一定包含于$G$的某个Sylow\,$p$-子群中;\\
+    \qquad (2)\,$G$的任意两个Sylow\,$p$-子群在$G$中共轭.\\
+    \textbf{Sylow第三定理}:设群$G$的阶为$n=p^km$,其中$p$为素数且$(p,m)=1,k>0$,则$G$的Sylow\,$p$-子群的个数$r$模$p$同余于1,且$r$是$m$的因子,即
+    $$
+    r\equiv 1(\operatorname{mod} p),\quad \text{且}r|m
+    $$
+\end{tcolorbox}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{环}
+\textbf{理想}$^\clubsuit $:设$I$是$R$的一个非空子集,若$I$是$R$的加法子群,且对任意$r\in R$有$rI\subset I$及$Ir\subset I$,则称$I$为环$R$的一个理想.\par
+值得注意的是,$I$是$R$的加法子群指的是对任意$x,y\in I$都有$x-y\in I$.我们更关注的是理想的具体形式是什么样的.\par
+设$R$是交换环,$a_1,a_2,\cdots,a_n\in R$,那么由$a_1,a_2,\cdots,a_n$生成的理想为
+$$
+(a_1,a_2,\cdots,a_n)=\{r_1a_1+r_2a_2+\cdots+r_na_n:r_i\in R,i=1,2,\cdots,n\}
+$$
+进一步有$(a_1,a_2,\cdots,a_n)=(a_1)+(a_2)+\cdots+(a_n)$.而对于单个元素$a\in R$所生成的理想$(a)$为
+$$
+(a)=aR=\{ar:r\in R\}
+$$
+称其为由元素$a$生成的\textbf{主理想}.如果环$R$的每一个理想都是主理想,我们就称$R$为主理想环.\par
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{多项式环的理想},sharpish corners]
+    设$F$为域,则环$F[x]$的每一个理想都是主理想.这说明一元多项式环$F[x]$是主理想环.
+\end{tcolorbox}
+\textbf{Proof}:设$I$为$F[x]$的一个理想.若$I=\{0\}$,则$I=(0)$为主理想.若$I\neq 0$,取$I$中一个次数最低的非零多项式$m(x)$.任取$f(x)\in I$,考虑带余除法
+$$
+f(x)=q(x)m(x)+r(x),\quad \deg r(x)<\deg m(x)
+$$
+所以
+$$
+r(x)=f(x)-q(x)m(x)
+$$
+再根据$f(x),m(x)$以及$I$是理想,得到$r(x)\in I$.由于$m(x)$是$I$中次数最低的非零多项式,所以只能有$r(x)=0$.这就说明了
+$$
+f(x)=q(x)m(x)\in (m(x))
+$$
+因此$I\subset (m(x))$.另一方面,$m(x)\in I$,所以$(m(x))\subset I$.综上所述,$I=(m(x))$为主理想.\par
+设$F$是域.则由上面的例子可以看出多项式环$F[x]$的每一个理想都是主理想$(f(x))$,那么商环$F[x]/(f(x))$中每个元素有怎样的表示?\par
+设$J_1.J_2$为环$R$的理想,如果$J_1+J_2=R$,则称$J_1$与$J_2$互素.接下来证明如下中国剩余定理.
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{中国剩余定理},sharpish corners]
+    设$R$是环,$J_1.J_2,\cdots,J_n$是环$R$的两两互素的理想,则有环同构
+    $$
+    R\big/\bigcap_{i=1}^n J_i\cong \bigoplus\limits_{i=1}^n R/J_i 
+    $$
+\end{tcolorbox}
+\textbf{Proof}:定义映射
+$$
+\begin{aligned}
+    \varphi :R &\to \bigoplus\limits_{i=1}^n R/J_i\\
+               r &\mapsto (r+J_1,r+J_2,\cdots,r+J_n)
+\end{aligned}
+$$
+容易验证$\varphi$是环同态(验证两种运算).下面验证$\varphi$是满射.\par
+任取
+$$
+(a_1+J_1,a_2+J_2,\cdots,a_n+J_n)\in \bigoplus\limits_{i=1}^n R/J_i
+$$
+由于$J_1,J_2,\cdots,J_n$两两互素,从而对于每个$i,1\leqslant i\leqslant n,J_i$与$\bigcap_{j=1,j\neq i}J_j$互素.因此存在$c_i\in J_i,b_i\in \bigcap_{j=1,j\neq i}J_j$使得$1=c_i+b_i$,换句话说即是$1-b_i=c_i\in J_i$,所以
+$$
+b_i+J_i=1+J_i
+$$
+当$k\neq i$的时候,由于$b_k\in \bigcap_{j=1,j\neq k}J_j$,自然有$b_k\in J_i$,即$b_k+J_i=0+J_i$.\par
+令$r=\sum_{k=1}^n a_kb_k$,则对任意的$i$有
+$$
+r+J_i=\sum_{k=1}^n (a_kb_k+J_i)=\sum_{k=1}^n(a_k+J_i)(b_k+J_i)=a_i+J_i
+$$
+从而
+$$
+\varphi(r)=(r+J_1,r+J_2,\cdots,r+J_n)=(a_1+J_1,a_2+J_2,\cdots,a_n+J_n)
+$$
+这就得到了$\varphi$是满射.\par
+下面计算$\ker\varphi$.显然$\varphi(r)=0$当且仅当对每个$i,1\leqslant i\leqslant n$,有
+$$
+r+J_i=0+J_i
+$$
+即$r\in J_i$,这也等价于$r\in \bigcap_{i=1}^n J_i$,故
+$$
+\ker\varphi=\bigcap_{i=1}^n J_i
+$$
+由环同态基本定理就得到了中国剩余定理的证明.\par
+环有几个重要的特殊类型.例如:至少含有两个元素(一般这一条用$1\neq 0$代替)且没有零因子的交换环称为\textbf{整环}.至少含有两个元素且每一个非零元都可逆的交换环称为\textbf{域}.由这两个定义可以看出,域一定是整环,反之未必.但是,有限整环一定是域.\par
+关于域有一个重要的属性:特征.不过从域的定义可以看出,域就是环,因此我们可以直接定义环的特征.\par
+环$R$的特征就是使得单位元$\mathbf{1}_R$在加法群中满足
+$$
+n\cdot \mathbf{1}_R=\mathbf{0}_R
+$$
+的最小整数$n$.如果不存在这样的正整数,则称环$R$的特征为0.我们记$\operatorname{char}(R)$为环$R$的特征.域是一种特殊的环,它没有零因子,所以域的特征只能是0或者素数$p$.\par

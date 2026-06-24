@@ -1,0 +1,492 @@
+#include <Eigen/Sparse>
+#include <Eigen/Dense>
+#include <Eigen/SparseLU>
+
+#include <array>
+#include <cmath>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
+
+struct Point {
+    double x, y;
+};
+
+struct Triangle {
+    std::array<int, 3> v;
+    std::array<int, 3> edge;
+};
+
+struct Edge {
+    int a, b;      // global orientation: a -> b, with a < b
+    int count = 0; // number of adjacent triangles
+    int dof = -1;  // -1 means boundary edge, otherwise interior unknown id
+};
+
+struct Mesh {
+    std::vector<Point> nodes;
+    std::vector<Triangle> tris;
+    std::vector<Edge> edges;
+};
+
+static constexpr double PI = 3.141592653589793238462643383279502884;
+
+static std::pair<int, int> edge_key(int i, int j) {
+    return (i < j) ? std::make_pair(i, j) : std::make_pair(j, i);
+}
+
+Mesh make_unit_square_mesh(int n) {
+    Mesh mesh;
+    mesh.nodes.reserve((n + 1) * (n + 1));
+
+    for (int j = 0; j <= n; ++j) {
+        for (int i = 0; i <= n; ++i) {
+            mesh.nodes.push_back({double(i) / n, double(j) / n});
+        }
+    }
+
+    auto vid = [n](int i, int j) { return j * (n + 1) + i; };
+
+    mesh.tris.reserve(2 * n * n);
+    for (int j = 0; j < n; ++j) {
+        for (int i = 0; i < n; ++i) {
+            int v00 = vid(i, j);
+            int v10 = vid(i + 1, j);
+            int v01 = vid(i, j + 1);
+            int v11 = vid(i + 1, j + 1);
+
+            // Two counter-clockwise triangles in each square.
+            mesh.tris.push_back({{v00, v10, v11}, {-1, -1, -1}});
+            mesh.tris.push_back({{v00, v11, v01}, {-1, -1, -1}});
+        }
+    }
+
+    std::map<std::pair<int, int>, int> edge_id;
+
+    for (auto& tri : mesh.tris) {
+        std::array<std::pair<int, int>, 3> local_edges = {
+            std::make_pair(tri.v[0], tri.v[1]),
+            std::make_pair(tri.v[1], tri.v[2]),
+            std::make_pair(tri.v[2], tri.v[0])
+        };
+
+        for (int e = 0; e < 3; ++e) {
+            auto key = edge_key(local_edges[e].first, local_edges[e].second);
+            auto it = edge_id.find(key);
+            if (it == edge_id.end()) {
+                int id = static_cast<int>(mesh.edges.size());
+                edge_id[key] = id;
+                mesh.edges.push_back({key.first, key.second, 1, -1});
+                tri.edge[e] = id;
+            } else {
+                tri.edge[e] = it->second;
+                mesh.edges[it->second].count += 1;
+            }
+        }
+    }
+
+    int ndof = 0;
+    for (auto& e : mesh.edges) {
+        if (e.count == 2) {
+            e.dof = ndof++;
+        }
+    }
+
+    return mesh;
+}
+
+int local_vertex_index(const Triangle& tri, int global_vertex) {
+    for (int i = 0; i < 3; ++i) {
+        if (tri.v[i] == global_vertex) return i;
+    }
+    return -1;
+}
+
+struct LocalData {
+    double area;
+    std::array<Eigen::Vector2d, 3> grad_lambda;
+};
+
+LocalData triangle_data(const Mesh& mesh, const Triangle& tri) {
+    const Point& p0 = mesh.nodes[tri.v[0]];
+    const Point& p1 = mesh.nodes[tri.v[1]];
+    const Point& p2 = mesh.nodes[tri.v[2]];
+
+    double twice_area = (p1.x - p0.x) * (p2.y - p0.y)
+                      - (p2.x - p0.x) * (p1.y - p0.y);
+    if (twice_area <= 0.0) {
+        throw std::runtime_error("Triangle orientation is not counter-clockwise.");
+    }
+
+    LocalData d;
+    d.area = 0.5 * twice_area;
+    d.grad_lambda[0] = Eigen::Vector2d(p1.y - p2.y, p2.x - p1.x) / twice_area;
+    d.grad_lambda[1] = Eigen::Vector2d(p2.y - p0.y, p0.x - p2.x) / twice_area;
+    d.grad_lambda[2] = Eigen::Vector2d(p0.y - p1.y, p1.x - p0.x) / twice_area;
+    return d;
+}
+
+inline double cross2(const Eigen::Vector2d& a, const Eigen::Vector2d& b) {
+    return a.x() * b.y() - a.y() * b.x();
+}
+
+double int_lambda_product(double area, int p, int q) {
+    return (p == q) ? area / 6.0 : area / 12.0;
+}
+
+Eigen::Vector2d nedelec_basis_value(
+    const std::array<Eigen::Vector2d, 3>& grad_lambda,
+    const Eigen::Vector3d& lambda,
+    int a,
+    int b
+) {
+    // N_ab = lambda_a grad(lambda_b) - lambda_b grad(lambda_a)
+    return lambda[a] * grad_lambda[b] - lambda[b] * grad_lambda[a];
+}
+
+double nedelec_basis_curl(
+    const std::array<Eigen::Vector2d, 3>& grad_lambda,
+    int a,
+    int b
+) {
+    // curl N_ab = 2 * (grad lambda_a x grad lambda_b)
+    return 2.0 * cross2(grad_lambda[a], grad_lambda[b]);
+}
+
+Eigen::Matrix3d local_matrix(const Mesh& mesh, const Triangle& tri, double k0) {
+    LocalData data = triangle_data(mesh, tri);
+    Eigen::Matrix3d A = Eigen::Matrix3d::Zero();
+
+    std::array<std::pair<int, int>, 3> oriented_local_edge_vertices;
+    for (int e = 0; e < 3; ++e) {
+        const Edge& ge = mesh.edges[tri.edge[e]];
+        int a_local = local_vertex_index(tri, ge.a);
+        int b_local = local_vertex_index(tri, ge.b);
+        oriented_local_edge_vertices[e] = {a_local, b_local};
+    }
+
+    std::array<double, 3> curlN{};
+    for (int i = 0; i < 3; ++i) {
+        int a = oriented_local_edge_vertices[i].first;
+        int b = oriented_local_edge_vertices[i].second;
+        curlN[i] = nedelec_basis_curl(data.grad_lambda, a, b);
+    }
+
+    for (int i = 0; i < 3; ++i) {
+        int ai = oriented_local_edge_vertices[i].first;
+        int bi = oriented_local_edge_vertices[i].second;
+        for (int j = 0; j < 3; ++j) {
+            int aj = oriented_local_edge_vertices[j].first;
+            int bj = oriented_local_edge_vertices[j].second;
+
+            double stiffness = data.area * curlN[j] * curlN[i];
+
+            // Exact mass integral of N_j dot N_i on a triangle.
+            double mass = 0.0;
+            mass += data.grad_lambda[bj].dot(data.grad_lambda[bi]) * int_lambda_product(data.area, aj, ai);
+            mass -= data.grad_lambda[bj].dot(data.grad_lambda[ai]) * int_lambda_product(data.area, aj, bi);
+            mass -= data.grad_lambda[aj].dot(data.grad_lambda[bi]) * int_lambda_product(data.area, bj, ai);
+            mass += data.grad_lambda[aj].dot(data.grad_lambda[ai]) * int_lambda_product(data.area, bj, bi);
+
+            A(i, j) = stiffness - k0 * k0 * mass;
+        }
+    }
+    return A;
+}
+
+Eigen::Vector2d exact_E(double x, double y) {
+    double s = std::sin(PI * x) * std::sin(PI * y);
+    return Eigen::Vector2d(s, s);
+}
+
+double exact_curl_E(double x, double y) {
+    return PI * (std::cos(PI * x) * std::sin(PI * y)
+               - std::sin(PI * x) * std::cos(PI * y));
+}
+
+Eigen::Vector2d rhs_f(double x, double y, double k0) {
+    double sx = std::sin(PI * x);
+    double sy = std::sin(PI * y);
+    double cx = std::cos(PI * x);
+    double cy = std::cos(PI * y);
+
+    // q = curl E = pi(cx sy - sx cy)
+    // curl q = (dq/dy, -dq/dx) = pi^2(cx cy + sx sy) * (1, 1)
+    double curlcurl_component = PI * PI * (cx * cy + sx * sy);
+    double mass_component = k0 * k0 * sx * sy;
+    double value = curlcurl_component - mass_component;
+    return Eigen::Vector2d(value, value);
+}
+
+Eigen::Vector3d barycentric_to_xy(
+    const Mesh& mesh,
+    const Triangle& tri,
+    const Eigen::Vector3d& lambda
+) {
+    Eigen::Vector3d out(0.0, 0.0, 0.0);
+    for (int i = 0; i < 3; ++i) {
+        const Point& p = mesh.nodes[tri.v[i]];
+        out[0] += lambda[i] * p.x;
+        out[1] += lambda[i] * p.y;
+    }
+    return out;
+}
+
+Eigen::Vector3d local_rhs(const Mesh& mesh, const Triangle& tri, double k0) {
+    LocalData data = triangle_data(mesh, tri);
+
+    std::array<std::pair<int, int>, 3> oriented_local_edge_vertices;
+    for (int e = 0; e < 3; ++e) {
+        const Edge& ge = mesh.edges[tri.edge[e]];
+        int a_local = local_vertex_index(tri, ge.a);
+        int b_local = local_vertex_index(tri, ge.b);
+        oriented_local_edge_vertices[e] = {a_local, b_local};
+    }
+
+    // 7-point Dunavant quadrature, weights sum to 1 on the reference triangle.
+    const double w0 = 0.225;
+    const double w1 = 0.132394152788506;
+    const double w2 = 0.125939180544827;
+    const double a1 = 0.059715871789770;
+    const double b1 = 0.470142064105115;
+    const double a2 = 0.797426985353087;
+    const double b2 = 0.101286507323456;
+
+    std::vector<std::pair<Eigen::Vector3d, double>> quad = {
+        {Eigen::Vector3d(1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0), w0},
+        {Eigen::Vector3d(a1, b1, b1), w1},
+        {Eigen::Vector3d(b1, a1, b1), w1},
+        {Eigen::Vector3d(b1, b1, a1), w1},
+        {Eigen::Vector3d(a2, b2, b2), w2},
+        {Eigen::Vector3d(b2, a2, b2), w2},
+        {Eigen::Vector3d(b2, b2, a2), w2}
+    };
+
+    Eigen::Vector3d rhs = Eigen::Vector3d::Zero();
+    for (const auto& q : quad) {
+        const Eigen::Vector3d& lam = q.first;
+        double weight = q.second * data.area;
+        Eigen::Vector3d xy = barycentric_to_xy(mesh, tri, lam);
+        Eigen::Vector2d f = rhs_f(xy[0], xy[1], k0);
+
+        for (int i = 0; i < 3; ++i) {
+            int a = oriented_local_edge_vertices[i].first;
+            int b = oriented_local_edge_vertices[i].second;
+            Eigen::Vector2d Ni = nedelec_basis_value(data.grad_lambda, lam, a, b);
+            rhs[i] += weight * f.dot(Ni);
+        }
+    }
+    return rhs;
+}
+
+struct Result {
+    int n;
+    int ndof;
+    double h;
+    double l2_error;
+    double curl_error;
+    double hcurl_error;
+};
+
+Result solve_level(int n, double k0, const std::string& solution_prefix, bool write_solution) {
+    Mesh mesh = make_unit_square_mesh(n);
+    int ndof = 0;
+    for (const auto& e : mesh.edges) {
+        if (e.dof >= 0) ndof = std::max(ndof, e.dof + 1);
+    }
+
+    using SpMat = Eigen::SparseMatrix<double>;
+    using Triplet = Eigen::Triplet<double>;
+
+    std::vector<Triplet> trips;
+    trips.reserve(static_cast<std::size_t>(ndof) * 10);
+    Eigen::VectorXd b = Eigen::VectorXd::Zero(ndof);
+
+    for (const auto& tri : mesh.tris) {
+        Eigen::Matrix3d Ak = local_matrix(mesh, tri, k0);
+        Eigen::Vector3d bk = local_rhs(mesh, tri, k0);
+
+        for (int i = 0; i < 3; ++i) {
+            int gi = mesh.edges[tri.edge[i]].dof;
+            if (gi < 0) continue; // homogeneous PEC boundary edge
+            b[gi] += bk[i];
+
+            for (int j = 0; j < 3; ++j) {
+                int gj = mesh.edges[tri.edge[j]].dof;
+                if (gj < 0) continue;
+                trips.emplace_back(gi, gj, Ak(i, j));
+            }
+        }
+    }
+
+    SpMat A(ndof, ndof);
+    A.setFromTriplets(trips.begin(), trips.end());
+    A.makeCompressed();
+
+    Eigen::SparseLU<SpMat> solver;
+    solver.analyzePattern(A);
+    solver.factorize(A);
+    if (solver.info() != Eigen::Success) {
+        throw std::runtime_error("SparseLU factorization failed.");
+    }
+    Eigen::VectorXd x = solver.solve(b);
+    if (solver.info() != Eigen::Success) {
+        throw std::runtime_error("SparseLU solve failed.");
+    }
+
+    // Error calculation by quadrature.
+    double l2_sq = 0.0;
+    double curl_sq = 0.0;
+
+    const double w0 = 0.225;
+    const double w1 = 0.132394152788506;
+    const double w2 = 0.125939180544827;
+    const double a1 = 0.059715871789770;
+    const double b1q = 0.470142064105115;
+    const double a2 = 0.797426985353087;
+    const double b2 = 0.101286507323456;
+
+    std::vector<std::pair<Eigen::Vector3d, double>> quad = {
+        {Eigen::Vector3d(1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0), w0},
+        {Eigen::Vector3d(a1, b1q, b1q), w1},
+        {Eigen::Vector3d(b1q, a1, b1q), w1},
+        {Eigen::Vector3d(b1q, b1q, a1), w1},
+        {Eigen::Vector3d(a2, b2, b2), w2},
+        {Eigen::Vector3d(b2, a2, b2), w2},
+        {Eigen::Vector3d(b2, b2, a2), w2}
+    };
+
+    for (const auto& tri : mesh.tris) {
+        LocalData data = triangle_data(mesh, tri);
+
+        std::array<std::pair<int, int>, 3> oriented_local_edge_vertices;
+        std::array<double, 3> coeff{};
+        std::array<double, 3> curlN{};
+
+        for (int e = 0; e < 3; ++e) {
+            const Edge& ge = mesh.edges[tri.edge[e]];
+            int a = local_vertex_index(tri, ge.a);
+            int bb = local_vertex_index(tri, ge.b);
+            oriented_local_edge_vertices[e] = {a, bb};
+            curlN[e] = nedelec_basis_curl(data.grad_lambda, a, bb);
+            coeff[e] = (ge.dof >= 0) ? x[ge.dof] : 0.0;
+        }
+
+        double curlEh = 0.0;
+        for (int e = 0; e < 3; ++e) curlEh += coeff[e] * curlN[e];
+
+        for (const auto& q : quad) {
+            const Eigen::Vector3d& lam = q.first;
+            double weight = q.second * data.area;
+            Eigen::Vector3d xy = barycentric_to_xy(mesh, tri, lam);
+
+            Eigen::Vector2d Eh = Eigen::Vector2d::Zero();
+            for (int e = 0; e < 3; ++e) {
+                int a = oriented_local_edge_vertices[e].first;
+                int bb = oriented_local_edge_vertices[e].second;
+                Eh += coeff[e] * nedelec_basis_value(data.grad_lambda, lam, a, bb);
+            }
+
+            Eigen::Vector2d err = exact_E(xy[0], xy[1]) - Eh;
+            double cerr = exact_curl_E(xy[0], xy[1]) - curlEh;
+            l2_sq += weight * err.squaredNorm();
+            curl_sq += weight * cerr * cerr;
+        }
+    }
+
+    if (write_solution) {
+        std::ofstream out(solution_prefix + "_solution.csv");
+        out << "x,y,Ex,Ey,Ex_exact,Ey_exact\n";
+        for (const auto& tri : mesh.tris) {
+            LocalData data = triangle_data(mesh, tri);
+            Eigen::Vector3d lam(1.0 / 3.0, 1.0 / 3.0, 1.0 / 3.0);
+            Eigen::Vector3d xy = barycentric_to_xy(mesh, tri, lam);
+            Eigen::Vector2d Eh = Eigen::Vector2d::Zero();
+            for (int e = 0; e < 3; ++e) {
+                const Edge& ge = mesh.edges[tri.edge[e]];
+                int a = local_vertex_index(tri, ge.a);
+                int bb = local_vertex_index(tri, ge.b);
+                double c = (ge.dof >= 0) ? x[ge.dof] : 0.0;
+                Eh += c * nedelec_basis_value(data.grad_lambda, lam, a, bb);
+            }
+            Eigen::Vector2d Ee = exact_E(xy[0], xy[1]);
+            out << xy[0] << ',' << xy[1] << ',' << Eh[0] << ',' << Eh[1] << ','
+                << Ee[0] << ',' << Ee[1] << '\n';
+        }
+    }
+
+    Result r;
+    r.n = n;
+    r.ndof = ndof;
+    r.h = 1.0 / n;
+    r.l2_error = std::sqrt(l2_sq);
+    r.curl_error = std::sqrt(curl_sq);
+    r.hcurl_error = std::sqrt(l2_sq + curl_sq);
+    return r;
+}
+
+int main(int argc, char** argv) {
+    try {
+        double k0 = 1.0;
+        std::string outname = "convergence.csv";
+        bool write_solution = true;
+
+        std::vector<int> levels = {4, 8, 16, 32, 64};
+        if (argc >= 2) {
+            levels.clear();
+            for (int i = 1; i < argc; ++i) {
+                levels.push_back(std::stoi(argv[i]));
+            }
+        }
+
+        std::vector<Result> results;
+        results.reserve(levels.size());
+
+        for (int n : levels) {
+            bool dump_solution = write_solution && (n == levels.back());
+            Result r = solve_level(n, k0, "nedelec2d", dump_solution);
+            results.push_back(r);
+            std::cout << "n=" << r.n
+                      << ", ndof=" << r.ndof
+                      << ", h=" << r.h
+                      << ", L2=" << r.l2_error
+                      << ", curl=" << r.curl_error
+                      << ", Hcurl=" << r.hcurl_error
+                      << std::endl;
+        }
+
+        std::ofstream csv(outname);
+        csv << "n,ndof,h,L2_error,L2_rate,curl_error,curl_rate,Hcurl_error,Hcurl_rate\n";
+        for (std::size_t i = 0; i < results.size(); ++i) {
+            double l2_rate = 0.0;
+            double curl_rate = 0.0;
+            double hcurl_rate = 0.0;
+            if (i > 0) {
+                const auto& prev = results[i - 1];
+                const auto& cur = results[i];
+                double denom = std::log(prev.h / cur.h);
+                l2_rate = std::log(prev.l2_error / cur.l2_error) / denom;
+                curl_rate = std::log(prev.curl_error / cur.curl_error) / denom;
+                hcurl_rate = std::log(prev.hcurl_error / cur.hcurl_error) / denom;
+            }
+            csv << results[i].n << ','
+                << results[i].ndof << ','
+                << results[i].h << ','
+                << results[i].l2_error << ','
+                << l2_rate << ','
+                << results[i].curl_error << ','
+                << curl_rate << ','
+                << results[i].hcurl_error << ','
+                << hcurl_rate << '\n';
+        }
+
+        std::cout << "\nSaved convergence table to " << outname << std::endl;
+        std::cout << "Saved final-level solution samples to nedelec2d_solution.csv" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
+    }
+    return 0;
+}

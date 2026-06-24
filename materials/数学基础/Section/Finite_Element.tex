@@ -1,0 +1,1320 @@
+\newpage
+\section{有限元方法初步}
+\subsection{变分问题}
+设$a(\cdot,\cdot)$是赋范线性空间$H$上的双线性形式.若存在常数$C>0$使得
+$$
+|a(v,w)|\leqslant C\|v\|_H\|w\|_H,\quad \forall v,w\in H
+$$
+我们称$a(\cdot,\cdot)$是有界的(连续的).若存在常数$\alpha >0$使得
+$$
+a(v,v)\geqslant \alpha \|v\|^2_H,\quad \forall v\in V\subset H
+$$
+我们称$a(\cdot,\cdot)$在$V\subset H$上强制.\par
+变分问题:设$H$为Hilbert空间,$V\subset H$为闭子空间,$a(\cdot,\cdot)$为$H$上的有界且在$V$上强制的双线性形式,那么非对称变分问题是指给定$F\in V'$,找到$u\in V$使得
+\begin{equation}
+    a(u,v)=\langle F,v\rangle,\quad \forall v\in V
+    \label{eq:2.6.2}
+\end{equation}
+事实上,这个问题解的存在与唯一性可以通过下面的Lax-Milgram定理来保证.\par
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{Lax-Milgram定理},sharpish corners]
+    设$H$为Hilbert空间,$a(\cdot,\cdot)$为$H$上的有界且在$V$上强制的双线性形式,$F\in H'$,那么存在唯一的$u\in H$使得
+    $$
+    a(u,v)=\langle F,v\rangle,\quad \forall v\in H
+    $$
+\end{tcolorbox}
+\textbf{Proof}:证明暂留.\par
+从理论的角度来讲,问题已经解决的差不多了,但是从实际计算的角度来讲,无论是人工还是计算机,都无法处理无限维空间中的问题.因此一个自然的想法是,能否退而求其次,在一个有限维子空间中寻找近似解.\par
+Galerkin逼近问题:给定一个有限维子空间$V_h\subset V$与$F\in V'$.寻找$u_h\in V_h$满足
+\begin{equation}
+    a(u_h,v)=\langle F,v\rangle,\quad \forall v\in V_h
+    \label{eq:2.6.3}
+\end{equation}
+由此引出几个问题:\par
+1.解$u_h$是否存在且唯一?\par
+这个很好解决,只需要注意到有限维子空间是完备的.\par
+2.如何估计误差$u-u_h$?\par
+这个误差是在$V$中范数下的误差,随后将会给出Céa引理来估计误差.\par
+3.如何构造有限维子空间$V_h$?\par
+这在实际计算中是关键的一步,幸运的是,目前已经有很多成熟的方法来构造这个有限维子空间,其中最常用的就是有限元方法,随后我们会介绍有限元空间的构造.\par
+4.当我们真的构造出了有限维子空间$V_h$,如何求解Galerkin逼近问题?\par
+既然是有限维空间,我们设$\operatorname{dim}V_h=n$,同时设$\{\phi_1,\cdots,\phi_n\}$为其一组基.既然我们要寻找$u_h\in V_h$,那么我们可以先将$u_h$表示为
+$$
+u_h=\sum_{j=1}^nU_j\phi_j
+$$
+注意到逼近问题中$v\in V_h$是任意的,于是不妨直接取$v=\phi_i,i=1,\cdots,n$.于是我们将得到下面的方程组
+$$
+\begin{cases}
+    U_1a(\phi_1,\phi_1)+U_2a(\phi_2,\phi_1)+\cdots+U_na(\phi_n,\phi_1)=\langle F,\phi_1\rangle\\
+    U_1a(\phi_1,\phi_2)+U_2a(\phi_2,\phi_2)+\cdots+U_na(\phi_n,\phi_2)=\langle F,\phi_2\rangle\\
+    \cdots\cdots\cdots\cdots\cdots\cdots\\
+    U_1a(\phi_1,\phi_n)+U_2a(\phi_2,\phi_n)+\cdots+U_na(\phi_n,\phi_n)=\langle F,\phi_n\rangle
+\end{cases}
+$$
+记$K_{ij}=a(\phi_j,\phi_i),F_i=\langle F,\phi_i\rangle,i,j=1,2\cdots,n$,并且令$U=[U_j],K=[K_{ij}],F=[F_i]$,那么Galerkin逼近问题就等价于下面的方程组
+$$
+KU=F
+$$
+这个方程组是有解的,且解是唯一的.\par
+现在我们设$u$是变分问题\eqref{eq:2.6.2}的解,$u_h$是Galerkin逼近问题\eqref{eq:2.6.3}的解,我们现在想估计误差$\|u-u_h\|_V$.
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{Céa引理},sharpish corners]
+    设$H$为Hilbert空间,$V\subset H$为闭子空间,$a(\cdot,\cdot)$为$H$上的有界且在$V$上强制的双线性形式,$F\in V'$.设$u\in V$是变分问题\eqref{eq:2.6.2}的解,$u_h\in V_h\subset V$是Galerkin逼近问题\eqref{eq:2.6.3}的解,则有
+    $$
+    \|u-u_h\|_V\leqslant \frac{C}{\alpha}\inf_{v\in V_h}\|u-v\|_V
+    $$
+    其中$C$是$a(\cdot,\cdot)$的有界常数,$\alpha$是$a(\cdot,\cdot)$在$V$上强制的常数.
+\end{tcolorbox}
+\textbf{Proof}:因为$a(u,v)=\langle F,v\rangle,\forall v\in V$且$a(u_h,v)=\langle F,v\rangle,\quad \forall v\in V_h$,因此
+$$
+a(u-u_h,v)=0,\quad \forall v\in V_h
+$$
+则对任意$v\in V_h$,有
+$$
+\begin{aligned}
+    \alpha \|u-u_h\|^2_V &\leqslant a(u-u_h,u-u_h)\\
+                         &=a(u-u_h,u-v)+a(u-u_h,v-u_h)\\
+                         &= a(u-u_h,u-v)\\
+                         &\leqslant C\|u-u_h\|_V\|u-v\|_V
+\end{aligned}
+$$
+因此$\|u-u_h\|_V\leqslant \frac{C}{\alpha}\|u-v\|_V,\forall v\in V_h$.两边取下确界可以得到
+$$
+\|u-u_h\|_V\leqslant \frac{C}{\alpha}\inf_{v\in V_h}\|u-v\|_V
+$$
+如果注意到$V_h$还是闭的,那么可以得到$\|u-u_h\|_V\leqslant \frac{C}{\alpha}\min_{v\in V_h}\|u-v\|_V$.\par
+这个引理右边是$u$在$V_h$中的最佳近似误差,因此这个引理说明Galerkin逼近解$u_h$的误差不会比$u$在$V_h$中的最佳近似误差大多少倍.这就把误差估计问题转化为了如何构造有限维子空间$V_h$以及如何估计最佳近似误差的问题.\par
+\subsection{有限元空间的构造}
+如果直接在整个区域$\Omega$上构造一个有限维空间,例如
+$$
+V_h=\{p\in \mathcal{P}_k(\Omega)\}
+$$
+这样的话,如果区域边界特别复杂,或者真解$u$在某些地方变化的特别剧烈,这时必须要用高次多项式才能逼近,这就会导致Runge现象.此外,局部误差无法单独控制,并且还不能处理非光滑或分段连续的真解.于是从数值计算与数学角度,更好的做法是将区域分成若干个子区域.
+据此,引出下面的三个问题:\par
+1.空间$V_h$由哪些函数组成;\par
+2.如何在各个子区域上定义这些函数;\par
+3.如何在相邻区域之间保证适当的连续性.\par
+\textbf{定义}$^\clubsuit $:设\par
+(1.)(\textbf{单元区域}):$K\subset\mathbb{R}^n$是一个有界闭集,其内部非空且边界分段光滑;\par
+(2.)(\textbf{形函数}):$\mathcal{P}$是$K$上的有限维函数空间;\par
+(3.)(\textbf{节点变量集}):$\mathcal{N}=\{N_1,N_2,\cdots,N_k\}$是$\mathcal{P}'$($\mathcal{P}$的对偶空间)的一组基.\par
+那么,我们称$(K,\mathcal{P},\mathcal{N})$为一个有限元.\par
+\textbf{定义}$^\clubsuit $:设$(K,\mathcal{P},\mathcal{N})$是一个有限元.$\mathcal{P}$中与$\mathcal{N}$对偶的基$\{\phi_1,\phi_2,\cdots,\phi_k\}$称为$\mathcal{P}$的节点基.\par
+根据线性代数的知识就能知道节点基函数与节点变量之间的应当有下面的关系
+$$
+N_i(\phi_j)=\delta_{ij}=
+\begin{cases}
+    1,& i=j\\
+    0,&i\neq j
+\end{cases}
+$$
+这两个定义是十分抽象且让人摸不着头脑的.我们以一维的例子来理解.\par
+\begin{center}
+\begin{tikzpicture}[scale=10, >=stealth]
+
+  % 绘制线段 [0,1]
+  \draw[thick] (0,0) -- (1,0);
+
+  % 分成 10 段，共 11 个节点
+  \foreach \i in {0,...,10} {
+    \fill (\i/10,0) circle (0.15pt);
+  }
+
+  % 上方标注 0 和 1
+  \node[above] at (0,0) {$0$};
+  \node[above] at (1,0) {$1$};
+
+  % 下方标注 x_0, x_n
+  \node[below] at (0,0) {$x_0$};
+  \node[below] at (1,0) {$x_n$};
+
+  % 第五、第六、第七个节点坐标
+  \def\xA{0.4}  % x_{i-1}
+  \def\xB{0.5}  % x_i
+  \def\xC{0.6}  % x_{i+1}
+
+  % 下方标注 x_{i-1}, x_i, x_{i+1}
+  \node[below] at (\xA,0) {$x_{i-1}$};
+  \node[below] at (\xB,0) {$x_i$};
+  \node[below] at (\xC,0) {$x_{i+1}$};
+
+  % 红色实线（屋顶）
+  \draw[red, thick] (\xA,0) -- (\xB,0.1) -- (\xC,0);
+
+  % 蓝色实线：f(x) = (x_i - x)/(x_i - x_{i-1})
+  \draw[blue, thick] (\xA,0.1) -- (\xB,0);
+
+  % 亮绿色实线：f(x) = (x - x_i)/(x_{i+1} - x_i)
+  \draw[green!70!black, thick] (\xB,0) -- (\xC,0.1);
+
+\end{tikzpicture}
+\end{center}
+如上图所示,我们考虑区间$[0,1]$的划分如下
+$$
+0=x_0<x_1<\cdots<x_{n-1}<x_n=1
+$$
+其中$K=[x_{i-1},x_i]$.一维例子我们最常见的是以线性函数空间,也就是说
+$$
+\mathcal{P}=\operatorname{span}\{1,x\}
+$$
+这个形函数空间其实就是表明我们是用什么样的函数逼近,比如这里是线性函数,如果是二次函数,那就应该是$\operatorname{span}\{1,x,x^2\}$了.
+接下来考虑定义单元$K$上的节点基函数,我们知道每个节点都要定义一个基函数,因此我们需要定义两个节点基函数$\phi_{i-1},\phi_{i}$,二者需要满足下面的条件:\par
+(i).$\phi_{i-1},\phi_{i}\in\mathcal{P}$,也就是两个都是线性的;\par
+(ii).在节点处满足
+$$
+\phi_{i-1}(x_{i-1})=1,\phi_{i}(x_{i-1})=0;\phi_{i-1}(x_i)=0,\phi_{i}(x_i)=1
+$$
+注意到,分号两侧我们实际上定义了分别依赖于节点$x_{i-1},x_i$的线性泛函
+$$
+N_{i-1}(\phi)=\phi(x_{i-1});N_{i}(\phi)=\phi(x_i)
+$$
+这就是所谓的节点变量,它满足$N_i(\phi_j)=\delta_{ij}$.我们想在每个节点处定义基函数,我们这个例子,基函数一定是线性的,节点变量的作用就是辨别哪些线性函数可以做节点基函数.\par
+从数学的角度,节点变量其实就是抛开几何节点来确定代数基函数的手段,在理论分析中具有普适性.\par
+更一般的,我们令$K=[a,b]$,考虑形函数空间为次数不超过$k$的多项式空间$\mathcal{P}_k$.需要注意到的是,我们需要$k+1$个节点.如果只有开头和末尾两个节点$x_0,x_1$,那么基函数应当满足下面的关系
+$$
+N_i(\phi)=\phi(x_i)
+$$
+而这里$\phi$是次数不超过$k$的多项式,有$k+1$个系数,根据线性代数的知识,必须要有$k+1$个方程才可以.因此我们需要$k+1$个节点.记$\mathcal{N}_k=\{N_0,N_1\cdots,N_k\}$,其中满足$N_i(\phi)=\phi(a+(b-a)i/k),\forall \phi\in\mathcal{P}_k$.于是$(K,\mathcal{P}_k,\mathcal{N}_K)$是一个有限元.\par
+从这里可以看出,单元节点的个数是受到形函数空间维数的限制,一般来讲二者是相等的.\par
+\textbf{定义}$^\clubsuit $:如果$\phi\in\mathcal{P}$满足对于任意$N\in\mathcal{N},N(\psi)=0$可以推出$\psi=0$,那么我们称$\mathcal{N}$确定$\mathcal{P}$.\par
+这个定义容易使人混淆.其实它说的是,给定$\mathcal{P}$,$\mathcal{N}$能够区分$\mathcal{P}$中所有的元素.在构造的顺序上,是现有$\mathcal{P}$才有$\mathcal{N}$的,因为在最开始我们就需要设想用什么样的函数逼近,之后选择节点.有了节点,从数学上定义节点变量,然后由节点变量确定$\mathcal{P}$中哪些元素可以作为节点基函数.这个流程中,最后一步能进行的前提就是$\mathcal{N}$能够区分$\mathcal{P}$中的函数.如果区分不出来呢?那么就重新选择节点变量.比如下面的例子\par
+依然考虑一维单元的例子,$K=[0,1]$,我们想用线性函数作为形函数空间,即$\mathcal{P}=\operatorname{span}\{1,x\}$,考虑节点变量集$\mathcal{N}=\{N_1(v)=v(0),N_2(v)=v(1)\}$.\par
+任取$\psi(x)=a+bx\in\mathcal{P}$,若
+$$
+\begin{aligned}
+    N_1(\psi) &=\psi(0)=a=0\\
+    N_2(\psi) &=\psi(1)=a+b=0
+\end{aligned}
+$$
+我们就得到了$a=b=0$,所以$\psi=0$.\par
+作为反例,若我们取$\mathcal{N}=\{N_1(v)=v(0)\}$,此时$\psi(x)=x$有$N_1(\psi)=0$,但$\psi\neq 0$.\par
+我们经常用到超平面$\{x:L(x)=0\}$,这里$L$是非退化线性函数.\par
+\textbf{引理}$^\clubsuit $:设$P$是次数大于等于1的多项式且在超平面$L$上为$0$.那么我们可以作如下分解$P=LQ$,这里$Q$是$(d-1)$次多项式.\par
+因为后面我们是要在计算机上求解,因此,我们必须要有一套机械的方法求解节点基函数.我们考虑下面的三角单元$K$:
+\begin{center}
+\begin{tikzpicture}[scale=3]
+% 定义三角形节点坐标
+\coordinate (A) at (0,0);
+\coordinate (B) at (1,0);
+\coordinate (C) at (0,1);
+
+% 画三角形
+\draw[thick] (A) -- (B) -- (C) -- cycle;
+
+% 标注节点
+\node[below left] at (A) {$z_1$};
+\node[below right] at (B) {$z_2$};
+\node[above right] at (C) {$z_3$};
+
+\fill (A) circle[radius=0.5mm];
+\fill (B) circle[radius=0.5mm];
+\fill (C) circle[radius=0.5mm];
+
+% 可选: 标注边中心
+\coordinate (ABmid) at ($(A)!0.5!(B)$);
+\coordinate (BCmid) at ($(B)!0.5!(C)$);
+\coordinate (CAmid) at ($(C)!0.5!(A)$);
+
+\node[below] at (ABmid) {$L_1$};
+\node[right] at (BCmid) {$L_2$};
+\node[left] at (CAmid) {$L_3$};
+
+\end{tikzpicture}
+\end{center}
+其中$z_1=(0,0),z_2=(1,0),z_3=(0,1)$.我们考虑用线性函数,即$\mathcal{P}=\operatorname{span}\{1,x,y\}$,同时定义节点变量$\mathcal{N}=\{N_1,N_2,N_3\}$为$N_i(v)=v(z_i)$.设节点基函数为$\{\phi_1,\phi_2,\phi_3\}$.每个节点基函数都可以写成$\phi=a+bx+cy$的形式,再利用对偶关系$N_i(\phi_j)=\delta_{ij}$,那么对每个基函数都有一个线性方程组.对于上图中的单元,很容易计算出
+$$
+\phi_1=1-x-y,\phi_2=x,\phi_3=y
+$$
+对于其他的单元类似,只要确定形函数空间与泛函定义的方式,基函数的求解就变得简单了.\par
+但是,在实际计算中,每个单元$K$的形状和位置都可能不同——如果对每个单元都分别解一次线性方程来得到基函数,计算量将非常大,也不方便实现.因此,我们的想法是在一个标准的单元(参考单元)上事先定义好一个有限元,然后在实际计算中,只需要通过仿射变换将参考单元映射到实际单元,从而得到实际单元上的基函数.\par
+例如,对于三角单元
+
+现在回到我们的目的,我们本质上是想在单元上逼近函数$f$,由此我们可以定义它的插值函数.\par
+\textbf{定义}$^\clubsuit $:给定一个有限元$(K,\mathcal{P},\mathcal{N})$,令$\{\phi_i:1\leqslant i\leqslant k\}\subset\mathcal{P}$是对偶于$\mathcal{N}$的基.若$f$是使得$N_i(f)$都有定义的函数,那么定义$f$的局部插值为
+$$
+\mathcal{I}_K f=\sum_{i=1}^{k}N_i(f)\phi_i
+$$
+这是一个单元上的插值函数,我们在实际问题中,通常是将一块区域划分为若干个单元,然后求每个单元上的插值函数,再组合起来.接下来定义全局插值函数,不过在此之前需要定义区域的划分.\par
+\textbf{定义}$^\clubsuit $:区域$\Omega$的一个划分,是有限个满足如下条件的单元域全体$\{K_i\}$:
+\begin{enumerate}[nosep,label = \arabic*)]
+    \item $\operatorname{int} K_i\cap\operatorname{int}K_j=\emptyset,i\neq j$;
+    \item $\cup K_i=\overline{\Omega}$.
+\end{enumerate}
+\textbf{定义}$^\clubsuit $:设$\Omega$是一个有划分$\mathcal{T}$的区域.设划分中的每个单元$K$都定义了某种类型的形函数空间$\mathcal{P}$与节点变量集$\mathcal{N}$,使得$(K,\mathcal{P},\mathcal{N})$成为一个有限元.设$m$为节点变量所涉及的偏导数最高阶数.对于$f\in C^m(\overline{\Omega})$,其全局插值函数定义为
+$$
+\mathcal{I}_{\mathcal{T}}f|_{K_i}=\mathcal{I}_{K_i} f
+$$
+对所有的$K_i\in\mathcal{T}$.\par
+\begin{center}
+    \begin{tikzpicture}[scale=3]
+
+
+% 定义三角形节点坐标
+\coordinate (A) at (0,0);
+\coordinate (B) at (1,0);
+\coordinate (C) at (0,1);
+\coordinate (D) at (1,1);
+
+\draw[thick] (A) -- (B) -- (D) -- (C) -- cycle;
+\draw[thick] (C) -- (B);
+
+% 标注节点
+\node[below] at (A) {$(0,0)$};
+\node[below] at (B) {$(1,0)$};
+\node[above] at (C) {$(0,1)$};
+\node[above] at (D) {$(1,1)$};
+
+
+\fill (A) circle[radius=0.5mm];
+\fill (B) circle[radius=0.5mm];
+\fill (C) circle[radius=0.5mm];
+\fill (D) circle[radius=0.5mm];
+
+\node at (0.25,0.25) {$K_1$};
+\node at (0.75,0.75) {$K_2$};
+
+\end{tikzpicture}
+\end{center}
+如图所示,我们依然用线性函数作为形函数空间,很容易计算出$K_1$的节点基函数为$\{1-x-y,x,y\}$,$K_2$的节点基函数为$\{1-x,1-y,x+y-1\}$.我们令$f=\sin(\varPi(x+y)/2)$,那么
+$$
+\mathcal{I}_{\mathcal{T}}f=
+\begin{cases}
+    x+y,& (x,y)\in K_1\\
+    2-x-y,& (x,y)\in K_2
+\end{cases}
+$$
+插值的效果如下,因为划分单元太少,以及形函数是用线性函数,效果不怎么好.
+\begin{figure}[htbp]  % h=here, t=top, b=bottom, p=page
+  \centering           % 居中
+  \includegraphics[width=\textwidth]{Figure/sin(pi(x+y)2).png}
+\end{figure}
+
+
+
+
+
+
+
+\subsection{混合有限元}
+\subsubsection{混合变分公式示例}
+稳态(极)粘性流体流动的Stokes方程为:
+\begin{equation}\label{eq:12.1.1}
+\begin{aligned}
+- {\Delta u} + \operatorname{grad}p &= f \\
+\operatorname{div}{u} &= 0
+\end{aligned}
+\end{equation}
+\qquad 在 $\Omega  \subset  {\mathbb{R}}^{n}$ 中, 其中 $y$ 表示流体速度, $p$ 表示压力.为了在所有情况下使维度清晰, 我们使用符号 ${H}^{s}{\left( \Omega \right) }^{n}$ 代替 ${H}^{s}\left( \Omega \right)$ , ${L}^{2}{\left( \Omega \right) }^{n}$ 代替 $L^{2}\left( \Omega \right)$ , 等等.\par
+方程 \eqref{eq:12.1.1} 代表了随后将要讨论的Navier-Stokes方程中雷诺数为零的极限情况. 拥有非零的强迫项 $f$ 是不寻常的, 但这些方程的线性性质允许我们将更有可能出现的非齐次边界数据情况转换为齐次情况. 因此, 我们假设, 例如, 我们在 $\partial \Omega$ 上有狄利克雷(Dirichlet)边界条件 $u = 0$ .\par
+通过分部积分, 我们可以为合适的 $u$ 和 $q$ 推导出一个变分恒等式：
+    \begin{align}
+        a\left( {u,v}\right)  + b\left( {v,p}\right)  &= \int_{\Omega }fv\mathrm{d}x,\label{eq:12.1.2}\\
+        b\left( {u,q}\right)  &= 0,\label{eq:12.1.3}
+    \end{align}
+其中$a\left( {\cdot , \cdot  }\right)$ 和 $b\left( {\cdot , \cdot  }\right)$ 被定义为
+    \begin{align}
+        a\left( {u,v}\right)&:=\int_{\Omega }\sum\limits_{{i = 1}}^{n}\operatorname{grad}{u}_{i} \cdot  \mathop{\operatorname{grad}}\limits_{ \sim  }{v}_{i}\mathrm{d}x\label{eq:12.1.4}\\
+        b\left( {v,q}\right)&:=- \int_{\Omega }\left( {\operatorname{div}v}\right) q\mathrm{d}x.\label{eq:12.1.5}
+    \end{align}
+令 $v = H^{1}_{0}{\left( \Omega \right) }^{n}$ 且 $\varPi  = \left\{  {q \in  {L}^{2}\left( \Omega \right)  : \int_{\Omega }{qdx} = 0}\right\}$ . 以下问题具有唯一解.\par
+给定 $F \in  {V}^{\prime }$ , 寻找函数 $u \in  V$ 和 $p \in  \varPi$ 使得
+\begin{equation}\label{eq:12.1.6}
+\begin{aligned}
+a\left( {u,v}\right)  + b\left( {v,p}\right)  &= F\left( v\right) \quad\forall v \in  v, \\
+b\left( {u,q}\right)  &= 0\quad\forall q \in  \varPi .
+\end{aligned}
+\end{equation}
+
+该问题的适定性部分源于 $a\left( {\cdot , \cdot  }\right)$ 在 ${H}^{1}{\left( \Omega \right) }^{n}$ 上的强制性.\par
+占据区域 $\Omega$ 的多孔介质中流体流动的模型采取如下形式:
+\begin{equation}\label{eq:12.1.7}
+- \sum\limits_{{i,j = 1}}^{n}\frac{\partial }{\partial {x}_{i}}\left( {{a}_{ij}\left( x\right) \frac{\partial p}{\partial {x}_{j}}\left( x\right) }\right)  = f\left( x\right) \text{ in }\Omega ,
+\end{equation}
+其中 $p$ 是压力 (同样为了简单起见, 我们采用非齐次的右手边) . Darcy定律假设流体速度 $u$ 与 $p$ 的梯度相关, 即
+$$
+\sum\limits_{{j = 1}}^{n}{a}_{ij}\left( x\right) \frac{\partial p}{\partial {x}_{j}}\left( x\right)  = {u}_{i}\left( x\right) \;\forall i = 1,\ldots ,n.
+$$
+\qquad 我们假设系数 ${a}_{ij}$ 构成一个对称正定系统 (几乎处处) , 它们与介质的孔隙率有关. 当然, 许多其他的物理模型也采取 \eqref{eq:12.1.7} 的形式.\par
+通过令 $A\left( x\right)$ 表示系数矩阵 $\left( {a}_{ij}\right)$ 的 (几乎处处定义的) 逆, 并写作 $\operatorname{grad}p = Au$ , 可以推导出 \eqref{eq:12.1.7} 具有 \eqref{eq:12.1.6} 形式的变分公式. 定义
+\begin{equation}\label{eq:12.1.8}
+a\left( {u,v}\right) :=\int_{\Omega }\sum\limits_{{i,j = 1}}^{n}{A}_{ij}{u}_{i}{v}_{j}\mathrm{d}x
+\end{equation}
+且 $b\left( {\cdot , \cdot  }\right)$ 如前所述. 那么 \eqref{eq:12.1.7} 的解满足
+\begin{equation}\label{eq:12.1.9}
+\begin{aligned}
+a\left( {u,v}\right)  + b\left( {v,p}\right)  &= 0\quad\forall v \in  V, \\
+b\left( {u,q}\right)  &= F\left( q\right) \quad\forall q \in  \varPi
+\end{aligned}
+\end{equation}
+其中 $\varPi  = {L}^{2}\left( \Omega \right)$ 并且
+$$
+V:=\left\{  {v \in  {L}^{2}{\left( \Omega \right) }^{n} : \operatorname{div}v \in  {L}^{2}\left( \Omega \right) }\right\}  .
+$$
+后者被称为$H(\operatorname{div})$空间, 它具有一个由下式给出的自然范数：
+\begin{equation}\label{eq:12.1.10}
+\| v\|_{H\left( \operatorname{div}\right) }^{2} = \| v\|_{{L}^{2}{\left( \Omega \right) }^{n}}^{2} + \| \operatorname{div}v\|_{{L}^{2}\left( \Omega \right) }^{2},
+\end{equation}
+与前面的问题不同, 双线性形式 $a\left( {\cdot , \cdot  }\right)$ 并非在整个 $V$ 上都是强制的.这是一个棘手的问题,在有限元理论中,强制性是保证解唯一性的要求.实际上根据强制性的定义:存在$\alpha>0$,使得
+$$
+a(v,v)\geqslant \alpha\|v\|^2_V
+$$
+然而$a\left( {v,v}\right) =\int_{\Omega }\sum\limits_{{i,j = 1}}^{n}{A}_{ij}{v}_{i}{v}_{j}\mathrm{d}x\approx \|v\|_{L^2}^2$,这就说明$a(v,v)$只能控制$\|v\|^2_{L^2}$这一部分,而没有包含$\| \operatorname{div}v\|_{L^2}^{2}$.\par
+不过, 它在散度为零函数的临界子空间上是强制的.
+\subsubsection{抽象混合公式}
+现在我们提取上述两个问题的关键特征. 我们有两个 Hilbert 空间 $V$ 和 $\varPi$ , 以及两个双线性形式 $a\left( {\cdot , \cdot  }\right)  : V \times  V \rightarrow  \mathbb{R}$ 和 $b\left( {\cdot , \cdot  }\right)  : V \times  \varPi  \rightarrow  \mathbb{R}$ . 自然地假设这些形式是连续的：
+\begin{equation}\label{eq:12.2.1}
+\begin{aligned}
+a\left( {u,v}\right)  &\leq  C\| u\|_{V}\| v\|_{V}\;\forall u,v \in  V \\
+b\left( {v,p}\right)  &\leq  C\| v\|_{V}\| p\|_{\varPi }\;\forall v \in  V,p \in  \varPi ,
+\end{aligned}
+\end{equation}
+但目前我们推迟讨论任一形式的适当强制性(coercivity)概念.\par
+$V$ 和 $\varPi$ 之间没有唯一的关系, 但它们之间存在一个提供链接的算子. 我们将假设 $\mathcal{D} : V \rightarrow$  $\varPi$ 是连续的, 
+\begin{equation}\label{eq:12.2.2}
+\| \mathcal{D}v\|_{\varPi } \leq  C\| v\|_{V},
+\end{equation}
+需要注意的是,对于固定的$v$,双线性形式$b(v,p)$定义了$\varPi$上的连续线性泛函,根据Riesz表示定理,存在$y_v\in \varPi$使得
+$$
+b(v,p)=(y_v,p),\quad \forall p\in\varPi
+$$
+对于每个$v\in V$,都存在唯一的$y_v$,这就给出了映射$\mathcal{B}:V\to \varPi;v\mapsto y_v$.并且$\mathcal{B}$是有界连续算子.由此我们改写上式为
+$$
+b(v,p)=(\mathcal{B}v,p),\quad \forall p\in\varPi
+$$
+\qquad 此外, 我们做一个简化的假设:令算子$\mathcal{B}$是我们关心的(或者可实际操作的)$\mathcal{D}$,则
+\begin{equation}\label{eq:12.2.3}
+b\left( {v,p}\right)  = {\left( \mathcal{D}v,p\right) }_{\varPi }.
+\end{equation}
+\qquad 我们考虑变分问题, 寻找 $u \in  V$ 和 $p \in  \varPi$ 使得
+\begin{equation}\label{eq:12.2.4}
+\begin{aligned}
+a\left( {u,v}\right)  + b\left( {v,p}\right)  &= F\left( v\right) \;\forall v \in  V \\
+b\left( {u,q}\right)  &= G\left( q\right) \;\forall q \in  \varPi
+\end{aligned}
+\end{equation}
+其中 $F \in  {V}^{\prime }$ 且 $G \in  {\varPi }^{\prime }$ .\par
+我们注意到存在伴随算子 ${\mathcal{D}}^{\prime } : \varPi  \rightarrow  V$ 且 $b\left( {v,p}\right)  = {\left( v,{\mathcal{D}}^{\prime }p\right) }_{V}$ .\par
+通过下式定义 $V$ 的一个闭子空间：
+\begin{equation}\label{eq:12.2.5}
+    Z = \{ v \in V : b\left( {v,q}\right) = 0\quad \forall q \in \varPi \} .
+\end{equation}
+\qquad 暂时假设在 \eqref{eq:12.2.4} 中 $G = 0$ .那么根据第二个方程,我们发现$u\in Z$,又因为$v$的任意性,不妨将其限制在$Z$中.那么 \eqref{eq:12.2.4} 决定 $u$ 的方式等价于以下问题：寻找 $u \in  Z$ 使得
+\begin{equation}\label{eq:12.2.6}
+a\left( {u,v}\right)  = F\left( v\right) \;\forall v \in  Z.
+\end{equation}
+\qquad 只要 $a\left( {\cdot , \cdot  }\right)$ 是强制的, 即根据 Lax-Milgram 定理, 对于所有的 $v \in  Z$ 有
+\begin{equation}\label{eq:12.2.7}
+\alpha \| v\|_{V}^{2} \leq  a\left( {v,v}\right)
+\end{equation}
+成立, 这个问题就是适定的.\par
+强制性条件 \eqref{eq:12.2.7} 对于上一节中考虑的两个问题均成立. 对于基于 \eqref{eq:12.1.4} 中形式 $a\left( {\cdot , \cdot  }\right)$ 的 Stokes 公式, 它对所有的 $v \in  V$ 都成立, 尽管对于其他公式它只会在散度为零的函数子集 $Z$ 上成立. 对于标量椭圆问题, 我们必须将其限制在 $z \in  Z$ 是至关重要的, 其中在这种情况下
+$$
+Z = \left\{  {v \in  H\left( \operatorname{div}\right)  : \operatorname{div}v = 0}\right\}  .
+$$
+对于 $v \in  Z,\| v\|_{H\left( \operatorname{div}\right) } = \| v\|_{{L}^{2}{\left( \Omega \right) }^{n}}$ , 并且强制性源于系数 ${a}_{ij}$ 是有界的事实.\par
+如果 \eqref{eq:12.2.4} 中的 $G$ 不为零, 我们可以如下将其简化为 $G = 0$ 的情况. 注意到下面的直和分解$V=Z\oplus Z^{\bot}$,因此不妨设变分问题的解可以写成$u=u_0+u_1,u_0\in Z,u_1\in Z^{\bot}$.此时变分问题将变成
+$$
+\begin{aligned}
+a\left( {u_0,v}\right)  + a(u_1,v)+b\left( {v,p}\right)  &= F\left( v\right) \;\forall v \in  V \\
+b\left( {u_1,q}\right)  &= G\left( q\right) \;\forall q \in  \varPi
+\end{aligned}
+$$
+只要$b$满足一定的条件,那么第二个方程就可以求解出$u_1$.然后选择$v\in Z$,那么$u_0\in Z$满足
+$$
+a(u_0,v)=F(v)-a(u_1,v),\quad \forall v\in Z
+$$
+就这样,我们获得了$u$.因此, 在本节的剩余部分, 我们将重点关注问题
+\begin{equation}\label{eq:12.2.8}
+\begin{aligned}
+a\left( {u,v}\right)  + b\left( {v,p}\right)  &= F\left( v\right) \;\forall v \in  V \\
+b\left( {u,q}\right)  &= 0\;\forall q \in  \varPi
+\end{aligned}
+\end{equation}
+其中 $F \in  {V}^{\prime }$ .\par
+随着 $u$ 由 \eqref{eq:12.2.6} 完好定义, 我们接着确定 $p \in  \varPi$ 使得
+\begin{equation}\label{eq:12.2.9}
+b\left( {v,p}\right)  =  - a\left( {u,v}\right)  + F\left( v\right) \;\forall v \in  V.
+\end{equation}
+该问题的适定性源于一种新型的强制性. 为了引出这种新的强制性条件, 让我们重新审视如 \eqref{eq:12.2.7} 这类条件的使用. 这样的条件意味着
+$$
+\alpha \| v\|_{V} \leq  \mathop{\sup }\limits_{{w \in  V}}\frac{a\left( {w,v}\right) }{\| w\|_{V}}\;\forall v \in  V
+$$
+
+(取 $w = v$ ) , 并且对于我们使用过强制性条件的各类估计而言, 后一个条件已经足够. 将这一思想应用于 $b\left( {\cdot , \cdot  }\right)$ , 我们考虑如下条件
+
+\begin{equation}\label{eq:12.2.10}
+\beta \| p\|_{\varPi } \leq  \mathop{\sup }\limits_{{w \in  V}}\frac{b\left( {w,p}\right) }{\| w\|_{V}}\;\forall p \in  \varPi .
+\end{equation}
+
+问题 \eqref{eq:12.2.9} 具有如下形式
+
+\begin{equation}\label{eq:12.2.11}
+b\left( {v,p}\right)  = \widetilde{F}\left( v\right) \;\forall v \in  V
+\end{equation}
+
+其中对于所有 $v \in  Z$ 有 $\widetilde{F}\left( v\right)  = 0$ . 条件 \eqref{eq:12.2.10} (当 $\beta  > 0$ 时) 意味着解的唯一性. 解的存在性也由 \eqref{eq:12.2.10} 得出, 但这需要更多一点解释.
+\begin{Lemma}
+假设 \eqref{eq:12.2.1} 和 \eqref{eq:12.2.10} 成立且 $\beta  > 0$ . 那么 \eqref{eq:12.2.11} 存在唯一解.
+\end{Lemma}
+\begin{Proof}令 ${Z}^{ \bot  }$ 表示 $Z$ 在 $V$ 中的正交补. 由于 $b\left( {\cdot , \cdot  }\right)$ 在 $Z$ 上的行为是平凡的, 我们不妨将注意力限制在 \eqref{eq:12.2.11} 中的 $v \in  {Z}^{ \bot  }$ 上.我们可以将 ${Z}^{ \bot  }$ 视为一个带有继承自 $V$ 的内积 ${\left( \cdot , \cdot  \right) }_{V}$ 的 Hilbert 空间. 给定 $p \in  \varPi$ , 线性形式 $v \rightarrow  b\left( {v,p}\right)$ 在 ${Z}^{ \bot  }$ 上是连续的, 因此 Riesz 表示定理保证了存在 ${Tp} \in  {Z}^{ \bot  }$ 使得
+\begin{equation}\label{eq:12.2.13}
+{\left( Tp,v\right) }_{V} = b\left( {v,p}\right) \;\forall v \in  {Z}^{ \bot  }.
+\end{equation}
+此外$T$ 是线性的, 并且
+$$
+\| {Tp}\|_{V} = \mathop{\sup }\limits_{{v \in  {Z}^{ \bot  }}}\frac{b\left( {v,p}\right) }{\| v\|_{V}} \leq  C\| p\|_{\varPi },
+$$
+
+其中不等式是基于假设 \eqref{eq:12.2.1} . 令 $R$ 表示 $T$ 在 ${Z}^{ \bot  }$ 中的像. 如果我们能证明 $R = {Z}^{ \bot  }$ , 那么再次应用 Riesz 表示定理即可完成证明, 因为这意味着我们总可以将 $\widetilde{F}$ 表示为
+
+$$
+\widetilde{F}\left( v\right)  = {\left( u,v\right) }_{V}\;\forall v \in  {Z}^{ \bot  }
+$$
+
+对于某个 $u \in  {Z}^{ \bot  }$ 成立. 我们只需选取 $p$ 使得 ${Tp} = u$ 即可.
+
+为了证明 $R$ 即为整个 ${Z}^{ \bot  }$ , 我们首先证明它是闭集. 假设 ${p}_{j} \in  \varPi$ 是一个序列, 其具有 $T{p}_{j} \rightarrow  w$ 在 ${Z}^{ \bot  }$ 中成立的性质. 那么 $\left\{  {T{p}_{j}}\right\}$ 在 ${Z}^{ \bot  }$ 中是 Cauchy 序列, 且有
+
+$$
+\begin{aligned}
+\beta {\begin{Vmatrix}{p}_{j} - {p}_{k}\end{Vmatrix}}_{\varPi } &\leq  \mathop{\sup }\limits_{{w \in  {Z}^{ \bot  }}}\frac{b\left( {w,{p}_{j} - {p}_{k}}\right) }{\| w\|_{V}}\\
+&= \mathop{\sup }\limits_{{w \in  {Z}^{ \bot  }}}\frac{{\left( w,T{p}_{j} - T{p}_{k}\right) }_{V}}{\| w\|_{V}}\\
+&= {\begin{Vmatrix}T{p}_{j} - T{p}_{k}\end{Vmatrix}}_{V}
+\end{aligned}
+$$
+
+从而 $\left\{  {p}_{j}\right\}$ 在 $\varPi$ 中是 Cauchy 序列. 令 $q = \mathop{\lim }\limits_{{j \rightarrow  \infty }}{p}_{j}$ . 根据 $T$ 的连续性, ${Tq} = w$ , 因此 $R$ 是闭集. 如果 $R \neq  {Z}^{ \bot  }$ , 选取 $0 \neq  v \in  {R}^{ \bot  }$ . 那么对于所有的 $q \in  \varPi$ 有 $b\left( {v,q}\right)  =$  ${\left( v,Tq\right) }_{V} = 0$ . 但这意味着 $v \in  Z$ , 产生矛盾. 因此 $R = {Z}^{ \bot  }$ 证明完毕.
+\end{Proof}
+
+条件 \eqref{eq:12.2.10} 对于上一节引入的问题成立, 并且在这两种情况下的证明是相似的. 它可以从引理 11.2.3 得出, 即可以通过求解关于 $w \in  {H}^{1}{\left( \Omega \right) }^{n}$ 的欠定系统 $\operatorname{div} w = p$ , 并且满足
+
+$$
+\| w\|_{{H}^{1}{\left( \Omega \right) }^{n}} \leq  \left( {1/\beta }\right) \| p\|_{{L}^{2}\left( \Omega \right) }
+$$
+
+其中取 $\beta  = 1/C$ , 这里的 $C$ 是引理 11.2.3 中的常数. 如果进一步有 $\int_{\Omega }{pdx} = 0$ , 那么我们可以取 $w \in  H_0^{1}{\left( \Omega \right)}^{n}$ , 也就是说, 我们可以假设 $w$ 在边界上消失. 因此, 在上一节研究的任何一种情况中, 都存在一个 $w \in  V$ 使得
+
+$$
+\beta \| p\|_{{L}^{2}\left( \Omega \right) } = \beta \frac{b\left( {w,p}\right) }{\| p\|_{{L}^{2}\left( \Omega \right) }} \leq  \frac{b\left( {w,p}\right) }{\| w\|_{{H}^{1}{\left( \Omega \right) }^{n}}} \leq  \sqrt{n}\frac{b\left( {w,p}\right) }{\| w\|_{H\left( \operatorname{div}\right) }},
+$$
+
+这就验证了这两种情况下的条件 \eqref{eq:12.2.10} .
+
+
+\subsubsection{离散混合公式}
+
+现在令 $V_{h} \subset V$ 且 $\varPi_{h} \subset \varPi$ , 并考虑如下变分问题：寻找 $u_{h} \in V_{h}$ 和 $p_{h} \in \varPi_{h}$ 使得
+
+\begin{equation}\label{eq:12.3.1}
+\begin{aligned}
+a(u_{h},v) + b(v,p_{h}) &= F(v) \;\forall v \in V_{h}, \\
+b(u_{h},q) &= 0 \;\forall q \in \varPi_{h}.
+\end{aligned}
+\end{equation}
+
+(第二个方程中右手边非齐次的情况将在第 12.5 节中考虑.) 类似地, 定义
+
+\begin{equation}\label{eq:12.3.2}
+Z_{h} = \{ v \in V_{h} : b(v,q) = 0 \;\forall q \in \varPi_{h} \} .
+\end{equation}
+
+那么 \eqref{eq:12.3.1} 等价于以下形式. 寻找 $u_{h} \in Z_{h}$ 使得
+
+\begin{equation}\label{eq:12.3.3}
+a(u_{h},v) = F(v) \;\forall v \in Z_{h},
+\end{equation}
+
+接着确定 $p_{h} \in \varPi_{h}$ 使得
+
+\begin{equation}\label{eq:12.3.4}
+b(v,p_{h}) = -a(u_{h},v) + F(v) \;\forall v \in V_{h}.
+\end{equation}
+
+如果 $Z_{h} \subset Z$ , 我们可以应用 C\'ea 定理 2.8.1 得到
+
+\begin{equation}\label{eq:12.3.5}
+\|u - u_{h}\|_{V} \leq \frac{C}{\alpha} \inf_{v \in Z_{h}} \|u - v\|_{V}.
+\end{equation}
+
+如果 $Z_{h} \not\subset Z$ , 那么我们就遭遇了变分犯罪(variational crime), 必须应用第 10.1 节中建立的理论. 我们由引理 10.1.1 发现
+
+$$
+\|u - u_{h}\|_{V} \leq \left( 1 + \frac{C}{\alpha} \right) \inf_{v \in Z_{h}} \|u - v\|_{V} + \frac{1}{\alpha} \sup_{w \in Z_{h} \setminus \{0\}} \frac{|a(u - u_{h}, w)|}{\|w\|_{V}}
+$$
+
+前提是 \eqref{eq:12.2.7} 在 $Z_{h}$ 上同样成立. 我们现在来确认后一项. 对于 $w \in Z_{h}$
+
+\begin{equation}\label{eq:12.3.6}
+\begin{aligned}
+a(u - u_{h}, w) &= a(u,w) - F(w) \quad &\text{(由 \eqref{eq:12.3.3} 得出)} \\
+&= -b(w,p) \quad &\text{(由 \eqref{eq:12.2.8} 得出, 因为 } w \text{ 属于 } V \text{)} \\
+&= -b(w,p - q) \quad \forall q \in \varPi_{h}. \quad &(w \text{ 属于 } Z_{h})
+\end{aligned}
+\end{equation}
+
+但不等式 \eqref{eq:12.2.1} 意味着
+
+$$
+|b(w, p - q)| \leq C \|w\|_{V} \|p - q\|_{\varPi}.
+$$
+
+由于 $q$ 是任意的, 我们发现
+
+$$
+|a(u - u_{h}, w)| \leq C \|w\|_{V} \inf_{q \in \varPi_{h}} \|p - q\|_{\varPi}.
+$$
+
+因此, 我们证明了以下结果 (cf. (Brezzi 1974, Remark 2.1)) .
+
+\textbf{(12.3.7) 定理.} 令 $V_{h} \subset V$ 且 $\varPi_{h} \subset \varPi$ , 并分别由 \eqref{eq:12.2.5} 和 \eqref{eq:12.3.2} 定义 $Z$ 和 $Z_{h}$ . 假设 \eqref{eq:12.2.7} 对于所有 $z \in Z \cup Z_{h}$ 均成立. 令 $u$ 和 $p$ 由 \eqref{eq:12.2.8} 决定, 并令 $u_{h}$ 等价地由 \eqref{eq:12.3.1} 或 \eqref{eq:12.3.3} 决定. 那么
+
+$$
+\|u - u_{h}\|_{V} \leq \left( 1 + \frac{C}{\alpha} \right) \inf_{v \in Z_{h}} \|u - v\|_{V} + \frac{C}{\alpha} \inf_{q \in \varPi_{h}} \|p - q\|_{\varPi}
+$$
+
+其中 $C$ 由 \eqref{eq:12.2.1} 给出.
+
+该定理的主要观点是误差 $u - u_{h}$ 仅仅取决于空间 $Z_{h}$ 和 $\varPi_{h}$ 的逼近性以及强制性条件 \eqref{eq:12.2.7} . 关于 $p_{h}$ 的界则要求更多条件, 事实上 $p_{h}$ 甚至可能无法稳定地被决定. 我们注意到 $Z_{h}$ 的逼近性质可能不是很好, 但尽管如此, 如果 \eqref{eq:12.2.7} 成立, 至少 $u_{h}$ 是稳定决定的.
+\subsubsection{速度近似的收敛性结果}
+
+作为上述理论的第一个应用, 我们考虑用于近似二维斯托克斯(Stokes)方程 \eqref{eq:12.1.1} 的空间族. 条件 \eqref{eq:12.2.7} 对于所有的 $z \in V$ 关于形式 \eqref{eq:12.1.4} 均成立, 因此我们只需证明其逼近性即可.
+
+令 $V_{h}^{k}$ 表示在最大三角形直径为 $h$ 的多边形区域 $\Omega \subset \mathbb{R}^{2}$ 的非退化三角剖分上的 $k$ 次 $C^{0}$ 分段多项式. 令
+
+\begin{equation}\label{eq:12.4.1}
+v_{h} = \left\{ v \in V_{h}^{k} \times V_{h}^{k} : \underset{\sim}{v} = 0 \text{ 在 } \partial \Omega \text{ 上} \right\}
+\end{equation}
+
+并且令 $\varPi_{h}$ 为 $\varPi = \left\{ q \in L^{2}(\Omega) : \int_{\Omega} q(x) dx = 0 \right\}$ 的任意子集, 且满足
+
+\begin{equation}\label{eq:12.4.2}
+\inf_{q \in \varPi_{h}} \|p - q\|_{L^{2}(\Omega)} \leq C h^{s} \|p\|_{H^{s}(\Omega)}, \quad \forall p \in \varPi \cap H^{s}(\Omega)
+\end{equation}
+
+对所有的 $0 \leq s \leq k$ 成立. 这样的一族空间是用于压力的 Taylor-Hood 空间族 (Brezzi \& Falk 1991) , 如以下结果所述.
+
+\textbf{(12.4.3) 引理.} 条件 \eqref{eq:12.4.2} 对于下式成立
+
+\begin{equation}\label{eq:12.4.4}
+\varPi_{h} = \left\{ q \in V_{h}^{k - 1} : \int_{\Omega} q(x) dx = 0 \right\}.
+\end{equation}
+
+\textit{证明.} 由推论 4.4.24 (也可参见定理 4.8.12) , 我们有
+
+$$
+\inf_{q \in V_{h}^{k - 1}} \|p - q\|_{L^{2}(\Omega)} \leq C h^{s} \|p\|_{H^{s}(\Omega)}, \quad 0 \leq s \leq k.
+$$
+
+该下确界由 $P_{V_{h}^{k - 1}}p$ 达到, 其中 $P_{V_{h}^{k - 1}}p$ 是 $p$ 到 $V_{h}^{k - 1}$ 上的 $L^{2}(\Omega)$ 投影. 由于常数函数包含在 $V_{h}^{k - 1}$ 中, 我们有 $\int_{\Omega} P_{V_{h}^{k - 1}}p(x) dx = \int_{\Omega} p(x) dx = 0$ , 因此 $P_{V_{h}^{k - 1}}p \in \varPi_{h}$ . $\blacksquare$
+
+\textbf{(12.4.5) 定理.} 令 $v_{h}$ 由 \eqref{eq:12.4.1} 给出, 且令 $\varPi_{h}$ 满足 \eqref{eq:12.4.2} . 令 $u$ 和 $u_{h}$ 如定理 12.3.7 所述. 假设 $k \geq 4$ . 那么对于 $0 \leq s \leq k$ 
+
+\begin{equation}
+\|u - u_{h}\|_{H^{1}(\Omega)^{2}} \leq C h^{s} \left( \|u\|_{H^{s + 1}(\Omega)^{2}} + \|p\|_{H^{s}(\Omega)} \right)
+\end{equation}
+
+前提是 \eqref{eq:12.1.6} 的解 $(u,p)$ 满足 $(u,p) \in H^{s + 1}(\Omega)^{2} \times H^{s}(\Omega)$ .
+
+\textit{证明.} 考虑到 \eqref{eq:12.4.2} 和定理 12.3.7, 我们只需要证明
+
+\begin{equation}\label{eq:12.4.6}
+\inf_{\underset{\sim}{v} \in Z_{h}} \|\underset{\sim}{u} - \underset{\sim}{v}\|_{H^{1}(\Omega)^{2}} \leq C h^{s} \|\underset{\sim}{u}\|_{H^{s + 1}(\Omega)^{2}}.
+\end{equation}
+
+观察到 $u \in Z$ 意味着 $u = \operatorname{curl}\psi$ , 其中 $\psi \in H^{s + 2}(\Omega) \cap \mathring{H}^{2}(\Omega)$ (Arnold, Scott \& Vogelius 1988) , 这里的 curl 算子已在第 10.1 节定义. 使用 $\mathcal{T}^{h}$ 上的 Argyris 元 ((3.2.10) 及后续内容) (也可参见 (Morgan \& Scott 1975)) , 存在一个次数为 $s + 1$ 的 $C^{1}$ 分段多项式 $\psi_{h} \in H^{2}(\Omega)$ 使得
+
+$$
+\|\psi - \psi_{h}\|_{H^{2}(\Omega)} \leq C h^{s} |\psi|_{H^{s + 2}(\Omega)}.
+$$
+
+由于 $\mathop{\operatorname{curl}}\limits_{\sim} \psi_{h} \in Z_{h}$ (通常 $V_{h} \cap Z \subset Z_{h}$ 总成立) , 我们完成了证明. 注意到 $|\psi|_{H^{s + 2}(\Omega)^{2}} \leq C |u|_{H^{s + 1}(\Omega)^{2}}$ 因为 $\underset{\sim}{u} = (\psi_{x}, -\psi_{y})$ . $\blacksquare$
+
+\textbf{(12.4.7) 注记.} 在下一节中, 我们将证明 $k = 2$ 时的结果. 至于 $k = 3$ 的情况则由 (Brezzi \& Falk 1991) 处理.
+
+为了用混合方法近似标量椭圆问题 \eqref{eq:12.1.7} , 我们必须应对这样一个事实: 对应的形式 $a(\cdot, \cdot)$ 并非在所有的 $V$ 上都是强制的, 这与斯托克斯问题的情况不同. 显然, 它在以下空间上是强制的
+
+$$
+Z = \left\{ v \in H(\operatorname{div}) : \operatorname{div}\underset{\sim}{v} = 0 \right\}
+$$
+
+因此 \eqref{eq:12.2.6} 是适定的. 然而, 需要仔细处理以确保它在由 \eqref{eq:12.3.2} 给出的 $Z_{h}$ 上也是适定的. 一个简单的解决方案是确保 $Z_{h} \subset Z$ , 我们将展示一种实现方式.
+
+回到上一节的一般记号, 我们注意到 $\varPi_{h}$ 自然地与 $\mathcal{D}V_{h}$ 配对(在迄今为止研究的两个例子中, $\mathcal{D} = -\operatorname{div}$) . 如果我们取 $\varPi_{h} = \mathcal{D}V_{h}$ , 那么 $Z_{h}$ 的定义 \eqref{eq:12.3.2} 就保证了 $Z_{h} \subset Z$ , 而这反过来又保证了强制性. 例如, 我们可能取 $V_{h} = V_{h}^{k} \times V_{h}^{k}$ (参见 \eqref{eq:12.4.1}) , 并且对 \eqref{eq:12.4.6} 的证明表明
+
+\begin{equation}\label{eq:12.4.8}
+\inf_{\underset{\sim}{v} \in Z_{h}} \|\underset{\sim}{u} - \underset{\sim}{v}\|_{H^{1}(\Omega)^{2}} \leq C h^{k} \|\underset{\sim}{u}\|_{H^{k + 1}(\Omega)^{2}},
+\end{equation}
+
+因为这在将 $Z_{h}$ 替换为 $V_{h} \cap \left\{ v \in H^{1}(\Omega)^{2} : \operatorname{div}v = 0 \right\}$ 时也是成立的, 且后者是 $Z_{h}$ 的子集. 在下一章中, 我们将研究允许人们在没有 $\varPi_{h}$ 结构显式信息的情况下利用 $\varPi_{h} = \mathcal{D}V_{h}$ 进行计算的算法. 作为 \eqref{eq:12.3.5} 和 \eqref{eq:12.4.8} 的推论, 我们有以下结果.
+
+\textbf{(12.4.9) 定理.} 考虑针对 $n = 2$ 时的标量椭圆问题 \eqref{eq:12.1.7} 的混合方法, 其中形式 $a(\cdot, \cdot)$ 由 \eqref{eq:12.1.8} 给出. 令 (参见 \eqref{eq:12.4.1})
+
+$$
+V_{h} = V_{h}^{k} \times V_{h}^{k}
+$$
+
+并且令 $\varPi_{h} = \operatorname{div}V_{h}$ . 假设 $k \geq 4$ . 那么对于 $0 \leq s \leq k$ 
+
+$$
+\|\underset{\sim}{a} \operatorname{grad}p - \underset{\sim}{u}_{h}\|_{L^{2}(\Omega)^{2}} \leq C h^{s + 1} \|\underset{\sim}{a} \operatorname{grad}p\|_{H^{s + 1}(\Omega)^{2}}
+$$
+
+前提是 \eqref{eq:12.1.7} 的解 $p$ 满足 $\underset{\approx}{a} \operatorname{grad}p \in H^{s + 1}(\Omega)$ .
+
+类似地, 以下结果是 \eqref{eq:12.3.5} 和 \eqref{eq:12.4.6} 的推论.
+
+\textbf{(12.4.10) 定理.} 令 $v_{h}$ 由 \eqref{eq:12.4.1} 给出, 且令 $\varPi_{h} = \operatorname{div}v_{h}$ . 令 $u$ 和 $u_{h}$ 如定理 12.3.7 所述. 假设 $k \geq 4$ . 那么对于 $0 \leq s \leq k$ 
+
+$$
+\|\underset{\sim}{u} - \underset{\sim}{u}_{h}\|_{H^{1}(\Omega)^{2}} \leq C h^{s} \|\underset{\sim}{u}\|_{H^{s + 1}(\Omega)^{2}}
+$$
+
+前提是 \eqref{eq:12.1.6} 的解 $u$ 满足 $u \in H^{s + 1}(\Omega)^{2}$ .
+
+上述理论也可用于发展斯托克斯方程的非协调有限元近似. 定义 (参见 \eqref{eq:11.4.6}) 
+
+\begin{equation}
+\begin{aligned}
+a_{h}(\underset{\sim}{u}, \underset{\sim}{v}) &\mathrel{\text{:=}} \sum_{T \in \mathcal{T}^{h}} \int_{T} \operatorname{grad}_{h}\underset{\sim}{v} : \operatorname{grad}_{h}\underset{\sim}{w} dx \\
+b_{h}(\underset{\sim}{v}, q) &\mathrel{\text{:=}} - \sum_{T \in \mathcal{T}^{h}} \int_{T} \operatorname{div}_{h}\underset{\sim}{v} q dx
+\end{aligned}
+\end{equation}
+
+并且令 $\|v\|_{h} \mathrel{\text{:=}} \sqrt{a_{h}(v, v)}$ . 令 $V_{h}^{*}$ 为 \eqref{eq:11.4.5} 中定义的空间, 也就是说, $V_{h}^{*} \mathrel{\text{:=}} V_{h} \times V_{h}$ , 其中 $V_{h}$ 是 \eqref{eq:10.3.2} 中定义的空间. 令 $\varPi_{h}$ 表示在 $\mathcal{T}^{h}$ 上的分段常数函数 $q$ , 满足 $\int_{\Omega} q dx = 0$ . 定义 $u_{h} \in V_{h}^{*}$ 和 $p_{h} \in \varPi_{h}$ 使得
+
+\begin{equation}\label{eq:12.4.11}
+\begin{aligned}
+a_{h}(u_{h}, \underset{\sim}{v}) + b_{h}(v, p_{h}) &= \int_{\Omega} \underset{\sim}{f} \cdot \underset{\sim}{v} dx \;\forall \underset{\sim}{v} \in V_{h}^{*}, \\
+b_{h}(\underset{\sim}{u}_{h}, q) &= 0 \;\forall q \in \varPi_{h}.
+\end{aligned}
+\end{equation}
+
+\textbf{(12.4.12) 定理.} 如果 $u \in H^{2}(\Omega)^{2}$ 且 $p \in H^{1}(\Omega)$ , 那么
+
+$$
+\|u - u_{h}\|_{h} \leq C h \left( \|u\|_{H^{2}(\Omega)^{2}} + \|p\|_{H^{1}(\Omega)} \right).
+$$
+
+\textit{证明.} 令 $Z_{h} = \left\{ v \in V_{h}^{*} : b_{h}(v, q) = 0 \;\forall q \in \varPi_{h} \right\}$ . 由 \eqref{eq:10.1.10} 我们有
+
+$$
+\|\underset{\sim}{u} - u_{h}\|_{h} \leq \inf_{\underset{\sim}{v} \in Z_{h}} \|\underset{\sim}{u} - \underset{\sim}{v}\|_{h} + \sup_{\underset{\sim}{w} \in Z_{h} \setminus \{0\}} \frac{|a_{h}(\underset{\sim}{u} - u_{h}, \underline{w})|}{\|\underset{\sim}{w}\|_{h}}.
+$$
+
+注意 $a_{h}(\cdot, \cdot)$ 在 $V = H^{1}(\Omega)^{2}$ 上是强制的, 因为在 $V$ 上有 $a_{h}(\cdot, \cdot) = a(\cdot, \cdot)$ . 它在 $V_{h}^{*}$ 上是非退化的, 因为 $a_{h}(v, v) = 0$ 意味着 $v$ 是分段常数, 加上零边界条件以及在中点处的连续性意味着 $\underset{\sim}{v} \equiv 0$ . 那么在分部积分后我们有
+
+$$
+\begin{aligned}
+a_{h}(\underset{\sim}{u} - \underset{\sim}{u}_{h}, \underset{\sim}{w}) &= a_{h}(\underset{\sim}{u}, \underset{\sim}{w}) - \int_{\Omega} \underset{\sim}{f} \cdot \underset{\sim}{w} dx \\
+&= a_{h}(\underset{\sim}{u}, \underset{\sim}{w}) - \int_{\Omega} \left( -\Delta \underset{\sim}{u} + \operatorname{grad}p \right) \cdot \underset{\sim}{w} dx \quad &\text{(由 \eqref{eq:12.1.1})} \\
+&= \sum_{e} \int_{e} \sum_{i = 1,2} \frac{\partial u_{i}}{\partial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds - b_{h}(\underset{\sim}{w}, p)
+\end{aligned}
+$$
+
+为了记号的简单起见, 我们约定在 $\Omega$ 外 $w$ 被定义为零, 因此在边界边上“跳跃” $[w]$ 等同于 $w$ 本身. 由引理 10.3.7 和 10.3.9, 我们发现
+
+$$
+\left| \sum_{e} \int_{e} \sum_{i = 1,2} \frac{\partial u_{i}}{\partial \underset{\sim}{\nu}} [w_{i}] - p [\underset{\sim}{w} \cdot \underset{\sim}{\nu}] ds \right| \leq C h \left( \|u\|_{H^{2}(\Omega)^{2}} + \|p\|_{H^{1}(\Omega)} \right) \|\underline{w}\|_{h}.
+$$
+
+遵循定理 12.3.7 的推导, 我们发现
+
+$$
+\begin{aligned}
+\left| b_{h}(w, p) \right| &\leq \sqrt{2} \|w\|_{h} \inf_{q \in \varPi_{h}} \|p - q\|_{L^{2}(\Omega)} \\
+&\leq C h \|w\|_{h} \|p\|_{H^{1}(\Omega)}
+\end{aligned}
+$$
+
+对于所有 $w \in Z_{h}$ 都成立. 因此, 我们只需要证明
+
+$$
+\inf_{v \in Z_{h}} \|u - v\|_{h} \leq C h \|u\|_{H^{2}(\Omega)^{2}}
+$$
+
+令 $M_{h}$ 表示如图 10.5 所示的 Morley 空间. 那么 $\mathop{\operatorname{curl}}\limits_{\sim} M_{h} \subset Z_{h}$ (练习 12.x.11). 取 $v = \mathop{\operatorname{curl}}\limits_{\sim} \mathcal{I}^{h}\phi$ , 其中 $u = \mathop{\operatorname{curl}}\limits_{\sim} \phi$ (如同定理 12.4.5 的证明中那样) 即可完成证明. $\blacksquare$
+\subsubsection{离散 Inf-Sup 条件}
+
+在上一节中, 我们看到关于(速度)误差 $u - {u}_{h}$ 的误差估计可以根据空间 ${Z}_{h}$ 和 ${\varPi }_{h}$ 的逼近性质推导出来. 我们现在考虑关于 ${p}_{h}$ 的问题 \eqref{eq:12.3.4} 的适定性. 作为副产品, 我们将简化关于 ${Z}_{h}$ 的逼近问题, 将其转化为关于 ${V}_{h}$ 的逼近问题. 在定理 12.4.5、12.4.9 和 12.4.12 中, 关于 ${Z}_{h}$ 的逼近问题很容易解决, 但在其他情况下它要复杂得多. 我们证明 \eqref{eq:12.2.10} 限制在 $\left( {{V}_{h},{\varPi }_{h}}\right)$ 上的对应条件对于 ${Z}_{h}$ 的逼近性和 ${p}_{h}$ 的可解性都是至关重要的, 我们从后者开始讨论.
+
+\textbf{(12.5.1) 引理. (Inf-Sup 条件)} 为了使 \eqref{eq:12.3.4} 具有唯一解, 充要条件是
+
+\begin{equation}\label{eq:12.5.2}
+0 < \beta :=\mathop{\inf }\limits_{{q \in  {\varPi }_{h}}}\mathop{\sup }\limits_{{v \in  {V}_{h}}}\frac{\left| b\left( v,q\right) \right| }{\| v\|_{V}\| q\|_{\varPi }}.
+\end{equation}
+
+\textit{证明.} 如果 $\beta  = 0$ , 那么 ${\varPi }_{h}$ 的有限维性将意味着存在一个 $q \in  {\varPi }_{h}$ 使得对于所有 $v \in  {V}_{h}$ 都有 $b\left( {v,q}\right)  = 0$ (练习 12.x.7) . 这证明了 inf-sup 条件的必要性.
+
+另一方面, $\beta  > 0$ 意味着 \eqref{eq:12.3.4} 的唯一性, 因为 \eqref{eq:12.5.2} 等价于
+
+\begin{equation}\label{eq:12.5.3}
+\beta \| q\|_{\varPi } \leq  \mathop{\sup }\limits_{{v \in  {V}_{h}}}\frac{\left| b\left( v,q\right) \right| }{\| v\|_{V}}\;\forall q \in  {\varPi }_{h}.
+\end{equation}
+
+我们现在考虑 \eqref{eq:12.3.4} 的可解性.
+
+\eqref{eq:12.3.4} 的右手边对所有的 $v \in  {Z}_{h}$ 都为零. 因此, \eqref{eq:12.3.4} 等价于
+
+\begin{equation}\label{eq:12.5.4}
+b\left( {v,{p}_{h}}\right)  =  - a\left( {{u}_{h},v}\right)  + F\left( v\right) \;\forall v \in  {Z}_{h}^{ \bot  }
+\end{equation}
+
+其中
+
+\begin{equation}\label{eq:12.5.5}
+{Z}_{h}^{ \bot  }:=\left\{  {v \in  {V}_{h} : {\left( v,z\right) }_{V} = 0\;\forall z \in  {Z}_{h}}\right\}  .
+\end{equation}
+
+一旦我们看到 $\dim {Z}_{h}^{ \bot  } = \dim {\varPi }_{h}$ , 那么 \eqref{eq:12.5.4} 就代表一个方阵系统, 且唯一性蕴含着存在性. 但我们可以将 ${Z}_{h}$ 视为映射的核:
+
+$$
+T : {V}_{h} \rightarrow  {\mathbb{R}}^{\dim {\varPi }_{h}}\text{ 其中 }{\left( Tv\right) }_{i}:=b\left( {v,{q}_{i}}\right)
+$$
+
+并且 $\left\{  {{q}_{i} : i = 1,\ldots ,\dim {\varPi }_{h}}\right\}$ 是 ${\varPi }_{h}$ 的一组基. 如果 $T$ 不是满射的, 那么存在一个非平凡的系数向量 $\left( {c}_{i}\right)$ , 使得对于所有的 $v \in  {V}_{h}$ 都有
+
+$$
+\sum\limits_{{i = 1}}^{{\dim {\varPi }_{h}}}{c}_{i}{\left( Tv\right) }_{i} = 0
+$$
+
+通过 $q = \sum\limits_{{i = 1}}^{{\dim {\varPi }_{h}}}{c}_{i}{q}_{i}$ 定义 $0 \neq  q \in  {\varPi }_{h}$ . 那么对于所有 $v \in  {V}_{h}$ 有 $b\left( {v,q}\right)  = 0$ , 这与 $\beta  > 0$ 矛盾. 因此, $T$ 必须是满射的, 进而
+
+$$
+\dim {Z}_{h} = \dim \text{ kernel } T = \dim {V}_{h} - \dim \text{ image } T = \dim {V}_{h} - \dim {\varPi }_{h}.
+$$
+
+当然, $\dim {V}_{h} = \dim {Z}_{h} + \dim {Z}_{h}^{ \bot  }$ 因为 ${V}_{h} = {Z}_{h} \oplus  {Z}_{h}^{ \bot  }$ . 因此, $\dim {Z}_{h}^{ \bot  } = \dim {V}_{h} - \dim {Z}_{h} = \dim {\varPi }_{h}.$
+
+让我们引入一个与问题 \eqref{eq:12.3.4} 相关的解算子. 定义 $M : {Z}_{h}^{ \bot  } \rightarrow  {\varPi }_{h}$ 为
+
+\begin{equation}\label{eq:12.5.6}
+b\left( {v,{Mu}}\right)  = {\left( u,v\right) }_{V}\;\forall v \in  {V}_{h}.
+\end{equation}
+
+很容易看出 (练习 12.x.8) 
+
+$$
+\| M\|_{V \rightarrow  \varPi }:=\mathop{\sup }\limits_{{0 \neq  u \in  {V}_{h}}}\frac{\| {Mu}\|_{\varPi }}{\| u\|_{V}} \leq  \frac{1}{\beta }
+$$
+
+其中 $\beta$ 是 \eqref{eq:12.5.2} 中的常数.
+
+存在一个算子 $L : {\varPi }_{h} \rightarrow  {Z}_{h}^{ \bot  }$ (见 \eqref{eq:12.5.5}) , 定义为
+
+\begin{equation}\label{eq:12.5.7}
+b\left( {{Lp},q}\right)  = {\left( p,q\right) }_{\varPi }\;\forall q \in  {\varPi }_{h}
+\end{equation}
+
+因为 \eqref{eq:12.5.7} 代表一个方阵系统 (见引理 12.5.1 的证明) , 且唯一性由 ${Z}_{h} \cap  {Z}_{h}^{ \bot  } = \{ 0\}$ 这一事实所保证. $L$ 是 $M$ 的伴随算子, 意义在于
+
+\begin{equation}\label{eq:12.5.8}
+{\left( p,Mu\right) }_{\varPi } = b\left( {{Lp},{Mu}}\right)  = {\left( u,Lp\right) }_{V}\;\forall u \in  {V}_{h},p \in  {\varPi }_{h}.
+\end{equation}
+
+$M$ 和 $L$ 的范数有如下关系:
+
+\begin{align*}
+\| L\|_{\varPi  \rightarrow  V} &\mathrel{\text{ := }} \mathop{\sup }\limits_{{0 \neq  p \in  {\varPi }_{h}}}\frac{\| {Lp}\|_{V}}{\| p\|_{\varPi }} \\
+&= \mathop{\sup }\limits_{{0 \neq  p \in  {\varPi }_{h}}}\mathop{\sup }\limits_{{0 \neq  u \in  {V}_{h}}}\frac{{\left( u,Lp\right) }_{V}}{\| u\|_{V}\| p\|_{\varPi }}\quad \text{(练习 2.x.16)} \\
+&= \mathop{\sup }\limits_{{0 \neq  p \in  {\varPi }_{h}}}\mathop{\sup }\limits_{{0 \neq  u \in  {V}_{h}}}\frac{{\left( Mu,p\right) }_{\varPi }}{\| u\|_{V}\| p\|_{\varPi }} \quad \text{(由 \eqref{eq:12.5.8})} \\
+&= \| M\|_{V \rightarrow  \varPi }.
+\end{align*}
+
+我们可以将 ${Lp}$ 刻画为欠定问题——寻找 $v \in  {V}_{h}$ 使得 $b\left( {v,q}\right)  = {\left( p,q\right) }_{\varPi }\;\forall q \in  {\varPi }_{h}$ ——的最小范数解. 更准确地说, ${Lp} \in  {Z}_{h}^{ \bot  }$ 意味着 (见练习 12.x.9) 
+
+\begin{equation}\label{eq:12.5.9}
+\| {Lp}\|_{V} = \mathop{\min }\limits_{{v \in  {Z}_{h}^{p}}}\| v\|_{V}
+\end{equation}
+
+其中 ${Z}_{h}^{p}:=\left\{  {v \in  {V}_{h} : b\left( {v,q}\right)  = {\left( p,q\right) }_{\varPi }\forall q \in  {\varPi }_{h}}\right\}$ . 因此,
+
+\begin{align*}
+\frac{1}{\| L\|_{\varPi  \rightarrow  V}} &= \mathop{\inf }\limits_{{0 \neq  p \in  {\varPi }_{h}}}\frac{\| p\|_{\varPi }}{\| {Lp}\|_{V}} \\
+&= \mathop{\inf }\limits_{{0 \neq  p \in  {\varPi }_{h}}}\mathop{\sup }\limits_{{0 \neq  v \in  {Z}_{h}^{p}}}\frac{\| p\|_{\varPi }}{\| v\|_{V}} \quad \text{(由 \eqref{eq:12.5.9})} \\
+&= \mathop{\inf }\limits_{{0 \neq  p \in  {\varPi }_{h}}}\mathop{\sup }\limits_{{0 \neq  v \in  {Z}_{h}^{p}}}\frac{{\left( p,p\right) }_{\varPi }}{\| p\|_{\varPi }\| v\|_{V}} \\
+&= \mathop{\inf }\limits_{{0 \neq  p \in  {\varPi }_{h}}}\mathop{\sup }\limits_{{0 \neq  v \in  {Z}_{h}^{p}}}\frac{b\left( {v,p}\right) }{\| p\|_{\varPi }\| v\|_{V}}\quad \text{( }{Z}_{h}^{p}\text{ 的定义)} \\
+&\leq  \mathop{\inf }\limits_{{0 \neq  p \in  {\varPi }_{h}}}\mathop{\sup }\limits_{{0 \neq  v \in  {V}_{h}}}\frac{b\left( {v,p}\right) }{\| p\|_{\varPi }\| v\|_{V}}\quad \left( {{Z}_{h}^{p} \subset  {V}_{h}}\right) 
+\end{align*}
+
+这意味着 $\| L\|_{\varPi  \rightarrow  V} \geq  1/\beta$ . 我们将上述结果总结如下.
+
+\textbf{(12.5.10) 引理.} 条件 \eqref{eq:12.5.2} 等价于算子 $L$ 和 $M$ 的存在性 (分别在 \eqref{eq:12.5.7} 和 \eqref{eq:12.5.6} 中定义) , 且满足 $\| L\|_{\varPi  \rightarrow  V} = \| M\|_{V \rightarrow  \varPi } = 1/\beta .$
+
+\textit{证明.} $L$ 和 $M$ 的存在性以及它们范数的计算刚刚已经得到证明. 逆命题留给读者作为练习 12.x.10. $\blacksquare$
+
+关于 $p - {p}_{h}$ 的误差估计推导如下. 通过将 \eqref{eq:12.2.8} 和 \eqref{eq:12.3.1} 中的第一个方程相减, 我们得到如下关系:
+
+\begin{equation}\label{eq:12.5.11}
+b\left( {v,p - {p}_{h}}\right)  =  - a\left( {u - {u}_{h},v}\right) \;\forall v \in  {V}_{h}.
+\end{equation}
+
+对于任意 $q \in  {\varPi }_{h}$ , 我们有
+
+\begin{align*}
+\beta {\begin{Vmatrix}q - {p}_{h}\end{Vmatrix}}_{\varPi } &\leq  \mathop{\sup }\limits_{{v \in  {V}_{h}}}\frac{\left| b\left( v,q - {p}_{h}\right) \right| }{\| v\|_{V}} \quad \text{(由 \eqref{eq:12.5.3})} \\
+&= \mathop{\sup }\limits_{{v \in  {V}_{h}}}\frac{\left| b\left( v,p - {p}_{h}\right)  + b\left( v,q - p\right) \right| }{\| v\|_{V}} \\
+&= \mathop{\sup }\limits_{{v \in  {V}_{h}}}\frac{\left| -a\left( u - {u}_{h},v\right)  + b\left( v,q - p\right) \right| }{\| v\|_{V}} \quad \text{(由 \eqref{eq:12.5.11})} \\
+&\leq  C\left( {{\begin{Vmatrix}u - {u}_{h}\end{Vmatrix}}_{V} + \| q - p\|_{\varPi }}\right) . \quad \text{(由 \eqref{eq:12.2.1})}
+\end{align*}
+
+下面的结果就是三角不等式的推论.
+
+\textbf{(12.5.12) 定理.} 令 ${V}_{h} \subset  V$ 且 ${\varPi }_{h} \subset  \varPi$ . 令 $u$ 和 $p$ 等价地由 \eqref{eq:12.2.8} 决定，或者由 \eqref{eq:12.2.6} 和 \eqref{eq:12.2.9} 决定, 并令 ${u}_{h}$ 等价地由 \eqref{eq:12.3.1} 或 \eqref{eq:12.3.3} 决定. 假设 \eqref{eq:12.5.2} 中 $\beta  > 0$ . 那么对于 \eqref{eq:12.3.4} 存在唯一解 ${p}_{h}$ , 且满足
+
+$$
+{\begin{Vmatrix}p - {p}_{h}\end{Vmatrix}}_{\varPi } \leq  \frac{C}{\beta }{\begin{Vmatrix}u - {u}_{h}\end{Vmatrix}}_{V} + \left( {1 + \frac{C}{\beta }}\right) \mathop{\inf }\limits_{{q \in  {\varPi }_{h}}}\| p - q\|_{\varPi }
+$$
+
+其中 $C$ 由 \eqref{eq:12.2.1} 给出.
+
+\textbf{(12.5.13) 推论.} 在定理 12.5.12 和 12.3.7 的条件下,
+
+$$
+{\begin{Vmatrix}p - {p}_{h}\end{Vmatrix}}_{\varPi } \leq  c\mathop{\inf }\limits_{{v \in  {Z}_{h}}}\| u - v\|_{V} + \left( {1 + c}\right) \mathop{\inf }\limits_{{q \in  {\varPi }_{h}}}\| p - q\|_{\varPi },
+$$
+
+其中 $c:=\frac{C}{\beta }\left( {1 + \frac{C}{\alpha }}\right)$ .
+
+我们现在展示 \eqref{eq:12.5.2} 是如何参与到 ${Z}_{h}$ 的逼近性中的. 为此, 我们回到完整的问题 \eqref{eq:12.2.4} , 并考虑通过以下方式对其进行近似.
+
+对于 ${V}_{h} \subset  V$ 和 ${\varPi }_{h} \subset  \varPi$ , 且 $F \in  {V}^{\prime }$ 和 $G \in  {\varPi }^{\prime }$ , 寻找 ${u}_{h} \in  {V}_{h}$ 和 ${p}_{h} \in  {\varPi }_{h}$ 使得
+
+\begin{equation}\label{eq:12.5.14}
+\begin{aligned}
+a\left( {{u}_{h},v}\right)  + b\left( {v,{p}_{h}}\right)  &= F\left( v\right) \;\forall v \in  {V}_{h} \\
+b\left( {{u}_{h},q}\right)  &= G\left( q\right) \;\forall q \in  {\varPi }_{h}.
+\end{aligned}
+\end{equation}
+
+观察到 ${u}_{h}$ 位于仿射集
+
+\begin{equation}\label{eq:12.5.15}
+{Z}_{h}^{G}:=\left\{  {v \in  {V}_{h} : b\left( {v,q}\right)  = G\left( q\right) \;\forall q \in  {\varPi }_{h}}\right\}  .
+\end{equation}
+
+特别地, ${Z}_{h}^{0} = {Z}_{h}$ . 类似地, 我们可以定义
+
+\begin{equation}\label{eq:12.5.16}
+{Z}^{G}:=\{ v \in  V : b\left( {v,q}\right)  = G\left( q\right) \;\forall q \in  \varPi \} .
+\end{equation}
+
+如果 $(u, p)$ 表示 \eqref{eq:12.2.4} 的解, 那么 $u \in  {Z}^{G}$ , 且 ${Z}^{0} = Z$ .
+
+我们现在研究关于从 ${Z}_{h}^{G}$ 中对 $u$ 的逼近与整个空间 ${V}_{h}$ 的逼近之间的关系. 对于任意 $v \in  {V}_{h}$ , 令 $w \in  {V}_{h}$ 满足
+
+$$
+b\left( {w,q}\right)  = b\left( {u - v,q}\right) \;\forall q \in  {\varPi }_{h}.
+$$
+
+因此, $w = L{P}_{{\varPi }_{h}}\mathcal{D}\left( {u - v}\right)$ (见 \eqref{eq:12.5.7}) , 引理 12.5.10 和 \eqref{eq:12.2.2} 意味着
+
+$$
+\| w\|_{V} \leq  \frac{1}{\beta }\| \mathcal{D}\left( {u - v}\right) \|_{\varPi } \leq  \frac{C}{\beta }\| u - v\|_{V}.
+$$
+
+根据 $w$ 的定义, 只要 $u \in  {Z}^{G}$ , 我们就有 $v + w \in  {Z}_{h}^{G}$ . 此外,
+
+\begin{align*}
+\| u - \left( {v + w}\right) \|_{V} &\leq  \| u - v\|_{V} + \| w\|_{V} \\
+&\leq  \left( {1 + \frac{C}{\beta }}\right) \| u - v\|_{V}.
+\end{align*}
+
+因此, 我们证明了以下结果.
+
+\textbf{(12.5.17) 定理.} 令 ${V}_{h} \subset  V$ 且 ${\varPi }_{h} \subset  \varPi$ , 并分别由 \eqref{eq:12.5.16} 和 \eqref{eq:12.5.15} 定义 ${Z}^{G}$ 和 ${Z}_{h}^{G}$ . 假设在 \eqref{eq:12.5.2} 中 $\beta  > 0$ . 那么对于所有的 $u \in  {Z}^{G}$
+
+$$
+\mathop{\inf }\limits_{{z \in  {Z}_{h}^{G}}}\| u - z\|_{V} \leq  \left( {1 + \frac{C}{\beta }}\right) \mathop{\inf }\limits_{{v \in  {V}_{h}}}\| u - v\|_{V}.
+$$
+
+\textbf{(12.5.18) 推论.} 令 $(u, p)$ 表示 \eqref{eq:12.2.4} 的解, 并且令 $\left( {{u}_{h},{p}_{h}}\right)$ 表示 \eqref{eq:12.5.14} 的解. 存在一个常数 $c$ , 仅依赖于 \eqref{eq:12.2.1} 中的常数 $C$ 、 \eqref{eq:12.2.7} 中的 $\alpha$ 以及 \eqref{eq:12.5.2} 中的 $\beta$ , 使得
+
+$$
+{\begin{Vmatrix}u - {u}_{h}\end{Vmatrix}}_{V} + {\begin{Vmatrix}p - {p}_{h}\end{Vmatrix}}_{\varPi } \leq  c\left( {\mathop{\inf }\limits_{{v \in  {V}_{h}}}\| u - v\|_{V} + \mathop{\inf }\limits_{{q \in  {\varPi }_{h}}}\| p - q\|_{\varPi }}\right) .
+$$
+
+\textit{证明.} 修改引理 10.1.1 的证明 (参见练习 12.x.13) , 我们发现
+
+\begin{equation}\label{eq:12.5.19}
+\begin{aligned}
+{\begin{Vmatrix}u - {u}_{h}\end{Vmatrix}}_{V} \leq  \left( {1 + \frac{C}{\alpha }}\right) \mathop{\inf }\limits_{{v \in  {Z}_{h}^{G}}}\| u - v\|_{V} + \frac{1}{\alpha }\mathop{\sup }\limits_{{0 \neq  w \in  {Z}_{h}^{0}}}\frac{\left| a\left( u - {u}_{h},w\right) \right| }{\| w\|_{V}}.
+\end{aligned}
+\end{equation}
+
+从定理 12.3.7 的证明中, 我们有
+
+$$
+\left| {a\left( {u - {u}_{h},w}\right) }\right|  \leq  C\| w\|_{V}\mathop{\inf }\limits_{{q \in  {\varPi }_{h}}}\| p - q\|_{\varPi }
+$$
+
+对于所有的 $w \in  {Z}_{h}^{0}$ 成立. 因此, 关于 $u - {u}_{h}$ 的估计可由定理 12.5.17 得出. 关于 $p - {p}_{h}$ 的估计可由定理 12.5.12 得出. $\blacksquare$
+
+没有一种通用的方法来验证 \eqref{eq:12.5.2} , 但在这里我们指出一种简单的情况. 假设以下假定成立.
+
+(12.5.20) 存在一个算子 ${T}_{h} : V \rightarrow  {V}_{h}$ , 具有以下性质:
+
+\begin{equation}\label{eq:12.5.20}
+\mathcal{D}{T}_{h}v = {P}_{{\varPi }_{h}}\mathcal{D}v\;\text{ 并且 }\;{\begin{Vmatrix}{T}_{h}v\end{Vmatrix}}_{V} \leq  B\| v\|_{V}\;\forall v \in  V,
+\end{equation}
+
+其中常数 $B < \infty$ , ${P}_{{\varPi }_{h}}$ 表示关于内积 ${\left( \cdot , \cdot  \right) }_{\varPi }$ 在 ${\varPi }_{h}$ 上的投影. 进一步假设 $\mathcal{D}$ 是有界可逆的, 即
+
+\begin{equation}\label{eq:12.5.21}
+\text{对于任意 } p \in  \varPi \text{, 存在 } v \in  V \text{ 使得 } \mathcal{D}v = p \text{ 且 } \| v\|_{V} \leq  C\| p\|_{\varPi }.
+\end{equation}
+
+那么对于任意 $p \in  {\varPi }_{h}$ 我们有
+
+\begin{align*}
+{\left( p,p\right) }_{\varPi } &= \left( {p,\mathcal{D}v}\right) \quad \text{(由 \eqref{eq:12.5.21})} \\
+&= \left( {p,{P}_{{\varPi }_{h}}\mathcal{D}v}\right) \quad \text{(因为 } p \in  {\varPi }_{h} \text{)} \\
+&= \left( {p,\mathcal{D}{T}_{h}v}\right) \quad \text{(由 \eqref{eq:12.5.20})} \\
+&= b\left( {{T}_{h}v,p}\right) . \quad \text{(由 \eqref{eq:12.2.3})}
+\end{align*}
+
+因此,
+
+\begin{align*}
+\| p\|_{\varPi } &= \frac{b\left( {{T}_{h}v,p}\right) }{\| p\|_{\varPi }} \\
+&\leq  C\frac{b\left( {{T}_{h}v,p}\right) }{\| v\|_{V}} \quad \text{(由 \eqref{eq:12.5.21})} \\
+&\leq  {CB}\frac{b\left( {{T}_{h}v,p}\right) }{{\begin{Vmatrix}{T}_{h}v\end{Vmatrix}}_{V}}. \quad \text{(由 \eqref{eq:12.5.20})}
+\end{align*}
+
+因此, 我们证明了以下结果.
+
+\textbf{(12.5.22) 引理.} 假设条件 \eqref{eq:12.5.20} 和 \eqref{eq:12.5.21} 成立. 则 \eqref{eq:12.5.2} 成立且 $\beta  = \frac{1}{CB}$ .
+
+在下一节中, 我们将给出一个构造所需算子 ${T}_{h}$ 的例子. 这样一种构造在一般情况下并不显然, 但我们现在指出 \eqref{eq:12.5.2} 意味着这样一个 ${T}_{h}$ 必定总是存在. 给定 $u \in  V$ , 通过求解以下问题来定义 ${u}_{h} = {T}_{h}u$ :
+
+\begin{align*}
+a\left( {{u}_{h},v}\right)  + b\left( {v,{p}_{h}}\right)  &= a\left( {u,v}\right) \;\forall v \in  {V}_{h} \\
+b\left( {{u}_{h},q}\right)  &= b\left( {u,q}\right) \;\forall q \in  {\varPi }_{h},
+\end{align*}
+
+这对应于用 $F\left( v\right) :=a\left( {u,v}\right)$ 和 $G\left( q\right) :=b\left( {u,q}\right)$ 来近似 \eqref{eq:12.2.4} . 考虑到 \eqref{eq:12.2.3} , 第二个方程简而言之就是声明 $\mathcal{D}{u}_{h} = {P}_{{\varPi }_{h}}\mathcal{D}u$ . 具有这些数据的 \eqref{eq:12.2.4} 的解当然是数对 $(u,0)$ , 因此推论 12.5.18 意味着
+
+$$
+{\begin{Vmatrix}u - {u}_{h}\end{Vmatrix}}_{V} \leq  c\| u\|_{V}
+$$
+
+因此, 根据三角不等式, \eqref{eq:12.5.20} 在 $B = 1 + c$ 时成立. 因此, 我们证明了以下定理.
+
+\textbf{(12.5.23) 定理.} 假设 \eqref{eq:12.5.21} 成立. 则条件 \eqref{eq:12.5.2} 和 \eqref{eq:12.5.20} 是等价的.
+\subsubsection{Inf-Sup 条件的验证}
+
+我们现在推导针对泰勒-胡德(Taylor-Hood)空间特例的 (12.5.2) , 即由 (12.4.1) 给出的 $v_{h}$ 和如 (12.4.4) 所示的 $\varPi_{h}$ , 用于近似斯托克斯方程. 我们将讨论限制在 $k = 2$ 的情况. 我们使用一种将问题简化为局部估计的一般技术.
+
+令 $p \in \varPi_{h}$ . 因为在这种情况下 $\varPi_{h} \subset H^{1}(\Omega)$ , 我们有
+
+$$
+b(\underset{\sim}{v},p) = \int_{\Omega} \underset{\sim}{v} \cdot \operatorname{grad}p dx.
+$$
+
+对于 $\mathcal{T}^{h}$ 中三角形的每条边 $e$ , 令 $\tau_{e}$ 表示相切于 $e$ 的单位向量, $\nu_{e}$ 表示单位法向量, $m_{e}$ 表示边的中点. 对于每条内部边, 选择
+
+\begin{align*}
+\underset{\sim}{v}(m_{e}) \cdot \tau_{e} &= (|T_{e,1}| + |T_{e,2}|) [\tau_{e} \cdot \operatorname{grad}p(m_{e})], \\
+\underset{\sim}{v}(m_{e}) \cdot \nu_{e} &= 0,
+\end{align*}
+
+其中 $T_{e,1}$ 和 $T_{e,2}$ 是 $\mathcal{T}^{h}$ 中以 $e$ 为公共边的两个三角形. 注意 $\tau_{e} \cdot \operatorname{grad}p(m_{e})$ 是无歧义的, 因为 $\operatorname{grad}p$ 的切向分量跨边是连续的. 我们在所有顶点和所有边界边中点处设置 $v = 0$ . 令 $r_{T}$ 表示 $T \in \mathcal{T}^{h}$ 的内部边数量, 也就是说, 如果 $T$ 在内部则 $r_{T} = 3$ , 如果有一条边在 $\partial \Omega$ 上则 $r_{T} = 2$ . 我们假设 $\mathcal{T}^{h}$ 中没有任何三角形有两条边在 $\partial \Omega$ 上. 对于给定的 $T \in \mathcal{T}^{h}$ , 令 $e^{i} (1 \leq i \leq r_{T})$ 表示内部边. 那么我们有
+
+\begin{align*}
+\int_{T} \underset{\sim}{v} \cdot \operatorname{grad}p dx &= \frac{|T|}{3} \sum_{i = 1}^{r_{T}} (\underset{\sim}{v} \cdot \operatorname{grad}p)(m_{e^{i}}) \\
+&= \frac{|T|}{3} \sum_{i = 1}^{r_{T}} \left( \sum_{j = 1}^{2} |T_{e^{i},j}| \tau_{e^{i}} \cdot \operatorname{grad}p(m_{e^{i}})^{2} \right) \\
+&= \frac{|T|}{3} \sum_{i = 1}^{r_{T}} \left( \sum_{j = 1}^{2} |T_{e^{i},j}| |\tau_{e^{i}} \cdot (\operatorname{grad}p|_{T})^{2}|^{2} \right) \quad (\operatorname{grad}p \text{ 在 } T \text{ 上是常数}) \\
+&\geq |T|^{2} c_{\rho} |\operatorname{grad}p|_{T}|^{2} \\
+&= c_{\rho} |T| \int_{T} |\operatorname{grad}p|^{2} dx
+\end{align*}
+
+对 $T \in \mathcal{T}^{h}$ 求和得到
+
+\begin{equation}\label{eq:12.6.1}
+b(\underset{\sim}{v},p) \geq c_{\rho} \sum_{T \in \mathcal{T}^{h}} |T| |p|_{H^{1}(T)}^{2}.
+\end{equation}
+
+$v$ 的定义也意味着 (参见练习 12.x.15)
+
+\begin{equation}\label{eq:12.6.2}
+\|\underset{\sim}{v}\|_{H^{1}(\Omega)^{2}} \leq C \left[ \sum_{T \in \mathcal{T}^{h}} |T| |p|_{H^{1}(T)}^{2} \right]^{1/2}.
+\end{equation}
+
+令 $K > 0$ 为一个任意常数 (稍后选取) , 并定义
+
+$$
+\varPi_{h}^{K} = \left\{ q \in \varPi_{h} : \|q\|_{L^{2}(\Omega)} \leq K \left[ \sum_{T \in \mathcal{T}^{h}} |T| |q|_{H^{1}(T)}^{2} \right]^{1/2} \right\}.
+$$
+
+对于 $p \in \varPi_{h}^{K}$ 以及如上定义的 $\underset{\sim}{v}$ ,
+
+\begin{align*}
+\frac{b(v,p)}{\|v\|_{H^{1}(\Omega)^{2}}} &\geq c_{\rho} \frac{\sum_{T \in \mathcal{T}^{h}} |T| |p|_{H^{1}(T)}^{2}}{\|v\|_{H^{1}(\Omega)^{2}}} \quad \text{(由 (12.6.1))} \\
+&\geq \frac{c_{\rho}}{K} \frac{\left[ \sum_{T \in \mathcal{T}^{h}} |T| |p|_{H^{1}(T)}^{2} \right]^{1/2} \|p\|_{L^{2}(\Omega)}}{\|\underset{\sim}{v}\|_{H^{1}(\Omega)^{2}}} \quad (p \in \varPi_{h}^{K}) \\
+&\geq \frac{c_{\rho}}{CK} \|p\|_{L^{2}(\Omega)}. \quad \text{(由 (12.6.2))}
+\end{align*}
+
+这证明了对于给定 $K$ 时 $p \in \varPi_{h}^{K}$ 的 (12.5.3) .
+
+对于 $p \notin \varPi_{h}^{K}$ , 我们进行如下操作. 根据引理 11.2.3 或 (Girault \& Raviart 1986, Arnold, Scott \& Vogelius 1988) , 我们可选取 $u \in H^{1}(\Omega)^{2}$ 使得
+
+$$
+-\operatorname{div}\underset{\sim}{u} = p \text{ in } \Omega
+$$
+
+\begin{equation}\label{eq:12.6.3}
+\|\underset{\sim}{u}\|_{H^{1}(\Omega)^{2}} \leq \widetilde{C} \|p\|_{L^{2}(\Omega)}.
+\end{equation}
+
+令 $\underset{\sim}{u}_{h} \in v_{h}$ 满足
+
+\begin{equation}\label{eq:12.6.4}
+\|u_{h}\|_{H^{1}(\Omega)^{2}} + \left[ \sum_{T \in \mathcal{T}^{h}} |T|^{-1} \|u - u_{h}\|_{L^{2}(T)^{2}}^{2} \right]^{1/2} \leq C^{*} \|u\|_{H^{1}(\Omega)^{2}}
+\end{equation}
+
+(关于构造见 4.8 节) . 那么
+
+\begin{align*}
+b(u_{h},p) &= \|p\|_{L^{2}(\Omega)}^{2} - b(u - u_{h},p) \quad (\text{因为 } -\operatorname{div}u = p) \\
+&\geq \|p\|_{L^{2}(\Omega)}^{2} - \left[ \sum_{T \in \mathcal{T}^{h}} |T|^{-1} \|u - u_{h}\|_{L^{2}(T)^{2}}^{2} \right]^{1/2} \left[ \sum_{T \in \mathcal{T}^{h}} |T| |p|_{H^{1}(T)}^{2} \right]^{1/2} \quad \text{(由 (2.1.5))} \\
+&\geq \|p\|_{L^{2}(\Omega)}^{2} - \widetilde{C}C^{*} \|p\|_{L^{2}(\Omega)} \left[ \sum_{T \in \mathcal{T}^{h}} |T| |p|_{H^{1}(T)}^{2} \right]^{1/2} \quad \text{(由 (12.6.3) \& (12.6.4))} \\
+&\geq \|p\|_{L^{2}(\Omega)}^{2} \left( 1 - \frac{\widetilde{C}C^{*}}{K} \right) \\
+&\geq \|p\|_{L^{2}(\Omega)} \left( \frac{1}{\widetilde{C}C^{*}} - \frac{1}{K} \right) \|\underset{\sim}{u}_{h}\|_{H^{1}(\Omega)^{2}}. \quad \text{(由 (12.6.3) \& (12.6.4))}
+\end{align*}
+
+因此, 对于足够大的 $K$ , 我们证明了针对 $p \notin \varPi_{h}^{K}$ 的 (12.5.3) .
+
+结合这两种情况, 我们证明了以下结果.
+
+\textbf{(12.6.6) 定理.} 假设 $\mathcal{T}^{h}$ 是非退化的, 并且没有在 $\partial \Omega$ 上有两条边的三角形. 令 $v_{h}$ 如 (12.4.1) 所示, 且令 $\varPi_{h}$ 如 (12.4.4) 所示. 那么对于 $k = 2$ 的情况, 条件 (12.5.3) , 即
+
+$$
+\beta \|q\|_{L^{2}(\Omega)} \leq \sup_{\underset{\sim}{v} \in v_{h}} \frac{|b(\underset{\sim}{v},q)|}{\|\underset{\sim}{v}\|_{H^{1}(\Omega)^{2}}} \;\forall q \in \varPi_{h},
+$$
+
+(或等价形式 (12.5.2) ) 成立, 且 $\beta > 0$ 独立于 $h$ .
+
+作为该定理和推论 12.5.18 的推论, 我们有以下结果.
+
+\textbf{(12.6.7) 定理.} 假设 $\mathcal{T}^{h}$ 是非退化的, 并且没有在 $\partial \Omega$ 上有两条边的三角形. 令 $k = 2$ 时的 $v_{h}$ 如 (12.4.1) 所示, $\varPi_{h}$ 如 (12.4.4) 所示. 令 $(u,p)$ 为 (12.1.6) 的解. 令 $(u_{h},p_{h})$ 是利用 (12.1.4) 和 (12.1.5) 给出的形式求解 (12.3.1) 得到的解. 那么对于 $0 \leq s \leq 2$ 
+
+$$
+\|u - u_{h}\|_{H^{1}(\Omega)^{2}} + \|p - p_{h}\|_{L^{2}(\Omega)} \leq C h^{s} \left( \|u\|_{H^{s + 1}(\Omega)^{2}} + \|p\|_{H^{s}(\Omega)} \right)
+$$
+
+前提是 $(u,p) \in H^{s + 1}(\Omega)^{2} \times H^{s}(\Omega)$ .
+
+定理 12.6.6 和 12.6.7 对所有 $k \geq 2$ 成立 (参见 Brezzi \& Falk 1991) . 在网格满足一些温和限制的情况下, $k \geq 4$ 的情况是下面定理 12.6.10 的推论. 类似的技术适用于其他空间 $v_{h}$ 和 $\varPi_{h}$ 的选择. 其基本理念是选取 $\operatorname{div}v$ 来匹配“局部”的 $p \in \varPi_{h}^{K}$ , 然后针对 $p \notin \varPi_{h}^{K}$ 使用一般论证 (12.6.5) (Scott \& Vogelius 1985a) .
+
+由于 $\operatorname{div}v_{h}$ 与 $\varPi_{h}$ 自然配对, 探讨选择 $\varPi_{h} = \operatorname{div}v_{h}$ 是否总是满足 (12.5.2) 是很有趣的. 在 13.1 节中, 我们将展示如何高效地求解 (12.5.14) 而无需 $\varPi_{h} = \operatorname{div}v_{h}$ 的显式基底, 从而大大简化求解过程. 因为任意 $p \in \varPi_{h}$ 都具有 $p = \operatorname{div}w$ 的形式 (对于某个 $w \in v_{h}$ ) , 在 (12.5.2) 中选择 $v = w$ 根据紧致性论证可以得出结论: 对于有限维的 $v_{h}$ 有 $\beta > 0$ . 然而, 更关键的问题是 $\beta$ 的选择是否可以独立于 $h$ . 事实证明这强烈依赖于分段多项式的次数 $k$ .
+
+令 $v_{h}$ 表示在 $k \geq 1$ 时由 (12.4.1) 定义的空间, 并令 $\varPi_{h} = \operatorname{div}v_{h}$ . 关于以下结果的验证, 我们参考 (Scott \& Vogelius 1985b) . 对于非常一般网格上的 $k = 1$ , 相应的 $Z_{h}$ 仅包含恒等为零的函数 (参见 (11.3.8)) . 与定理 12.5.17 的比较表明 $\beta$ 趋于零的速度至少与 $h$ 一样快, 因为第 4 章的结果得出
+
+$$
+\|\underset{\sim}{u}\|_{H^{1}(\Omega)^{2}} = \inf_{\underset{\sim}{v} \in Z_{h}} \|\underset{\sim}{u} - \underset{\sim}{v}\|_{H^{1}(\Omega)^{2}} \leq \left( 1 + \frac{1}{\beta} \right) Ch \|\underset{\sim}{u}\|_{H^{2}(\Omega)^{2}}.
+$$
+
+在 (Scott \& Vogelius 1985b) 中给出了在 $k = 2$ 和 $3$ 时 $\beta \rightarrow 0$ 的其他例子. 另一方面, (Scott \& Vogelius 1985a) 证明了一旦 $k \geq 4$ , 在我们现在要回顾的关于网格的非常温和的限制下, 就可以选择独立于 $h$ 的 $\beta$ .
+
+如果在三角剖分中四个三角形相交的内部顶点, 那些交汇于此的相应边位于两条直线上, 则称该顶点为奇异(singular)顶点. 如果我们将在这样一个顶点处由相邻边形成的角标记为 $\theta_{j}$ , 我们可以将条件重新表述为对 $i = 1,2,3$ 有 $\theta_{i} + \theta_{i + 1} = \varPi$ . 类似地, 如果在边界上有 $r \leq 4$ 个三角形相交, 并且对 $i = 1,\ldots ,r - 1$ 有 $\theta_{i} + \theta_{i + 1} = \varPi$ , 我们称该边界顶点是奇异的. (四个三角形只能在一个狭缝(slit)的顶点处相交.) $r = 1$ 的情况有些特殊, 条件必须修改; 当一个三角形有两条边在边界上时会发生这种情况. 在这种情况下, 任何在边界上消失的分段多项式在这种顶点处的梯度都会消失. 考虑到这个原因以及其他一些原因, 我们将在我们的三角剖分中禁止出现此类顶点. 除了有两条边在边界上的三角形外, 顶点的奇异性并没有带来问题. 然而, 如果一个三角剖分族有一个非奇异但趋向于奇异的顶点序列, 那么在理论上存在常数 $\beta$ 恶化的可能性.
+
+\textbf{(12.6.8) 定义.} 如果存在一个独立于 $h$ 的 $\sigma > 0$ , 使得
+
+\begin{equation}\label{eq:12.6.9}
+\sum_{i = 1}^{r - 1} |\theta_{i} + \theta_{i + 1} - \varPi| \geq \sigma
+\end{equation}
+
+对于所有四个三角形相交的内部非奇异顶点(此时 $r = 4$)以及所有 $2 \leq r \leq 4$ 个三角形相交的边界非奇异顶点都成立, 我们就说三角剖分族 $\mathcal{T}^{h}$ 没有近似奇异(nearly singular)顶点.
+
+以下是 (Scott \& Vogelius 1985a) 中结果的推论. 在 $v_{h} = V_{h}^{k} \times V_{h}^{k}$ 的情况下, 不需要关于边界上近似奇异顶点的限制, 有两条边在边界上的三角形也不会引起任何困难, 但为了与狄利克雷条件的情况区分, 我们忽略这一点.
+
+\textbf{(12.6.10) 定理.} 假设 $\mathcal{T}^{h}$ 是非退化的, 没有在边界上有两条边的三角形, 并且没有近似奇异顶点. 令 $v_{h}$ 为 $V_{h}^{k} \times V_{h}^{k}$ 或如 (12.4.1) 所示, 并令 $\varPi_{h} \mathrel{\text{:=}} \operatorname{div}v_{h}$ . 那么条件 (12.5.3) ,
+
+即
+
+$$
+\beta \|q\|_{L^{2}(\Omega)} \leq \sup_{v \in v_{h}} \frac{|b(v,q)|}{\|v\|_{H^{1}(\Omega)^{2}}} \;\forall q \in \varPi_{h},
+$$
+
+(或等价形式 (12.5.2) ) 在 $k \geq 4$ 时成立, 且 $\beta > 0$ 独立于 $h$ .
+
+在下一章中, 我们将研究在没有 $\varPi_{h}$ 结构显式信息的情况下利用 $\varPi_{h} = \mathcal{D}v_{h}$ 进行计算的算法. 对 $\varPi_{h}$ 进行这种选择的唯一障碍是要知道像 (12.4.2) 这样的条件是否成立. 当没有对 $v_{h}$ 中的函数施加狄利克雷边界条件时, 如我们现在所展示的, (12.4.2) 仅仅是 $v_{h}$ 逼近性结果的推论.
+
+\textbf{(12.6.11) 引理.} 条件 (12.4.2) 对 $\varPi_{h} \mathrel{\text{:=}} \operatorname{div}(V_{h}^{k})^{n}$ 成立.
+
+\textit{证明.} 令 $B$ 为包含 $\Omega$ 的球, 并令 $Ep$ 为 $p$ 在 $B$ 上的延拓 (即 $Ep|_{\Omega} = p$ ) , 从而 (见定理 1.4.5)
+
+$$
+\|Ep\|_{H^{s}(B)} \leq C \|p\|_{H^{s}(\Omega)}.
+$$
+
+通过在 $B$ 内求解 $\Delta \phi = Ep$ 并附带狄利克雷边界条件 $\phi = 0$ 在 $\partial B$ 上来定义 $\phi$ . 由椭圆正则性 (5.5 节) ,
+
+$$
+\|\phi\|_{H^{s + 2}(B)} \leq C \|Ep\|_{H^{s}(B)} \leq C^{\prime} \|p\|_{H^{s}(\Omega)}.
+$$
+
+记 $\underline{w} = \operatorname{grad}\phi$ 并注意 $\|\underline{w}\|_{H^{s + 1}(\Omega)^{n}} \leq C \|p\|_{H^{s}(\Omega)}$ . 那么在 $\Omega$ 中 $p = \operatorname{div}\underline{w}$ 并且
+
+\begin{align*}
+\inf_{q \in \varPi_{h}} \|p - q\|_{L^{2}(\Omega)} &= \inf_{v \in v_{h}} \|\operatorname{div}w - \operatorname{div}v\|_{L^{2}(\Omega)} \quad (\varPi_{h} = \operatorname{div}v_{h}) \\
+&\leq \inf_{v \in v_{h}} \sqrt{n} \|w - v\|_{H^{1}(\Omega)^{n}} \\
+&\leq C h^{s} \|w\|_{H^{s + 1}(\Omega)^{n}} \quad \text{(由 4.4.25)} \\
+&\leq C h^{s} \|p\|_{H^{s}(\Omega)}.
+\end{align*}
+
+当对 $v_{h}$ 中的函数施加狄利克雷边界条件时, $\varPi_{h} = \operatorname{div}v_{h}$ 的条件 (12.4.2) 似乎无法直接由 $v_{h}$ 的逼近性结果得出. 然而, 对于像 (12.4.1) 这样的空间, (Scott \& Vogelius 1985a) 确定了 $\operatorname{div}v_{h}$ , 并且这些结果允许人们在 $k \geq 4$ 时证明关于 $\varPi_{h} = \operatorname{div}v_{h}$ 的 (12.4.2) . 以下是那些结果的一个简单推论.
+
+\textbf{(12.6.12) 引理.} 假设 $\mathcal{T}^{h}$ 是多边形区域 $\Omega \subset \mathbb{R}^{2}$ 的三角剖分, 并且没有在边界上有两条边的三角形. 令 $k \geq 4$ . 那么
+
+$$
+V_{h}^{k - 1} \subset \operatorname{div}(V_{h}^{k} \times V_{h}^{k})
+$$
+
+并且
+
+$$
+\left\{ q \in V_{h}^{k - 1} : \int_{\Omega} q(x) dx = 0 \right\} \subset \operatorname{div}v_{h}
+$$
+
+其中 $v_{h}$ 由 (12.4.1) 给出.
+
+特别地, 引理 12.6.12 意味着条件 (12.4.2) 在这两种情况下对 $\varPi_{h} \mathrel{\text{:=}} \operatorname{div}v_{h}$ 均成立. 结合推论 12.5.13 和 12.4 节中的速度近似结果应用此引理, 我们得到以下结果.
+
+\textbf{(12.6.13) 定理.} 假设 $\mathcal{T}^{h}$ 是非退化的, 没有在边界上有两条边的三角形, 并且没有近似奇异顶点. 对于由 (12.4.1) 定义的带有 $k \geq 4$ 的 $v_{h}$ 和 $\varPi_{h} \mathrel{\text{:=}} \operatorname{div}v_{h}$ , (12.1.6) 解 $(u,p)$ 的压力近似误差满足
+
+$$
+\|p - p_{h}\|_{L^{2}(\Omega)} \leq C h^{s} (\|u\|_{H^{s + 1}(\Omega)^{2}} + \|p\|_{H^{s}(\Omega)}), \quad 0 \leq s \leq k,
+$$
+
+前提是 $(u,p) \in H^{s + 1}(\Omega)^{2} \times H^{s}(\Omega)$ . 对于带有 $k \geq 4$ 的 $v_{h} = V_{h}^{k} \times V_{h}^{k}$ 和 $\varPi_{h} \mathrel{\text{:=}} \operatorname{div}v_{h}$ , 标量椭圆问题 (12.1.7) 解的压力近似误差满足
+
+$$
+\|p - p_{h}\|_{L^{2}(\Omega)} \leq C h^{s + 1} \|\underset{\approx}{a} \operatorname{grad}p\|_{H^{s + 1}(\Omega)^{2}} + C h^{s} \|p\|_{H^{s}(\Omega)}, \quad 0 \leq s \leq k,
+$$
+
+前提是 $\underset{\approx}{a} \operatorname{grad}p \in H^{s + 1}(\Omega)$ 且 $p \in H^{s}(\Omega)$ .
+
+回想一下关于速度误差的对应结果分别在定理 12.4.10 和 12.4.9 中得到了证明. 因此, 对于高次近似, 收敛准则变得简化且几乎没有提供限制, 而低次近似可能产生大相径庭的结果.
+
+我们通过考虑定理 12.4.12 之前引入的非协调方法来结束本节. 我们注意到在考虑到 (11.4.13) 、 (11.4.14) 和 4.8 节技术的情况下, $\mathcal{D} = -\operatorname{div}_{h}$ 满足 (12.5.20) . 因此, 可以证明以下结果 (参见练习 12.x.14) .
+
+\textbf{(12.6.14) 定理.} (12.4.11) 的解满足
+
+$$
+\|p - p_{h}\|_{L^{2}(\Omega)} \leq C h (\|\underset{\sim}{u}\|_{H^{2}(\Omega)^{2}} + \|p\|_{H^{1}(\Omega)})
+$$
+
+前提是 $\underset{\sim}{u} \in H^{2}(\Omega)^{2}$ 且 $p \in H^{1}(\Omega)$ .
+
+
+
+\subsection{计算的步骤以及实际例子}
+先用一个一维的例子来演示,我们考虑下面的边值问题
+\begin{equation}
+    \begin{cases}
+            \frac{\mathrm{d}u}{\mathrm{d}x}=1,&x\in[0,1]\\
+            u(0)=0,&\quad 
+    \end{cases}
+\end{equation}
+我们将区间$[0,1]$等分为5个单元,即
+\begin{center}
+    \begin{tikzpicture}[scale=1.5]
+    
+    \def\dx{1}
+    \def\normalH{0.1}
+    \def\specialH{0.25}
+
+
+    \draw[thick] (0, 0) -- (5, 0);
+
+    \foreach \i in {0,1,2,3,4,5} {
+        \draw[thick] (\i, -\normalH) -- (\i, \normalH);
+    }
+
+    \node[above=0.15cm] at (0, \normalH) {$n=1$};
+    \node[above=0.15cm] at (1, \normalH) {$n=2$};
+    \node[above=0.15cm] at (2, \normalH) {$n=3$};
+    \node[above=0.15cm] at (3, \normalH) {$n=4$};
+    \node[above=0.15cm] at (4, \normalH) {$n=5$};
+    \node[above=0.15cm] at (5, \normalH) {$n=6$};
+
+    \node[below=0.15cm] at (0.5, -\normalH) {$e=1$};
+    \node[below=0.15cm] at (1.5, -\normalH) {$e=2$};
+    \node[below=0.15cm] at (2.5, -\normalH) {$e=3$};
+    \node[below=0.15cm] at (3.5, -\normalH) {$e=4$};
+    \node[below=0.15cm] at (4.5, -\normalH) {$e=5$};
+    
+    \node[left] at (-\normalH,0) {$x=0$};
+    \node[right] at (5+\normalH,0) {$x=1$};
+\end{tikzpicture}
+\end{center}
+接下来我们需要将节点以及单元储存到计算机.通常包括下面几个数据.
+\begin{enumerate}[nosep]
+    \item 单元信息数据:储存单元所包含的节点序号,行数就是总的单元数,列数与单元内的节点数相同.以我们这个例子来看,每个单元内有两个节点,因此可以储存为
+    $$
+    \begin{bmatrix}
+        1 & 2\\
+        2 & 3\\
+        3 & 4\\
+        4 & 5\\
+        5 & 6
+    \end{bmatrix}
+    $$
+    \item 节点坐标数据:存储节点的坐标,行数表示节点总数,列数表示问题的维度,因为我们的例子考虑的是一维,因此只需要一列即可
+    $$
+    \begin{bmatrix}
+        0\\
+        0.2\\
+        0.4\\
+        0.6\\
+        0.8\\
+        1
+    \end{bmatrix}
+    $$
+    \item 边界条件数据:我们考虑的问题一般涉及两个边界条件,不过现在的例子只有Dirichlet边界条件.行数等于处于边界条件的节点总数,对于列数和边界条件的分类与研究问题的维数有关,在现在的例子中,第一列为处于Dirichlet边界条件的节点序号,第二列是相应的值
+    $$
+    \begin{bmatrix}
+        1 & 0
+    \end{bmatrix}
+    $$
+\end{enumerate}
+当网格离散完成,单元的节点基函数也就确定了.我们以$[0,1]$为参考单元,相应的基函数为
+$$
+\Phi_1 = 1-\xi,\Phi_2 = \xi,\quad \xi\in [0,1]
+$$
+对于第$e$个单元有$\xi=\frac{x-x_1^e}{x_2^e-x_1^e}=\frac{x-x_1^e}{h_e}$,设单元节点处的函数值为$u_1^e,u_2^e$,值得注意的是,这两个待求的值是不随坐标的改变而改变,因此我们考虑在参考单元上插值为
+$$
+u^e=\sum_{i=1}^{2}u^e_i\Phi_i
+$$
+为了在参考单元上完成计算,我们考虑积分变换
+$$
+\int_{x_1^e}^{x_2^e}\Phi_i\frac{\mathrm{d}u}{\mathrm{d}x}\mathrm{d}x=\sum_{j=1}^{2}u_j^e\left(\int_0^1\Phi_i(\xi)\frac{\mathrm{d}\Phi_j}{\mathrm{d}\xi}\mathrm{d}\xi\right)=h_e\int_0^1\Phi_i(\xi)\mathrm{d}\xi
+$$
+将基函数代入计算,就可以得到第$e$个单元得到的代数系统$K^eu^e=F^e$为
+$$
+\frac{1}{2}
+\begin{bmatrix}
+    -1 & 1\\
+    -1 & 1
+\end{bmatrix}
+\begin{bmatrix}
+    u^e_1\\
+    u^e_2
+\end{bmatrix}
+=
+\frac{h_e}{2}
+\begin{bmatrix}
+    1\\
+    1
+\end{bmatrix}
+$$
+
+
+
+
+
+
+
+
+
+
+
+

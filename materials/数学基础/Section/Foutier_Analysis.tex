@@ -1,0 +1,1350 @@
+\section{偏微分方程}
+\subsection{三大古典偏微分方程}
+\subsubsection{位势方程}
+考虑下面的Dirichlet边界条件的定解问题
+\begin{equation}
+\begin{cases}
+    \Delta u=f(x),\quad &x\in \Omega,\\
+    u=\varphi(x),\quad &x\in \pa\Omega,
+\end{cases}
+\label{eq:2.0.2}
+\end{equation}
+其中$\Omega\subset\R ^n$为有界区域,$f(x)$和$\varphi(x)$是$\Omega$和$\pa \Omega$上的已知函数.\par
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{弱极大值原理},sharpish corners]
+    若$u\in C^2(\Omega)\cap C(\overline{\Omega})$且在$\Omega$中满足$\Delta u\geqslant 0$,则$u$在$\overline{\Omega}$上的最大值在$\pa\Omega$上达到,即
+    $$
+    \max_{\overline{\Omega}}u=\max_{\pa\Omega}u.
+    $$
+\end{tcolorbox}
+\textbf{Proof}:由于$\pa\Omega\subset\overline{\Omega}$,显然有$\max_{\overline{\Omega}}u\geqslant\max_{\pa\Omega}u$.下面证明$\max_{\overline{\Omega}}u\geqslant\max_{\pa\Omega}u$.下面证明$\max_{\overline{\Omega}}u\geqslant\max_{\pa\Omega}u$.下面证明$\max_{\overline{\Omega}}u\leqslant\max_{\pa\Omega}u$.\par
+若$u$在$x_0\in\Omega$处达到最大值(因为在内部,所以也是极大值),因此
+$$
+Du(x_0)=0,\quad \operatorname{Hessi}u(x_0)\text{负定}
+$$
+因此$u_{x_ix_i}(x_0)<0(i=1,\cdots,n)$,所以$\Delta u(x_0)<0$.\par
+如果在$\Omega$中$\Delta u>0$,那么由上面讨论,$u$在$\overline{\Omega}$上的最大值不可能在$\Omega$的内部取得,从而只能在边界取得.\par
+如果在$\Omega$中$\Delta u\geqslant 0$,对任意$\varepsilon>0$,构造函数
+$$
+u_{\varepsilon}(x)=u(x)+\varepsilon|x|^2
+$$
+容易得到在$\Omega$中
+$$
+\Delta u_{\varepsilon}=\Delta u +2n\varepsilon\geqslant 2n\varepsilon>0
+$$
+因此$\max_{\overline{\Omega}}u_{\varepsilon}=\max_{\pa\Omega}u_{\varepsilon}$.注意到
+$$
+\begin{aligned}
+    \max_{\overline{\Omega}}u &\leqslant \max_{\overline{\Omega}}(u+\varepsilon|x|^2)=\max_{\overline{\Omega}}u_{\varepsilon}=\max_{\pa\Omega}u_{\varepsilon}\\
+                              &=\max_{\pa\Omega}(u+\varepsilon|x|^2)\leqslant \max_{\pa\Omega}u+\varepsilon\max_{\pa\Omega}|x|^2
+\end{aligned}
+$$
+令$\varepsilon\to 0^+$,即得$\max_{\overline{\Omega}}u\leqslant\max_{\pa\Omega}u$.\par
+相对应的,也有弱极小值原理,条件要改成$\Delta u\leqslant 0$.弱极大值原理和弱极小值原理统称为弱极值原理,这两个定理表明:如果$u\in C^2(\Omega)\cap C(\overline{\Omega})$且在$\Omega$中满足$\Delta u=0$,则
+$$
+\min_{\pa\Omega}u\leqslant u(x)\leqslant \max_{\pa\Omega}u,\quad x\in\Omega
+$$
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{最大模估计},sharpish corners]
+    设$f\in C(\overline{\Omega}),\varphi\in C(\pa\Omega)$,若$u\in C^2(\Omega)\cap C(\overline{\Omega})$是问题\eqref{eq:2.0.2}的解,则
+    $$
+    \max_{\overline{\Omega}}|u|\leqslant\max_{\pa\Omega}|\varphi|+\frac{d^2}{2n}\max_{\overline{\Omega}}|f|
+    $$
+    其中$d=\operatorname{diam}\Omega$
+\end{tcolorbox}
+\textbf{Proof}:记$\Phi=\max_{\pa\Omega}|\varphi|,M=\max_{\overline{\Omega}}|f|$.取$x_0\in\Omega$,构造辅助函数
+$$
+w(x)=\Phi+\frac{M}{2n}(d^2-|x-x_0|^2)-u(x)
+$$
+直接计算,有
+$$
+\begin{cases}
+    \Delta w=-M-f\leqslant 0,&x\in\Omega\\
+    w=\Phi+\frac{M}{2n}(d^2-|x-x_0|^2)-\varphi\geqslant 0,&x\in\pa\Omega
+\end{cases}
+$$
+由弱极小值原理得到$\min_{\overline{\Omega}}w=\min_{\pa\Omega}w\geqslant 0$.于是在$\overline{\Omega}$上$w\geqslant 0$,即
+$$
+u\leqslant \Phi+\frac{M}{2n}(d^2-|x-x_0|^2)\leqslant\Phi+\frac{d^2}{2n}M 
+$$
+在上述论述中以$-u$代替$u$就可以得到
+$$
+-u\leqslant\Phi+\frac{d^2}{2n}M 
+$$
+这就证明了结论.\par
+\textbf{例}$^\spadesuit$:设$\Omega$是$\R^n$中的有界区域,$\varphi\in C(\pa\Omega),u\in C^3(\Omega)\cap C(\overline{\Omega})$是问题
+$$
+\begin{cases}
+    \Delta u(x)=u^3(x)-u(x),&x\in\Omega\\
+    u(x)=\varphi(x),&x\in\pa\Omega
+\end{cases}
+$$
+的解.证明:若$\max_{\pa\Omega}|\varphi|\leqslant 1$,则$\max_{\overline{\Omega}}|u|\leqslant 1$.\par
+\textbf{Proof}:如果$u$在边界上取到最大值,那么根据$\max_{\pa\Omega}|\varphi|\leqslant 1$,得到$\max_{\overline{\Omega}}u\leqslant 1$.\par
+如果$u$在$\Omega$内部$x_0\in\Omega$取到最大值,那么有$\Delta u(x_0)\leqslant 0$.所以我们得到
+$$
+\Delta u(x_0)=u^3(x_0)-u(x_0)=u(x_0)(u(x_0)-1)(u(x_0)+1)\leqslant 0
+$$
+因此一定有$u(x_0)\leqslant 1$.这就是$\max_{\overline{\Omega}}u\leqslant 1$.\par
+如果$u$在边界上取到最小值,那么根据$\max_{\pa\Omega}|\varphi|\leqslant 1$,得到$\min_{\overline{\Omega}}u\geqslant -1$.\par
+如果$u$在$\Omega$内部$y_0\in\Omega$取到最小值,那么有$\Delta u(x_0)\geqslant 0$.所以我们得到
+$$
+\Delta u(y_0)=u^3(y_0)-u(y_0)=u(y_0)(u(y_0)-1)(u(y_0)+1)\geqslant 0
+$$
+因此一定有$u(y_0)\geqslant -1$.这就是$\min_{\overline{\Omega}}u\geqslant -1$.\par
+综上我们证明了$\max_{\overline{\Omega}}|u|\leqslant 1$.\par
+\textbf{基本解}$^\clubsuit $:定义在$x\in\mathbb{R}^n\setminus \{0\}$的函数
+$$
+\Phi (x)=
+\begin{cases}
+    -\frac{1}{2\pi}\ln |x|,&(n=2)\\[3pt]
+    \frac{1}{n(n-2)\alpha(n)}\frac{1}{|x|^{n-2}}, &(n\geqslant 3)
+\end{cases}
+$$
+称为Laplace方程的基本解.\par
+为了后面方便,我们可以先估计$\Phi$的导数如下:
+$$
+|D\Phi(x)|\leqslant \frac{C}{|x|^{n-1}},|D^2\Phi(x)|\leqslant \frac{C}{|x|^n}\quad (x\neq 0)
+$$
+基本解$\Phi(x)$在$\mathbb{R}^n\setminus \{0\}$上满足$\Delta \Phi(x)=0$,且当$x\neq 0$时
+$$
+\begin{cases}
+    \frac{\pa \Phi}{\pa x_i} &= -\frac{1}{n\alpha(n)}\frac{x_i}{|x|^n}\\[6pt]
+    \frac{\pa^2 \Phi}{\pa x_i^2} &= \frac{1}{\alpha(n)}\frac{x_i^2}{|x|^{n+1}}-\frac{1}{n\alpha(n)}\frac{1}{|x|^n}
+\end{cases}
+\quad (i=1,2,\cdots,n)
+$$
+\qquad 我们假设$f\in C^2_c(\mathbb{R}^n)$
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{Poisson方程的解},sharpish corners]
+    定义$u(x)=\int_{\mathbb{R}^n}\Phi(x-y)f(y)\mathrm{d}y$.那么\par
+    (1)\, $u\in C^2(\mathbb{R}^n)$,且\par
+    (2)\, $-\Delta u=f,x\in\mathbb{R}^n$
+\end{tcolorbox}
+\textbf{Proof}:对于充分小的$h>0$,则
+$$
+\frac{u(x+he_i)-u(x)}{h}=\int_{\mathbb{R}^n}\Phi(y)\frac{f(x+he_i-y)-f(x-y)}{h}\mathrm{d}y
+$$
+因为$f\in C^2_c(\mathbb{R}^n)$,所以$\frac{f(x+he_i-y)-f(x-y)}{h}\to f_{x_i}(x-y)(h\to 0)$,并且这个收敛是一致的.于是
+$$
+u_{x_i}=\int_{\mathbb{R}^n}\Phi(y)f_{x_i}(x-y)\mathrm{d}y
+$$
+同理有$u_{x_ix_i}=\int_{\mathbb{R}^n}\Phi(y)f_{x_ix_i}(x-y)\mathrm{d}y$.因此$u\in C^2(\mathbb{R}^n)$.\par
+下面计算$\Delta u$.由上面的讨论可以看出,对任意$\varepsilon>0$
+$$
+\begin{aligned}
+    \Delta u &= \int_{\mathbb{R}^n}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y\\
+             &= \int_{B(0,\varepsilon)}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y+\int_{\mathbb{R}^n\setminus B(0,\varepsilon)}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y
+\end{aligned}
+$$
+对于第一项很容易做出下面的估计
+$$
+\left|\int_{B(0,\varepsilon)}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y\right|\leqslant \|D^2f\|_{L^{\infty}(\mathbb{R}^n)}\int_{B(0,\varepsilon)}|\Phi(y)|\mathrm{d}y\lesssim 
+\begin{cases}
+    \frac{1}{2(n-2)} \|D^2f\|_{L^{\infty}(\mathbb{R}^n)}\varepsilon^2,&n\geqslant 3\\[8pt]
+    \frac{\|D^2f\|_{L^{\infty}(\mathbb{R}^n)}}{2}\varepsilon^2(|\ln \varepsilon|+\frac{1}{2}),& n=2
+\end{cases}
+$$
+于是$\lim_{\varepsilon\to 0^+}\left|\int_{B(0,\varepsilon)}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y\right|=0$.对于第二项,利用Green第二积分公式就有
+$$
+\int_{\mathbb{R}^n\setminus B(0,\varepsilon)}\Phi(y)\Delta_{x}f(x-y)\mathrm{d}y=\int_{\pa B(0,\varepsilon)}\Phi(y)\frac{\pa f}{\pa \nu_{x}}(x-y)-f(x-y)\frac{\pa\Phi}{\pa\nu_{x}}(y)\mathrm{d}S_y
+$$
+需要注意的是,这里的$\nu_{x}$是单位法向量,指向球内部的.显然当$\varepsilon\to 0^+$
+$$
+\left|\int_{B(0,\varepsilon)}\Phi(y)\frac{\pa f}{\pa \nu_{x}}(x-y)\mathrm{d}S_y\right|\leqslant \alpha(n)|\Phi(\varepsilon)|\|Df\|_{L^{\infty}(\mathbb{R}^n)}\varepsilon^{n-1}\to 0\,
+$$
+对于另一项,我们已经计算出$\nabla\Phi(y)=-\frac{1}{n\alpha(n)}\frac{y}{|y|^n}$,而球面单位内法向量应该是$-\frac{y}{|y|}$,于是直接计算得
+$$
+\begin{aligned}
+    -\int_{\pa B(0,\varepsilon)}f(x-y)\frac{\pa\Phi}{\pa\nu_{x}}(y)\mathrm{d}S_y &= -\int_{\pa B(0,\varepsilon)}f(x-y)\nabla \Phi(y)\cdot \nu_{x}\mathrm{d}S_y\\
+                                                                                 &= -\frac{1}{n\alpha(n)}\int_{\pa B(0,\varepsilon)}f(x-y)\frac{y}{|y|^n}\cdot\frac{y}{|y|}\mathrm{d}S_y\\
+                                                                                 &= -\frac{1}{n\alpha(n)}\int_{\pa B(0,1)}f(x-\varepsilon z)\mathrm{d}S_z
+\end{aligned}
+$$
+因此,令$\varepsilon\to 0^+$就能得到
+$$
+-\int_{\pa B(0,\varepsilon)}f(x-y)\frac{\pa\Phi}{\pa\nu_{x}}(y)\mathrm{d}S_y\to -f(x)
+$$
+综上所述,我们得到了$-\Delta u(x)=f(x)$.
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{平均值公式},sharpish corners]
+    设$u\in C^2(\Omega)$调和,则
+    $$
+    u(x)=\fint_{B(x,r)}u(y)\mathrm{d}y=\fint_{\pa B(x,r)}u(y)\mathrm{d}S
+    $$
+    对所有的球$B(x,r)\subset \Omega$都成立.
+\end{tcolorbox}
+\textbf{Proof}:
+
+
+\subsubsection{热传导方程}
+
+\subsubsection{波动方程}
+\subsection{PDE中的其他概念}
+\begin{Definition}
+    设$u$是定义在开集$\Omega\subset\mathbb{R}^n$上的函数,$\lambda\in (0,1]$,如果
+    $$
+    [u]_{\lambda,\Omega}:=\sup\limits_{x,y\in\Omega\\x\neq y }\frac{|u(x)-u(y)|}{|x-y|^{\lambda}}<+\infty
+    $$
+    则称函数$u$在$\Omega$上一致$\lambda$阶Holder连续,记$u\in C^{0,\lambda}(\Omega)$,$[u]_{\lambda,\Omega}$称为$u$的$\lambda$阶Holder半模
+\end{Definition}
+回忆一下,$C^{k}$是由连同其各个偏导数$D^{\alpha}u,1\leqslant|\alpha|\leqslant k$均可连续延拓到$\overline{\Omega}$上的所有函数$u\in C^k(\Omega)$组成.因此可以定义Holder空间$C^{k,\lambda}(\overline{\Omega})$是由所有$u\in C^k(\overline{\Omega})$且其范数
+$$
+\|u\|_{C^{k,\lambda}}:=\sum_{|\alpha|\leqslant k}\|D^{\alpha}u\|_{C(\overline{\Omega})}+\sum_{|\alpha|=k}[D^{\alpha}u]_{C^{0,\lambda}(\overline{\Omega})}
+$$
+有限的函数组成.
+\begin{Theorem}{内插不等式}
+    设$\Omega\subset\mathbb{R}^n$是一个区域,$0\leqslant \lambda<\mu<\gamma<\leqslant 1$,则对任意的$u\in C^{0,\gamma}(\overline{\Omega})$有
+    $$
+    [u]_{\mu,\Omega}\leqslant [u]_{\lambda,\Omega}^{1-\theta}[u]_{\gamma,\Omega}^\theta
+    $$
+    其中$\theta$满足$\mu=(1-\theta)\lambda+\theta\gamma$.
+\end{Theorem}
+只需要根据定义,由
+$$
+[u]_{\mu,\Omega}:=\sup\limits_{x,y\in\Omega\\x\neq y }\left\{\frac{|u(x)-u(y)|}{|x-y|^{\lambda}}\right\}^{1-\theta}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}^{\theta}\leqslant [u]_{\lambda,\Omega}^{1-\theta}[u]_{\gamma,\Omega}^\theta
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{广义函数}
+\subsubsection{基本函数空间}
+设$\Omega\subset\R ^n$为开集.广义函数理论中主要介绍三个基本空间:$C^{\infty}(\Omega),C^{\infty}_c(\Omega),\mathcal{S}(\R ^n)$.\par
+我们首先定义$C^{\infty}(\Omega)$,我们已经知道$C^{\infty}(\Omega)$中的元素是指在$\Omega$上任意次连续可微的函数,其中的收敛性规定为:
+若有$C^{\infty}(\Omega)$中的序列$\{\varphi _{\nu }\}$,且对任一紧集$K\subset \Omega$与多重指标$\alpha$,使得$\sup_{x\in K}|\pa^{\alpha}\varphi _{\nu}|\to 0$,我们称$\varphi _{\nu}\to 0$;\par
+对于一个定义在$\Omega$上的函数$f$,其支集
+$$
+\operatorname{supp}f=\overline{\{x\in \Omega;f(x)\neq 0\}}
+$$
+如果$\operatorname{supp}f$还是紧集,则称$f$具有紧支集.\par
+空间$C^{\infty}_c(\Omega)$中的元素是指所有$f\in C^{\infty}(\Omega)$且在$\Omega$上具有紧支集的函数,有时候我们也会记$\mathcal{\pa}(\Omega)=C^{\infty}_c(\Omega)$.其中的收敛性规定为:若有$C^{\infty}_c(\Omega)$中的序列$\{\varphi _{\nu }\}$,满足如下两个条件:\par
+(1)所有$\{\varphi _{\nu}\}$的支集在一个共同的紧集$K$内,即$\operatorname{supp}\varphi _{\nu}\subset K,\forall \nu$;\par
+(2)对任何多重指标$\alpha$,有$\sup_{x\in K}|\pa^{\alpha}\varphi _{\nu}|\to 0$.\\
+则称$\varphi _{\nu}\to 0$.\par
+\textbf{命题}$^\clubsuit $:设$1\leqslant p<\infty$,则
+$$
+C_{c}(\Omega)=\{\text{在}\Omega\text{中具有紧支集的连续函数全体}\}
+$$
+在$\Lp$中是稠密的.\par
+\textbf{Proof}:设$u\in\Lp$,$1\leqslant p<\infty$,对任意的 $\varepsilon>0$,我们的目标是找到一个函数$\phi \in C_{c}(\Omega)$,使得$\|\phi-u\|_{\Lp}< \varepsilon$.\par
+我们知道对$f$有分解$f=f^{+}-f^{-}$,其中$f^{+},f^{-}\geqslant 0$.因此对任意的取复值的函数$u$,均可写为
+$$
+u=(\operatorname{Re}u)^{+}-(\operatorname{Re}u)^{-}+\mathrm {i}((\operatorname{Im}u)^{+}-(\operatorname{Im}u)^{-}):=u_{1}-u_{2}+\mathrm{i}(u_{3}-u_{4})
+$$  
+这里,$0\leqslant u_{j}\in \Lp, 1\leqslant j \leqslant 4$.因此,如果找到$\phi_{j}\in C_{c}( \Omega)$,使得$\|\phi_{j}-u_{j}\|_{ \Lp} <$ $\frac{\varepsilon}{4},1\leqslant j\leqslant4$.从而有 $\|\phi-u\|_{\Lp}<\varepsilon$.$\phi=\phi_{1}-\phi_{2}+\mathrm{i}(\phi_{3}-\phi_{4})\in C_{c} (\Omega )$.\par
+不失一般性,假定$0\leqslant u\in \Lp$,利用简单函数的逼近定理,存在一个在$\Omega$上的单调增加的非负简单函数序列$\{s_{k}(x)\}$,使得$s_{k}(x) \to u(x),a.e.x\in\Omega$.因为$0\leqslant s_{k}(x)\leqslant u(x),a.e.x\in\Omega$.可知$s_{k}\in\Lp$.由于$(u(x)-s_{k}(x))^{p}\leqslant(u(x))^{p}\in L^{1}(\Omega )$,利用控制收敛定理可得$\lim_{k\to\infty}\|s_{k}-u\|_{ \Lp}=0$.
+所以存在充分大的$k_{0}$,使得$\|s_{k_{0}}-u\|_{\Lp}<\frac{\varepsilon}{2}$.又由于$s_{k_{0}}\in\Lp,p< \infty$.故$|\supp s_{k_{0}}|<\infty$.由Lusin定理,存在函数$\phi\in C(\varOmega)$,使得$|\phi(x)| \leqslant\|s_{k_0}\|_{L^{\infty}(\Omega)}, \forall x\in \Omega$.并且
+$$
+m(\{ x \in \Omega:s_{k_{0}}(x)\neq\phi(x)\})< \left(\frac{\varepsilon}{4\|s_{k_{0}}\|_{L^{\infty}(\Omega)}}\right)^{p}
+$$  
+因此
+$$
+\begin{aligned}
+    \|\phi-s_{k_0}\|_{\Lp} &\leqslant\|\phi-s_{k_0}\|_{L^{\infty}(\Omega)}m(\{ x \in \Omega:s_{k_{0}}(x)\neq\phi(x)\})^{\frac{1}{p}}\\ 
+                           &\leqslant\frac{2\|s_{k_0}\|_{L^{\infty}(\Omega)}\varepsilon}{4\|s_{k_0}\|_{L^{\infty}(\Omega)}}=\frac{ \varepsilon}{2} 
+\end{aligned}
+$$
+从而
+$$
+\|\phi-u\|_{\Lp}\leqslant\|\phi-s_{k_{0}}\|_{\Lp}+\|s_{k_{0}}-u\|_{\Lp}<\varepsilon.
+$$
+\qquad 下面将介绍所谓磨光算子的概念.这是一个很自然的想法:我们知道$C_c(\Omega)$在$L^p(\Omega)(1\leqslant p<\infty)$中是稠密的,也就是说,我们可以用好的函数去逼近性质差的函数.从之前学过的知识中可以发现,卷积就是改善函数光滑性的工具,足以将两个可积函数变为连续函数.\par
+$\R ^n$中一族磨光函数是指由形为
+$$
+\eta_{\varepsilon}(x)=\frac{1}{\varepsilon^n}\eta\left(\frac{x}{\varepsilon}\right),x\in\R ^n
+$$
+的函数$\eta _{\varepsilon}:\R ^n\to \R$组成的函数族$(\eta _{\varepsilon})_{\varepsilon>0}$,其中$\eta _{\varepsilon}:\R ^n\to \R$满足
+$$
+\begin{aligned}
+    \eta &\in C^{\infty}(\R ^n),\text{对于所有的}x\in\R ^n,\eta (x)\geqslant 0\\
+    \operatorname{supp} &\subset \overline{B(0,1)},\;\int_{\R ^n}\eta (x)\mathrm{d}x=1
+\end{aligned}
+$$
+因此,对每个$\varepsilon>0$,
+$$
+\begin{aligned}
+    \eta_{\varepsilon} &\in C^{\infty}(\R ^n),\text{对于所有的}x\in\R ^n,\eta_{\varepsilon}\geqslant 0\\
+    \operatorname{supp} &\subset \overline{B(0,\varepsilon)},\;\int_{\R ^n}\eta_{\varepsilon}\mathrm{d}x=1
+\end{aligned}
+$$
+这类函数当然是存在的,例如
+$$
+\eta (x)=
+\begin{cases}
+    C\exp\left(\frac{1}{|x|^2-1}\right),& |x|<1\\
+    0,& |x|\geqslant 1
+\end{cases}
+$$
+其中常数$C$使得$\int_{\R ^n}\eta (x)\mathrm{d}x=1$.设$u\in L^1_{loc}(\R ^n)$,定义
+$$
+u_{\varepsilon}(x)=\int_{\R ^n}u(x-y)\eta_{\varepsilon}(y)\mathrm{d}y=\int_{\R ^n}u(y)\eta_{\varepsilon}(x-y)\mathrm{d}y
+$$
+那么我们有下面的定理
+\begin{Theorem}{}
+    假设$u\in L^1_{loc}(\R ^n)$,那么$u_{\varepsilon}$是一个$C^{\infty}(\R ^n)$函数.并且若$u\in L^p(\R ^n),1\leqslant p<\infty$,则
+    $$
+    \lim_{\varepsilon\to 0}\|u_{\varepsilon}-u\|_{L^p(\R ^n)}=0
+    $$
+\end{Theorem}
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{磨光函数的逼近\hypertarget{磨光函数的逼近}{}},sharpish corners]
+    假设$u\in L^1_{loc}(\R ^n)$,那么$u_{\varepsilon}$是一个$C^{\infty}(\R ^n)$函数.并且若$u\in L^p(\R ^n),1\leqslant p<\infty$,则
+    $$
+    \lim_{\varepsilon\to 0}\|u_{\varepsilon}-u\|_{L^p(\R ^n)}=0
+    $$
+\end{tcolorbox}
+\textbf{Proof}:由于$\eta_{\varepsilon}\in C^{\infty}_c(\R ^n)$,以及$u_{\varepsilon}(x)=\int_{\R ^n}u(y)\eta_{\varepsilon}(x-y)\mathrm{d}y$,
+利用导数与积分交换顺序,可以得到$u\in C^{\infty}(\R ^n)$.\par
+现在假定$u\in L^p(\R ^n),1\leqslant p<\infty$.利用具有紧支集的连续函数在$L^p(\R ^n)$中的稠密性知,对任意的$\delta>0$,可以找到一个函数$v\in C_{c}(\R ^n)$使得
+$$
+\|u-v\|_{L^p(\R ^n)}\leqslant \delta
+$$
+注意到
+$$
+\begin{aligned}
+    \|f_\varepsilon\|_{L^p(\mathbb{R}^n)}^p 
+    &= \int_{\mathbb{R}^n} |f_\varepsilon(x)|^p \, \dd x \\
+    &= \int_{\mathbb{R}^n} \left| \int_{\mathbb{R}^n} f(x - y) \eta_\varepsilon(y) \, \dd y \right|^p \dd x \\
+    &= \int_{\mathbb{R}^n} \left| \int_{\mathbb{R}^n} f(x - y) \eta_\varepsilon^{\frac{1}{p}}(y) \eta_\varepsilon^{1 - \frac{1}{p}}(y) \, \dd y \right|^p \dd x \\
+    &\leqslant \int_{\mathbb{R}^n} \int_{\mathbb{R}^n} |f(x - y)|^p \eta_\varepsilon(y) \, \dd y \, \dd x 
+    \left( \int_{\mathbb{R}^n} \eta_\varepsilon(y) \, \dd y \right)^{p - 1} \\
+    &= \int_{\mathbb{R}^n} \int_{\mathbb{R}^n} |f(x - y)|^p \eta_\varepsilon(y) \, \dd y \, \dd x \\
+    &= \int_{\mathbb{R}^n} \left( \int_{\mathbb{R}^n} |f(x - y)|^p \, \dd x \right) \eta_\varepsilon(y) \, \dd y \\
+    &= \|f\|_{L^p(\mathbb{R}^n)}^p \int_{\mathbb{R}^n} \eta_\varepsilon(y) \, \dd y \\
+    &= \|f\|_{L^p(\mathbb{R}^n)}^p.
+\end{aligned}
+$$
+这说明$ \|f_\varepsilon\|_{L^p(\mathbb{R}^n)}^p \leqslant \|f\|_{L^p(\mathbb{R}^n)}^p$.\par
+由于$v\in C_{c}(\R ^n)$,这说明$\lim_{|x|\to\infty}v(x)=0$,故对任意的$s>0$,存在充分大的$R>0$,使得$\forall x\notin \overline{B(0,R)}$成立$|v(x)|\leqslant s$.\par
+记紧集$K_{i}=\{x\in\R ^n|\operatorname{dist}(x,\overline{B(0,R)})\leqslant i\}$,其中$i=1,2$,则$\overline{B(0,R)}\subset K_1\subset K_2$.利用$u$在紧集$K_2$上的一致连续性可知,对上述$s>0$,当$\varepsilon>0$充分小时,成立
+$$
+\begin{aligned}
+    \max_{x\in\R^n}|v_{\varepsilon}(x)-v(x)| &\leqslant \max_{x\in K_1}|v_{\varepsilon}(x)-v(x)|+\max_{x\notin K_1}|v_{\varepsilon}(x)-v(x)|\\
+                                             &\leqslant \max_{x\in K_1}\int_{|y|\leqslant \varepsilon}|v(x-y)-v(x)|\eta _{\varepsilon}(y)\dd y\\
+                                             &\quad +\max_{x\notin K_1}\left(|v(x)|+\int_{|y|\leqslant \varepsilon}|v(x-y)|\eta _{\varepsilon}(y)\dd y\right)\\
+                                             &\leqslant s\int_{|y|\leqslant}\eta_{\varepsilon}(y)\dd y+\max_{x\notin K_1}\left(s+s\int_{|y|\leqslant \varepsilon}\eta _{\varepsilon}(y)\dd y\right)\leqslant 3s    
+\end{aligned}
+$$
+由此得出当$\varepsilon\to 0$时,$\max_{\R ^n}|v_{\varepsilon}(x)-v(x)\to 0$.\par
+记$K=\supp v$,那么$K\subset K_2$,且对任意$\varepsilon\in (0,1),\supp (v_{\varepsilon}-v)\subset K_2$,故而当$\varepsilon\to 0$时,
+$$
+\|v_{\varepsilon}-v\|_{L^p(\R ^n)}=\|v_{\varepsilon}-v\|_{L^p(K_2)}\leqslant \max_{x\in K_2}|v_{\varepsilon}(x)-v(x)|\cdot m(K_2)^{1/p}\to 0
+$$
+因此,当$\varepsilon>0$充分小时,成立$\|v_{\varepsilon}-v\|_{L^p(\R ^n)}\leqslant \delta$.利用三角不等式
+$$
+\begin{aligned}
+    \|u_{\varepsilon}-u\|_{L^p(\R^n)} &\leqslant \|u_{\varepsilon}-v_{\varepsilon}\|_{L^p(\R^n)}+\|v_{\varepsilon}-v\|_{L^p(\R^n)}+\|v-u\|_{L^p(\R^n)}\\
+                                      &\leqslant 2 \|v-u\|_{L^p(\R^n)}+\|v_{\varepsilon}-v\|_{L^p(\R^n)}\leqslant 3\delta
+\end{aligned}
+$$
+这就表明了$\lim_{\varepsilon\to 0}\|u_{\varepsilon}-u\|_{L^p(\R ^n)}=0$.\par
+这个定理说明了$C^{\infty}(\R^n)\cap L^p(\R^n)$在$L^p(\R^n)$中是稠密的.\par
+关于磨光函数还有一个重要性质:当$u\in C(\Omega)$时,则$\varepsilon\to 0$时在$\Omega$的紧子集上一致地$u_{\varepsilon}\to u$.\par
+下面我们给出个重要的例子:截断函数.\par
+\textbf{截断函数}$^\spadesuit$:设$R>1,\mathbf{1}_{R}(x)$为球$B(0,R)$的特征函数,即
+$$
+\mathbf{1}_{R}(x)=
+\begin{cases}
+    1&,|x|\leqslant R\\
+    0&,|x|>R
+\end{cases}
+$$
+作卷积
+$$
+\beta_{R}(x)=\int_{\R^n}\mathbf{1}_{R}(x-y)\eta (y)\dd y=\int_{\R^n}\mathbf{1}_{R}(y)\eta (x-y)\dd y
+$$
+则$\beta_{R}(x)\in C^{\infty}(\R^n)$,且支集
+$$
+\supp \beta_{R}\subset\{x\in\R^n:|x|\leqslant R+1\}
+$$
+且当$|x|\leqslant R-1$时,$\beta_{R}(x)=1$.\par
+假设$|x|>R+1$,由于$|x-y|\leqslant 1$,则
+$$
+|y|\geqslant |x|-|x-y|>R+1-1=R \Rightarrow |y|>1
+$$
+故$\mathbf{1}_{R}(y)=0$,从而
+$$
+\beta_{R}(x)=\int_{\R^n}\mathbf{1}_{R}(y)\eta (x-y)\dd y=0
+$$
+这就说明了
+$$
+\supp \beta_{R}\subset\{x\in\R^n:|x|\leqslant R+1\}
+$$
+此外,若假设$|x|\leqslant R-1$,由于$|x-y|\leqslant 1$,知
+$$
+|y|\leqslant |x-y|+|x|\leqslant R-1+1=R
+$$
+故$\mathbf{1}_{R}(y)=1$.从而得
+$$
+\beta_{R}(x)=\int_{\R^n}\mathbf{1}_{R}(y)\eta (x-y)\dd y=\int_{\R^n}\eta (x-y)\dd y=1
+$$
+\qquad 我们用这个截断函数证明:$C^{\infty}_c(\R^n)$在$C^{\infty}(\R^n)$中是稠密的.\par
+\textbf{Proof}:对任一$\varphi\in C^{\infty}(\R^n)$,作函数$\varphi _\nu(x)=\beta_{\nu}\varphi (x)$,则$\varphi_\nu\in C^{\infty}_c(\R^n)$.容易知道,在$|x|\leqslant\nu-1$时,$\varphi_\nu(x)=\varphi (x)$,在$|x|<\nu+1$时等于零.\par
+对任何固定的紧集$K$,当$\nu$充分大的时候,$K\subset\{x\in\R^n:|x|\leqslant\nu-1\}$.因此,在$K$上,当$\nu$充分大时,必有$\varphi_\nu(x)=\varphi(x)$,且对任意多重指标$\alpha$有$\paa\varphi_\nu(x)=\paa\varphi(x)$.所以在$C^{\infty}(\R^n)$中有$\varphi_\nu\to\varphi$.\par
+由此可见,$C^{\infty}_c(\R^n)$在$C^{\infty}(\R^n)$中是稠密的\par
+还剩下一类重要的空间就是速降函数空间$\mathcal{S}(\R ^n)$.\par
+\textbf{定义}$^\clubsuit $:设$\varphi\in C^{\infty}(\R ^n)$.对任意的多重指标$\alpha,\beta$成立
+\begin{equation}
+    \lim_{|x|\to \infty}x^{\alpha}\pa^{\beta}\varphi (x)=0
+    \label{eq:2.1.8}
+\end{equation}
+则称$\varphi$为速降函数;速降函数全体构成的线性空间称为速将函数空间,记为$\mathcal{S}(\R ^n)$.\par
+在$\mathcal{S}(\R ^n)$中的收敛性规定为:设$\{\varphi _N\}\subset\mathcal{S}(\R ^n)$,若对任意的多重指标$\alpha,\beta$,当$N\to\infty$时,成立
+$$
+\sup_{x\in\R ^n}|x^{\alpha}\pa^{\beta}\varphi (x)|\to 0
+$$
+则称$\varphi_N\to 0$.\par
+由速降函数的定义中条件\eqref{eq:2.1.8}可以知道,对任意的多重指标$\alpha,\beta$,函数$x^{\alpha}\pa^{\beta}\varphi (x)$在$\R^n$上有界.反过来也对.事实上有下面的定理
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{速降函数极限条件的等价定义},sharpish corners]
+   速降函数定义中的条件\eqref{eq:2.1.8}与下述两个条件之一等价:\\
+   (1)对任意的多重指标$\alpha,\beta$,函数$x^{\alpha}\pa^{\beta}\varphi (x)$在$\R^n$上有界;\\
+   (2)对任意的正整数$k$与重指标$\beta$,函数$(1+|x|^2)^k\pa^{\beta}\varphi (x)$在$\R^n$上有界.
+\end{tcolorbox}
+\textbf{Proof}:由于都是充要条件,所以我们按照:\eqref{eq:2.1.8}$\Leftrightarrow $(1)$\Leftrightarrow $(2)的思路来证明.\par
+(1)$\Rightarrow $\eqref{eq:2.1.8}.\quad 若对任意的多重指标$\alpha,\beta$,函数$x^{\alpha}\pa^{\beta}\varphi (x)$在$\R^n$上有界,则在$x\neq 0$处,成立
+$$
+\begin{aligned}
+    x^{\alpha}\pa^{\beta}\varphi (x) &=\frac{1}{|x|^2}\sum_{j=1}^{n}x^2_jx^{\alpha}\pa^{\beta}\varphi (x)\\
+                                     &=\frac{1}{|x|^2}\sum_{j=1}^{n}x_1^{\alpha_1}x_2^{\alpha_2}\cdots x_{j-1}^{\alpha_{j-1}}x^{2+\alpha_j}_j x_{j+1}^{\alpha_{j+1}}\cdots x^{\alpha_n}_n\pa^{\beta}\varphi (x)\\
+\end{aligned}
+$$
+如果我们记$p=(\alpha_1,\cdots,2+\alpha_j,\cdots,\alpha_n)$,则$p$为一多重指标,因此$x^{p}\pa^{\beta}\varphi (x)$有界,可得
+$$
+\lim_{|x|\to \infty}|x^{\alpha}\pa^{\beta}\varphi (x)|=0
+$$
+\qquad (1)$\Rightarrow $(2).\quad 记$p_{ik}$为多重指标,且第$i$个分量为$2k$,其余$n-1$个分量均为0.由此可以看出$x^{p_{ik}}=x_i^{2k}$.注意到
+$$
+\begin{aligned}
+    |x|^{2k} &= (x_1^2+x_2^2+\cdots+x_n^2)^k\\
+             &\leqslant n^{k-1}(x_1^{2k}+x_2^{2k}+\cdots+x_n^{2k})\\
+             &= n^{k-1}(x^{p_{1k}}+x^{p_{2k}}+\cdots+x^{p_{nk}})
+\end{aligned}
+$$
+若对任意的正整数$k$与重指标$\beta$,成立
+$$
+\sup_{x\in\R^n}|x^{\alpha}\pa^{\beta}\varphi (x)|\leqslant C
+$$
+则
+$$
+\begin{aligned}
+    &\sup_{x\in\R^n}|(1+|x|^2)^k\pa^{\beta}\varphi (x)|\\
+    &\leqslant 2^{k-1}\sup_{x\in\R^n}|\pa^{\beta}\varphi (x)|+ 2^{k-1}\sup_{x\in\R^n}|x|^{2k}|\pa^{\beta}\varphi (x)|\\
+    &\leqslant 2^{k-1}\sup_{x\in\R^n}|\pa^{\beta}\varphi (x)|+ (2n)^{k-1}\sum_{j=1}^{k}\sup_{x\in\R^n}|x^{p_{jk}}\pa^{\beta}\varphi (x)|\leqslant C
+\end{aligned}
+$$
+\qquad (2)$\Rightarrow $(1)\quad 注意到
+$$
+|x^{\alpha}|=|x^{\alpha_1}_{1}x^{\alpha_2}_{2}\cdots x^{\alpha_n}_{n}|\leqslant|x|^{\alpha_1}_{1}|x|^{\alpha_2}_{2}\cdots |x|^{\alpha_n}_{n} \leqslant |x|^{\alpha_1+\cdots+\alpha_n}=|x|^{|\alpha|}
+$$
+若
+$$
+\sup_{x\in\R^n}|(1+|x|^2)^k\pa^{\beta}\varphi (x)|\leqslant C
+$$
+则
+$$
+\sup_{x\in\R^n}|x^{\alpha}\pa^{\beta}\varphi (x)|\leqslant \sup_{x\in\R^n}|x|^{|\alpha|}|\pa^{\beta}\varphi (x)|\leqslant \sup_{x\in\R^n}|(1+|x|^2)^{|\alpha|}\pa^{\beta}\varphi (x)|\leqslant C
+$$
+\qquad \textbf{例}$^\spadesuit$:若$f,g\in\sch$,则$f*g\in\sch$.\par
+\textbf{Proof}:对任意的$x,y\in\R^n$及正整数$k$,成立
+$$
+\begin{aligned}
+    (1+|x|^2)^k &\leqslant (1+2|x-y|^2+2|y|^2)^k\\
+                &\leqslant 2^k(1+|x-y|^2+1+|y|^2)^k\\
+                &\leqslant 2^{2k}[(1+|x-y|^2)^k+(1+|y|^2)^k]
+\end{aligned}
+$$
+由于$f,g\in\sch$.因此,对任意的多重指标$\alpha$及正整数$k$,
+$$
+\begin{aligned}
+    \left|(1+|x|^2)^k\paa\int_{\R^n}f(x-y)g(y)\dd y\right| &\leqslant 2^{2k}\int_{\R^n}(1+|x-y|^2)^k|\paa_x f(x-y)|g(y)|\dd y\\
+                                                           &+2^{2k}\int_{\R^n}(1+|y|^2)^k|\paa_x f(x-y)|g(y)|\dd y\\
+                                                           &\leqslant C\int_{\R^n}|g(y)|\dd y+C\int_{\R^n}|\paa_x f(x-y)|\dd y\\
+                                                           &\leqslant C\int_{\R^n}(1+|y|^2)^{-n}[(1+|y|^2)^n|g(y)|+(1+|y|^2)^n|\paa f(y)|]\dd y\\
+                                                           &\leqslant C_1\int_{\R^n}(1+|y|^2)^{-n}\dd y\leqslant C_2
+\end{aligned}
+$$
+这就说明了$f*g\in\sch$.\par
+\qquad \textbf{例}$^\spadesuit$:$C^{\infty}_c(\R^n)\subset\sch$且在$\sch$中是稠密的.\par
+我们之前证明过$C^{\infty}_c(\R^n)$在$C^{\infty}(\R ^n)$中是稠密的,再根据这个例子可以得到$\sch$在$C^{\infty}(\R^n)$中也是稠密的.此外还成立下述包含关系:
+$$
+C^{\infty}_c(\R^n)\subset \sch\subset C^{\infty}(\R ^n)
+$$
+\subsubsection{广义函数}
+我们主要考虑三类广义函数,也就是$C^{\infty}_c(\R^n),\sch,C^{\infty}(\R ^n)$上的连续线性泛函,分别记为$\mathcal{D} ',\mathcal{S} ',\mathcal{E} '$.对与给定的开集$\Omega\subset \mathbb{R}^n$我们可以定义$\mathcal{D}(\Omega)$与$C^{\infty}(\Omega)$上的广义函数空间,但对于$\mathcal{S}$只能在全空间去考虑.
+对于这三个广义函数空间,由下面的包含关系
+$$
+\mathcal{E}'(\mathbb{R}^n)\subset \mathcal{S}'(\mathbb{R}^n)\subset\mathcal{D}'(\mathbb{R}^n)
+$$
+
+
+
+
+
+\newpage
+\subsection{Sobolev空间}
+先从弱导数的定义开始.设$\Omega\subset\R ^n$为开集.\par
+\textbf{定义}$^\clubsuit $:设$u\in L^1_{loc}(\Omega)$,且$\alpha$为一多重指标,$m$为正整数.如果存在$v\in L^1_{loc}(\Omega)$使得对任意$\varphi\in C^{\infty}_{c}(\Omega)$成立
+$$
+\int_{\Omega}u\pa ^{\alpha}\varphi\dd x=(-1)^{|\alpha|}\int_{\Omega}v\varphi\dd x
+$$
+则称$v$为$u$的$\alpha$阶弱导数,记作$\pa ^{\alpha}u=v$.如果对所有的$|\alpha|\leqslant k$,$u$在$\Omega$上都有$\alpha$阶弱导数,则称$u$在$\Omega$上$k$阶弱可微.我们用$W^{k}(\Omega)$表示由全体在$\Omega$上$k$阶弱可微的函数组成的集合.\par
+关于Sobolev空间有诸多定义:函数型定义,分布型定义.\par
+\textbf{a.函数型定义: }给定正数$k$以及$1\leqslant p\leqslant\infty$.定义Sobolev空间
+$$
+W^{k,p}(\Omega)=\{u\in L^{p}(\Omega):\pa^{\alpha}u\in L^{p}(\Omega),0\leqslant |\alpha|\leqslant k\}
+$$
+其中$\pa^{\alpha}u$指的是弱导数.\par
+\textbf{注}:Sobolev空间中有一类重要的情况,即$p=2$时,我们记为
+$$
+H^k(\Omega)=W^{k,2}(\Omega)\; (k=0,1,2,\cdots)
+$$
+很快我们就会看到,其实$H^k(\Omega)$是Hilbert空间.其内积定义为
+$$
+(u,v)_{H^k(\Omega)}=\sum_{|\alpha|\leqslant k}\int_{\Omega}\pa ^{\alpha}u(x)\pa ^{\alpha}v(x)\dd x,\forall u,v\in H^k(\Omega)
+$$
+为了研究Sobolev空间上的拓扑结构,我们定义范数如下:如果$u\in W^{k,p}(\Omega)$
+$$
+\|u\|_{W^{k,p}(\Omega)}=:
+\begin{cases}
+    \left(\sum_{|\alpha|\leqslant k}\|\pa^{\alpha}u\|_{\Lp}^p\right)^{\frac{1}{p}},& 1\leqslant p<\infty\\
+    \max_{|\alpha|\leqslant k}\|\pa^{\alpha}u(x)\|_{L^\infty(\Omega)},& p=\infty
+\end{cases}
+$$
+可以证明$W^{k,p}(\Omega)$在赋以上述范数下是Banach空间.\par
+\textbf{注}:值得注意的是,在一些其他的书籍中,我们会看到将Sobolev空间定义为($1\leqslant p\leqslant\infty$):
+$$
+W^{k,p}(\Omega)=\{u\in W^{k}(\Omega):\pa^{\alpha}u\in L^{p}(\Omega),|\alpha|\leqslant k\}
+$$
+并在其上定义范数如下
+$$
+\|u\|_{W^{k,p}(\Omega)}=\sum_{|\alpha|\leqslant k}\|\pa ^{\alpha}u\|_{L^{p}(\Omega)}
+$$
+这两个定义是等价的.\par
+我们用$W^{k,p}_0(\Omega)$表示$C^{\infty}_{c}(\Omega)$在$W^{k,p}(\Omega)$中的闭包.因此$u\in W^{k,p}_0(\Omega)$当且仅当存在函数列$\{u_m\}\subset C^{\infty}_{c}(\Omega)$使得$u_m\to u$.(这个收敛是在$W^{k,p}_0(\Omega)$的范数意义下).
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{Sobolev空间的完备性},sharpish corners]
+   对于每个$k=1,\cdots$和$1\leqslant p< \infty$,Sobolev空间$W^{k,p}(\Omega)$是Banach空间.\par
+\end{tcolorbox}
+\textbf{Proof}:首先我们先证明$\|u\|_{W^{k,p}(\Omega)}$是一个范数.仅考虑三角不等式是否成立.设$u,v\in W^{k,p}(\Omega)$.利用Minkowski不等式得到
+$$
+\begin{aligned}
+    \|u+v\|_{W^{k,p}(\Omega)} &= \left(\sum_{|\alpha|\leqslant k}\|\paa u+\paa v\|_{L^{p}(\Omega)}^P\right)^{1/p}\\
+                              &\leqslant \left(\sum_{|\alpha|\leqslant k}(\|\paa u\|_{L^{p}(\Omega)}+\|\paa v\|_{L^{p}(\Omega)})^p\right)^{1/p}\\
+                              &\leqslant \left(\sum_{|\alpha|\leqslant k}\|\paa u\|_{L^{p}(\Omega)}^p\right)^{1/p}+\left(\sum_{|\alpha|\leqslant k}\|\paa V\|_{L^{p}(\Omega)}^p\right)^{1/p}\\
+                              &= \|u\|_{W^{k,p}(\Omega)}+\|v\|_{W^{k,p}(\Omega)}
+\end{aligned}
+$$
+剩下再证明$\sbev$是完备的.假设$\{u_m\}$是$\sbev$中的Cauchy列,则对每个$|\alpha|\leqslant k$,$\{\paa u_m\}$是$\Lp$中的Cauchy列.又因为$\Lp$完备,故存在函数$u_{\alpha}\in\Lp$,使得对每个$|\alpha|\leqslant k$,在$\Lp$中有$\paa u_m\to u_{\alpha}$.
+特别有$u_m\to u_{(0,\cdots,0)}=u$.接下来需要说明下面两件事
+$$
+u\in\sbev,\paa u=u_{\alpha}
+$$
+根据弱导数定义,对任意给定的$\varphi\in C^{\infty}_{c}(\Omega)$,有
+$$
+\int_{\Omega}u\paa \varphi\dd x=\lim_{m\to\infty}\int_{\Omega}u_m\paa \varphi\dd x=\lim_{m\to\infty}(-1)^{|\alpha|}\int_{\Omega}\paa u_m\varphi\dd x=(-1)^{|\alpha|}\int_{\Omega}\paa u_{\alpha}\varphi\dd x
+$$
+这就证明了$u\in\sbev,\paa u=u_{\alpha}$.接下来说明$u_m$是在Sobolev空间的范数下收敛到$u$即可.对于所有的$|\alpha|\leqslant k$,在$\Lp$上有$\paa u_m\to \paa u$,由此知在$\sbev$上有$u_m\to u$.\par
+\subsubsection{逼近定理}
+先证明第一个逼近定理:设$\Omega_{\varepsilon}=\{x\in\Omega:\operatorname{dist}(x,\partial \Omega)>\varepsilon\}$.
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{光滑函数的局部逼近},sharpish corners]
+设$1\leqslant p<\infty$,若$u\in\sbev$,令
+$$
+u_{\varepsilon}=\eta_{\varepsilon}\ast u,\text{在$\Omega_{\varepsilon}$中}
+$$
+那么对任意$V\subset\subset \Omega$,当$\varepsilon\to 0$时,$\|u_{\varepsilon}-u\|_{W^{k,p}(V)}\to 0$.
+\end{tcolorbox}
+\textbf{Proof}:断言:若$|\alpha|\leqslant k$,则在$\Omega_{\varepsilon}$中有
+$$
+\paa u_{\varepsilon}=\eta_{\varepsilon}\ast \paa u
+$$
+事实上,对于$x\in\Omega_{\varepsilon}$
+$$
+\begin{aligned}
+    \paa u_{\varepsilon} &= \paa_x\int_{\Omega}\eta_{\varepsilon}(x-y)u(y)\dd y=\int_{\Omega}u(y)\paa_x\eta_{\varepsilon}(x-y)\dd y\\
+                         &= (-1)^{|\alpha|}\int_{\Omega}u(y)\paa_y\eta_{\varepsilon}(x-y)\dd y
+\end{aligned}
+$$
+对于固定的$x\in\Omega_{\varepsilon}$,函数$\varphi(y)=\eta_{\varepsilon}(x-y)\in C^{\infty}_c(\Omega)$.根据$u$的$\alpha$阶弱导数的定义
+$$
+\int_{\Omega}u(y)\paa_y\eta_{\varepsilon}(x-y)\dd y=(-1)^{|\alpha|}\int_{\Omega}\eta_{\varepsilon}(x-y)\paa u(y)\dd y
+$$
+于是
+$$
+\paa u_{\varepsilon}=(-1)^{|\alpha|+|\alpha|}\int_{\Omega}\eta_{\varepsilon}(x-y)\paa u(y)\dd y=[\eta_{\varepsilon}\ast \paa u](x)
+$$
+对于任意开集$V\subset\subset U$,根据\hyperlink{磨光函数的逼近}{磨光函数的逼近定理},在$L^p(V)$中,对每个$|\alpha|\leqslant k$,当$\varepsilon\to 0$时,$\paa u_{\varepsilon}\to \paa u$.
+因此,当$\varepsilon\to 0$时有
+$$
+\|u_{\varepsilon}-u\|_{W^{k,p}(V)}=\sum_{|\alpha|\leqslant k}\|\paa u_{\varepsilon}- \paa u\|_{L^p(V)}\to 0
+$$
+\qquad 事实上我们不仅可以得到局部逼近,还可以得到全局逼近,只不过并不涉及边界的光滑性.用一句话总结下面的定理:
+$$
+C^{\infty}(\Omega)\cap\sbev\text{在}\sbev\text{中稠密}
+$$
+不过这个定理的证明需要用到所谓的单位分解定理:\par
+\textbf{单位分解定理}$^\clubsuit $:若在$\R^n$中的开集组$\{O_i\}_{i=1}^k$覆盖紧集$K$,且$O_i\cap K\neq \emptyset,i=1,\cdots,k$,则可以找到函数组$\{\varphi_i\}_{i=1}^k$满足:\par
+   (1)$\varphi_i(x)\in C^{\infty}_{c}(O_i),0\leqslant \varphi_i(x)\leqslant 1,1\leqslant i\leqslant k$;\par
+   (2)$\sum^k_{i=1}\varphi _i(x)=1,\forall x\in K$.\par
+这个定理是对紧集的情况,事实上我们可以建立$\R^n$中任意集合$\Omega$的单位分解.只不过此时就不一定具有有限覆盖,但是根据Lindel$\ddot{o}$f覆盖定理,$\Omega$具有可数覆盖.所以,上述定理中的$k$均可以改写为$\infty$.
+同时对任意$\Omega$的紧子集$\Omega'$,使得$\{\varphi_i\}_{i=1}^{\infty}$只有有限个在$\Omega'$中不为零,此时$\sum^{\infty}_{i=1}\varphi _i(x)$其实是有限和.\par
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{光滑函数的全局逼近},sharpish corners]
+   设$\Omega$有界.对于某个$p\in[1,\infty)$,若$u\in\sbev$,那么存在$u_m\in C^{\infty}(\Omega)\cap\sbev$,使得在$\sbev$中
+   $$
+    u_m\to u
+   $$
+\end{tcolorbox}
+\textbf{Proof}:定义
+$$
+\Omega_{i}=\left\{x\in \Omega:\operatorname{dist}(x,\pa \Omega)>\frac{1}{i}\right\},\quad i\geqslant 1
+$$
+那么有$\Omega=\bigcup_{i=1}^{\infty}\Omega_i$.容易发现
+$$
+\Omega_1\subset\subset \Omega_2\subset\subset\cdots\subset\subset \Omega_N\subset\subset\cdots\subset\subset\Omega
+$$
+构造环形区域用来局部分割$\Omega$.记$V_i=\Omega_{i+3}-\overline{\Omega}_{i+1}$.任取开集$V_0\subset\subset \Omega$使得$\Omega=\bigcup_{i=0}^{\infty}V_i$.利用单位分解定理,存在$\{\varphi_i\}_{i=0}^{\infty}$使得
+$$
+\begin{cases}
+    \varphi_i(x)\in C^{\infty}_{c}(V_i),& 0\leqslant \varphi_i(x)\leqslant 1\\
+    \sum^{\infty}_{i=0}\varphi_i(x)=1,&\forall x\in \Omega
+\end{cases}
+$$
+任取$u\in\sbev$,我们将其分解为一系列局部函数,事实上$u=\sum^{\infty}_{i=0}\varphi_i(x)u$.那么$\varphi_iu\in \sbev$且$\supp (\varphi_iu)\subset V_i$.\par
+利用光滑函数的局部逼近定理,给定$\delta>0$,取足够小的$\varepsilon_i>0$使得$u_i=\eta_{\varepsilon_i}\ast (\varphi_iu)$满足
+$$
+\begin{cases}
+    \|u_i-\varphi_iu\|_{\sbev}\leqslant\frac{\delta}{2^{i+1}} &,i\geqslant 0\\
+    \supp(u_i)\subset W_i&,i\geqslant 1
+\end{cases}
+$$
+其中$W_i=\Omega_{i+4}-\overline{\Omega}_i\supset V_i(i\geqslant 1)$为包含$V_i$的环形区域.\par
+记$v(x)=\sum^{\infty}_{i=0}u_i(x)$,又因为对于任意$x\in\Omega$,必然$x$只属于有限个$V_i$,所以$u=\sum^{\infty}_{i=0}\varphi_i(x)u$其实右边是有限和.对于任意开集$V\subset\subset\Omega$,知$\overline{V}$是$\Omega$的紧集,
+因此只有有限个$V_i$覆盖$V\subset\overline{V}$,所以对每一个开集$V\subset\subset\Omega$,和式$v(x)=\sum^{\infty}_{i=0}u_i(x)$其实是有限和,故$v(x)\in C^{\infty}(\Omega)$.由于对每一个开集$V\subset\subset\Omega$,有
+$$
+\begin{aligned}
+    \|v-u\|_{W^{k,p}(V)} &=\|\sum^{\infty}_{i=0}u_i-\sum^{\infty}_{i=0}\varphi_iu\|_{W^{k,p}(V)}\\
+                         &\leqslant \sum^{\infty}_{i=0}\|u_i-\varphi_iu\|_{W^{k,p}(V)}\\
+                         &\leqslant \sum^{\infty}_{i=0}\|u_i-\varphi_iu\|_{W^{k,p}(\Omega)}\\
+                         &\leqslant \sum^{\infty}_{i=0}\frac{\delta}{2^{i+1}}=\delta
+\end{aligned}
+$$
+在所有的集合$V\subset\subset\Omega$上取上确界,得到$\|v-u\|_{W^{k,p}(\Omega)}\leqslant\delta$.\par
+在后面的讨论中通常会涉及到区域边界的性质,我们在这里对此进行阐述:设$\Omega\subset\R ^n$是有界开集,$\Omega$的边界$\pa \Omega$是$C^k$的,是指对任意$x_0\in\pa\Omega$,都存在一个$r>0$和一个$C^k$函数(就是边界函数)$\gamma:\R^{n-1}\to \R$使得
+$$
+\Omega\cap B(x_0,r)=\{x\in B(x_0,r):x_n>\gamma (x_1,\cdots,x_{n-1})\}
+$$
+且边界
+$$
+\pa\Omega\cap B(x_0,r)=\{x\in B(x_0,r):x_n=\gamma (x_1,\cdots,x_{n-1})\}
+$$
+其实这里的$\gamma$就是对边界的参数化,比如考虑单位球,其边界就是$x_1^2+x^2_2+x_3^2=1$,此时$x_3=\gamma(x_1,x_2)\Leftrightarrow x_3=\sqrt{1-x_1^2-x_2^2}$.有时候我们又不清楚边界是什么形状,这时候我们可以展平边界.定义映射某个映射使得
+$$
+\begin{cases}
+    y_i=x_i,&(i=1,\cdots,n-1)\\
+    y_n=x_n-\gamma(x_1,\cdots,x_{n-1})
+\end{cases}
+$$
+为了方便我们记$x'=(x_1,\cdots,x_{n-1})$,上面的意思就是定义映射$\mathbf{\varPhi}$:
+$$
+\mathbf{\varPhi}(x',x_n)=(x',x_n-\gamma(x'))=(y',y_n)
+$$
+这个映射将原来的边界$\{x_n=\gamma(x')\}$变成了新坐标系下的平面$\{y_n=0\}$,并且这个$\mathbf{\varPhi}$是可逆的.这就实现了边界的展平.\par
+现在我们考虑到边界的光滑函数逼近.
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{用光滑到边界的函数全局逼近},sharpish corners]
+   设$\Omega$有界,且$\pa\Omega\in C^1$.对于某个$p\in[1,\infty)$,若$u\in\sbev$,那么存在$u_m\in C^{\infty}(\overline{\Omega})$,使得在$\sbev$中
+   $$
+    u_m\to u
+   $$
+\end{tcolorbox}
+\textbf{Proof}:任意固定$x_0\in\pa\Omega$,因为$\pa\Omega$是$C^1$的,那么存在$r>0$以及一个$C^1$函数$\gamma:\R^{n-1}\to\R$使得
+$$
+\Omega\cap B(x_0,r)=\{x\in B(x_0,r):x_n>\gamma (x_1,\cdots,x_{n-1})\}
+$$
+记$V=\Omega\cap B(x_0,\frac{r}{2})$.\par
+我们打算在$V$中磨光,但有一个问题,这个问题是由卷积引起的,如果直接考虑磨光函数$\eta_{\varepsilon}$,它的支集$\supp\subset \overline{B(0,\varepsilon)}$.那么卷积$\eta_{\varepsilon}\ast u$的支集就是
+$$
+\supp (\eta_{\varepsilon}\ast u)\subset \supp u+\overline{B(0,\varepsilon)}
+$$
+这说明,卷积的支集会向外膨胀$\varepsilon$的距离,对于任意的$x\in V$,如果$x$特别靠近边界的时候,直接进行磨光,那磨光之后的支集会跑出$\pa\Omega$,这不是我们想看到的,因此,我们可以将$x$往内移,但是如果只移$\varepsilon$的话,似乎卷积之后又贴着边界,所以不妨再移一点,留下一点空间,
+当然如果向内移的太过,又会突破$B(x_0,r)$,这也不行.\par
+对$\forall x\in V$作平移
+$$
+x_{\varepsilon}=x+\lambda\varepsilon e_n
+$$
+使得对于某个固定的$\lambda>0$,对所有$x\in V$与所有的小的$\varepsilon>0$,球$B(x_{\varepsilon},\varepsilon)$依然位于$\Omega\cap B(x_0,r)$之中.\par
+定义$u_{\varepsilon}=u(x_{\varepsilon})$,记$v_{\varepsilon}=\eta_{\varepsilon}\ast u_{\varepsilon}$,下面我们说明卷积在$x\in\overline{V}$上是有意义的,回忆卷积公式
+$$
+v_{\varepsilon}=\eta_{\varepsilon}\ast u_{\varepsilon}=\int_{\R^n}u_{\varepsilon}(x-y)\eta_{\varepsilon}\mathrm{d}y
+$$
+也就是说,对于任意的$x\in\overline{V}$,需要确保对于所有的$y\in\supp\eta_{\varepsilon}\subset \overline{B(0,\varepsilon)}$有(注意$u_{\varepsilon}(x-y)=u(x-y+\lambda\varepsilon e_n)=u(x_{\varepsilon}-y)$)
+$$
+x-y+\lambda\varepsilon e_n=x_{\varepsilon}-y\in\Omega\cap B(x_0,r)
+$$
+这是因为$\|y\|\leqslant\varepsilon$,因此
+$$
+\|x_{\varepsilon}-y-x_{\varepsilon}\|=\|-y\|\leqslant\varepsilon
+$$
+这就说明$x_{\varepsilon}-y\in B(x_{\varepsilon},\varepsilon)\subset\Omega\cap B(x_0,r)$.那么有$v_{\varepsilon}\in C^{\infty}(\overline{V})$.\par
+下面我们断言,在$\Wkp[V]{k}{p}$中$v_{\varepsilon}\to u$.为此,对于任意给定的多重指标$\alpha,|\alpha|\leqslant k$,成立
+$$
+\|\paa v_{\varepsilon}-\paa u\|_{L^{p}(V)}\leqslant \|\paa v_{\varepsilon}-\paa u_{\varepsilon}\|_{L^{p}(V)}+\|\paa u_{\varepsilon}-\paa u\|_{L^{p}(V)}
+$$
+第一项趋于零是由磨光的逼近性质;第二项趋于零是根据Lebesgue积分理论中的平移连续性定理.\par
+取$\delta>0$.由于$\pa\Omega$是紧的,所以存在有限个$x_0^i\in\pa\Omega$以及相应的$V_i=\Omega\cap B(x_0^i,\frac{r_i}{2})$,函数$v_i\in C^{\infty}(\overline{V}_i)$,使得$\pa\Omega\subset\bigcup_{i=1}^{N}B(x_0^i,\frac{r_i}{2})$且
+$$
+\|v_i-u\|_{\Wkp[V_i]{k}{p}}\leqslant\delta
+$$
+上面我们只是将边界包围了起来,但内部还有空隙.因此取开集$V_0\subset\subset\Omega$使得$\Omega\subset\bigcup_{i=0}^{N}V_i$,根据局部逼近定理,存在函数$v_0\in C^{\infty}(\overline{V_0})$满足
+$$
+\|v_0-u\|_{\Wkp[V_0]{k}{p}}\leqslant\delta
+$$
+令$\{\varphi_i\}_{i=0}^N$是从属于$\overline{\Omega}$中开集族$\{V_0,B(x_0^1,\frac{r_1}{2}),\cdots,B(x_0^N,\frac{r_N}{2})\}$的单位分解.定义$v=\sum_{i=0}^N\varphi_iv_i$,显然$v\in C^{\infty}(\overline{\Omega})$.又因为$u=\sum_{i=0}^N\varphi_iu$,因此对于每个$|\alpha|\leqslant k$,有
+$$
+\begin{aligned}
+    \|\paa v-\paa u\|_{L^{p}(\Omega)} &\leqslant \sum_{i=0}^{N}\|\paa (\varphi_iv_i)-\paa (\varphi_i u)\|_{L^{p}(V_i)}\\
+                                      &\leqslant C\sum_{i=0}^{N}\|v_i-u\|_{\Wkp[V_i]{k}{p}}\leqslant C(N+1)\delta
+\end{aligned}
+$$
+\qquad \textbf{注:}这里对最后的不等式做一个说明,就是第二个不等号怎么来的.事实上由乘积导数的Leibniz公式有
+$$
+\begin{aligned}
+&\quad \,\,\|\paa (\varphi_iv_i)-\paa (\varphi_i u)\|_{L^{p}(V_i)} =\|\paa[\varphi_i(v_i-u)]\|_{L^{p}(V_i)}\\
+                                                        &= \left\|\sum_{\beta\leqslant\alpha}\binom{\alpha}{\beta}\pa^{\beta}\varphi_i\cdot\pa^{\alpha-\beta}(v_i-u) \right\|_{L^{p}(V_i)}\\
+                                                        &\leqslant \sum_{\beta\leqslant\alpha}\binom{\alpha}{\beta}\|\pa^{\beta}\varphi_i\cdot\pa^{\alpha-\beta}(v_i-u)\|_{L^{p}(V_i)},\quad \text{记}M_{\beta,i}=\sup_{x\in V_i}|\pa^{\beta}\varphi_i(x)|\\
+                                                        &\leqslant \sum_{\beta\leqslant\alpha}\binom{\alpha}{\beta}M_{\beta,i}\cdot\|\pa^{\alpha-\beta}(v_i-u)\|_{L^{p}(V_i)},\quad \text{再记}M_{\beta}=\max_{0\leqslant i\leqslant N}\sup_{x\in V_i}|\pa^{\beta}\varphi_i(x)|<+\infty\\
+                                                        &\leqslant \sum_{\beta\leqslant\alpha}\binom{\alpha}{\beta}M_{\beta}\cdot\|\pa^{\alpha-\beta}(v_i-u)\|_{L^{p}(V_i)},\quad \text{组合数是有限的,记}C_0=\max_{\beta\leqslant\alpha,|\alpha|\leqslant k}\binom{\alpha}{\beta}M_{\beta}\\
+                                                        &\leqslant C_0\sum_{\beta\leqslant\alpha}\|\pa^{\alpha-\beta}(v_i-u)\|_{L^{p}(V_i)},\quad \text{记}\gamma=\alpha-\beta,\text{求和指标就变成了}|\gamma|\leqslant k\\
+                                                        &\leqslant C_0\sum_{|\gamma|\leqslant k}\|\pa^{\gamma}(v_i-u)\|_{L^{p}(V_i)},\quad \text{由范数的等价性,参考最开始范数的两种形式,}\\
+                                                        &\leqslant C\|v_i-u\|_{\Wkp[V_i]{k}{p}}
+\end{aligned}
+$$
+所以
+$$
+\sum_{i=0}^{N}\|\paa (\varphi_iv_i)-\paa (\varphi_i u)\|_{L^{p}(V_i)}\leqslant C\sum_{i=0}^{N}\|v_i-u\|_{\Wkp[V_i]{k}{p}}\leqslant C(N+1)\delta
+$$
+\subsubsection{延拓与迹定理}
+我们现在将$\Wkp[\Omega]{1}{p}$中的函数延拓为$\Wkp[\R ^n]{1}{p}$中的函数.事实上可以想象一下,一张A4纸就是$\R ^n$,在中间画一个圆就是$\Omega$,如果我们令圆外直接就是零,这样的延拓就不连续.因此我们的想法是从$\Omega$的边界平缓地过渡到零.例如考虑函数
+$$
+f(x)=1,x\in[-1,1]
+$$
+区间$[-1,1]$就是$\Omega$.我们希望从函数两端有平缓的坡道连接到$x$轴,这个坡道就是过渡用的,两端过渡的区域在加上本来的区间就是下面的$V$.\par
+设$p\in [1,\infty)$.同时下面我们可能使用$A\lesssim B$用来表示有常数$C$使得$A\leqslant CB$,并且$C$是不依赖于函数$u$的.这是因为我们不关心常数长什么样子,对于那些需要明确刻画常数的情况,不再采取这种简写.
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{延拓定理},sharpish corners]
+   设$\Omega$有界,且$\pa\Omega\in C^1$.选一个有界开集$V$使得$U\subset\subset V$,则存在一个有界线性算子
+   $$
+    \mathbf{E}:\Wkp[\Omega]{1}{p}\to \Wkp[\R ^n]{1}{p}
+   $$
+   使得对每一个$u\in \Wkp[\Omega]{1}{p}$有:\\
+   1.在$\Omega$中几乎处处有$\mathbf{E}u=u$.\\
+   2.$\mathbf{E}u$的支集在$V$中.\\
+   3.
+   $$
+    \|\mathbf{E}u\|_{\Wkp[\R ^n]{1}{p}}\leqslant C\|u\|_{\Wkp[\Omega]{1}{p}}
+   $$
+   常数$C$仅依赖于$p,\Omega,V$.
+\end{tcolorbox}
+证明思路是先考虑边界是平坦的情况,利用反射方法构造出$C^1$延拓.对于一般边界,考虑边界拉直即可.最后利用光滑函数逼近Sobolev空间.\par
+\textbf{Proof}:固定$x_0\in\pa\Omega$,首先设在$x_0$附近$\pa\Omega$是平坦的且位于平面$\{x_n=0\}$上.不妨设,存在一个以$x_0$为球心,$r$为半径的开球$B^0$,使得
+$$
+\begin{cases}
+    B^+&=B^0\cap \{x_n\geqslant 0\}\subset \overline{\Omega}\\
+    B^-&=B^0\cap \{x_n\leqslant 0\}\subset \R^n-\overline{\Omega}
+\end{cases}
+$$
+设$u\in C^1(\overline{\Omega}),x'=(x_1,x_2,\cdots,x_{n-1})$.我们先尝试一下最简单的反射(想象二维的情形)
+$$
+\overline{u}(x)=
+\begin{cases}
+    u(x',x_n),&x\in B^+\\
+    u(x',-x_n),&x\in B^-
+\end{cases}
+$$
+我们关注$x_n$方向的导数$\frac{\pa}{\pa x_n}\overline{u}(x',x_n)$.\par
+在上半空间$\{x_n>0\}$内$\frac{\pa}{\pa x_n}\overline{u}(x',x_n)=\frac{\pa u}{\pa x_n}(x',x_n)$.在下半空间$\{x_n<0\}$,由链式法则
+$$
+\frac{\pa}{\pa x_n}\overline{u}(x',x_n)=\frac{\pa}{\pa x_n}u(x',-x_n)=-\frac{\pa u}{\pa x_n}(x',-x_n)
+$$
+现在考察导数在边界处的左右极限,上半空间令$x_n\to 0^+$,下半空间令$x_n\to 0^-$,显然两侧导数是相反数,说明导数不连续(我们假设了$u$是$C^1$,自然希望延拓之后也是$C^1$).那有没有什么办法解决这个问题呢?有的,兄弟,有的.我们上面只选取了一个反射点$-x_n$,如果我们多选几个反射点$-c_k x_n(c_k>0)$,将$u(x',-c_k x_n)$进行加权组合.这个和数值分析的思路很像,例如在PDE数值解中,利用待定系数法给构造给定精度的导数近似,我们就是选取其他节点进行加权组合.\par
+我们的目的是要保持延拓之后的函数依然是$C^1$的,就是要说明两点:本身连续,导函数连续.每个反射点前都有1个待定的加权系数$\lambda_k$,故由两个连续性要求得到两个方程,因此我们只需要两个加权系数,对应的只需要考虑两个反射点即可.\par
+我们设
+$$
+\overline{u}(x)=
+\begin{cases}
+    u(x',x_n),&x\in B^+\\
+    \lambda_1u(x',-x_n)+\lambda_2u(x',-\frac{x_n}{2}),&x\in B^-
+\end{cases}
+$$
+由函数值在$x_n=0$处连续得到
+$$
+\lambda_1+\lambda_2=1
+$$
+计算$x_n<0$侧导数
+$$
+\frac{\pa}{\pa x_n}\overline{u}(x)=-\lambda_1\frac{\pa}{\pa x_n}u(x',-x_n)-\frac{\lambda_2}{2}\frac{\pa}{\pa x_n}u(x',-\frac{x_n}{2})
+$$
+我们希望$\lim_{x_n\to 0^-}\frac{\pa}{\pa x_n}\overline{u}(x)=\lim_{x_n\to 0^+}\frac{\pa}{\pa x_n}\overline{u}(x)=\frac{\pa}{\pa x_n}u(x',0)$,于是得到
+$$
+-\lambda_1-\frac{\lambda_2}{2}=1
+$$
+解关于$\lambda_1$和$\lambda_2$的线性方程组,我们就可以得到$\lambda_1=-3,\lambda_2=4$.所以我们定义
+$$
+\overline{u}(x)=
+\begin{cases}
+    u(x',x_n),&x\in B^+\\
+    -3u(x',-x_n)+4u(x',-\frac{x_n}{2}),&x\in B^-
+\end{cases}
+$$
+并且$\overline{u}(x)\in C^1(B^0)$.类似定理描述中的3.我们需要证明
+$$
+\|\overline{u}\|_{W^{1,p}(B^0)}\leqslant C\|u\|_{W^{1,p}(B^+)}
+$$
+根据范数定义
+$$
+\begin{aligned}
+    \|\overline{u}\|_{W^{1,p}(B^0)}^p &= \int_{B^0}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x\\
+                                      &= \int_{B^+}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x+\int_{B^-}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x\\
+                                      &= \int_{B^+}|u|^p+|\nabla u|^p\mathrm{d}x+\int_{B^-}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x
+\end{aligned}
+$$
+因此我们只需要估计$B^-$部分,这一部分需要用到不等式:对所有$a,b\geqslant 0$,有$(a+b)^p\leqslant 2^{p-1}(a^p+b^p)$.显然
+$$
+\begin{aligned}
+|\overline{u}|^p=|-3u(x',-x_n)+4u(x',-\frac{x_n}{2})|^p &\leqslant 2^{1-p}\left(3^p|u(x',-x_n)|^p+4^p|u(x',-\frac{x_n}{2})|^p\right)\\
+                                                        &\lesssim \left(|u(x',-x_n)|^p+|u(x',-\frac{x_n}{2})|^p\right)
+\end{aligned}
+$$
+容易计算得
+$$
+\nabla \overline{u}=
+\begin{cases}
+    -3\frac{\pa}{\pa x_i}u(x',-x_n)+4\frac{\pa}{\pa x_i}u(x',-\frac{x_n}{2}),&i<n\\
+    3\frac{\pa}{\pa x_i}u(x',-x_n)-2\frac{\pa}{\pa x_i}u(x',-\frac{x_n}{2}),&i=n
+\end{cases}
+$$
+因此
+$$
+\begin{aligned}
+    |\nabla\overline{u}|^2 &= \sum^n_{i=1}\left(\frac{\pa}{\pa x_i}\overline{u}\right)^2 \\
+    &= \sum^{n-1}_{i=1}\left(-3\frac{\pa}{\pa x_i}u(x',-x_n)+4\frac{\pa}{\pa x_i}u(x',-\frac{x_n}{2})\right)^2+\left(3\frac{\pa}{\pa x_n}u(x',-x_n)-2\frac{\pa}{\pa x_n}u(x',-\frac{x_n}{2})\right)^2\\
+    & \leqslant\sum^{n-1}_{i=1}\left[18\left(\frac{\pa}{\pa x_i}u(x',-x_n)\right)^2+32\left(\frac{\pa}{\pa x_i}u(x',-\frac{x_n}{2})\right)^2\right]\\
+    &+18\left(\frac{\pa}{\pa x_n}u(x',-x_n)\right)^2+8\left(\frac{\pa}{\pa x_n}u(x',-\frac{x_n}{2})\right)^2\\
+    & \lesssim \left(|\nabla u(x',-x_n)|^2+|\nabla u(x',-\frac{x_n}{2})|^2\right)
+\end{aligned}
+$$
+从而
+$$
+|\nabla\overline{u}|^p\lesssim \left(|\nabla u(x',-x_n)|^p+|\nabla u(x',-\frac{x_n}{2})|^p\right)
+$$
+因此我们得到了
+$$
+\int_{B^-}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x\lesssim \int_{B^-}|u(x',-x_n)|^p+|\nabla u(x',-x_n)|^p+|u(x',-\frac{x_n}{2})|^p+|\nabla u(x',-\frac{x_n}{2})|^p\mathrm{d}x
+$$
+不要忘了我们的目的,我们需要将上面关于$B^-$上的积分变为关于$B^+$上的积分先考虑$(x',-x_n)$项,作变量替换
+$$
+y'=x',y_n=-x_n
+$$
+该变换的Jacoba行列式绝对值为1,并且$y_n>0$因此
+$$
+\begin{aligned}
+    \int_{B^-}|u(x',-x_n)|^p+|\nabla u(x',-x_n)|^p\mathrm{d}x &=\int_{x_n<0}|u(x',-x_n)|^p+|\nabla u(x',-x_n)|^p\mathrm{d}x\\
+                                                              &=\int_{y_n>0}|u(y',y_n)|^p+|\nabla u(y',y_n)|^p\mathrm{d}y\\
+                                                              &=\int_{B^+}|u(x',x_n)|^p+|\nabla u(x',x_n)|^p\mathrm{d}x
+\end{aligned}
+$$
+同理对于$(x',-\frac{x_n}{2})$项来讲,作变量替换$z'=x',z_n=-\frac{x_n}{2}$有
+$$
+\begin{aligned}
+    \int_{B^-}|u(x',-\frac{x_n}{2})|^p+|\nabla u(x',-\frac{x_n}{2})|^p\mathrm{d}x &=2\int_{z_n>0}|u(z',z_n)|^p+|\nabla u(z',z_n)|^p\mathrm{d}z\\
+                                                                                  &=\int_{B^+}|u(x',x_n)|^p+|\nabla u(x',x_n)|^p\mathrm{d}x
+\end{aligned}
+$$
+因此
+$$
+\begin{aligned}
+    \|\overline{u}\|_{W^{1,p}(B^0)}^p &= \int_{B^+}|u|^p+|\nabla u|^p\mathrm{d}x+\int_{B^-}|\overline{u}|^p+|\nabla \overline{u}|^p\mathrm{d}x\\
+                                      & \lesssim \int_{B^+}|u|^p+|\nabla u|^p\mathrm{d}x+2\int_{B^+}|u(x',x_n)|^p+|\nabla u(x',x_n)|^p\mathrm{d}x\\
+                                      & \lesssim \int_{B^+}|u|^p+|\nabla u|^p\mathrm{d}x=\|u\|_{W^{1,p}(B^+)}
+\end{aligned}
+$$
+这就证明了结论.\par
+下面我们考虑$x_0$附近$\pa\Omega$不平坦的情况.可以找到一个逆映射为$\boldsymbol{\Psi }$的$C^1$映射$\boldsymbol{\Phi} $,在$x_0$附近拉直$\pa\Omega$.记
+$$
+y=\boldsymbol{\Phi}(x),u'(y)=u(\boldsymbol{\Psi}(y))
+$$
+我们现在在$y-$坐标下考虑问题.和前面的讨论一样,可以选择小球$B^0_y$,可以将$B^+_y$上的函数$u'$延拓为整个$B^0_y$上的函数$\overline{u'}$且$\overline{u'}$是$C^1$的,并且有估计式
+$$
+\|\overline{u'}\|_{W^{1,p}(B^0_y)}\leqslant C\|u'\|_{W^{1,p}(B^+_y)}
+$$
+令$W=\boldsymbol{\Psi}(B^0_y)$,变回$x$坐标系,我们得到$u$到$W$上的延拓$\overline{u}$,并且
+$$
+\|\overline{u}\|_{W^{1,p}(W)}\leqslant C\|u\|_{W^{1,p}(\boldsymbol{\Psi}(B^+_y))}\leqslant C\|u\|_{W^{1,p}(\Omega)}
+$$
+因为$\pa\Omega$是紧的,利用有限覆盖,存在有限多个$x_0^i\in\pa\Omega$和开集$W_i$使得$\pa\Omega\subset\bigcup^{N}_{i=1}W_i$,并且$u$有到$W_i$的延拓$\overline{u}_i(i=1,\cdots,N)$.取$W_0\subset\subset \Omega$使得$\Omega\subset\bigcup^{N}_{i=0}W_i$,自然考虑$u$在$W_0$上的延拓就是自己$\overline{u}_0=u$.\par
+\begin{center}
+    \begin{tikzpicture}
+
+% 主圆参数
+\def\Rmain{2.5}
+\def\Rsmall{1}
+\def\Rcen{2}
+\def\lar{4}
+\def\n{10}
+
+% 红色主圆（Ω）: 先填充，再画黑边
+\fill[red, opacity=0.3] (0,0) circle(\Rmain);
+\draw[black] (0,0) circle(\Rmain);
+
+% 蓝色副圆（W_0）: 先填充（更淡），再画黑边
+\foreach \i in {0,...,9} {
+    \pgfmathsetmacro\x{\Rmain*cos(360/\n*\i)}
+    \pgfmathsetmacro\y{\Rmain*sin(360/\n*\i)}
+    \fill[blue, opacity=0.15] (\x,\y) circle(\Rsmall);
+    \draw[black] (\x,\y) circle(\Rsmall);
+}
+% 中心蓝圆
+\fill[blue, opacity=0.15] (0,0) circle(\Rcen);
+\draw[black] (0,0) circle(\Rcen);
+
+\draw[black] (0,0) circle(\lar);
+\node at (3.75,0) {$V$};
+
+% 图例区域（右侧）
+\begin{scope}[shift={(4.5,1)}]
+    \fill[blue, opacity=0.15] (0,0) rectangle +(0.4,0.4);
+    \draw[black] (0,0) rectangle +(0.4,0.4);
+    \node[right] at (0.5,0.2) {$W_i$};
+    
+    \fill[red, opacity=0.3] (0,-0.8) rectangle +(0.4,0.4);
+    \draw[black] (0,-0.8) rectangle +(0.4,0.4);
+    \node[right] at (0.5,-0.6) {$\Omega$};
+\end{scope}
+
+\end{tikzpicture}
+\end{center}
+令$\{\zeta _i\}_{i=0}^N$为从属于覆盖$\bigcup^{N}_{i=0}W_i$的单位分解,记$\overline{u}=\sum_{i=0}^N\zeta_i\overline{u}_i$.显然由三角不等式得到
+$$
+\|\overline{u}\|_{W^{1,p}(\R ^n)}\leqslant \sum^N_{i=0}\|\zeta_i\overline{u}_i\|_{W^{1,p}(\R ^n)}
+$$
+我们现在断言$\|\zeta_i\overline{u}_i\|_{W^{1,p}(\R ^n)}\lesssim \|\overline{u}_i\|_{W^{1,p}(W_i)}$.显然$\|\zeta_i\overline{u}_i\|_{W^{1,p}(\R ^n)}=\|\zeta_i\overline{u}_i\|_{W^{1,p}(W_i)}$,于是
+$$
+\begin{aligned}
+    |\nabla (\zeta_i\overline{u}_i)|^p &\leqslant \left(|\zeta_i||\nabla \overline{u}_i|+|\overline{u}_i||\nabla \zeta_i|\right)^p\\
+                                       &\leqslant 2^{p-1}\left(|\zeta_i|^p|\nabla \overline{u}_i|^p+|\overline{u}_i|^p|\nabla \zeta_i|^p\right)
+\end{aligned}
+$$
+因此根据Sobolev范数定义
+$$
+\begin{aligned}
+    \|\zeta_i\overline{u}_i\|^p_{W^{1,p}(\R ^n)} &= \int_{W_i}\|\zeta_i\overline{u}_i\|^p+|\nabla (\zeta_i\overline{u}_i)|^p\mathrm{d}x\\
+                                               &\leqslant  \int_{W_i}|\zeta_i|^p|\overline{u}_i|^p+2^{p-1}\left(|\zeta_i|^p|\nabla \overline{u}_i|^p+|\overline{u}_i|^p|\nabla \zeta_i|^p\right)\mathrm{d}x\\
+                                               &= \int_{W_i}(|\zeta_i|^p+2^{p-1}|\nabla \zeta_i|^p)|\overline{u}_i|^p+2^{p-1}|\zeta_i|^p|\nabla \overline{u}_i|^p\mathrm{d}x\\
+                                               &\lesssim \int_{W_i}|\overline{u}_i|^p+|\nabla \overline{u}_i|^p\mathrm{d}x,\quad \text{不要忘了$\zeta_i$是紧支集的}\\
+                                               &= \|\overline{u}_i\|^p_{W^{1,p}(W_i)}
+\end{aligned}
+$$
+注意到$\|\overline{u}_i\|^p_{W^{1,p}(W_i)}\lesssim \|u\|^p_{W^{1,p}(\Omega)}$,从而
+$$
+\begin{aligned}
+\|\overline{u}\|_{W^{1,p}(\R ^n)} \leqslant \sum^N_{i=0}\|\zeta_i\overline{u}_i\|_{W^{1,p}(\R ^n)}&\lesssim \sum^N_{i=0}\|\overline{u}_i\|^p_{W^{1,p}(W_i)}\\
+                                  &\lesssim \sum^N_{i=0}\|u\|^p_{W^{1,p}(\Omega)}\lesssim \|u\|^p_{W^{1,p}(\Omega)}
+\end{aligned}
+$$
+此外取$V\supset\supset \Omega$使得$\overline{u}$的支集都在$V$中,这是可以做到的(看上面的图).\par
+下面记$\mathbf{E}u=\overline{u}$,显然这是一个线性算子.请不要忘记,我们之前的讨论都是基于$u\in C^1(\overline{\Omega})$的.现设$u\in W^{1,p}(\Omega)$,根据逼近定理,存在$u_m\in C^{\infty}(\overline{\Omega})$使得在$W^{1,p}(\Omega)$中收敛到$u$.因此
+$$
+\|\mathbf{E}u_m-\mathbf{E}u_n\|_{W^{1,p}(\R ^n)}\leqslant C\|u_m-u_n\|_{W^{1,p}(\Omega)}
+$$
+这表明$\{\mathbf{E}u_m\}$是Cauchy列,故收敛且收敛到$\mathbf{E}u$.此外,这一延拓不依赖$\{u_m\}$的选取.\par
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{迹定理},sharpish corners]
+   设$\Omega$有界,且$\pa\Omega\in C^1$.则存在一个有界线性算子
+   $$
+    \mathbf{T}:W^{1,p}(\Omega)\to L^p(\pa\Omega)
+   $$
+   使得\\
+   1.当$u\in W^{1,p}(\Omega)\cap C(\overline{\Omega})$时,$\mathbf{T}u=u|_{\pa\Omega}$.\\
+   2.对每个$u\in W^{1,p}(\Omega)$,
+   $$
+    \|\mathbf{T}u\|_{L^p(\pa\Omega)}\leqslant C\|u\|_{W^{1,p}(\Omega)}
+   $$
+   常数$C$仅依赖于$p$和$\Omega$.
+\end{tcolorbox}
+接下来的证明和延拓定理的证明思路是十一样的,就是先考虑局部情况,然后再把局部拼起来成为整体.特别注意的是,请务必将延拓定理的证明细节搞清楚,尤其是拉直边界那一部分,下面的证明,对这一部分我就直接省去细节.延拓定理是对区局部区域进行讨论,而这里是考虑对局部的边界考虑.\par
+\textbf{Proof}:固定$x_0\in\pa\Omega$,首先设在$x_0$附近$\pa\Omega$是平坦的且位于平面$\{x_n=0\}$上.不妨设,存在一个以$x_0$为球心,$r$为半径的开球$B^0$,令$\hat{B}$是半径为$r/2$的同心球.\par
+取$\zeta\in C^{\infty}_{c}(B^0)$.在$B^0$中$\zeta\geqslant 0$,在$\hat{B}$上$\zeta\equiv 1$,记$\Gamma$为$\pa\Omega$在$\hat{B}$内的部分.我们的思路其实很简单,就是先对边界的一小段进行讨论,然后根据有限覆盖将整个边界拼起来.此时我们假设$u\in C(\overline{\Omega})$.那么$u|_{\Gamma}$就是经典意义下的值.根据定理的要求,还需要进行下面的估计
+$$
+\int_{\Gamma}|u|^p\mathrm{d}x'\lesssim \int_{B^+}(|u|^p+|\nabla u|^p)\mathrm{d}x
+$$
+事实上
+$$
+\int_{\Gamma}|u|^p\mathrm{d}x'\leqslant \int_{x_n=0}\zeta |u|^p\mathrm{d}x'
+$$
+根据散度定理$\int_{B^+}\frac{\pa}{\pa x_n}(\zeta |u|^p)\mathrm{d}x=\int_{\pa B^+}\zeta |u|^p\nu _n\mathrm{d}x'$,注意到,我们的区域在$x_n>0$那一侧,因此外法向量自然就是$-e_n$,于是
+$$
+\begin{aligned}
+    \int_{x_n=0}\zeta |u|^p\mathrm{d}x' &= -\int_{B^+}\frac{\pa}{\pa x_n}(\zeta |u|^p)\mathrm{d}x,\text{不要忘了}|u|=\sqrt{u^2}\\
+                                        &= -\int_{B^+}\left[\zeta_{x_n}|u|^p+p\zeta |u|^{p-1}\operatorname{sgn}(u)u_{x_n}\right]\mathrm{d}x
+\end{aligned}
+$$
+注意到$\zeta_{x_n}$是有界的,因此
+$$
+\left|\int_{B^+}\zeta_{x_n}|u|^p\mathrm{d}x\right|\leqslant \int_{B^+}|\zeta_{x_n}|u|^p\mathrm{d}x|\lesssim \int_{B^+}|u|^p\mathrm{d}x
+$$
+对于第二项,注意到$\left|\int_{B^+}p\zeta |u|^{p-1}\operatorname{sgn}(u)u_{x_n}\mathrm{d}x\right|=\left|\int_{B^+}p\zeta |u|^{p-1}u_{x_n}\mathrm{d}x\right|$,利用Holder不等式与Young不等式得到
+$$
+\begin{aligned}
+    p\left|\int_{B^+}\zeta |u|^{p-1}u_{x_n}\mathrm{d}x\right| &\leqslant p\left(\int_{B^+}|u|^{(p-1)q}\zeta^q\mathrm{d}x\right)^{1/q}\left(\int_{B^+}|u_{x_n}|^p\mathrm{d}x\right)^{1/p}\\
+                                                              &\leqslant p\left(\frac{1}{p}\int_{B^+}|u_{x_n}|^p\mathrm{d}x+\frac{1}{q}\int_{B^+}|u|^{(p-1)q}\zeta^q\mathrm{d}x\right)\\
+                                                              &\lesssim \left(\int_{B^+}|u|^p\mathrm{d}x+\int_{B^+}|\nabla u|^p\mathrm{d}x\right)
+\end{aligned}
+$$
+这里$q=\frac{p}{p-1}$,不要忘了$(p-1)q=p$.综上,我们可以找到常数$C$使得
+$$
+\int_{\Gamma}|u|^p\mathrm{d}x'\leqslant C\int_{B^+}(|u|^p+|\nabla u|^p)\mathrm{d}x
+$$
+现在假设$\pa\Omega$在$x^0$附近不是平坦的,那么我们当然能将这局部的一段边界拉直,并在新的坐标系下得到类似于上面的不等式,然后再利用变量替换就可以得到原坐标系下的不等式(注意,变量替换过程中的Jacobi行列式也是常数)
+$$
+\int_{\Gamma}|u|^p\mathrm{d}S\leqslant C\int_{\Omega}(|u|^p+|\nabla u|^p)\mathrm{d}x
+$$
+这里的$\Gamma$是包含$x_0$的$\pa\Omega$的开子集(我们将$x_0$附近拉直,又变了回来,这里的$\Gamma$其实相当于延拓定理证明中的中的$W$).\par
+因为$\pa\Omega$是紧的,根据有限覆盖,存在有限多个$x_0^i\in\pa\Omega$和开子集$\Gamma_i\subset\pa\Omega$使得$\pa\Omega=\bigcup_{i=1}^N\Gamma_i$,并且有估计式
+$$
+\|u\|_{L^p(\Gamma_i)}\leqslant C\|u\|_{W^{1,p}(\Omega)},\quad (i=1,\cdots,N)
+$$
+我们记$\mathbf{T}u=u|_{\pa\Omega}$,那么(注意到$u|_{\pa\Omega}=\bigcup_{i=1}^Nu|_{\Gamma_i}$)
+$$
+\|\mathbf{T}u\|_{L^p(\pa\Omega)}\leqslant C\|u\|_{W^{1,p}(\Omega)}
+$$
+其中$C$是不依赖于函数$u$的常数.\par
+现在设$u\in W^{1,p}(\Omega)$,由逼近定理,存在函数$u_m\in C^{\infty}(\overline{\Omega})$在$W^{1,p}(\Omega)$收敛到$u$.所以有
+$$
+\|\mathbf{T}u_m-\mathbf{T}u_n\|_{L^p(\pa\Omega)}\leqslant C\|u_m-u_n\|_{W^{1,p}(\Omega)}
+$$
+这说明$\{\mathbf{T}u_m\}$是Cauchy列,故收敛,我们设$\mathbf{T}u=\lim_{m\to\infty}\mathbf{T}u_m$.\par
+现在设$u\in W^{1,p}(\Omega)\cap C(\overline{\Omega})$.如果还记得逼近定理的证明过程,我们是用磨光技术构造的卷积逼近,而卷积逼近在连续函数空间是一致的,因此我们在上面选择逼近序列时,自然可以选择在$C(\overline{\Omega})$一致逼近的序列
+(在$W^{1,p}(\Omega)$依然是收敛,你会发现我们从来没讲过在$W^{k,p}(\Omega)$中一致收敛的概念,因为这里面的函数有些性质很差,不连续.即使点点连续,但一致是个整体概念.那么为什么这里可以谈一致收敛呢?因为我们假设了$u\in W^{1,p}(\Omega)\cap C(\overline{\Omega})$).因为$u_m\in C^{\infty}(\overline{\Omega})$,因此
+$$
+\mathbf{T}u_m=u_m|_{\pa\Omega}
+$$
+而$u_m\to u$在$C(\overline{\Omega})$中是一致收敛的,因此在边界也一致收敛,即有
+$$
+\|u_m|_{\pa\Omega}-u|_{\pa\Omega}\|_{L^p(\pa\Omega)}\to 0
+$$
+换句话说就是在$L^p(\pa\Omega)$中有$\mathbf{T}u_m\to u|_{\pa\Omega}$.这就证明了$\mathbf{T}u=u|_{\pa\Omega}$.
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{$W^{1,p}(\Omega)$中的迹零函数},sharpish corners]
+   设$\Omega$有界,且$\pa\Omega\in C^1$.进一步设$u\in W^{1,p}(\Omega)$,则当且仅当在$\pa\Omega$上$\mathbf{T}u=0$时$u\in W^{1,p}_0(\Omega)$
+\end{tcolorbox}
+
+\subsubsection{Sobolev不等式}
+我们先引入赋范线性空间中\textbf{嵌入}的定义:设$(X,\|\cdot\|_{X})$和$(Y,\|\cdot\|_Y)$是两个赋范线性空间.如果$X\subset Y$并且存在常数$C>0$使得
+$$
+\|x\|_Y\leqslant C\|x\|_X,\quad \forall x\in X
+$$
+我们就称$X$嵌入$Y$,记作$X\hookrightarrow Y$.如果$X$中的每个有界序列在$Y$中都是相对紧的,那么我们称$X$\textbf{紧嵌入}$Y$,记作$X\hookrightarrow \hookrightarrow Y$.这里需要解释一下相对紧的定义.\par
+一个集合相对紧的原始定义就是他的闭包是紧的.如果用序列的语言描述就是:$X$中的任意有界序列都包含一个在$Y$中收敛的子列,值得注意的是,未必在$X$中收敛.\par
+上面嵌入的定义要求了$X\subset Y$,其实这是不必要的,嵌入意味着等同而不是严格相同,因此我们有下面的定义:
+\begin{Definition}{嵌入}
+    给定两个赋范线性空间$(X,\|\cdot\|_{X})$和$(Y,\|\cdot\|_Y)$,如果存在一个映射$\iota :X\to Y$,满足下面三条性质,我们就称$X$可以嵌入到$Y$:
+    \begin{enumerate}[nosep,label = (\roman*)]
+        \item $\iota $是一个线性映射;
+        \item 存在常数$C>0$使得$\|\iota (x)\|_Y\leqslant \|x\|_X$对所有的$x\in X$成立;
+        \item 如果$\iota(x)=\iota(x')$,那么$x=x'$.
+    \end{enumerate}
+    如果要求这个映射$\iota $ 是紧算子(就是把$X$中的有界集映为$Y$中的相对紧集),我们就称$X$紧嵌入到$Y$中.
+\end{Definition}
+当$X,Y,Z$是三个赋范线性空间,且$X\hookrightarrow Y,Y\hookrightarrow Z$,那么必有$X\hookrightarrow Z$.另外,如果其中一个是紧嵌入,那么$X\hookrightarrow\hookrightarrow Z$.当$X,Y$都是Banach空间时,为证明$X\hookrightarrow Y$,只需要对$X$的一个稠密线性子集中的$u$证明所需要的不等式即可,这是因为稠密子集上的连续线性算子可以唯一地延拓到全空间.
+\begin{Theorem}{Ehrling引理}
+    设$X,Y,Z$是三个Banach空间,$X\hookrightarrow Y\hookrightarrow Z$,则$X\hookrightarrow\hookrightarrow Y$的充要条件是:
+    \begin{enumerate}[nosep,label = (\roman*)]
+        \item $X\hookrightarrow\hookrightarrow Z$;
+        \item 对任意$\eta\in (0,1)$,存在常数$C_{\eta}>0$使得
+              $$
+              \|u\|_Y\leqslant \eta\|u\|_{X}+C_{\eta}\|u\|_Z,\quad \forall u\in X
+              $$
+    \end{enumerate}
+\end{Theorem}
+\begin{Proof}
+    首先考虑必要性.因为$X\hookrightarrow\hookrightarrow Y$,所以$X\hookrightarrow\hookrightarrow Z$.接下来利用反证法,若条件(ii)不成立,则存在$\eta_0\in (0,1)$,对每个自然数$k$,存在$u_k\in X$且$\|u_k\|_X=1$使得
+    $$
+    \|u_k\|_Y>\eta_0+k\|u_k\|_Z
+    $$
+    另一方面,由于$X\hookrightarrow Y$,故$\|u_k\|_Y\leqslant C\|u_k\|_X=C$.因此
+    $$
+    \|u_k\|_Z<\frac{C}{k}\to 0,\quad k\to\infty
+    $$
+    这就说明在$Z$中$u_k\to 0(k\to \infty)$.又因为$X\hookrightarrow\hookrightarrow Y$,所以存在$\{u_k\}$的子序列$\{u_{n_k}\}$在$Y$中有$u_{n_k}\to u_0\in Y$.而$Y\hookleftarrow Z$,那么在$Z$中也有$u_{n_k}\to u_0$,因此$u_0=0$.而
+    $$
+    \|u_{n_k}\|_Y>\eta_0+k\|u_{n_k}\|_Z
+    $$
+    两边令$k\to\infty$,得到$\|u_0\|_Y\geqslant \eta_0>0$,这就与$u_0=0$矛盾.\par
+    接下来考虑充分性.为了证明$X\hookrightarrow\hookrightarrow Y$,令$S=\{u:u\in X,\|u\|_X=1\}$是$X$中的单位球面.因为$X\hookrightarrow\hookrightarrow Z$,则存在$S$的子序列$\{u_n\}$在$Z$中收敛.又对任意$\eta\in (0,1)$,存在$C_{\eta}>0$,有
+    $$
+    \|u_m-u_n\|_Y\leqslant \eta+C_{\eta}\|u_m-u_n\|_Z
+    $$
+    对任意$\varepsilon>0$,取$\eta<\frac{\varepsilon}{2}$,存在$N>0$使得当$m,n>N$时,$\|u_m-u_n\|_{Z}<\frac{\varepsilon}{2}$.从而有$\|u_m-u_n\|<\varepsilon$,由此说明$\{u_n\}$在$Y$中收敛.所以$X\hookrightarrow\hookrightarrow Y$.
+\end{Proof}
+像(ii)中的不等式称为内插不等式,它说明介于两个空间之间的第三个空间的范数可由前,后两个空间的范数控制,并且这种估计可以做到使得小空间范数的作用可以任意小(前面有个$\eta$).
+\begin{Definition}{}
+若$1\leqslant p<n$,则$p$的Sobolev共轭是
+$$
+p^*:=\frac{np}{n-p}
+$$
+\end{Definition}
+下面的定理我相信看过谢惠民老师的数学分析习题课讲义的都会很熟悉.
+\begin{Theorem}{Gagliardo-Nirenberg-Sobolev不等式}
+    假设$1\leqslant p<n$,则存在一个常数$C=C(n,p)>0$使得对于所有的$u\in C^1_c(\R ^n)$有
+   $$
+    \|u\|_{L^{p^*}(\R^n)}\leqslant C\|\nabla u\|_{L^p(\R^n)}
+   $$
+\end{Theorem}
+\textbf{Proof}:首先假设$p=1$.因为$u$具有紧支集,对于每个$i=1,\cdots,n$和$x\in \R^n$,我们有
+$$
+u(x)=\int_{-\infty}^{x_i}u_{x_i}(x_1,\cdots,x_{i-1},y_i,x_{i+1},\cdots,x_n)\mathrm{d}y_i
+$$
+因此
+$$
+|u(x)|\leqslant\int_{-\infty}^{\infty}|\nabla u(x_1,\cdots,x_{i-1},y_i,x_{i+1},\cdots,x_n)|\mathrm{d}y_i,i=1,\cdots,n
+$$
+于是
+$$
+|u(x)|^{\frac{n}{n-1}}\leqslant \prod _{i=1}^n\left(\int_{-\infty}^{\infty}|\nabla u(x_1,\cdots,x_{i-1},y_i,x_{i+1},\cdots,x_n)|\mathrm{d}y_i\right)^{\frac{1}{n-1}}
+$$
+将上式两边关于$x_1$积分,再利用$\mathrm{H\ddot{o}lder }$不等式得到
+$$
+\begin{aligned}
+    \int_{-\infty}^{\infty}|u(x)|^{\frac{n}{n-1}}\mathrm{d}x_1 &\leqslant \int_{-\infty}^{\infty}\prod _{i=1}^n\left(\int_{-\infty}^{\infty}|\nabla u|\mathrm{d}y_i\right)^{\frac{1}{n-1}}\mathrm{d}x_1\\
+                                                               &= \left(\int_{-\infty}^{\infty}|\nabla u|\mathrm{d}y_1\right)^{\frac{1}{n-1}}\int_{-\infty}^{\infty}\prod _{i=2}^n\left(\int_{-\infty}^{\infty}|\nabla u|\mathrm{d}y_i\right)^{\frac{1}{n-1}}\mathrm{d}x_1\\
+                                                               &\leqslant\left(\int_{-\infty}^{\infty}|\nabla u|\mathrm{d}y_1\right)^{\frac{1}{n-1}}\left(\prod _{i=2}^n\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}|\nabla u|\mathrm{d}x_1\mathrm{d}y_i\right)^{\frac{1}{n-1}}
+\end{aligned}
+$$
+继续关于$x_2,\cdots,x_n$积分可以发现
+$$
+\int_{\R^n}|u|^{\frac{n}{n-1}}\mathrm{d}x\leqslant\left(\int_{\R^n}|\nabla u|\mathrm{d}x\right)^{\frac{n}{n-1}}
+$$
+\qquad 现在考虑$1<p<n$的情况,在上式中将$u$改为$|u|^{\gamma}$,其中$\gamma>1$为待定常数.利用$\mathrm{H\ddot{o}lder }$不等式得到
+$$
+\begin{aligned}
+    \left(\int_{\R^n}|u|^{\frac{\gamma n}{n-1}}\mathrm{d}x\right)^{\frac{n-1}{n}} &\leqslant \int_{\R^n}|\nabla |u|^\gamma|\mathrm{d}x=\gamma\int_{\R^n}|u|^{\gamma-1}|\nabla u|\mathrm{d}x\\
+                                                                                  &\leqslant \gamma \left(\int_{\R^n}|u|^{(\gamma-1)\frac{p}{p-1}}\mathrm{d}x\right)^{\frac{p-1}{p}}\left(\int_{\R^n}|\nabla u|^p\mathrm{d}x\right)^{\frac{1}{p}}
+\end{aligned}
+$$
+我们取$\gamma$使得$\frac{\gamma n}{n-1}=(\gamma-1)\frac{p}{p-1}$,也即是
+$$
+\gamma:=\frac{p(n-1)}{n-p}>1
+$$
+此时$\frac{\gamma n}{n-1}=p^*$,所以
+$$
+\left(\int_{\R^n}|u|^{p^*}\mathrm{d}x\right)^{\frac{1}{p^*}}\leqslant \gamma \left(\int_{\R^n}|\nabla u|^p\mathrm{d}x\right)^{\frac{1}{p}}
+$$
+
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{Morrey不等式},sharpish corners]
+   设$n<p\leqslant\infty$,则存在仅依赖于$p$和$n$的常数$C$,使得对所有的$u\in C^1(\mathbb{R}^n)$有
+   $$
+    \|u\|_{C^{0,\gamma}(\mathbb{R}^n)}\leqslant C\|u\|_{W^{1,p}(\mathbb{R}^n)}
+   $$
+   其中$\gamma=1-\frac{n}{p}$.
+\end{tcolorbox}
+\textbf{分析}:从结论出发我们需要证明
+$$
+\sup_{x\in\mathbb{R}^n}|u(x)|+\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}\leqslant C\left(\|u\|^p_{L^p(\mathbb{R}^n)}+\|Du\|^p_{L^p(\mathbb{R}^n)}\right)^{1/p}
+$$
+但是你会发现书上的证明目标不是这样的而是
+$$
+\sup_{x\in\mathbb{R}^n}|u(x)|+\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}\leqslant C\left(\|u\|_{L^p(\mathbb{R}^n)}+\|Du\|_{L^p(\mathbb{R}^n)}\right)
+$$
+这是因为书上利用的是Sobolev范数的等价形式
+$$
+\|u\|_{W^{k,p}(\Omega)}=\sum_{|\alpha|\leqslant k}\|\pa ^{\alpha}u\|_{L^{p}(\Omega)}
+$$
+于是我们的目的就转向为估计两项
+$$
+\sup_{x\in\mathbb{R}^n}|u(x)|\text{和}\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}
+$$
+\qquad \textbf{Proof}:接下来我们将会用下面的符号省略控制常数:如果存在仅依赖于$p$和$n$的常数$C=C(n,p)$使得$A\leqslant CB$,我们就写作$A\lesssim B$.\par
+对于$A\leqslant C_1B+C_2D$,那么我们只需要取$C=\max\{C_1,C_2\},$自然就有$A\lesssim B+D$.\par
+我们断言对于任意的球$B(x,r)\subset\mathbb{R}^n$,都有
+$$
+\fint_{B(x,r)}|u(y)-u(x)|\mathrm{d}y\lesssim\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y
+$$
+如何将$|u(y)-u(x)|$和梯度扯上关系呢?利用微积分的知识,固定任意$w\in\partial B(0,1)$.若$0<s<r$,那么
+$$
+\begin{aligned}
+    |u(x+sw)-u(x)| &=\left|\int_0^s\frac{\mathrm{d}}{\mathrm{d}t}u(x+tw)\mathrm{d}t\right|\\
+                   &=\left|\int_0^s Du(x+tw)\cdot w\mathrm{d}t\right|\\
+                   &\leqslant \int_0^s|Du(x+tw)|\mathrm{d}t
+\end{aligned}
+$$
+因此
+$$
+\int_{\partial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w\leqslant \int_0^s\int_{\partial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t
+$$
+令$y=x+tw,t=|x-y|$,那么上式右边
+$$
+\begin{aligned}
+    \int_0^s\int_{\partial B(0,1)}|Du(x+tw)|\mathrm{d}S_w\mathrm{d}t &= \int_0^s\int_{\partial B(x,t)}\frac{Du(y)}{t^{n-1}}\mathrm{d}S_y\mathrm{d}t \\
+                                                                     &= \int_{B(x,s)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y \\
+                                                                     &\leqslant \int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y 
+\end{aligned}
+$$
+又因为
+$$
+\int_{\partial B(0,1)}|u(x+sw)-u(x)|\mathrm{d}S_w=\frac{1}{s^{n-1}}\int_{\partial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z
+$$
+所以
+$$
+\int_{\partial B(x,s)}|u(z)-u(x)|\mathrm{d}S_z\leqslant s^{n-1}\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y
+$$
+两边关于$s$从$0$到$r$积分,得到
+$$
+\fint_{B(x,r)}|u(y)-u(x)|\mathrm{d}y\leqslant \frac{1}{n\alpha(n)}\int_{B(x,r)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y
+$$
+\textbf{Part1.估计}$\sup_{x\in\mathbb{R}^n}|u(x)|$.\par
+固定任意$x\in\mathbb{R}^n$,那么如果记$q$满足$\frac{1}{p}+\frac{1}{q}=1$,利用Hölder不等式得到
+$$
+\begin{aligned}
+    |u(x)| &\leqslant \fint_{B(x,1)}|u(y)-u(x)|\mathrm{d}y+\fint_{B(x,1)}|u(y)|\mathrm{d}y\\
+           &\lesssim \int_{B(x,1)}\frac{|Du(y)|}{|y-x|^{n-1}}\mathrm{d}y+\left(\int_{B(x,1)}|u(y)|^p\mathrm{d}y\right)^{1/p}\\
+           &\leqslant \left(\int_{B(x,1)}|Du(y)|^p\mathrm{d}y\right)^{1/p}\left(\int_{B(x,1)}\frac{1}{|y-x|^{q(n-1)}}\mathrm{d}y\right)^{1/q}+\|u\|_{L^p(\mathbb{R}^n)}\\
+           &\lesssim \|Du\|_{L^p(\mathbb{R}^n)}+\|u\|_{L^p(\mathbb{R}^n)}
+\end{aligned}
+$$
+其中$\int_{B(x,1)}\frac{1}{|y-x|^{q(n-1)}}\mathrm{d}y=n\alpha(n)\frac{p-1}{p-n}$是只依赖于$p$和$n$的常数.\par
+\begin{quote}
+    \color{red}
+    Evans的中译本上面是对$B(x,r)$上进行估计,但是最终得到的结果是
+    $$
+    \|u\|_{C^{0,\gamma}(\mathbb{R}^n)}\lesssim r^{-n/p}\|u\|_{L^p(\mathbb{R}^n)}+\|Du\|_{L^p(\mathbb{R}^n)}
+    $$
+    这就导致了有一项$r^{-n/p}$难以处理,虽然中文译本上说这是依赖于$p$和$n$的,但我持怀疑态度,并且中文译本上的这句话没有给出任何有说服力的理由,而是一句话带过.英文版的处理方法直接避免了这个问题,同时没有影响最终结果.所以当你看英文版会奇怪为什么是在$B(x,1)$上积分,道理就在这里,这个1可以改为任意有限的正数.
+\end{quote}
+\textbf{Part2.估计}$\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}$.\par
+任取$x,y\in\mathbb{R}^n$,令$r=|x-y|,W=B(x,r)\cap B(y-r)$,则
+$$
+|u(x)-u(y)|\leqslant \fint_{W}|u(x)-u(z)|\mathrm{d}z+\fint_{W}|u(y)-u(z)|\mathrm{d}z
+$$
+因此
+$$
+\begin{aligned}
+    \fint_{W}|u(x)-u(z)|\mathrm{d}z &\lesssim \fint_{B(x,r)}|u(x)-u(z)|\mathrm{d}z\\
+                                   &\lesssim \int_{B(x,r)}\frac{|Du(z)|}{|z-x|^{n-1}}\mathrm{d}z\\
+                                   &\leqslant \left(\int_{B(x,r)}|Du(z)|^p\mathrm{d}z\right)^{1/p}\left(\int_{B(x,r)}\frac{1}{|z-x|^{q(n-1)}}\mathrm{d}z\right)^{1/q}\\
+                                   &\lesssim r^{1-\frac{n}{p}}\|Du\|_{L^p(\mathbb{R}^n)}
+\end{aligned}
+$$
+同理可得
+$$
+\fint_{W}|u(x)-u(z)|\mathrm{d}z\lesssim r^{1-\frac{n}{p}}\|Du\|_{L^p(\mathbb{R}^n)}
+$$
+这也就是说$|u(x)-u(y)|\lesssim r^{1-\frac{n}{p}}\|Du\|_{L^p(\mathbb{R}^n)}=|x-y|^{\gamma}\|Du\|_{L^p(\mathbb{R}^n)}$.这就表明了
+$$
+\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}\lesssim \|Du\|_{L^p(\mathbb{R}^n)}
+$$
+综上所述
+$$
+\begin{aligned}
+    \|u\|_{C^{0,\gamma}(\mathbb{R}^n)}&=\sup_{x\in\mathbb{R}^n}|u(x)|+\sup_{\substack{x,y\in\mathbb{R}^n\\x\neq y}}\left\{\frac{|u(x)-u(y)|}{|x-y|^{\gamma}}\right\}
+                                      &\lesssim \|Du\|_{L^p(\mathbb{R}^n)}+\|u\|_{L^p(\mathbb{R}^n)}=\|u\|_{W^{1,p}(\mathbb{R}^n)}
+\end{aligned}
+$$
+\subsubsection{$H^1_0(\Omega)$的对偶空间$H^{-1}(\Omega)$}
+\begin{tcolorbox}[colback=KuangNei,colframe=BianKuang,title=\textbf{$H^{-1}(\Omega)$的刻画},sharpish corners]
+   假设$\Omega$是$\R^n$中的区域,则$f\in H^{-1}(\Omega)$当且仅当存在函数$f_0,f_1,\cdots,f_n\in L^2(\Omega)$,使得
+    \begin{equation}
+        \langle f,v\rangle=\int_\Omega\left(f_0v+\sum^{n}_{i=1}f_iv_{x_i}\right)\mathrm{d}x,\quad \forall v\in H^1_0(\Omega)
+        \label{eq:3.2.1}
+    \end{equation}
+    进一步,还成立
+    \begin{equation}
+        \|f\|_{H^{-1}(\Omega)}=\inf\left\{\left(\int_\Omega \sum^{n}_{i=1}|f_i|^2\mathrm{d}x\right)^{1/2}:f_0,f_1,\cdots,f_n\text{满足}\eqref{eq:3.2.1}\right\}
+        \label{eq:3.2.2}
+    \end{equation}
+当式\eqref{eq:3.2.1}成立时,通常写作$f=f_0-\sum^{n}_{i=1}\pa_if_i$.\par
+特别地,当$f\in L^2(\Omega)$时,有$\|f\|_{H^{-1}(\Omega)}\leqslant \|f\|_{l^2(\Omega)}$,并且
+$$
+\langle f,v\rangle=(f,v)_{L^2(\Omega)}=\int_\Omega fv\mathrm{d}x,\quad v\in H^1_0(\Omega)
+$$
+\end{tcolorbox}
+需要理清这里面包含了几个结论:\par
+1.$f\in H^{-1}(\Omega)$当且仅当存在函数$f_0,f_1,\cdots,f_n\in L^2(\Omega)$,使得
+$$
+\langle f,v\rangle=\int_\Omega\left(f_0v+\sum^{n}_{i=1}f_iv_{x_i}\right)\mathrm{d}x,\quad \forall v\in H^1_0(\Omega)
+$$
+\qquad
+2.$H^{-1}(\Omega)$上的范数具体形式是
+$$
+\|f\|_{H^{-1}(\Omega)}=\inf\left\{\left(\int_\Omega \sum^{n}_{i=1}|f_i|^2\mathrm{d}x\right)^{1/2}\right\}
+$$
+\qquad
+3.当$f\in L^2(\Omega)$时,有$\|f\|_{H^{-1}(\Omega)}\leqslant \|f\|_{l^2(\Omega)}$,并且
+$$
+\langle f,v\rangle=(f,v)_{L^2(\Omega)}=\int_\Omega fv\mathrm{d}x,\quad v\in H^1_0(\Omega)
+$$
+\qquad \textbf{Proof}:\par
+\textbf{Part1.充分性}\par
+假设存在函数$f_0,f_1,\cdots,f_n\in L^2(\Omega)$,使得\eqref{eq:3.2.1}成立,因此直接利用算子范数的定义得
+$$
+\begin{aligned}
+    \|f\|_{H^{-1}(\Omega)} &= \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\left|\langle f,v\rangle\right|}{\|v\|_{H^1_0(\Omega)}}\\
+                           &= \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\left|\int_\Omega\left(f_0v+\sum^{n}_{i=1}f_iv_{x_i}\right)\mathrm{d}x\right|}{\|v\|_{H^1_0(\Omega)}}\\
+                           &\leqslant \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\|f_0\|_{L^2(\Omega)}\|v\|_{L^2(\Omega)}+\sum_{i=1}^n\|f_i\|_{L^2(\Omega)}\|\paa_iv\|_{L^2(\Omega)}}{\|v\|_{H^1_0(\Omega)}}\\
+                           &\leqslant \sum_{i=0}^n\|f_i\|_{L^2(\Omega)}
+\end{aligned}
+$$
+这就标明$f\in H^{-1}(\Omega)$,并且$\|f\|_{H^{-1}(\Omega)}\leqslant \sum_{i=0}^n\|f_i\|_{L^2(\Omega)}$\par
+\textbf{Part1.必要性}\par
+假设$f\in H^{-1}(\Omega)$,根据Riesz表示定理,存在唯一的函数$u\in H^1_0(\Omega)$使得
+$$
+\langle f,v\rangle=(u,v)_{H^1_0(\Omega)},\forall  v\in H^1_0(\Omega)
+$$
+并且$\|f\|_{H^{-1}(\Omega)}=\|u\|_{H^1_0(\Omega)}$.将内积写开就是
+$$
+\langle f,v\rangle=\int_{\Omega}\left(uv+\sum_{i=1}^n\pa_{i}u\pa_i v\right)\mathrm{d}x,\forall  v\in H^1_0(\Omega)
+$$
+于是我们取$f_0=u,f_i=\pa_i u$即可.并且
+$$
+\|f\|_{H^{-1}(\Omega)}=\|u\|_{H^1_0(\Omega)}=\left(\int_{\Omega}\left(|u|^2+\sum_{i=1}^n|\pa_i u|^2\right)\mathrm{d}x\right)^{1/2}=\left(\int_{\Omega}\sum_{i=0}^n|f_i|^2\mathrm{d}x\right)^{1/2}
+$$
+接下来我们需要知道的是,一般来讲我们要求一个算子的范数,通常是分为两步:第一步,计算算子范数的界;第二步,说明算子范数的确可以达到这个界.\par
+\textbf{Part2.范数的计算}\par
+假设对于任意给定的$g_0,g_1,\cdots,g_n$满足\eqref{eq:3.2.1},即
+$$
+\langle f,v\rangle=\int_\Omega\left(f_0v+\sum^{n}_{i=1}f_iv_{x_i}\right)\mathrm{d}x,\quad \forall v\in H^1_0(\Omega)
+$$
+则利用离散的$\mathrm{H\ddot{o} lder}$不等式(其实用的就是Cauchy不等式)得到
+$$
+\begin{aligned}
+    |\|f\|_{H^{-1}(\Omega)}| &\leqslant \int_\Omega\left(|g_0||v|+\sum^{n}_{i=1}|g_i||v_{x_i}|\right)\mathrm{d}x\\
+                             &\leqslant \left(\int_{\Omega}\sum_{i=1}^n|g_i|^2\mathrm{d}x\right)^{1/2}\|v\|_{H^1_0(\Omega)}
+\end{aligned}
+$$
+这就说明$\|f\|_{H^{-1}(\Omega)}\leqslant \left(\int_{\Omega}\sum_{i=1}^n|g_i|^2\mathrm{d}x\right)^{1/2}$.而我们在\textbf{Part1.必要性}部分已经证明了,这个上界是可以达到的,因此
+$$
+\|f\|_{H^{-1}(\Omega)}=\|u\|_{H^1_0(\Omega)}=\left(\int_{\Omega}\left(|u|^2+\sum_{i=1}^n|\pa_i u|^2\right)\mathrm{d}x\right)^{1/2}=\left(\int_{\Omega}\sum_{i=0}^n|f_i|^2\mathrm{d}x\right)^{1/2}
+$$
+\qquad \textbf{Part3}\par
+当$f\in L^2(\Omega)$时,$\int_{\Omega}fv\mathrm{d}x$定义了$H^1_0(\Omega)$上的连续线性泛函,因此
+$$
+\int_{\Omega}fv\mathrm{d}x=(f,v)_{L^2(\Omega)}=f(v)=\langle f,v\rangle
+$$
+此外
+$$
+\begin{aligned}
+    \|f\|_{H^{-1}(\Omega)} &= \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\left|\langle f,v\rangle\right|}{\|v\|_{H^1_0(\Omega)}}\\
+                           &= \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\left|(f,v)_{L^2(\Omega)}\right|}{\|v\|_{H^1_0(\Omega)}}\\
+                           &\leqslant \sup\limits_{v\in H^1_0(\Omega)\setminus \{0\}}\frac{\|f\|_{L^2(\Omega)}\|v\|_{L^2(\Omega)}}{\|v\|_{H^1_0(\Omega)}}\\
+                           &\leqslant \|f\|_{L^2(\Omega)}
+\end{aligned}
+$$
+这表明,$L^2(\Omega)\hookrightarrow H^{-1}(\Omega)$.
+\subsection{二阶椭圆方程}

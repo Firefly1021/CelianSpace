@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/celiansun/mathfile/MyCode/LearningCode/CPP/DeepLearning/build/Debug",
+  "command": "/usr/bin/clang++ -DUSE_C10D_GLOO -DUSE_DISTRIBUTED -DUSE_RPC -DUSE_TENSORPIPE -isystem /Users/celiansun/mathfile/MyCode/libtorch/include -isystem /Users/celiansun/mathfile/MyCode/libtorch/include/torch/csrc/api/include -g -std=gnu++17 -arch arm64 -o CMakeFiles/DeepLearning.dir/main.cpp.o -c /Users/celiansun/mathfile/MyCode/LearningCode/CPP/DeepLearning/main.cpp",
+  "file": "/Users/celiansun/mathfile/MyCode/LearningCode/CPP/DeepLearning/main.cpp",
+  "output": "/Users/celiansun/mathfile/MyCode/LearningCode/CPP/DeepLearning/build/Debug/CMakeFiles/DeepLearning.dir/main.cpp.o"
+}
+]

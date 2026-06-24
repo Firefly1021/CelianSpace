@@ -21,3 +21,4 @@ https://firefly1021.github.io/CelianSpace/
 - `script.js`：项目筛选、资料库检索、滚动进度与动态实验画布
 - `assets/hero-celianspace.png`：首页插画
 - `wiki/`：多页面文档站，包含数学基础、模板、代码实验和学习文档
+- `materials/`：迁移进仓库的原始学习资料与模板源文件

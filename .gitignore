@@ -1,2 +1,22 @@
 outputs/
 work/
+
+# Local build/editor artifacts under migrated materials.
+materials/**/build/
+materials/**/out/
+materials/**/Debug/
+materials/**/Release/
+materials/**/x64/
+materials/**/.git/
+materials/**/.vscode/
+materials/**/__pycache__/
+materials/**/*.dSYM/
+materials/**/*.obj
+materials/**/*.pdb
+materials/**/*.exe
+materials/**/*.ilk
+materials/**/*.lib
+materials/**/*.dll
+materials/**/*.exp
+materials/**/*.idb
+materials/**/*.ipch
