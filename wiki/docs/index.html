@@ -9,9 +9,13 @@
   <meta name="description" content="code 学习文档按笔记、示例与参考材料整理。" />
   <title>学习文档 | CelianSpace Wiki</title>
   <link rel="icon" href="data:," />
-  <link rel="stylesheet" href="../assets/wiki.css?v=20260624-latex-structure" />
-  <script defer src="../assets/search-index.js?v=20260624-latex-structure"></script>
-  <script defer src="../assets/wiki.js?v=20260624-latex-structure"></script>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css" />
+  <link rel="stylesheet" href="../assets/wiki.css?v=20260630-code-display" />
+  <script defer src="../assets/search-index.js?v=20260630-code-display"></script>
+  <script defer src="../assets/wiki.js?v=20260630-code-display"></script>
+  
+  <script defer src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/common.min.js"></script>
   <script>window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], macros: { R: '\\mathbb{R}', N: '\\mathbb{N}', C: '\\mathbb{C}', K: '\\mathbb{K}', A: '\\boldsymbol{A}', m: 'm^*', tR: '\\tilde{\\mathcal{R}}', X: '(X,\\mathcal{M},\\mu)', ii: '\\mathrm{i}', dd: '\\mathrm{d}', pa: '\\partial', paa: '\\partial^{\\alpha}', Lp: 'L^p(\\Omega)', sbev: 'W^{k,p}(\\Omega)', sch: '\\mathcal{S}(\\mathbb{R}^n)', vecb: ['\\boldsymbol{#1}', 1], ttt: '\\mathcal{T}', dx: '\\,\\mathrm{d}x', curl: '\\operatorname{curl}', diverge: '\\operatorname{div}', E: '\\boldsymbol{E}', Hfield: '\\boldsymbol{H}', J: '\\boldsymbol{J}', n: '\\boldsymbol{n}', tvec: '\\boldsymbol{t}', re: '\\operatorname{Re}', im: '\\operatorname{Im}', supp: '\\operatorname{supp}', diam: '\\operatorname{diam}', dist: '\\operatorname{dist}', induct: ['\\left\\langle #1,#2\\right\\rangle', 2], norm: ['\\left\\|#1\\right\\|', 1], tnorm: ['|\\!|\\!|#1|\\!|\\!|', 1] } }, svg: { fontCache: 'global' } };</script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   
@@ -44,7 +48,389 @@
 <a class="" href="../code/index.html">代码实验</a>
 <a class="active" href="../docs/index.html">学习文档</a>
 </nav></details></aside>
-    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>学习文档</h1><p class="doc-subtitle">code 学习文档按笔记、示例与参考材料整理。</p><div class="doc-chips"><span>4 个材料条目</span><span>专题概览</span></div></header><section class="doc-section"><p>本页只展示整理后的模块结构，底层支撑文件入口已隐藏。</p><div class="fold-list"><details class="fold-panel" open><summary><strong>c++</strong><span>PDF 1，TeX 1，代码 1</span></summary><div class="topic-summary"><p>该模块已纳入站内整理，底层支撑文件入口已隐藏。</p><div class="kind-summary"><span>PDF：1</span><span>TeX：1</span><span>代码：1</span></div></div></details><details class="fold-panel"><summary><strong>Markdown</strong><span>Markdown 1</span></summary><div class="topic-summary"><p>该模块已纳入站内整理，底层支撑文件入口已隐藏。</p><div class="kind-summary"><span>Markdown：1</span></div></div></details></div></section></article></main>
+    <main class="wiki-main"><article class="doc-article"><header class="doc-header"><p class="breadcrumb">CelianSpace Wiki</p><h1>学习文档</h1><p class="doc-subtitle">code 学习文档按笔记、示例与参考材料整理。</p><div class="doc-chips"><span>4 个材料条目</span><span>展开 3 项</span></div></header><section class="doc-section"><p>本页按模块直接展示代码、配置、Markdown、CSV 预览与图片预览；PDF 和二进制数据只作为支撑材料参与整理。</p><div class="fold-list code-fold-list"><details class="fold-panel code-topic" open><summary><strong>c++</strong><span>PDF 1，TeX 1，代码 1 · 已展开 2 项</span></summary><div class="topic-summary"><p class="topic-note">另有 1 个 PDF、二进制数据或辅助文件未在页面中展开。</p><div class="code-block"><div class="code-title"><span>c++/codeexamples/main.cpp</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">#include &lt;memory&gt;
+#include &lt;iostream&gt;
+
+void demo() {
+    auto ptr = std::make_shared&lt;int&gt;(100);
+    std::cout &lt;&lt; &quot;Value: &quot; &lt;&lt; *ptr &lt;&lt; std::endl;
+}</code></pre></div><div class="code-block"><div class="code-title"><span>c++/CPP学习笔记.tex</span><div class="code-tools"><em>latex</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-latex">\documentclass[12pt, a4paper]{ctexart}
+\usepackage[utf8]{inputenc}
+\usepackage{xcolor}
+\usepackage{minted}
+\usepackage[most]{tcolorbox}
+
+% --- 激活 tcolorbox 的 minted 库 ---
+\tcbuselibrary{minted}
+
+% --- 定义 macOS 窗口按钮颜色 ---
+\definecolor{onedarkback}{RGB}{40, 44, 52}    % 主背景色
+\definecolor{onedarkframe}{RGB}{24, 26, 31}   % 边框深色
+\definecolor{onedarktitle}{RGB}{171, 178, 191} % 标题文字颜色
+\definecolor{macred}{RGB}{255, 95, 86}
+\definecolor{macyellow}{RGB}{255, 189, 46}
+\definecolor{macgreen}{RGB}{39, 201, 63}
+
+% --- 定义 macOS 风格代码块 ---
+\tcbset{
+    macosstyle/.style={
+        listing engine=minted,
+        minted language=cpp,
+        % 默认配置放这里
+        minted options={
+            fontsize=\small,
+            breaklines,
+            linenos,
+            numbersep=10pt,
+            tabsize=4,
+            style=one-dark,
+            autogobble
+        },
+        enhanced,
+        colback=onedarkback,
+        colupper=white,
+        colframe=onedarkframe,
+        left=12mm,
+        top=5mm,
+        arc=3mm,
+        boxrule=0.5pt,
+        overlay={
+            \fill[macred] ([xshift=10mm, yshift=-4mm]frame.north west) circle (1.5mm);
+            \fill[macyellow] ([xshift=15mm, yshift=-4mm]frame.north west) circle (1.5mm);
+            \fill[macgreen] ([xshift=20mm, yshift=-4mm]frame.north west) circle (1.5mm);
+        },
+        fonttitle=\bfseries\sffamily\footnotesize,
+        coltitle=gray!30,
+        attach boxed title to top center={yshift=-3.5mm},
+        boxed title style={empty, size=minimal, top=0pt, bottom=0pt},
+        title={#1} % 接收参数作为标题
+    }
+}
+
+% --- 命令封装 ---
+% 1. 引入外部文件：\includeclist{路径}{标题}
+\newtcbinputlisting{\includeclist}[2]{
+    macosstyle={#2},
+    listing file={#1},
+    listing only
+}
+
+% 2. 手写代码环境：\begin{cppcode}{标题} ... \end{cppcode}
+\newtcblisting{cppcode}{
+    macosstyle,
+    listing only
+}
+
+% 定义截取代码段的宏
+\newcommand{\includeclistpart}[3]{%
+    \tcbinputlisting{
+        macosstyle={#3},      % 1. 先加载你的完美样式（包含所有 UI 装饰）
+        listing file={#2},    % 2. 指定文件
+        listing only,
+        % 3. 关键：重新声明 minted options 注入行号
+        % 注意：必须把样式里那些核心配置（如 style, fontsize）带上
+        % 因为这里的声明会“顶替”掉样式里的旧设置
+        minted options={
+            fontsize=\small,
+            style=one-dark,
+            breaklines,
+            linenos,
+            autogobble,
+            #1                % 注入你的 firstline=2, lastline=6
+        }
+    }
+}
+
+
+\newcommand{\cppin}[1]{\mintinline[style=xcode]{cpp}{#1}}
+
+% ---------------------------------------------------------
+\begin{document}
+
+\section{函数模版}
+
+
+\subsection{1. 直接引入本地源文件}
+这里直接引入了当前目录下的 \texttt{main.cpp}。
+% 请确保你当前目录下有一个 test.cpp 文件，否则请修改路径
+\includeclist{./codeexamples/main.cpp}{快速排序主程序}
+
+\subsection{2. 只引入特定的函数片段}
+通过参数，只展示文件中的核心逻辑（例如第 5 到 15 行）。
+\includeclistpart{firstline=2, lastline=6}{./codeexamples/main.cpp}{核心算法逻辑}
+
+\subsection{3. 手动插入简短代码}
+如果你不想创建文件，也可以直接在 LaTeX 中写：
+
+\begin{cppcode}
+#include &lt;memory&gt;
+#include &lt;iostream&gt;
+
+void demo() {
+    auto ptr = std::make_shared&lt;int&gt;(100);
+    std::cout &lt;&lt; &quot;Value: &quot; &lt;&lt; *ptr &lt;&lt; std::endl;
+}
+\end{cppcode}
+
+在行内讨论变量 \cppin{std::vector&lt;int&gt; v;} 时也非常方便。
+
+\end{document}</code></pre></div></div></details><details class="fold-panel code-topic"><summary><strong>Markdown</strong><span>Markdown 1 · 已展开 1 项</span></summary><div class="topic-summary"><section class="content-entry"><h3>计算机学习文档.md</h3><h3>工具的使用</h3>
+<h4>关于github的使用</h4>
+<p>我们配合VsCode使用.</p>
+<p>首先我们先打开我们要git的文件夹,点击VsCode的终端(页面上方).</p>
+<p>第一步,配置身份,即要让Git明白你是谁.输入下面的命令</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>shell</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-shell">git config --global user.email &quot;邮箱&quot;
+git config --global user.name &quot;名字&quot;</code></pre></div>
+<p>第二步,建立连接</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>shell</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-shell">git init#这一步是初始化
+git remote add origin &quot;你的github仓库地址&quot;#这一步是连接仓库</code></pre></div>
+<p>如果你的GitHub仓库还有文件,那么你需要同步本地和云端,就是把你github上的文件和本地要上传的文件合并</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>shell</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-shell">git pull origin main --allow-unrelated-histories</code></pre></div>
+<p>这时你发现github上的文件出现在本地了.</p>
+<p>接下来就是怎么提交以及怎么同步不同设备(比如你在A设备做了修改,同步到B设备上)</p>
+<p>在VsCode左侧有个分支的图标,即源代码管理,如果说你修改了文件,那里的更改下面就是你修改的东西,将要上传的文件加入到暂存的修改(鼠标停留在要上传的某个文件上,点加号,或者鼠标停留在“更改”,点加号).在提交按钮上面的方框内填写提交信息(这是必须的,所谓提交信息就是你对文件做了什么修改),然后点击提交按钮右侧向下的箭头,选择“提交和推送”.大功告成!</p>
+<h3>基本的数据结构</h3>
+<h3>杂项</h3>
+<h4>`?:`-`if else`的替代</h4>
+<p>在C++中`?:`语法可以代替`if-else`语句,通用格式为</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">expression1 ? expression2 : expression3</code></pre></div>
+<p>如果`expression1`为`True`,则整个表达式的值就是`expression2`,否则就是`expression3`.举个例子</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">3==9 ? 25 : 18</code></pre></div>
+<p>显然`3==9`是`False`,于是表达式的值为25.你可能还会见到下面的语句`int c = a &gt; b ? a : b`,它等价于</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">int c;
+if (a &gt; b)
+  c = a;
+else
+  c = b;</code></pre></div>
+<h4>函数指针</h4>
+<p>我们知道,指针是存放数据地址的变量,与普通的数据类似,函数也有地址.函数的地址是存储其机器语言代码的内存开始的地址.获取函数地址的方法也很简单,就是函数名.也就是说,如果我们有一个函数`func()`,那么`func`就是该函数的地址.</p>
+<p>接下来的一个问题就是如何声明函数指针</p>
+<h4>`this`指针</h4>
+<p>类相当于汽车图纸,它规定了汽车的功能,但不是一辆真正的汽车.而对象就是根据这个图纸造出来的,实实在在的汽车.`this`指针是指向具体的对象的指针.如果我们定义了一个`Car`类</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">class Car {
+public:
+    int speed = 0; // 速度
+
+    // 非静态成员函数（普通函数）
+    void accelerate() {
+        // 这里的 this，指向的是调用这个函数的“那个具体的对象”
+        this-&gt;speed += 10;
+    }
+};</code></pre></div>
+<p>我们注意到函数`accelerate()`是依赖于实际的对象,比如我们有两个对象</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">int main() {
+    Car myCar;    // 造了第一辆车：myCar
+    Car yourCar;  // 造了第二辆车：yourCar
+
+    myCar.accelerate();   // 【场景 A】
+}</code></pre></div>
+<p>运行的结果是`MyCar.speed=10`,而对于`yourCar.speed`并没有改变.</p>
+<p>在定义类时还没有实例,但有些函数和实例有关,这时候this就假装实例.</p>
+<h4>`static`</h4>
+<p>在类中,有些函数并不依赖于所创建的对象(比如不需要读取,修改成员变量).比如有个函数`isAdult`判断对象是否成年,我们可以写成两种方式</p>
+<p>1.&quot;张三,你成年了么?&quot;</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">class Person {
+public:
+    int age; // 普通成员变量
+
+    // 非静态函数：自己判断自己
+    bool isAdult() {
+        // 这里用到了 this-&gt;age，依赖具体对象！
+        return this-&gt;age &gt;= 18;
+    }
+};
+
+int main() {
+    Person zhangsan;
+    zhangsan.age = 20;
+
+    // 问张三：你成年了吗？
+    bool result = zhangsan.isAdult();
+}</code></pre></div>
+<p>这个定义方式就读取了对象自己的属性,不能使用静态函数.而下面的例子中</p>
+<p>2.“这个年龄是否成年?”</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">class Person {
+public:
+    int age; // 普通成员变量
+
+    // 静态函数：通用的鉴定规则
+    // 它不知道你是谁，它只看你递给它的数字
+    static bool isAdultRule(int check_age) {
+        return check_age &gt;= 18;
+    }
+};
+
+int main() {
+    Person zhangsan;
+    zhangsan.age = 20;
+
+    // 把张三的年龄提取出来，递给鉴定器
+    bool result = Person::isAdultRule(zhangsan.age);
+
+    // 甚至不需要有人存在，也能直接用这个规则
+    bool result2 = Person::isAdultRule(15);
+}</code></pre></div>
+<p>这个函数不问是谁,只关注数字.</p>
+<p>现在来看为什么有些使用静态,而有些不能用.静态函数是属于类的,它也相当于图纸,也即是没有`this`指针,自然在依赖实际对象的函数中无法使用.</p>
+<p>此外静态函数不能调用非静态函数,反之则可以.</p>
+<h4>`extern &lt;type&gt;&lt;name&gt;`</h4>
+<p>##### 一般使用方法</p>
+<p>这是一个关于全局变量的命令,有时我们定义的函数需要使用全局变量,一种符合习惯的方法是直接在函数之前定义即可.但有时,我们需要临时定义一个全局变量,比如历史代码太长,我此时需要一个全局变量,之后再补上定义</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">void myFunction() {
+    extern int config_value; // 临时声明
+    std::cout &lt;&lt; config_value;
+}
+
+// ... 隔了很长一段代码 ...
+
+int config_value = 42; // 在后面定义</code></pre></div>
+<p>当然,这不是一个好的习惯.</p>
+<p>还有一个有说服力的理由,跨文件共享全局变量,也即是**多文件编译(大型项目)**</p>
+<ul class="doc-list"><li>**定义（Definition）：** 例如 `int global_var = 10;`。这不仅告诉编译器有这个变量，还**真正在内存中为它分配了空间**。同一个变量在整个程序中**只能被定义一次**。</li></ul>
+<ul class="doc-list"><li>**声明（Declaration）：** 例如 `extern int global_var;`。这只是给编译器打个欠条：“嗨，存在一个叫 `global_var`的变量，它的类型是 `int`，虽然没在这个位置定义，但你在其他地方或者其他文件里肯定能找到它，你先放行编译吧。”</li></ul>
+<p>假设你的项目变大了，分成了两个文件：`main.cpp` 和 `utils.cpp`。</p>
+<p>**场景：你想在 `utils.cpp` 中使用 `main.cpp` 里的全局变量。**</p>
+<p>**错误做法（不使用 extern）：**</p>
+<p>如果你在 `utils.cpp` 里也写一句 `int my_global = 100;`，当编译器把两个文件打包（链接）在一起时，会发现有两个一模一样的全局变量，直接报错：`Multiple definition`(重复定义).</p>
+<p>**正确做法（使用 extern）：**</p>
+<p>**文件 1：`main.cpp` (负责定义)**</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">//main.cpp
+#include &lt;iostream&gt;
+
+// 真正的【定义】，分配内存，且只能有一次！
+int my_global = 100;
+
+int main() {
+    // ...
+    return 0;
+}</code></pre></div>
+<p>**文件 2：`utils.cpp` (负责使用)**</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">//utils.cpp
+#include &lt;iostream&gt;
+
+// 【声明】：告诉编译器，my_global 在别的文件里定义过了，直接用就行！
+extern int my_global;
+
+void printGlobal() {
+    std::cout &lt;&lt; my_global &lt;&lt; std::endl; // 这里可以直接使用
+}</code></pre></div>
+<p>这就是 `extern` 最大的作用：**它让不同的源文件能够共享同一个全局变量，同时避免了重复定义的错误。**</p>
+<p>##### 定义全局变量更安全的做法</p>
+<p>在现代 C++ 开发中，**全局变量本身就是极其不被推荐的**（因为不安全、容易被其他代码意外篡改）.如果必须跨文件共享数据，现代做法更倾向于使用类封装.</p>
+<p>怎么理解呢,`extern`声明的全局变量相当于走廊上的白板,谁都可以修改,但没办法知道是谁修改.我们可以为全局变量建立安保措施</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">//GameState.h
+
+//...其他代码
+
+class GameState {
+private:
+    int score; // 私有数据，绝对安全
+    // 把构造函数藏起来，不让别人随便 new 多个实例
+    GameState() { score = 0; }
+
+public:
+    // 获取唯一实例的“任意门”
+    static GameState&amp; getInstance() {
+        static GameState instance; // 全局唯一的一次实例化
+        return instance;
+    }
+
+    // 通过专属方法来修改分数
+    void addScore(int points) {
+    	if (points &lt; 0) {
+        	// 直接拒绝！把错误操作挡在门外
+        	std::cout &lt;&lt; &quot;非法操作：加分不能是负数！&quot; &lt;&lt; std::endl;
+        	return;
+    	}
+    	if (score + points &gt; 10000) {
+        	score = 10000; // 甚至可以顺便实现“分数封顶”的业务逻辑
+        	return;
+    	}
+    score += points; // 经过层层安检，才允许真正修改数据
+		}
+};</code></pre></div>
+<p>为了不让这个全局变量随意的修改,构造函数需要私有,而私有成员函数只能有类里的其他成员函数调用,因此不妨直接在类里定义一个函数,函数的功能就是实例化,并且这个实例化是唯一的,确定的,没有实例化其他对象的可能,这就保证了这个全局变量的安全.</p>
+<p>那类外的函数怎么使用这个具有层层安保措施的全局变量呢?</p>
+<p>如果我们有两个`.cpp`文件,可以直接使用.</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">//player.cpp
+
+#include &quot;GameState.h&quot;
+#include &lt;iostream&gt;
+
+// 这是一个完全在类外面的普通函数
+void playerKillEnemy() {
+    std::cout &lt;&lt; &quot;玩家击杀怪物！&quot; &lt;&lt; std::endl;
+
+    // 关键点来了：不需要传参！不需要实例化！
+    GameState::getInstance().addScore(100);
+}</code></pre></div>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">//ui.cpp
+
+#include &quot;GameState.h&quot;
+#include &lt;iostream&gt;
+
+// 另一个完全在类外面的普通函数
+void updateScreen() {
+    int current_score = GameState::getInstance().getScore();
+
+    std::cout &lt;&lt; &quot;屏幕显示当前分数：&quot; &lt;&lt; current_score &lt;&lt; std::endl;
+}</code></pre></div>
+<h4>怎么写头文件</h4>
+<p>一般来讲,在一个文件夹中可能有很多个`.cpp`文件,它们的目的不同,比如有专门写类的头文件`class.h`,专门实现类功能的文件`Class.cpp`,其他函数的文件`Fun.cpp`,以及`main.cpp`,现在的问题是怎么将这些互相联系起来.首先是头文件的写法,头文件是扮演目录和接口的,只放声明,也就是告诉别人有东西存在.分为两种,一种是普通函数的头文件</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">//Fun.h
+
+#pragma once
+
+// 声明函数，后面加分号！不要写大括号 {}
+int add(int x, int y);
+void printMessage();</code></pre></div>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">//Fun.cpp
+
+#include &quot;Fun.h&quot;    // 重点：自己的源文件一定要包含自己的头文件
+#include &lt;iostream&gt;
+
+// 这里写具体的实现
+int add(int x, int y) {
+    return x + y;
+}
+
+void printMessage() {
+    std::cout &lt;&lt; &quot;Hello from Fun.cpp!&quot; &lt;&lt; std::endl;
+}</code></pre></div>
+<p>然后是类的头文件</p>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">//Class.h
+
+#pragma once
+#include &lt;string&gt; // 如果类里面用到了 std::string，头文件里就要引入
+
+class Player {
+private:
+    std::string name;
+    int health;
+
+public:
+    // 构造函数声明
+    Player(std::string n);
+
+    // 成员函数声明
+    void takeDamage(int damage);
+
+    // （极其简短的函数可以直接在头文件实现，这叫内联）
+    int getHealth() { return health; }
+};</code></pre></div>
+<div class="code-block"><div class="code-title"><span>Markdown 代码块</span><div class="code-tools"><em>cpp</em><button type="button" class="copy-code" title="复制代码" aria-label="复制代码">复制</button></div></div><pre><code class="language-cpp">#include &quot;Class.h&quot;
+#include &lt;iostream&gt;
+
+// 实现的时候，函数名前面必须加上 &quot;Player::&quot;，表示这是这个类的函数
+Player::Player(std::string n) {
+    name = n;
+    health = 100;
+}
+
+void Player::takeDamage(int damage) {
+    health -= damage;
+    std::cout &lt;&lt; name &lt;&lt; &quot; took &quot; &lt;&lt; damage &lt;&lt; &quot; damage!&quot; &lt;&lt; std::endl;
+}</code></pre></div></section></div></details></div></section></article></main>
     <aside class="wiki-toc"><p>本文目录</p><nav id="page-toc"></nav></aside>
   </div>
 </body>
